@@ -1,0 +1,209 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: black;
+  }
+  
+  .logo {
+    width: 200px; /* Adjust the width as needed */
+    height: auto;
+    background-color: white;
+  }
+  
+  .nav-links {
+    display: flex; /* Make the navigation links horizontal */
+    color: black;
+    list-style: none;
+    margin: 0 10px;
+    font-size: 19px;
+   
+  }
+  .nav-links li{
+    margin-left: 73px;
+    
+  }
+
+  .nav-links a {
+    text-decoration: none; /* Remove underline from navigation links */
+    color: black; /* Set the text color for the links */
+  }
+
+  .nav-links a:hover{
+    background-color: #ddd;
+    color: black;
+  }
+
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Optional: Add padding to the h3 tags */
+}
+
+.head h3 {
+    margin: 10px; /* Remove default margin for h3 tags */
+    padding-top: 40px;
+    color:black; /* Optional: Set text color */
+    font-size: 30px; /* Optional: Adjust font size */
+    font-weight: bold; /* Optional: Set font weight */
+
+}
+h3:hover ,h1:hover{
+   color: darkturquoise;
+}
+
+
+
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+.search-button{
+    background-color: #062a3f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.search-button:hover{
+    background-color: rgb(30, 145, 190);
+}
+.info{
+    background-color: rgb(139, 156, 163);
+    border: 1px solid white;
+    height: 300px;
+
+}
+
+.browse{
+    text-align: center;
+}
+.browse h1{
+    font-size: 30px;
+}
+.browse h1:hover{
+    color: dodgerblue;
+}
+
+
+
+
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box {
+    flex: 0 0 50%;
+    min-width: 300px;
+    scroll-snap-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 10px;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.left-arrow {
+    left: 0;
+}
+
+
+.box {
+    flex: 0 0 calc(20% - 20px); /* Adjust width based on the number of boxes and margins */
+    min-width: 200px; /* Minimum width for each box */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.right-arrow {
+    right: 0;
+}
+
+.box img{
+    height:50px;
+    width:50px;
+}
+
+
+
+
+
+
+
+
+
+
+/* About - css */
+
+
+.about-container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Set height to full viewport height */
+}
+
+.about-row{
+    display: flex;
+    height: 50%; /* Each row takes half of the container height */
+    /* border: 1px solid black; */
+}
+
+.about-column{
+    flex: 1; /* Each column takes equal space */
+    padding: 10px;
+}
+.about-img{
+    max-width: 100%; /* Ensure image fits within the column */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.about-img2, .about-img3{
+    max-width: 100%; /* Ensure image fits within the column */
+    height: 300px;
+}
+
+.text:hover {
+    background-color: #be929d; /* Change background color on hover */
+}
+
+
+
+
