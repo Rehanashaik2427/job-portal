@@ -1,10 +1,17 @@
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
 
-const CandidateDashboard = () => {
+const Resume = () => {
+  const [showMessage, setShowMessage] = useState(false);
+
+  const handleAddResume = () => {
+    setShowMessage(true);
+    // Additional logic to handle adding the resume can be added here
+  };
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -44,43 +51,42 @@ const CandidateDashboard = () => {
 
       <div className='rightside'>
         <div className="search">
-        <button><FontAwesomeIcon icon={faSearch} />search</button>
-            <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+          <button><FontAwesomeIcon icon={faSearch} />search</button>
+          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>
-        <div className="my-dashboard-container">
-      <div>
-        <h3 className='status-info'>My application status</h3>
-        <div className="dashboard">
-          <div className="data">
-            <span>
-              <p>applied to</p>
-              <h2><b>500</b></h2>
-              <p>companies</p>
+        <div>
+          <h1>My Resumes</h1>
+          <div className="span">
+            <span className="resume">
+              <h3>resume-1</h3>
+            </span>
+            <span className="resume">
+              <h3>resume-2</h3>
+            </span>
+            <span className="resume">
+              <h3>resume-3</h3>
+            </span>
+            <span className="resume">
+              <h3>resume-4</h3>
+            </span>
+            <span className="resume">
+              <h3>resume-5</h3>
             </span>
           </div>
-          <div className="data">
-            <h1>5</h1>
-            <h4>resumes</h4>
+          <div>
+            <h2>Add new Resume</h2>
+            <input type="file" placeholder="Resume" />
+            <input type="submit" value="ADD" onClick={handleAddResume} />
           </div>
-          <div className="data">
-            <h1>250</h1>
-            <h4>resume views</h4>
-          </div>
-          <div className="data">
-            <h1>50</h1>
-            <h4>shortlist</h4>
-          </div>
-          <div className="data">
-            <h1>500</h1>
-            <h4>companies</h4>
-          </div>
+          {showMessage && (
+            <div>
+              <p>Your resume has been added successfully!</p>
+            </div>
+          )}
         </div>
-        <h3 className='status-info'>My resume status report</h3>
-      </div>
-    </div>
       </div>
     </div>
   );
 };
 
-export default CandidateDashboard;
+export default Resume;

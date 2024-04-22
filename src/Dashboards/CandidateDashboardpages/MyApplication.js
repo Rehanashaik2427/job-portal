@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
 
-const CandidateDashboard = () => {
+const MyApplication = () => {
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -44,43 +44,52 @@ const CandidateDashboard = () => {
 
       <div className='rightside'>
         <div className="search">
-        <button><FontAwesomeIcon icon={faSearch} />search</button>
+            <button><FontAwesomeIcon icon={faSearch} />search</button>
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>
-        <div className="my-dashboard-container">
-      <div>
-        <h3 className='status-info'>My application status</h3>
-        <div className="dashboard">
-          <div className="data">
-            <span>
-              <p>applied to</p>
-              <h2><b>500</b></h2>
-              <p>companies</p>
-            </span>
-          </div>
-          <div className="data">
-            <h1>5</h1>
-            <h4>resumes</h4>
-          </div>
-          <div className="data">
-            <h1>250</h1>
-            <h4>resume views</h4>
-          </div>
-          <div className="data">
-            <h1>50</h1>
-            <h4>shortlist</h4>
-          </div>
-          <div className="data">
-            <h1>500</h1>
-            <h4>companies</h4>
-          </div>
+        <div>
+            <h1>My APPLICATIONS</h1>
+            <table className="table">
+                <thead>
+                    <tr id="thead">
+                        <th>Company Name</th>
+                        <th>Applied On</th>
+                        <th>Resume Profile</th>
+                        <th>Status & Actions</th>
+                    </tr>
+                </thead>
+                </table>
+                <tbody>
+                    <tr>
+                        <td>cisco</td>
+                        <td>04/04/2024</td>
+                        <td>resume-1</td>
+                        <td>HR viewed|shortlisted</td>
+                    </tr>
+                    <tr>
+                        <td>Microsoft</td>
+                        <td>02/04/2024</td>
+                        <td>resume-2</td>
+                        <td>HR viewed|shortlisted</td>
+                    </tr>
+                    <tr>
+                        <td>cisco</td>
+                        <td>04/04/2024</td>
+                        <td>resume-3</td>
+                        <td>HR viewed|shortlisted</td>
+                    </tr>
+                    <tr>
+                        <td>Microsoft</td>
+                        <td>02/04/2024</td>
+                        <td>resume-1</td>
+                        <td>HR viewed|shortlisted</td>
+                    </tr>
+                </tbody>
+            {/* </table> */}
         </div>
-        <h3 className='status-info'>My resume status report</h3>
       </div>
     </div>
-      </div>
-    </div>
-  );
-};
+  )
+}
 
-export default CandidateDashboard;
+export default MyApplication

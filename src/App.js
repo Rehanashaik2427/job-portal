@@ -12,9 +12,17 @@ import CompanyValidation from './Dashboards/AdminDashboardpages/CompanyValidatio
 import Contacts from './Dashboards/AdminDashboardpages/Contacts';
 import Myprofile from './Dashboards/AdminDashboardpages/Myprofile';
 import UserValidation from './Dashboards/AdminDashboardpages/UserValidation';
+import AppliedSucessmsg from './Dashboards/CandidateDashboardpages/AppliedSucessmsg';
+import CandiadteJobs from './Dashboards/CandidateDashboardpages/CandiadteJobs';
 import CandidateDashboard from './Dashboards/CandidateDashboardpages/CandidateDashboard';
 import CandidateRegisterSucessMsg from './Dashboards/CandidateDashboardpages/CandidateRegisterSucessMsg';
 import CandidateSignup from './Dashboards/CandidateDashboardpages/CandidateSignup';
+import CandidatesCompanies from './Dashboards/CandidateDashboardpages/CandidatesCompanies';
+import DreamCompany from './Dashboards/CandidateDashboardpages/DreamCompany';
+import MyApplication from './Dashboards/CandidateDashboardpages/MyApplication';
+import Payment from './Dashboards/CandidateDashboardpages/Payment';
+import Profile from './Dashboards/CandidateDashboardpages/Profile';
+import Resume from './Dashboards/CandidateDashboardpages/Resume';
 import About from './pages/About';
 import CandidateSucessMsg from './pages/CandidateSucessMsg';
 import Candidates from './pages/Candidates';
@@ -51,7 +59,15 @@ const App = () => {
           <Route path='/CandidateSucessMsg' component={CandidateSucessMsg} />
           <Route path='/candidate-signup' component={CandidateSignup} />
           <Route path='/CandidateRegisterSucessMsg' component={CandidateRegisterSucessMsg} />
-          <Route path='/candidate-dashboard' component={CandidateDashboard} />
+          <Route path='/candiadte-dashboard' component={CandidateDashboard} />
+          <Route path='/candiadte-jobs'  component={CandiadteJobs} />
+          <Route path='/candidate-companies' component={CandidatesCompanies}/>
+          <Route path='/my-application' component={MyApplication} />
+          <Route path='/payment' component={Payment} />
+          <Route path='/profile' component={Profile} />
+          <Route path='/resume' component={Resume}  />
+          <Route path='/dream-company' component={DreamCompany} />
+          <Route path='/applied-success-msg' component={AppliedSucessmsg} />
         </Switch>
       </BrowserRouter>
     </div>

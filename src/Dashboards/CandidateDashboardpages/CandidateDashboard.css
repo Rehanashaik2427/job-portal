@@ -1,0 +1,328 @@
+.candidate-dashboard-container{
+    display: flex;
+    flex-direction:row;
+}
+.left-side{
+    height: 100vh;
+    width: 300px;
+    background-color: aqua;
+}
+.rightside{
+    height: 100vh;
+    width: 1000px;
+    background-color: rgb(192, 231, 233);
+}
+#logo img{
+    height: 100px;
+    width: 200px;
+    border-radius: 60px;
+}
+section{
+    padding: 12px;
+}
+
+
+
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.data{
+    height: 100px;
+    width: 100px;
+    border: 3px solid gray;
+    text-align: center;
+    border-radius: 10px;
+}
+span {
+    font-size: 13px;
+}
+.status-info{
+    background-color: rgb(154, 184, 204);
+}
+.status-info:hover{
+    color:black;
+}
+.search i{
+    font-size: 25px;
+}
+.search button{
+    height: 30px;
+    width: 100px;
+    color: green;
+    background-color: coral;
+    border-radius: 10px;
+    border: none;
+}
+.search{
+display: flex;
+flex-direction: row;
+justify-content: end;
+}
+#user{
+margin-left: 10px;
+margin-top: 5px;
+color: rgb(90, 90, 182);
+}
+#user:hover{
+color: rgb(88, 2, 23);
+}
+a{
+text-decoration: none;
+}
+
+
+
+
+
+
+
+
+.table{
+    width: 95%;
+    display: flex;
+    margin-left: 30px;
+    margin-right: 50px;
+    /* margin: 30px; */
+   
+    /* border: 1px solid black; */
+
+}
+.table tr{
+  width: 500px;
+  justify-content: space-between;
+  font-size: 20px;
+
+
+}
+#thead{
+    background-color: rgb(163, 209, 240);
+    /* margin-right: 20px;
+    width: 95%; */
+}
+table {
+    border-collapse: collapse;
+}
+table, th, td {
+    /* border: 1px solid; */
+    width: 260px;
+    text-align: left;
+
+    
+}
+.search{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    
+    }
+.search i{
+    font-size: 25px;
+    
+}
+.search button{
+    height: 30px;
+    width: 100px;
+    color: green;
+    background-color: coral;
+    border-radius: 10px;
+    border: none;
+    position: fixed; /* Makes the element stay in place when scrolling */
+    top: 5px; /* Adjust the top position if needed (10px is a small margin) */
+    right: 100px; /* Adjust the right position if needed (10px is a small margin) */
+}
+.search .icon{
+    height: 24px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    position: fixed; /* Makes the element stay in place when scrolling */
+    top: 5px; /* Adjust the top position if needed (10px is a small margin) */
+    right: 20px; /* Adjust the right position if needed (10px is a small margin) */
+}
+#user{
+    margin-left: 10px;
+    margin-top: 5px;
+    color: white
+}
+
+.dream{
+    margin-top: 150px;
+    text-align: center;
+}
+.apply{
+    /* border: 1px solid black; */
+    height: 30px;
+    width: 350px;
+    background-color: rgb(180, 81, 45);
+    border-radius: 20px;
+    align-items: center;
+    margin-left: 380px;
+}
+.app b{
+    font-size: 18px;
+    color: antiquewhite; 
+}
+.app{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+}
+#user{
+    margin-left: 10px;
+    margin-top: 5px;
+    color: rgb(90, 90, 182);
+}
+#user:hover{
+    color: rgb(88, 2, 23);
+}
+
+
+/* candidate job */
+
+tbody{
+    display: block;
+    padding-left: 20px;
+}
+td{
+    padding-left: 18px;
+ 
+}
+
+
+
+
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height:230px; /* Ensures the form stretches to fill the viewport height */
+  }
+  .msg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+
+
+
+  
+.company {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+.company {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    color: #1d1c1c;
+}
+
+.company-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 200px;
+}
+.company-name {
+    font-weight: bold;
+}
+.company-description {
+    margin-top: 10px;
+}
+
+
+
+
+
+.resume{
+    height: 100px;
+    width: 100px;
+    border: 3px solid gray;
+    text-align: center;
+    border-radius: 10px;
+   
+}
+
+.resume h3{
+    margin: 15px;
+}
+.span{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+#user{
+    margin-left: 10px;
+    margin-top: 5px;
+    color: rgb(90, 90, 182);
+}
+
+a{
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.candidate-details{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  
+
+}
+.candidate-details h3{
+    color: rgb(55, 131, 55);
+}
+.search{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;  
+}
+#user{
+    margin-left: 10px;
+    margin-top: 5px;
+    color: rgb(90, 90, 182);
+}
+a{
+    text-decoration: none;
+}
+
+
+
+
+.payment-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.payment-option:hover{
+    color: blue;
+}

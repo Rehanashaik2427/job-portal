@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaSearch } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from "react-router-dom";
 
 
@@ -61,7 +60,8 @@ const Home = () => {
             <input type="text" placeholder="Keywords:role-developer,analyst...." />
             <input type="text" placeholder="Location" />
             <input type="text" placeholder="Experience" />
-            <button className='search-button' style={{backgroundColor:'#062a3f',color:'white',fontSize:'18px',width:'120px',height:'45px'}}><FaSearch />search</button><br />
+            {/* <button className='home-button'>Search</button> */}
+            {/* <button className='search-button' style={{backgroundColor:'#062a3f',color:'white',fontSize:'18px',width:'120px',height:'45px'}}><FaSearch />search</button><br /> */}
           </div>
         </div>
           <div className="column text">

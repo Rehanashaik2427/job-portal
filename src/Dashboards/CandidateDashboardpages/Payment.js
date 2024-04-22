@@ -1,10 +1,10 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
 
-const CandidateDashboard = () => {
+const Payment = () => {
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -44,43 +44,29 @@ const CandidateDashboard = () => {
 
       <div className='rightside'>
         <div className="search">
-        <button><FontAwesomeIcon icon={faSearch} />search</button>
-            <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+          <button><FontAwesomeIcon icon={faSearch} />search</button>
+          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>
-        <div className="my-dashboard-container">
-      <div>
-        <h3 className='status-info'>My application status</h3>
-        <div className="dashboard">
-          <div className="data">
-            <span>
-              <p>applied to</p>
-              <h2><b>500</b></h2>
-              <p>companies</p>
-            </span>
+
+        <div className="payment-container">
+          <div>
+            <h2>Payment Via</h2>
+            <section className="payment-options">
+              <h2 className='payment-option'><FontAwesomeIcon icon={faCreditCard} /> Credit/Debit card</h2>
+              <h2 className='payment-option'><FontAwesomeIcon icon={faPaperclip} /> UPI payments</h2>
+              <h2 className='payment-option'><FontAwesomeIcon icon={faGlobe} /> Net Banking</h2>
+            </section>
           </div>
-          <div className="data">
-            <h1>5</h1>
-            <h4>resumes</h4>
-          </div>
-          <div className="data">
-            <h1>250</h1>
-            <h4>resume views</h4>
-          </div>
-          <div className="data">
-            <h1>50</h1>
-            <h4>shortlist</h4>
-          </div>
-          <div className="data">
-            <h1>500</h1>
-            <h4>companies</h4>
+
+          <div>
+            <h2>Payment History</h2>
+            <p>Payments Details</p>
+            {/* Add payment history details here */}
           </div>
         </div>
-        <h3 className='status-info'>My resume status report</h3>
-      </div>
-    </div>
       </div>
     </div>
   );
-};
+}
 
-export default CandidateDashboard;
+export default Payment;
