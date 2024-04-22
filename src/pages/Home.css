@@ -172,8 +172,6 @@ input[type="text"] {
 
 
 /* About - css */
-
-
 .about-container{
     display: flex;
     flex-direction: column;
@@ -183,7 +181,7 @@ input[type="text"] {
 .about-row{
     display: flex;
     height: 50%; /* Each row takes half of the container height */
-    /* border: 1px solid black; */
+
 }
 
 .about-column{
@@ -206,4 +204,58 @@ input[type="text"] {
 
 
 
+/* Candidate login css*/
 
+.candidate-login-form ,.signup-container{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #87ceeb; /* Sky-blue border color */
+    width: 400px;
+    margin: 20px auto; /* Center horizontally */
+}
+.candidate-login-form-group,.candidate-form-group{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 12px;
+}
+.candidate-login-switch-form{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.candidate-name{
+    width: 200px;
+    height: 5px;
+}
+
+
+/* Success msg*/
+.sucess-msg-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically within the viewport */
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+.sucess-msg-container h2 {
+    margin-bottom: 10px;
+}
+
+.sucess-msg-container p {
+    margin-bottom: 20px;
+}
+
+.sucess-msg-container a {
+    color: blue;
+    text-decoration: underline;
+}

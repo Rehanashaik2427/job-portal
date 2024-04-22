@@ -12,7 +12,11 @@ import CompanyValidation from './Dashboards/AdminDashboardpages/CompanyValidatio
 import Contacts from './Dashboards/AdminDashboardpages/Contacts';
 import Myprofile from './Dashboards/AdminDashboardpages/Myprofile';
 import UserValidation from './Dashboards/AdminDashboardpages/UserValidation';
+import CandidateDashboard from './Dashboards/CandidateDashboardpages/CandidateDashboard';
+import CandidateRegisterSucessMsg from './Dashboards/CandidateDashboardpages/CandidateRegisterSucessMsg';
+import CandidateSignup from './Dashboards/CandidateDashboardpages/CandidateSignup';
 import About from './pages/About';
+import CandidateSucessMsg from './pages/CandidateSucessMsg';
 import Candidates from './pages/Candidates';
 import Companies from './pages/Companies';
 import Contact from './pages/Contact';
@@ -44,6 +48,10 @@ const App = () => {
           <Route path="/contacts" component={Contacts} />
           <Route path="/companyDetailsByAdmin" component={CompanyDetailsByAdmin} />
           <Route path="/companyDetailsAdded" component={CompanyAddedMsg} />
+          <Route path='/CandidateSucessMsg' component={CandidateSucessMsg} />
+          <Route path='/candidate-signup' component={CandidateSignup} />
+          <Route path='/CandidateRegisterSucessMsg' component={CandidateRegisterSucessMsg} />
+          <Route path='/candidate-dashboard' component={CandidateDashboard} />
         </Switch>
       </BrowserRouter>
     </div>

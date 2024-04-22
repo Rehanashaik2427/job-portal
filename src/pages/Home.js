@@ -2,6 +2,7 @@ import React from 'react';
 import { FaSearch } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from "react-router-dom";
 
+
 const Home = () => {
   return (
     <div>
