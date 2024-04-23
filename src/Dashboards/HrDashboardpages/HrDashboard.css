@@ -1,0 +1,96 @@
+.centered-form ,.job-posting-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-container ,.job-posting-form  {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: white;
+   
+  }
+  
+  
+  .form-group {
+    margin-bottom: 10px;
+   
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    
+  }
+  .form-group input,input[type='text']{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+  }
+  .error-message{
+    color: red;
+  }
+
+ /* HrDashboard.css */
+
+.hr-dashboard-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .hr-leftside {
+    height: 100vh;
+    width: 300px;
+    background-color: aqua;
+  }
+  
+  .hr-rightside {
+    height: 100vh;
+    width: 1000px;
+    background-color: rgb(192, 231, 233);
+  }
+  
+  #logo img {
+    height: 100px;
+    width: 200px;
+    border-radius: 60px;
+  }
+  
+section {
+    padding: 12px;
+}
+  
+.box-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    grid-template-rows: auto auto; /* Automatic rows */
+    gap: 15px; /* Gap between boxes */
+    margin: 20px;
+  }
+  
+
+  
+
+
+  .row {
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+  }
+  
+  .small-box {
+    height: 200px;
+    width: 200px;
+    border: 1px solid black; /* Example border for visualization */
+    margin: 20px;
+    border-radius: 5%;
+    text-align: center;
+    font-size: 25px;
+}
+
+
+
+
