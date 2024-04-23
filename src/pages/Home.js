@@ -53,24 +53,34 @@ const Home = () => {
       </div>
 
       <div className='info'>
+        {/* Start of the first row */}
         <div className="row row1">
-          <div className="column">
-            <h2 style={{ textAlign: 'center', fontSize: '50px' }}>There Are 102,256 Postings Here For you!</h2>
+          {/* First column */}
+          <div style={{ textAlign: 'center'}} className="info-sentence">
+            <h2 style={{ fontSize: '50px' }}>There Are 102,256 Postings Here For you!</h2>
             <p style={{ textAlign: 'center' }}>Find Jobs, Employment & Career Opportunities</p>
           </div>
 
+        </div>
+        {/* End of the first row */}
+      
+                  {/* Second column containing search inputs */}
           <div className="search">
-            <input type="text" placeholder="Keywords:role-developer,analyst...." />
+            <input type="text" placeholder="Keywords: role-developer, analyst...." />
             <input type="text" placeholder="Location" />
             <input type="text" placeholder="Experience" />
+            {/* Uncomment the buttons if needed */}
             {/* <button className='home-button'>Search</button> */}
             {/* <button className='search-button' style={{backgroundColor:'#062a3f',color:'white',fontSize:'18px',width:'120px',height:'45px'}}><FaSearch />search</button><br /> */}
-          </div>
         </div>
-          <div className="column text">
-            <p style={{ textAlign: 'center' }}><b>Popular Searches:</b> Designer, Web Developer, IOS, Developer, PHP, Senior Developer, Engineer</p>
-          </div>
-      </div>
+        
+
+    {/* Second row with text */}
+    <div className="column text">
+        <p style={{ textAlign: 'center' }}><b>Popular Searches:</b> Designer, Web Developer, IOS, Developer, PHP, Senior Developer, Engineer</p>
+    </div>
+</div>
+
 
       <div className="browse">
         <h1>Browse by category</h1>

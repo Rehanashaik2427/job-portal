@@ -5,7 +5,7 @@
     height: 100vh;
   }
   
-  .form-container ,.job-posting-form  {
+  .form-container {
     width: 400px;
     padding: 20px;
     border: 1px solid white;
@@ -50,7 +50,7 @@
   
   .hr-rightside {
     height: 100vh;
-    width: 1000px;
+    width: 100vw;
     background-color: rgb(192, 231, 233);
   }
   
@@ -82,15 +82,88 @@ section {
   }
   
   .small-box {
-    height: 200px;
-    width: 200px;
-    border: 1px solid black; /* Example border for visualization */
-    margin: 20px;
-    border-radius: 5%;
-    text-align: center;
-    font-size: 25px;
+    width: calc(33.33% - 20px); /* Adjust the width as needed */
+    margin-right: 20px; /* Set margin between boxes */
+    display: inline-block;
+    vertical-align: top;
+    background-color: #f0f0f0; /* Set background color */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  
+  /* .hr-rightside {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+   */
+  .job-posting-form {
+    width: 100%; /* Set the width of the form */
+    /* max-width: 600px;  */
+  }
+  
+  .Job-details {
+    display: flex;
+    justify-content: space-around; /* Space items equally around */
+    margin: 15px; /* Adjust margin between rows */
+    padding: 50px;
+  }
+  
+  .Job-details label {
+    flex: 1; /* Equal width for labels */
+  }
+  
+  .Job-details input,
+  .Job-details select,
+  .Job-details textarea {
+    flex: 2; /* Twice the width of labels for inputs, selects, and textareas */
+  }
+  
+  .Job-details select , .date {
+    height: 70%;
+    width: 150px;
+    font-size: 18px;
+  }
+
+  .submit-button {
+    width: 100px;
+    height: 50px;
+    position: relative;
+    left: 500px;
+  }
+
+
+
+  #application {
+    width: 100%;
+    height: 80%;
+  }
+  table, th, td {
+    border:1px solid black;
+  }
+
+  .jobs_list,.jobs_list_table,.people{
+    width: 100%;
+    height: 100%;
+  }
+
+
+  
+
+
+  
+.profile_row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-
-
-
-
+.boxp {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 250px;
+  height: 300px;
+}

@@ -2,7 +2,7 @@ import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import './HrDashboard.css';
 
 const PostedJobs = () => {
     
@@ -51,9 +51,96 @@ const PostedJobs = () => {
 
     <div className='hr-rightside'>
         <div className="jobs_list">
-            <h2>Posted jobs table</h2>
+            <table className="jobs_list_table" >
+                <tr>
+                    <th>Hr ID</th>
+                    <th>Hr Name</th>
+                    <th>Company Name</th>
+                    <th>Job ID</th>
+                    <th>Job Title</th>
+                    <th>Job Type</th>
+                    <th>Job Description</th>
+                    <th>Skills</th>
+                    <th>Eligible Candidates</th>
+                    <th>Date</th>
+                    <th>Vacancy</th>
+                    <th>Application Deadline</th>
+                </tr>
+
+                <tr>
+                    <td>HR123</td>
+                    <td>Swetha</td>
+                    <td>XYZ Corp</td>
+                    <td>001</td>
+                    <td>Software Engineer</td>
+                    <td>Full Employment</td>
+                    <td>Developing web applications using JavaScript, HTML, and CSS</td>
+                    <td>JavaScript, HTML, CSS</td>
+                    <td>BE, BTECH, MTECH</td>
+                    <td>2024-04-10</td>
+                    <td>3</td>
+                    <td>2024-04-30 12:00 PM</td>
+                </tr>
+                    <tr>
+                        <td>HR456</td>
+                        <td>Mythri</td>
+                        <td>XYZ Corp</td>
+                        <td>002</td>
+                        <td>Data Analyst</td>
+                        <td>Contract</td>
+                        <td>Analyzing data using Python and SQL</td>
+                        <td>Python, SQL</td>
+                        <td>BE, MTECH</td>
+                        <td>2024-04-11</td>
+                        <td>2</td>
+                        <td>2024-05-05 10:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>HR123</td>
+                        <td>Swetha</td>
+                        <td>XYZ Corp</td>
+                        <td>003</td>
+                        <td>Graphic Designer</td>
+                        <td>Freelancer</td>
+                        <td>Creating graphic designs for marketing materials</td>
+                        <td>Adobe Photoshop, Illustrator</td>
+                        <td>BTECH, Degree</td>
+                        <td>2024-04-12</td>
+                        <td>1</td>
+                        <td>2024-04-25 09:00 AM</td>
+                    </tr>
+                    <tr>
+                        <td>HR123</td>
+                        <td>Swetha</td>
+                        <td>XYZ Corp</td>
+                        <td>004</td>
+                        <td>Sales Executive</td>
+                        <td>Full Employment</td>
+                        <td>Managing sales activities and client relationships</td>
+                        <td>Sales, Communication</td>
+                        <td>BTECH</td>
+                        <td>2024-04-13</td>
+                        <td>2</td>
+                        <td>2024-05-01 11:30 AM</td>
+                    </tr>
+                    <tr>
+                        <td>HR202</td>
+                        <td>Surendra</td>
+                        <td>XYZ Corp</td>
+                        <td>005</td>
+                        <td>Project Manager</td>
+                        <td>Contract</td>
+                        <td>Leading project teams and overseeing project delivery</td>
+                        <td>Project Management, Leadership</td>
+                        <td>BTECH, MTECH</td>
+                        <td>2024-04-14</td>
+                        <td>1</td>
+                        <td>2024-04-28 03:00 PM</td>
+                    </tr>
+                </table>
+                
         </div>
-      </div>
+    </div>
     
 </div>
   )

@@ -48,7 +48,37 @@ const HrProfile = () => {
         </div>
 
         <div className='hr-rightside'>
-                
+        <div className="profile_row">
+            <div className="boxp">
+                <h1>300+ Jobs</h1>
+                <p>"counting of posting jobs"</p>
+                <Link to="/posted-jobs">count of job posting</Link>
+            </div>
+            <div className="boxp">
+                <h1>1000+ Applications</h1>
+                <p>"Number of applications you got"</p>
+                <a href="/hr-applications">Total Applications</a>
+            </div>
+            <div className="boxp">
+                <h1>200+ Candidates</h1>
+                <p>"shortlisted students"</p>
+                <a href="/hr-applications">Shortlisted</a>
+            </div>
+            <div className="boxp">
+                <h1>150+ Hired</h1>
+                <p>"The candidates hired by you"</p>
+                <a href="/hr-applications">Hired</a>
+            </div>
+            <div className="boxp">
+                <h1>300+ Candidates</h1>
+                <p>"The candidate profile want to check"</p>
+                <a href="/hr-applications">Candidate Profiles</a>
+            </div>
+            <div className="boxp">
+                <h1>Your Activity Status</h1>
+                <h2>96%</h2>
+            </div>
+        </div>   
         </div>
         
     </div>

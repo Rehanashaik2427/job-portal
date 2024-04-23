@@ -9,7 +9,7 @@
 }
 .rightSide{
     height: 100vh;
-    width: 1000px;
+    width: 100vw;
     background-color: rgb(192, 231, 233);
 }
 .admin-details{
