@@ -23,6 +23,9 @@ import MyApplication from './Dashboards/CandidateDashboardpages/MyApplication';
 import Payment from './Dashboards/CandidateDashboardpages/Payment';
 import Profile from './Dashboards/CandidateDashboardpages/Profile';
 import Resume from './Dashboards/CandidateDashboardpages/Resume';
+import Applications from './Dashboards/HrDashboardpages/Applications';
+import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
+import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
 import About from './pages/About';
 import CandidateSucessMsg from './pages/CandidateSucessMsg';
 import Candidates from './pages/Candidates';
@@ -68,6 +71,11 @@ const App = () => {
           <Route path='/resume' component={Resume}  />
           <Route path='/dream-company' component={DreamCompany} />
           <Route path='/applied-success-msg' component={AppliedSucessmsg} />
+
+
+          <Route path='/hr-applications' component={Applications} />
+          <Route path='/hr-registeration' component={HrRegistrationForm} />
+          <Route path='/hr-signin' component={HrSignin} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
+import './Home.css';
 
 const Home = () => {
   return (
@@ -27,6 +27,9 @@ const Home = () => {
             </li>
             <li>
               <Link to="/Candidates">Candidates</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
             </li>
             <li>
               <Link to="/Register">Register</Link>

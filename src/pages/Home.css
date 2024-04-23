@@ -11,8 +11,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    color: black;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
   }
   
   .logo {
@@ -25,18 +25,16 @@ body {
     display: flex; /* Make the navigation links horizontal */
     color: black;
     list-style: none;
-    margin: 0 10px;
+  
     font-size: 19px;
    
   }
-  .nav-links li{
-    margin-left: 73px;
-    
-  }
+
 
   .nav-links a {
     text-decoration: none; /* Remove underline from navigation links */
     color: black; /* Set the text color for the links */
+    margin:28px;
   }
 
   .nav-links a:hover{
@@ -259,3 +257,82 @@ input[type="text"] {
     color: blue;
     text-decoration: underline;
 }
+
+
+
+
+
+
+
+
+
+/* register */
+.centered-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .form-container {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .heading {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-registration-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+  }
+   */
+  .radio-group {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .radio-group input[type="radio"] {
+    margin-right: 2px;
+    
+  }
+  
+  .radio-labels label {
+    margin-right: 15px;
+  
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
