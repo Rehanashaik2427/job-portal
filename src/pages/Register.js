@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Import Link and useHistory
-
+import { useHistory } from 'react-router-dom'; // Import useHistory from react-router-dom
 
 const Register = () => {
   // State variables for user information and type
-  const [userData, setUserData] = useState({
-    userName: "",
-    userEmail: "",
-  });
   const [userType, setUserType] = useState("");
   const history = useHistory(); // Initialize useHistory
-
-  // Function to handle changes in both name and email fields
-  const handleInputChange = (event) => {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
-  };
 
   // Function to handle user type selection
   const handleUserTypeChange = (type) => {
@@ -42,7 +32,6 @@ const Register = () => {
             <input type="radio" name="userType" value="hr" onChange={() => handleUserTypeChange("hr")} checked={userType === "hr"} />  <label>HR</label> <br />
             <input type="radio" name="userType" value="candidate" onChange={() => handleUserTypeChange("candidate")} checked={userType === "candidate"} /> <label>Candidate</label>
           </div>
-
         </form>
       </div>
     </div>

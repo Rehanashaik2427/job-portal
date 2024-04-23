@@ -2,17 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Signin = () => {
-  const [userData, setUserData] = useState({
-    userName: "",
-    userEmail: "",
-  });
   const [userType, setUserType] = useState("");
   const history = useHistory(); // Initialize useHistory
-
-  // Function to handle changes in both name and email fields
-  const handleInputChange = (event) => {
-    setUserData({ ...userData, [event.target.name]: event.target.value });
-  };
 
   // Function to handle user type selection
   const handleUserTypeChange = (type) => {
@@ -40,11 +31,10 @@ const Signin = () => {
           <input type="radio" name="userType" value="hr" onChange={() => handleUserTypeChange("hr")} checked={userType === "hr"} />  <label>HR</label> <br />
           <input type="radio" name="userType" value="candidate" onChange={() => handleUserTypeChange("candidate")} checked={userType === "candidate"} /> <label>Candidate</label>
         </div>
-        {/* Conditionally render registration form based on userType */}
       </form>
     </div>
   </div>
-  )
-}
+  );
+};
 
-export default Signin
+export default Signin;

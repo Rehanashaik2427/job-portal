@@ -4,8 +4,8 @@ import App from './App';
 import './Dashboards/AdminDashboardpages/Admin.css';
 import './Dashboards/AdminDashboardpages/AdminDashboard.css';
 import './Dashboards/CandidateDashboardpages/CandidateDashboard.css';
+import './Dashboards/HrDashboardpages/HrDashboard.css';
 import './pages/Home.css';
-
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
