@@ -342,3 +342,66 @@ a{
 .payment-option:hover{
     color: blue;
 }
+
+
+
+
+
+
+/* candidate signup */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust height as needed */
+  }
+  
+  #signupForm {
+    width: 300px; /* Adjust form width as needed */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .candidate-form-group {
+    margin-bottom: 10px;
+  }
+  
+  .candidate-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  .candidate-form-group input[type="text"],
+  .candidate-form-group input[type="email"],
+  .candidate-form-group input[type="tel"],
+  .candidate-form-group input[type="password"] {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .candidate-form-group input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .candidate-form-group input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Additional styling for form responsiveness */
+  @media screen and (max-width: 600px) {
+    #signupForm {
+      width: 100%;
+    }
+  }
+  
