@@ -1,27 +1,22 @@
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import './HrDashboard.css';
-import { useState } from 'react';
 
 
 const Jobs = () => {
     
     const [jobDetails, setJobDetails] = useState({
+        hrId: '',
+        hrName: '',
+        companyName: '',
         title: '',
-        description: '',
-        requirements: '',
-        location: '',
-        salary: '',
-        company: '',
         jobType: '',
-        jobCategory: '',
+        eligibility: '',
         applicationDeadline: '',
-        contactName: '',
-        contactEmail: '',
-        contactPhone: '',
-        additionalNotes: '',
+        location: '',
+        requirements: '',
       });
     
       const handleChange = (e) => {
@@ -34,25 +29,21 @@ const Jobs = () => {
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you can add code to submit the job details
         console.log('Job details submitted:', jobDetails);
         // Reset form after submission (optional)
         setJobDetails({
+          hrId: '',
+          hrName: '',
+          companyName: '',
           title: '',
-          description: '',
-          requirements: '',
-          location: '',
-          salary: '',
-          company: '',
           jobType: '',
-          jobCategory: '',
+          eligibility: '',
           applicationDeadline: '',
-          contactName: '',
-          contactEmail: '',
-          contactPhone: '',
-          additionalNotes: '',
+          location: '',
+          requirements: '',
         });
       };
+    
   return (
     <div className='hr-dashboard-container'>
         <div className='hr-leftside'>

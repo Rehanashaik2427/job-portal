@@ -335,3 +335,36 @@ input[type="text"] {
     background-color: #0056b3;
   }
   
+
+
+
+.contact{
+  display: flex;
+  justify-content:'center'; 
+  align-items: center;
+  position: relative;
+  left: 200px;
+}
+  
+  .contact-details {
+    display: flex;
+    justify-content:'center'; 
+    padding-right:30px;
+    margin: 24px;
+    height: 500px;
+    width: 800px;
+  }
+
+ 
+.contact-info{
+  text-decoration: underline;
+  padding: 10px;
+  margin: 10px;
+}
+.address , .email , .mobile{
+  padding: 10px;
+}
+
+.address:hover , .email:hover , .mobile:hover{
+  color: blue;
+}

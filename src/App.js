@@ -31,7 +31,6 @@ import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
-import PostingJobForm from './Dashboards/HrDashboardpages/PostingJobForm';
 import About from './pages/About';
 import CandidateSucessMsg from './pages/CandidateSucessMsg';
 import Candidates from './pages/Candidates';
@@ -88,8 +87,6 @@ const App = () => {
           <Route path='/posted-jobs' component={PostedJobs} />
           <Route path='/people' component={People} />
           <Route path='/hr-profile' component={HrProfile} />
-          <Route path='/job-posting-form' component={PostingJobForm} />
-          <Route path="/job-posting-form" component={PostingJobForm} />
           <Route path="/posted-jobs" component={PostedJobs} />
         </Switch>
       </BrowserRouter>
