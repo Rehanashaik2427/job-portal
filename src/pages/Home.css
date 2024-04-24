@@ -367,7 +367,9 @@ h3:hover ,h1:hover{
     width: 800px;
   }
 
- 
+ .contact-form-info label{
+  text-align: left;
+ }
 .contact-info{
   text-decoration: underline;
   padding: 10px;
