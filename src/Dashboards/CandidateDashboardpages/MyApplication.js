@@ -43,49 +43,83 @@ const MyApplication = () => {
       </div>
 
       <div className='rightside'>
-        <div className="search">
+        <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} />search</button>
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>
         <div>
-            <h1>My APPLICATIONS</h1>
-            <table className="table">
-                <thead>
-                    <tr id="thead">
-                        <th>Company Name</th>
-                        <th>Applied On</th>
-                        <th>Resume Profile</th>
-                        <th>Status & Actions</th>
-                    </tr>
-                </thead>
-                </table>
-                <tbody>
-                    <tr>
-                        <td>cisco</td>
-                        <td>04/04/2024</td>
-                        <td>resume-1</td>
-                        <td>HR viewed|shortlisted</td>
-                    </tr>
-                    <tr>
-                        <td>Microsoft</td>
-                        <td>02/04/2024</td>
-                        <td>resume-2</td>
-                        <td>HR viewed|shortlisted</td>
-                    </tr>
-                    <tr>
-                        <td>cisco</td>
-                        <td>04/04/2024</td>
-                        <td>resume-3</td>
-                        <td>HR viewed|shortlisted</td>
-                    </tr>
-                    <tr>
-                        <td>Microsoft</td>
-                        <td>02/04/2024</td>
-                        <td>resume-1</td>
-                        <td>HR viewed|shortlisted</td>
-                    </tr>
-                </tbody>
-            {/* </table> */}
+            <h1 style={{textAlign:'center'}}>My APPLICATIONS</h1>
+            <div className='applications-table'>
+            <table className='applications-table'>
+                <tr>
+                    <th>Company Name</th>
+                    <th >Applied On</th>
+                    <th>Resume Profile</th>
+                    <th>Status & Actions</th>
+                </tr>
+                <tr>
+                    
+                     <td>
+                        cisco
+                    </td>
+                    <td>
+                        04/04/2024
+                    </td>
+                    <td>
+                        resume-1
+                    </td>
+                     <td>
+                        HR viewed|shortlisted
+                    </td>
+                </tr>
+                <tr>
+                   
+                     <td>
+                       Microsoft
+                    </td>
+                    <td>
+                        02/04/2024
+                    </td>
+                    <td>
+                        resume-2
+                    </td>
+                     <td>
+                        HR viewed|shortlisted
+                    </td>
+                </tr>
+                <tr>
+                    
+                     <td>
+                        cisco
+                    </td>
+                    <td>
+                        04/04/2024
+                    </td>
+                    <td>
+                        resume-3
+                    </td>
+                     <td>
+                        HR viewed|shortlisted
+                    </td>
+                </tr>
+                <tr>
+                    
+                     <td>
+                       Microsoft
+                    </td>
+                    <td>
+                        02/04/2024
+                    </td>
+                    <td>
+                        resume-1
+                    </td>
+                     <td>
+                        HR viewed|shortlisted
+                    </td>
+                </tr>
+            </table>
+              </div>
+               
         </div>
       </div>
     </div>

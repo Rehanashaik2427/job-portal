@@ -63,31 +63,35 @@ h3:hover ,h1:hover{
 }
 
 
+.search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search input[type="text"] {
 
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+  width: 150px; /* Adjust the width as needed */
+  padding: 8px; /* Add padding for better visual appearance */
+  margin-right: 10px; /* Add margin between input fields */
+  border: 1px solid #ccc; /* Add border for clarity */
+  border-radius: 5px; /* Add rounded corners */
 }
 
-input[type="text"] {
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 200px;
+.search button{
+  background-color: #062a3f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 15px;
+  position: relative;
+  bottom: 4px;
+  left: 2px;
+  width: 10%;
+ 
 }
-.search-button{
-    background-color: #062a3f;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 20px;
-}
-.search-button:hover{
+
+.search button:hover{
     background-color: rgb(30, 145, 190);
 }
 .info{
@@ -104,10 +108,15 @@ input[type="text"] {
     font-size: 30px;
 }
 .browse h1:hover{
-    color: dodgerblue;
+  color: rgb(30, 145, 190);
 }
 
+.info{
+  background-color: rgb(139, 156, 163);
+  border: 1px solid white;
+  height: 300px;
 
+}
 
 
 .carousel-container {
@@ -195,41 +204,69 @@ input[type="text"] {
     height: 300px;
 }
 
-.text:hover {
-    background-color: #be929d; /* Change background color on hover */
-}
+
 
 
 
 /* Candidate login css*/
-
-.candidate-login-form ,.signup-container{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 2px solid #87ceeb; /* Sky-blue border color */
-    width: 400px;
-    margin: 20px auto; /* Center horizontally */
-}
-.candidate-login-form-group,.candidate-form-group{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    padding: 12px;
-}
-.candidate-login-switch-form{
-    display: flex;
-    text-align: center;
-    justify-content: center;
+.candidate-login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
 }
 
-.candidate-name{
-    width: 200px;
-    height: 5px;
+#login-form {
+  width: 300px; /* Adjust width as needed */
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-login-form-group {
+  margin-bottom: 15px;
+}
+
+.candidate-login-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.candidate-login-form-group input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.candidate-login-form-group button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.candidate-login-form-group button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.candidate-login-switch-form {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.candidate-login-switch-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.candidate-login-switch-form a:hover {
+  text-decoration: underline;
 }
 
 
@@ -291,35 +328,10 @@ input[type="text"] {
     flex-direction: column;
   }
   
-  /* .input-group {
-    margin-bottom: 20px;
+  .radio-button{
+    padding: 10px;
   }
-  
-  .input-group input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    
-  }
-   */
-  .radio-group {
-    display: flex;
-    margin-bottom: 10px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .radio-group input[type="radio"] {
-    margin-right: 2px;
-    
-  }
-  
-  .radio-labels label {
-    margin-right: 15px;
-  
-  }
+ 
   
   button[type="submit"] {
     width: 100%;
@@ -335,3 +347,113 @@ input[type="text"] {
     background-color: #0056b3;
   }
   
+
+
+
+.contact{
+  display: flex;
+  justify-content:'center'; 
+  align-items: center;
+  position: relative;
+  left: 200px;
+}
+  
+  .contact-details {
+    display: flex;
+    justify-content:'center'; 
+    padding-right:30px;
+    margin: 24px;
+    height: 500px;
+    width: 800px;
+  }
+
+ .contact-form-info label{
+  text-align: left;
+ }
+.contact-info{
+  text-decoration: underline;
+  padding: 10px;
+  margin: 10px;
+}
+.address , .email , .mobile{
+  padding: 10px;
+}
+
+.address:hover , .email:hover , .mobile:hover{
+  color: blue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.comapny-container{
+  width: 500px;
+  margin: 50px auto;
+  /* background-color: #f0f9ff; */
+  /* border: 1px solid #ddd; */
+  padding: 20px;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+label {
+  width: 200px;
+  text-align: right;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  background-color:rgb(0, 153, 255);
+
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.success-message {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+}

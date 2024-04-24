@@ -1,8 +1,9 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
-
 const UserValidation = () => {
   const userData = [
     { name: 'Ram', verifiedOn: '04/04/2024', userType: 'Candidate', status: 'Active' },
@@ -44,32 +45,37 @@ const UserValidation = () => {
   <section id="contacts">
     <FaComments /> <Link to="/contacts">Contacts</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>  
 </div>
     </div>
 
     <div className="rightSide">
 
-    <h2>Details of Users Validation</h2>
-      <table className="user-table">
-        <thead className='user-thead'>
-          <tr className='user-tr'>
-            <th className='user-th'>User Name</th>
-            <th className='user-th'>Verified On</th>
-            <th className='user-th'>User Type</th>
-            <th className='user-th'>Status & Actions</th>
+    <h2 style={{textAlign:'center'}}>Details of Users Validation</h2>
+    <div className='user-table'>
+    <table className="user-table">
+ 
+          <tr >
+            <th >User Name</th>
+            <th >Verified On</th>
+            <th >User Type</th>
+            <th >Status & Actions</th>
           </tr>
-        </thead>
-        <tbody>
+     
           {userData.map((user, index) => (
-            <tr key={index} className='user-tr'>
-              <td className='user-td'>{user.name}</td>
-              <td className='user-td'>{user.verifiedOn}</td>
-              <td className='user-td'>{user.userType}</td>
-              <td className='user-td'>{user.status}</td>
+            <tr key={index} >
+              <td >{user.name}</td>
+              <td >{user.verifiedOn}</td>
+              <td >{user.userType}</td>
+              <td >{user.status}</td>
             </tr>
           ))}
-        </tbody>
+       
       </table>
+    </div>
+      
 
     </div>
 </div>

@@ -1,3 +1,5 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -42,32 +44,37 @@ const Contacts = () => {
   <section id="contacts">
     <FaComments /> <Link to="/contacts">Contacts</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>  
 </div>
     </div>
 
     <div className="rightSide">
-      <h1>Request from the Users</h1>
+      <h2 style={{textAlign:'center'}}>Request from the Users</h2>
       <div className="help">
-        <table className="user-table">
-          <thead className='user-thead'>
-            <tr className='user-tr'>
-              <th className='user-th'>User</th>
-              <th className='user-th'>Email</th>
-              <th className='user-th'>Message</th>
-              <th className='user-th'>Replying To Users</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map((data, index) => (
-              <tr key={index} className='user-tr'>
-                <td className='user-td'>{data.user}</td>
-                <td className='user-td'>{data.email}</td>
-                <td className='user-td'>{data.message}</td>
-                <td className='user-td'>{data.reply}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className='contacts-table'>
+      <table className='contacts-table'>
+
+    <tr>
+      <th>User</th>
+      <th>Email</th>
+      <th>Message</th>
+      <th>Replying To Users</th>
+    </tr>
+ 
+    {userData.map((data, index) => (
+      <tr key={index}>
+        <td>{data.user}</td>
+        <td>{data.email}</td>
+        <td>{data.message}</td>
+        <td>{data.reply}</td>
+      </tr>
+    ))}
+  
+</table>
+
+      </div>
       </div>
     </div>
 </div>

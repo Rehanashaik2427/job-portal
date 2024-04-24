@@ -14,17 +14,20 @@ const AdminRegister = () => {
 
   return (
     <div className="admin-from-container">
-      <form className='form-container' onSubmit={handleSubmit}>
-        
-        <div className='form-group'>
-          <label> Email: <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} /> </label>
-        </div>
-        <div className='form-group'>
-          <label> Password: <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} /> </label>
-        </div>
+    <form className='form-container' onSubmit={handleSubmit}>
+      <div className='form-group'>
+        <label>Email:</label>
+        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+      </div>
+      <div className='form-group'>
+        <label>Password:</label>
+        <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </div>
+      <div className='admin-button'>
         <button type="submit">Login</button>
-      </form>
-    </div>
+      </div>
+    </form>
+  </div>
   );
 };
 

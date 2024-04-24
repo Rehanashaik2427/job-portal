@@ -1,4 +1,4 @@
-.centered-form ,.job-posting-form-container {
+.centered-form {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,12 +25,13 @@
     margin-bottom: 5px;
     
   }
-  .form-group input,input[type='text']{
+  .form-group input,.form-group input[type='text']{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 90%;
   }
+  
   .error-message{
     color: red;
   }
@@ -98,41 +99,6 @@ section {
     align-items: center; 
   }
    */
-  .job-posting-form {
-    width: 100%; /* Set the width of the form */
-    /* max-width: 600px;  */
-  }
-  
-  .Job-details {
-    display: flex;
-    justify-content: space-around; /* Space items equally around */
-    margin: 15px; /* Adjust margin between rows */
-    padding: 50px;
-  }
-  
-  .Job-details label {
-    flex: 1; /* Equal width for labels */
-  }
-  
-  .Job-details input,
-  .Job-details select,
-  .Job-details textarea {
-    flex: 2; /* Twice the width of labels for inputs, selects, and textareas */
-  }
-  
-  .Job-details select , .date {
-    height: 70%;
-    width: 150px;
-    font-size: 18px;
-  }
-
-  .submit-button {
-    width: 100px;
-    height: 50px;
-    position: relative;
-    left: 500px;
-  }
-
 
 
   #application {
@@ -153,17 +119,98 @@ section {
 
 
   
-.profile_row {
+  .hr-profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+   
+  }
+
+  
+  .profile_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+   
+  }
+  
+  .boxp {
+    flex-basis: calc(33.33% - 20px); /* Adjust the width of each box */
+    /* padding: 20px; */
+    height: 120%;
+    width: 40%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 5px;
+    /* border: 0.1px double black; */
+
+   
+  }
+  
+  .boxp h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .boxp p {
+    font-size: 14px;
+ 
+    margin-bottom: 15px;
+  }
+  
+  .boxp a {
+    display: block;
+    text-decoration: none;
+    color: #0366d6; /* Link color */
+  }
+  
+
+
+
+/* hr jobs*/
+
+.job-details {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  margin: 20px;
 }
-.boxp {
-  background-color: #f9f9f9;
-  padding: 10px;
+
+.job-details label {
+  flex-basis: 30%;
+  text-align: left;
+  
+}
+
+.job-details input[type='text'] {
+  flex-basis: 60%;
+  padding: 8px;
+  margin-top: 15px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 250px;
-  height: 300px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#jobType {
+  height: 30px;
+  margin-top: 15px;
+}
+.job-details input[type='date'] ,  .job-details textarea{
+  margin-top: 15px;
+}
+
+.job-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.job-button button{
+  height: 30px;
+  width: 100px;
+  background-color: skyblue;
+  font-size: 15px;
 }

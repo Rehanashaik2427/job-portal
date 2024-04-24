@@ -21,7 +21,7 @@ const CompanyDetailsByAdmin = () => {
 
   return (
     <div className="company-admin-container">
-      <h1>Company Information</h1>
+      <h2>Company Information</h2>
       <form onSubmit={handleSubmit}>
         <div className="company-admin-form-group">
           <label htmlFor="companyName">Company Name:</label>

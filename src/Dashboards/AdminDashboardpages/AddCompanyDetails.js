@@ -1,8 +1,9 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
-
 const AddCompanyDetails = () => {
   return (
     <div className='body'>
@@ -38,25 +39,44 @@ const AddCompanyDetails = () => {
   <section id="contacts">
     <FaComments /> <Link to="/contact">Contacts</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>  
 </div>
     </div>
 
     <div className="rightSide">
-      <h1>Add Company Details</h1>
+      <h2>Add Company Details</h2>
 
       <div className="addDetails">
-        <span>
-          <label htmlFor="Company">Company</label>
-          <h3>Company 1</h3>
-          <h3>Company 2</h3>
-          <h3>Company 3</h3>
-        </span>
-        <span>
-          <label htmlFor="addDetails">Add Details</label>
-          <h3><Link to="/companyDetailsByAdmin">ADD</Link></h3>
-          <h3><Link to="/companyDetailsByAdmin">ADD</Link></h3>
-          <h3><Link to="/companyDetailsByAdmin">ADD</Link></h3>
-        </span>
+        <table>
+          <tr>
+            <th>Company Name</th>
+            <th>Add Detail</th>
+          </tr>
+
+          <tr>
+            <td>comapny 1</td>
+            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
+          </tr>
+              
+          <tr>
+            <td>comapny 2</td>
+            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
+          </tr>
+
+          <tr>
+            <td>comapny 3</td>
+            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
+          </tr>
+
+          <tr>
+            <td>comapny 4</td>
+            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
+          </tr>
+      </table>
+
+       
       </div>
     </div>
 </div>

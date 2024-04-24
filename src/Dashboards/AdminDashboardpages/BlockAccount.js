@@ -1,8 +1,9 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
-
 const BlockAccount = () => {
   return (
     <div className='body'>
@@ -38,22 +39,25 @@ const BlockAccount = () => {
   <section id="contacts">
     <FaComments /> <Link to="/contacts">Contacts</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>
 </div>
     </div>
 
     <div className="rightSide">
-      <h1>Blocked Accounts</h1>
+      <h2>Blocked Accounts</h2>
 
       <div className="blockedAccount">
         <h2>Blocked Company's details</h2>
         <div>
-          <label htmlFor="Company">Company</label>
+      
           <h3>Company 1</h3>
           <h3>Company 2</h3>
           <h3>Company 3</h3>
         </div>
         <div>
-          <label htmlFor="Status">Status</label>
+          
           <h3>Blocked</h3>
           <h3>Blocked</h3>
           <h3>Blocked</h3>
@@ -62,13 +66,13 @@ const BlockAccount = () => {
       <div className="blockedAccount">
         <h2>Blocked User's details</h2>
         <div>
-          <label htmlFor="User">User</label>
+          
           <h3>User1 (hr)</h3>
           <h3>User2 (candidate)</h3>
           <h3>User3 (hr)</h3>
         </div>
         <div>
-          <label htmlFor="Status">Status</label>
+          
           <h3>Blocked</h3>
           <h3>Blocked</h3>
           <h3>Blocked</h3>

@@ -43,9 +43,10 @@ const CandidateDashboard = () => {
       </div>
 
       <div className='rightside'>
-        <div className="search">
-        <button><FontAwesomeIcon icon={faSearch} />search</button>
-            <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+        <div className="candidate-search">
+        <button>
+          <FontAwesomeIcon icon={faSearch} className='button'/>search</button>
+          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>
         <div className="my-dashboard-container">
       <div>

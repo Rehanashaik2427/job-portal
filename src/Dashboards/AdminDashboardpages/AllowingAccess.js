@@ -1,8 +1,9 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
-
 
 const AllowingAccess = () => {
   const [accessData] = useState([
@@ -44,30 +45,35 @@ const AllowingAccess = () => {
   <section id="contacts">
     <FaComments /> <Link to="/contacts">Contacts</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>
 </div>
     </div>
 
     <div className="rightSide">
       <div>
-        <h2>Access Dashboard</h2>
+        <h2 style={{textAlign:'center'}}>Access Dashboard</h2>
+        <div className="access-table">
         <table className="access-table">
-          <thead className="access-thead">
-            <tr className="access-tr">
-              <th className="access-th">User</th>
-              <th className="access-th">Access To</th>
-              <th className="access-th">Access Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {accessData.map((data, index) => (
-              <tr key={index} className="access-tr">
-                <td className="access-td">{data.user}</td>
-                <td className="access-td">{data.accessTo}</td>
-                <td className="access-td">{data.accessStatus}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    
+    <tr >
+      <th >User</th>
+      <th >Access To</th>
+      <th >Access Status</th>
+    </tr>
+
+
+    {accessData.map((data, index) => (
+      <tr key={index} >
+        <td >{data.user}</td>
+        <td >{data.accessTo}</td>
+        <td >{data.accessStatus}</td>
+      </tr>
+    ))}
+
+</table>
+        </div>
       </div>
     </div>
 </div>

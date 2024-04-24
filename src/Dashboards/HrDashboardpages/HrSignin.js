@@ -30,9 +30,11 @@ const HrSignin = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input style={{height:'20%'}}type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
-          <button type="button" onClick={handleLogin}>Login</button>
+          <div className="form-group">
+            <button style={{backgroundColor:'skyblue', height:'40px' , width:'100px',fontSize:'16px'}}type="button" onClick={handleLogin}>Login</button>
+          </div>
         </form>
       </div>
     </div>

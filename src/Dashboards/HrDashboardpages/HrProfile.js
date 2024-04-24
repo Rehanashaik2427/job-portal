@@ -48,7 +48,8 @@ const HrProfile = () => {
         </div>
 
         <div className='hr-rightside'>
-        <div className="profile_row">
+            <div className='hr-profile'>
+            <div className="profile_row">
             <div className="boxp">
                 <h1>300+ Jobs</h1>
                 <p>"counting of posting jobs"</p>
@@ -79,6 +80,8 @@ const HrProfile = () => {
                 <h2>96%</h2>
             </div>
         </div>   
+            </div>
+        
         </div>
         
     </div>
