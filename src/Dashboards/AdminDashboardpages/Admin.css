@@ -14,12 +14,20 @@
     background-color: #ffffff;
   }
   
-  .form-group {
-    margin-bottom: 15px;
+  .admin-button{
+    width: 40%;  
   }
   
+  .form-group {
+    margin-bottom: 15px;
+    width: 90%;
+   
+  }
+  .form-group label{
+    text-align: left;
+  }
   .admin-form-details {
-    width: 100%;
+    width: 80%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;

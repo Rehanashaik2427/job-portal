@@ -1,3 +1,5 @@
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -38,62 +40,45 @@ const Myprofile = ({ userType }) =>  {
   <section id="contacts">
     <FaComments /> <Link to="/contacts">Contacs</Link>
   </section>
+  <section>
+          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
+        </section>  
 </div>
     </div>
 
-    <div className="rightSide">
-      <div className="details">
-        <span>
-          <label htmlFor="CompanyName">Company Name</label>
-          <h3>Company Name</h3>
-        </span>
-        <span>
-          <label htmlFor="CompanyType">Company Type</label>
-          <h3>Company Type</h3>
-        </span>
-        <span>
-          <label htmlFor="role">Job Role</label>
-          <h3>Job Role</h3>
-        </span>
-        <span>
-          <label htmlFor="status">Status</label>
-          <h3>Active/</h3>
-        </span>
-        <span>
-          <label htmlFor="lastlogin">Last Login Time</label>
-          <h3>date/time</h3>
-        </span>
-      </div>
-      <div className="details">
-        <span>
-          <label htmlFor="UserName">UserName</label>
-          <h3>Name</h3>
-        </span>
-        <span>
-          <label htmlFor="UserType">UserType</label>
-          <h3>{userType === 'HR' ? 'HR' : 'Candidate'}</h3>
-        </span>
-        <span>
-        <label htmlFor="CompanyName">Validated Company</label>
-        {userType === 'HR' && <h3>Company Name</h3>}
-        {userType === 'Candidate' && <p>No need Company name</p>}
-        {userType !== 'HR' && userType !== 'Candidate' && <p><h3>Company Name</h3>if user type candidate .<br />No need Company name</p>}
-      </span>
+    <div className='rightside'>
+      <div className='admin-profile'>
+         <table className='admin-profile'>
+            <tr>
+              <th>Company Name</th>
+              <th>Company Type</th>
+              <th>Validated Company</th>
+              <th>UserName</th>
+              <th>UserType</th>
+              <th>User Validation</th>
+              <th>User Status</th>
+              <th>Job Role</th>
+              <th>Job Status</th>            
+              <th>Last Login Time</th>
+            </tr>
 
-        <span>
-          <label htmlFor="User">User Validation</label>
-          <h3>User for validation</h3>
-        </span>
-        <span>
-          <label htmlFor="status">Status</label>
-          <h3>Approve/</h3>
-        </span>
-        <span>
-          <label htmlFor="lastlogin">Time of Validation</label>
-          <h3>date/time</h3>
-        </span>
+            <tr>
+              <td>Company Name</td>
+              <td>Company Type</td>
+              <td><p>if user type candidate No need Company name</p></td>
+              <td>UserName</td>
+              <td>UserType</td>
+              <td>User Validation</td>
+              <td><p>Approve/Reject</p></td>
+              <td>Job Role</td>
+              <td><p>Active/InActive</p></td>
+              <td><p>Date time</p></td>
+          </tr>
+
+         </table>
       </div>
     </div>
+
 </div>
   )
 }

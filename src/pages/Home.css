@@ -63,31 +63,35 @@ h3:hover ,h1:hover{
 }
 
 
+.search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search input[type="text"] {
 
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+  width: 150px; /* Adjust the width as needed */
+  padding: 8px; /* Add padding for better visual appearance */
+  margin-right: 10px; /* Add margin between input fields */
+  border: 1px solid #ccc; /* Add border for clarity */
+  border-radius: 5px; /* Add rounded corners */
 }
 
-input[type="text"] {
-    padding: 10px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 200px;
+.search button{
+  background-color: #062a3f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 15px;
+  position: relative;
+  bottom: 4px;
+  left: 2px;
+  width: 10%;
+ 
 }
-.search-button{
-    background-color: #062a3f;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 20px;
-}
-.search-button:hover{
+
+.search button:hover{
     background-color: rgb(30, 145, 190);
 }
 .info{
@@ -104,10 +108,15 @@ input[type="text"] {
     font-size: 30px;
 }
 .browse h1:hover{
-    color: dodgerblue;
+  color: rgb(30, 145, 190);
 }
 
+.info{
+  background-color: rgb(139, 156, 163);
+  border: 1px solid white;
+  height: 300px;
 
+}
 
 
 .carousel-container {
@@ -195,9 +204,7 @@ input[type="text"] {
     height: 300px;
 }
 
-.text:hover {
-    background-color: #be929d; /* Change background color on hover */
-}
+
 
 
 
@@ -291,35 +298,10 @@ input[type="text"] {
     flex-direction: column;
   }
   
-  /* .input-group {
-    margin-bottom: 20px;
+  .radio-button{
+    padding: 10px;
   }
-  
-  .input-group input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    
-  }
-   */
-  .radio-group {
-    display: flex;
-    margin-bottom: 10px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .radio-group input[type="radio"] {
-    margin-right: 2px;
-    
-  }
-  
-  .radio-labels label {
-    margin-right: 15px;
-  
-  }
+ 
   
   button[type="submit"] {
     width: 100%;

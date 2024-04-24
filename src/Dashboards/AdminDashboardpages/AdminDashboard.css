@@ -120,7 +120,7 @@ main {
 
 .user-table ,
 .company-table ,
-.access-table,.contacts-table{
+.access-table,.contacts-table,.admin-profile{
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -213,7 +213,7 @@ company details by admin */
 }
 
 .company-admin-form-group label{
-    display: block;
+    text-align: left;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -257,3 +257,9 @@ company details by admin */
     text-align: center; /* Center text inside the container */
   }
   
+.company-admin-form-group label{
+    text-align: right;
+}
+  .addDetails{
+    justify-content: center;
+  }
