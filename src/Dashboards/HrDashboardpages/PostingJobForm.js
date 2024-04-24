@@ -13,7 +13,7 @@ const PostingJobForm = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      // Logic to handle job posting, such as sending data to a backend API
+      
       
       console.log('Job posted:', {
         jobTitle,

@@ -4,24 +4,22 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import './HrDashboard.css';
 import { useState } from 'react';
+import axios from 'axios';
 
-
+const BASE_API_URL="http://localhost:8080/api/jobbox";
 const Jobs = () => {
     
     const [jobDetails, setJobDetails] = useState({
-        title: '',
-        description: '',
-        requirements: '',
-        location: '',
-        salary: '',
-        company: '',
-        jobType: '',
-        jobCategory: '',
-        applicationDeadline: '',
-        contactName: '',
-        contactEmail: '',
-        contactPhone: '',
-        additionalNotes: '',
+          hrId:'',
+          hrName:'',
+          companyName: '',
+          jobTitle: '',
+          requirements: '',
+          location: '',
+          jobType: '',
+          applicationDeadline: '',
+          numberOfPosition:'',
+          eligibility:'',
       });
     
       const handleChange = (e) => {
@@ -32,27 +30,44 @@ const Jobs = () => {
         }));
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        // Here you can add code to submit the job details
-        console.log('Job details submitted:', jobDetails);
-        // Reset form after submission (optional)
-        setJobDetails({
-          title: '',
-          description: '',
-          requirements: '',
-          location: '',
-          salary: '',
-          company: '',
-          jobType: '',
-          jobCategory: '',
-          applicationDeadline: '',
-          contactName: '',
-          contactEmail: '',
-          contactPhone: '',
-          additionalNotes: '',
-        });
+      
+        try {
+          // Prepare API request details (URL, method, data)
+          const apiUrl = BASE_API_URL+"/postingJob"; // Replace with your API endpoint
+          const method = 'POST'; // Adjust method based on your API (POST or PUT)
+          const data = jobDetails;
+      
+          // Send the API request using axios
+          const response = await axios({
+            url: apiUrl,
+            method: method,
+            data: data,
+          });
+      
+          console.log('Job details submitted:', response.data); // Log API response for debugging
+      
+          // Handle successful submission (e.g., display success message, reset form)
+          setJobDetails({
+            hrId:'',
+            hrName:'',
+            companyName: '',
+            jobTitle: '',
+            requirements: '',
+            location: '',
+            jobType: '',
+            applicationDeadline: '',
+            numberOfPosition:'',
+            eligibility:'',
+          });
+      
+        } catch (error) {
+          console.error('Error submitting job details:', error);
+          // Handle errors appropriately (e.g., display error message to the user)
+        }
       };
+      
   return (
     <div className='hr-dashboard-container'>
         <div className='hr-leftside'>
@@ -100,13 +115,20 @@ const Jobs = () => {
         <form className='job-posting-form' onSubmit={handleSubmit}>
             <h2 style={{textAlign:'center'}}>Post a Job</h2>
             <div className='Job-details'>
-                <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='hrId' value='HR_ID' /></label>
-                <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='hrName' value='HR_NAME' /></label>
-                <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value='COMPANY_NAME' /></label>
+            <label htmlFor='hrId'>HR Id:
+            <input type='number' id='hrId' name='hrId' value={jobDetails.hrId} onChange={handleChange}/>
+            </label>
+            <label htmlFor='hrName'>HR Name:
+            <input type='text' id='hrName' name='hrName' value={jobDetails.hrName} onChange={handleChange}/>
+            </label>
+            <label htmlFor='companyName'>Company Name:
+            <input type='text' id='companyName' name='companyName' value={jobDetails.companyName} onChange={handleChange}/>
+            </label>
+            
             </div>
 
             <div className='Job-details'>
-                <label htmlFor='title'>Job Title: <input type='text' id='title' name='title' value={jobDetails.title} onChange={handleChange} required /></label>
+                <label htmlFor='title'>Job Title: <input type='text' id='title' name='jobTitle' value={jobDetails.jobTitle} onChange={handleChange} required /></label>
                 <label htmlFor='jobType'>Job Type:<br/> 
                 <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
                     <option value=''>Select Job Type</option>
@@ -121,7 +143,8 @@ const Jobs = () => {
             <div className='Job-details'>
                 <label htmlFor='applicationDeadline' >Application Deadline: <br/><input type='date' className='date' id='applicationDeadline' name='applicationDeadline' value={jobDetails.applicationDeadline} onChange={handleChange} required /></label>
                 <label htmlFor='location'>Location: <input type='text' id='location' name='location' value={jobDetails.location} onChange={handleChange} required /></label>
-                <label htmlFor='requirements'>Requirements/Skills:<br/> <textarea id='requirements' name='requirements' value={jobDetails.requirements} onChange={handleChange} required /></label>
+                <label htmlFor='requirements'>Requirements/Skills:<br/> <textarea id='requirements' name='requirements' value={jobDetails.requirements} onChange={handleChange} required /></label> 
+                <label htmlFor='location'>Number Of Position: <input type='number' id='numberOfPosition' name='numberOfPosition' value={jobDetails.numberOfPosition} onChange={handleChange} required /></label>
             </div>
             <div className='submit-button' >
                 <button type='submit' >Submit</button>
