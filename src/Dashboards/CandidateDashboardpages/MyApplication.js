@@ -43,7 +43,7 @@ const MyApplication = () => {
       </div>
 
       <div className='rightside'>
-        <div className="search">
+        <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} />search</button>
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
         </div>

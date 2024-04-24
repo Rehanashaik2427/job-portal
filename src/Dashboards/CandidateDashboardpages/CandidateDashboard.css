@@ -45,22 +45,28 @@ span {
 .status-info:hover{
     color:black;
 }
-.search i{
-    font-size: 25px;
-}
-.search button{
-    height: 30px;
-    width: 100px;
-    color: green;
-    background-color: coral;
-    border-radius: 10px;
-    border: none;
-}
-.search{
-display: flex;
-flex-direction: row;
-justify-content: end;
-}
+.candidate-search {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    
+  }
+  
+  .candidate-search button {
+    margin-left: 10px; /* Adjust as needed */
+  }
+  
+
+  .icon {
+    position: absolute;
+    top: 8px;
+    right: 80px;
+    margin: 10px;
+    height: 25px;
+  }
+  
 #user{
 margin-left: 10px;
 margin-top: 5px;

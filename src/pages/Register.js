@@ -44,7 +44,7 @@ const Register = () => {
               <input type="radio" name="userType" value="candidate" onChange={() => handleUserTypeChange("candidate")} checked={userType === "candidate"} />Candidate
               {/* <label>Candidate</label> */}
             </div>
-  </div>
+          </div>
 
         </form>
       </div>

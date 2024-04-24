@@ -27,10 +27,21 @@ const Signin = () => {
       <form onSubmit={(event) => event.preventDefault()} className="user-registration-form">
         <p style={{textAlign:'center'}}>Select your role and login</p>
         <div className="radio-group">
-          <input type="radio" name="userType" value="admin" onChange={() => handleUserTypeChange("admin")} checked={userType === "admin"} /><label>Admin</label> <br />
-          <input type="radio" name="userType" value="hr" onChange={() => handleUserTypeChange("hr")} checked={userType === "hr"} />  <label>HR</label> <br />
-          <input type="radio" name="userType" value="candidate" onChange={() => handleUserTypeChange("candidate")} checked={userType === "candidate"} /> <label>Candidate</label>
-        </div>
+            <div className="radio-button">
+              <input type="radio" name="userType" value="admin" onChange={() => handleUserTypeChange("admin")} checked={userType === "admin"} /> Admin
+              {/* <label>Admin</label> <br /> */}
+            </div >
+
+            <div className="radio-button">
+            <input type="radio" name="userType" value="hr" onChange={() => handleUserTypeChange("hr")} checked={userType === "hr"} />Hr
+            {/* <label>HR</label> <br /> */}
+            </div>
+
+            <div className="radio-button">
+              <input type="radio" name="userType" value="candidate" onChange={() => handleUserTypeChange("candidate")} checked={userType === "candidate"} />Candidate
+              {/* <label>Candidate</label> */}
+            </div>
+          </div>
       </form>
     </div>
   </div>

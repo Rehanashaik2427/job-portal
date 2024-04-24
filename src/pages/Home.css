@@ -209,34 +209,64 @@ h3:hover ,h1:hover{
 
 
 /* Candidate login css*/
-
-.candidate-login-form ,.signup-container{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 2px solid #87ceeb; /* Sky-blue border color */
-    width: 400px;
-    margin: 20px auto; /* Center horizontally */
-}
-.candidate-login-form-group,.candidate-form-group{
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    padding: 12px;
-}
-.candidate-login-switch-form{
-    display: flex;
-    text-align: center;
-    justify-content: center;
+.candidate-login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
 }
 
-.candidate-name{
-    width: 200px;
-    height: 5px;
+#login-form {
+  width: 300px; /* Adjust width as needed */
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-login-form-group {
+  margin-bottom: 15px;
+}
+
+.candidate-login-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.candidate-login-form-group input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.candidate-login-form-group button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.candidate-login-form-group button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.candidate-login-switch-form {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.candidate-login-switch-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.candidate-login-switch-form a:hover {
+  text-decoration: underline;
 }
 
 
