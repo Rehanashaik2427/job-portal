@@ -13,7 +13,7 @@ const AdminAction = () => {
   return (
     <div>
     <header>
-      <h1>Admin Dashboard</h1>
+      <h2>Admin Dashboard</h2>
     </header>
     <main>
       <div className="request">

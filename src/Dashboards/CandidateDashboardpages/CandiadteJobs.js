@@ -50,72 +50,75 @@ const CandiadteJobs = () => {
           </div>
 
           
-            <h1>Jobs</h1>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Job Profile</th>
-                  <th>Company Name</th>
-                  <th>Post On</th>
-                  <th>Status & Actions</th>
+            <h1 style={{textAlign:'center'}}>Jobs</h1>
+            <div className='jobs-table'>
+            <table className='jobs-table'>
+                <tr id="thead">
+                    <th>Job Profile</th>
+                    <th >Company Name</th>
+                    <th >Post On</th>
+                    <th>Status & Actions</th>
                 </tr>
-              </thead>
-            
+                <tr>
+                    <td>
+                        Designer
+                    </td>
+                     <td>
+                        cisco
+                    </td>
+                    <td>
+                        04/04/2024
+                    </td>
+                     <td>
+                        Active
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       Developer
+                    </td>
+                     <td>
+                       Microsoft
+                    </td>
+                    <td>
+                        02/04/2024
+                    </td>
+                     <td>
+                        Active
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Designer
+                    </td>
+                     <td>
+                        cisco
+                    </td>
+                    <td>
+                        04/04/2024
+                    </td>
+                     <td>
+                        Active
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       Developer
+                    </td>
+                     <td>
+                       Microsoft
+                    </td>
+                    <td>
+                        02/04/2024
+                    </td>
+                     <td>
+                        Active
+                    </td>
+                </tr>
             </table>
-              <tbody>
-                <tr>
-                  <td>Designer</td>
-                  <td>Cisco</td>
-                  <td>04/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Developer</td>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Designer</td>
-                  <td>Cisco</td>
-                  <td>04/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Developer</td>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>Active</td>
-                </tr>
-              </tbody>
-              {/* <tbody>
-                <tr>
-                  <td>Designer</td>
-                  <td>Cisco</td>
-                  <td>04/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Developer</td>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Designer</td>
-                  <td>Cisco</td>
-                  <td>04/04/2024</td>
-                  <td>Active</td>
-                </tr>
-                <tr>
-                  <td>Developer</td>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>Active</td>
-                </tr>
-              </tbody> */}
-           
-
+            </div>
+            
+            
 
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>

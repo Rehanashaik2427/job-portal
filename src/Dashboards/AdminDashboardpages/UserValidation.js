@@ -49,27 +49,29 @@ const UserValidation = () => {
 
     <div className="rightSide">
 
-    <h2>Details of Users Validation</h2>
-      <table className="user-table">
-        <thead className='user-thead'>
-          <tr className='user-tr'>
-            <th className='user-th'>User Name</th>
-            <th className='user-th'>Verified On</th>
-            <th className='user-th'>User Type</th>
-            <th className='user-th'>Status & Actions</th>
+    <h2 style={{textAlign:'center'}}>Details of Users Validation</h2>
+    <div className='user-table'>
+    <table className="user-table">
+ 
+          <tr >
+            <th >User Name</th>
+            <th >Verified On</th>
+            <th >User Type</th>
+            <th >Status & Actions</th>
           </tr>
-        </thead>
-        <tbody>
+     
           {userData.map((user, index) => (
-            <tr key={index} className='user-tr'>
-              <td className='user-td'>{user.name}</td>
-              <td className='user-td'>{user.verifiedOn}</td>
-              <td className='user-td'>{user.userType}</td>
-              <td className='user-td'>{user.status}</td>
+            <tr key={index} >
+              <td >{user.name}</td>
+              <td >{user.verifiedOn}</td>
+              <td >{user.userType}</td>
+              <td >{user.status}</td>
             </tr>
           ))}
-        </tbody>
+       
       </table>
+    </div>
+      
 
     </div>
 </div>

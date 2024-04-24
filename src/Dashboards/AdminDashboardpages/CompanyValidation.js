@@ -43,43 +43,46 @@ const CompanyValidation = () => {
     </div>
 
     <div className="rightSide">
-        <h2>Details of Company Validation</h2>
-        <table className="company-table">
-          <thead className="company-thead">
-            <tr className="company-tr">
-              <th className="company-th">Company Name</th>
-              <th className="company-th">Verified On</th>
-              <th className="company-th">Company Type</th>
-              <th className="company-th">Status & Actions</th>
+        <h2 style={{textAlign:'center'}}>Details of Company Validation</h2>
+        <div className='company-table'>
+        <table className='company-table'>
+  
+          <tr>
+            <th>Company Name</th>
+            <th>Verified On</th>
+            <th>Company Type</th>
+            <th>Status & Actions</th>
+          </tr>
+          
+            <tr>
+              <td>Cisco</td>
+              <td>04/01/2024</td>
+              <td>IT</td>
+              <td>Active</td>
             </tr>
-          </thead>
-          <tbody>
-            <tr className="company-tr">
-              <td className="company-td">Cisco</td>
-              <td className="company-td">04/01/2024</td>
-              <td className="company-td">IT</td>
-              <td className="company-td">Active</td>
+            <tr>
+              <td>TCS</td>
+              <td>04/04/2022</td>
+              <td>IT</td>
+              <td>Active</td>
             </tr>
-            <tr className="company-tr">
-              <td className="company-td">TCS</td>
-              <td className="company-td">04/04/2022</td>
-              <td className="company-td">IT</td>
-              <td className="company-td">Active</td>
+            <tr>
+              <td>Shree Renuka Sugars</td>
+              <td>01/04/2024</td>
+              <td>Manufacturing</td>
+              <td>Active</td>
             </tr>
-            <tr className="company-tr">
-              <td className="company-td">Shree Renuka Sugars</td>
-              <td className="company-td">01/04/2024</td>
-              <td className="company-td">Manufacturing</td>
-              <td className="company-td">Active</td>
+            <tr>
+              <td>Myntra</td>
+              <td>04/04/2020</td>
+              <td>E-commerce</td>
+              <td>Active</td>
             </tr>
-            <tr className="company-tr">
-              <td className="company-td">Myntra</td>
-              <td className="company-td">04/04/2020</td>
-              <td className="company-td">E-commerce</td>
-              <td className="company-td">Active</td>
-            </tr>
-          </tbody>
+ 
         </table>
+
+        </div>
+     
       </div>
 </div>
   )

@@ -368,3 +368,78 @@ input[type="text"] {
 .address:hover , .email:hover , .mobile:hover{
   color: blue;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.comapny-container{
+  width: 500px;
+  margin: 50px auto;
+  /* background-color: #f0f9ff; */
+  /* border: 1px solid #ddd; */
+  padding: 20px;
+  border-radius: 5px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+label {
+  width: 200px;
+  text-align: right;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  background-color:rgb(0, 153, 255);
+
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.success-message {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  margin-top: 20px;
+}

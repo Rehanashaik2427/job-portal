@@ -39,6 +39,7 @@ import Contact from './pages/Contact';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Signin from './pages/Signin';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 
 const App = () => {
@@ -53,6 +54,8 @@ const App = () => {
           <Route path="/candidates" component={Candidates} />
           <Route path="/register" component={Register} />
           <Route path="/signin" component={Signin} />
+          <Route path='/terms-and-conditions' component={TermsAndConditions} />
+
           <Route path="/admin-register" component={AdminRegister} />
           <Route path="/admin-dashboard" component={AdminDashboard} />
           <Route path="/admin-action" component={AdminAction} />

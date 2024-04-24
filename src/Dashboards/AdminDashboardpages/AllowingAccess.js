@@ -49,25 +49,27 @@ const AllowingAccess = () => {
 
     <div className="rightSide">
       <div>
-        <h2>Access Dashboard</h2>
+        <h2 style={{textAlign:'center'}}>Access Dashboard</h2>
+        <div className="access-table">
         <table className="access-table">
-          <thead className="access-thead">
-            <tr className="access-tr">
-              <th className="access-th">User</th>
-              <th className="access-th">Access To</th>
-              <th className="access-th">Access Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {accessData.map((data, index) => (
-              <tr key={index} className="access-tr">
-                <td className="access-td">{data.user}</td>
-                <td className="access-td">{data.accessTo}</td>
-                <td className="access-td">{data.accessStatus}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    
+    <tr >
+      <th >User</th>
+      <th >Access To</th>
+      <th >Access Status</th>
+    </tr>
+
+
+    {accessData.map((data, index) => (
+      <tr key={index} >
+        <td >{data.user}</td>
+        <td >{data.accessTo}</td>
+        <td >{data.accessStatus}</td>
+      </tr>
+    ))}
+
+</table>
+        </div>
       </div>
     </div>
 </div>

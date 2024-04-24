@@ -75,7 +75,17 @@ text-decoration: none;
 
 
 
-
+.jobs-table ,.applications-table{
+    width: 100%;
+    
+}
+.jobs-table th , .jobs-table td
+{
+    text-align: center;
+}
+.applications-table td , .applications-table th{
+    text-align: center;
+}
 
 
 
@@ -105,7 +115,7 @@ text-decoration: none;
 table {
     border-collapse: collapse;
 }
-table, th, td {
+table, th, td ,tr{
     /* border: 1px solid; */
     width: 260px;
     text-align: left;
