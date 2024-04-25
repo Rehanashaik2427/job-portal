@@ -54,45 +54,30 @@ const CandidatesCompanies = () => {
     </div>
 
     <div className='rightside'>
-        <div className="search">
-          <form >
-          <input type='text' id='jobRole' name='jobRole' value={jobRole} onChange={handleChange}/> 
-          <input type='submit' value="Search"   />
-            {/* <button><FontAwesomeIcon icon={faSearch} />search</button> */}
-            </form>
-
-=======
         <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} />search</button>
-
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
-
         </div>
         <div className="company">
             <h1>Job offers by Companies</h1>
-            {/* return ( */}
-                <div className="">
-                    {companies.length > 0 ? ( // Check if companies data is available
-                     companies.map((company) => ( // Loop through companies array
-                       <div className="company-card" key={company.jobId}>   
-                               <p className="company-name">Company Name: <h1>{company.companyName}</h1></p>
-                               <h4>Job Role</h4>
-                               <h2>{company.jobTitle}</h2>
-                               <h4>Requirements</h4>
-                               <h2>{company.requirements}</h2>
-                               <p><b>Number of Positions: </b>{company.numberOfPosition}</p>
-                               {/* Optionally display description: <p className="company-description">{company.description}</p> */}
-                               <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
-                        </div>
-                             ))
-                          ) : (
-                         <p>Loading companies...</p> // Display a loading message while fetching data
-                           )}
-                 </div>
-          {/* ); */}
+            <div className="company-card">
+                <p className="company-name">Company A</p>
+                <h3>Job Role</h3>
+                <h3>Backend Developer</h3>
+                <p>Number of Positions: 10</p>
+                {/* <p className="company-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel libero euismod.</p> */}
+                <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
+            </div>
+            <div className="company-card">
+                <p className="company-name">Company B</p>
+                <h3>Job Role</h3>
+                <h3>Business Executive</h3>
+                <p>Number of Positions: 18</p>
+                {/* <p className="company-description">Vestibulum nec justo vel libero euismod, vehicula nisl vel, aliquam justo.</p> */}
+                <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
+            </div>
         </div>
     </div>
-  </div>npm
   </div>
   )
 }
