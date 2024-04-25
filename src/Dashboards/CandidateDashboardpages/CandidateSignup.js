@@ -1,9 +1,9 @@
 import React from 'react';
-import './CandidateDashboard.css';
+
 
 class CandidateSignup extends React.Component {
   redirectToSuccessPage = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     window.location.href = "/CandidateRegisterSucessMsg";
   }
 

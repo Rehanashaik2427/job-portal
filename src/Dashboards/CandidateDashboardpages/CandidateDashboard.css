@@ -11,6 +11,8 @@
     height: 100vh;
     width: 100vw;
     background-color: rgb(192, 231, 233);
+    overflow:scroll;
+    /* background-attachment: scroll; */
 }
 #logo img{
     height: 100px;
@@ -252,7 +254,7 @@ h1 {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    height: 200px;
+    height: fit-content;
 }
 .company-name {
     font-weight: bold;
