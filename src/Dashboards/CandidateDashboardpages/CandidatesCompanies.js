@@ -1,14 +1,10 @@
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-// Array to store company data
-
-const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandidatesCompanies = () => {
   const [companies, setCompanies] = useState([]); 
   const [jobRole, setJobRole] = useState('');
@@ -17,37 +13,8 @@ const CandidatesCompanies = () => {
     setJobRole({ ...jobRole, [e.target.name]: value });
   };
  
-  const searchJob= async ()=>{
-   
-    try {
-      const response = await axios.get(`${BASE_API_URL}/search/${jobRole}`);
-      const data = response.data; // Access the data directly
-      setCompanies(data);
-    } catch (error) {
-      //console.error('Error fetching companies:', error);
-      // Handle errors appropriately
-    }
-  };
-
-  // useEffect(() => {
-    
-  // }, []); //
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(BASE_API_URL+"/displayJobs");
-      const data = response.data; // Access the data directly
-      setCompanies(data);
-    } catch (error) {
-      console.error('Error fetching companies:', error);
-      // Handle errors appropriately
-    }
-  };
+ 
   
-  useEffect(() => {
-    fetchData();
-    searchJob();
-  }, []); // Empty dependency array ensures fetching data only once on mount
   
   return (
     <div className="candidate-dashboard-container">
@@ -87,9 +54,8 @@ const CandidatesCompanies = () => {
     </div>
 
     <div className='rightside'>
-<<<<<<< HEAD
         <div className="search">
-          <form onSubmit={searchJob}>
+          <form >
           <input type='text' id='jobRole' name='jobRole' value={jobRole} onChange={handleChange}/> 
           <input type='submit' value="Search"   />
             {/* <button><FontAwesomeIcon icon={faSearch} />search</button> */}
@@ -98,7 +64,7 @@ const CandidatesCompanies = () => {
 =======
         <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} />search</button>
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
+
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
 
         </div>
@@ -126,6 +92,7 @@ const CandidatesCompanies = () => {
           {/* ); */}
         </div>
     </div>
+  </div>
   </div>
   )
 }
