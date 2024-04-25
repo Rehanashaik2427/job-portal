@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
 
+
 const CandidateRegisterSucessMsg = () => {
   return (
     <div className="sucess-msg-container" style={{textAlign:'center'}}>
@@ -12,4 +13,8 @@ const CandidateRegisterSucessMsg = () => {
   )
 }
 
-export default CandidateRegisterSucessMsg
+export default CandidateRegisterSucessMsg;
+
+
+
+

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import './HrDashboard.css'; // Import CSS file for styling
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import "./HrReg.css";
 import axios from 'axios';
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const HrRegistrationForm = () => {
   const [formData, setFormData] = useState({
     userName: "",
-userRole:"",
+    userRole:"",
     userEmail: "",
     companyName: "",
     password: "",
-    confirmPassword: "",
+    confirmpassword: "",
   });
   
-
+ 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -31,6 +32,7 @@ userRole:"",
     return true; // Password is valid
   }
 
+  const history = useHistory();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ userRole:"",
     try {
       // Prepare API request details (URL, method, data)
       const apiUrl = BASE_API_URL+"/saveUser"; // Replace with your API endpoint
-      const method = 'POST'; // Adjust method based on your API (POST or PUT)
+      const method = 'POST'; // Adjust method based on your API 
       const data = formData;
   
       // Send the API request using axios
@@ -51,8 +53,8 @@ userRole:"",
       });
   
       console.log('Job details submitted:', response.data); // Log API response for debugging
-  this.redirectToSuccessPage();
-      // Handle successful submission (e.g., display success message, reset form)
+    history.push('/hr-RegSuccess')
+      
     setFormData({
       userName: '',
       userEmail: '',
@@ -97,7 +99,7 @@ userRole:"",
           </div>
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
+            <input type="password" id="confirmPassword" name="confirmpassword" value={formData.confirmpassword} onChange={handleInputChange} required />
           </div>
           
           <button type="submit">Register</button>

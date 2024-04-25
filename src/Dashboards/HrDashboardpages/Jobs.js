@@ -1,101 +1,48 @@
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-//import { Link } from "react-router-dom";
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import './HrDashboard.css';
-
-//import { useState } from 'react';
 import axios from 'axios';
+import { Link, useHistory } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-const BASE_API_URL="http://localhost:8080/api/jobbox";
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
+
 const Jobs = () => {
+  const [jobDetails, setJobDetails] = useState({
+    hrId: '',
+    hrName: '',
+    companyName: '',
     
-    const [jobDetails, setJobDetails] = useState({
+  });
 
-        userId:'',
-          userName:'',
-          companyName: '',
-          jobTitle: '',
-          requirements: '',
-          location: '',
-          jobType: '',
-          applicationDeadline: '',
-          numberOfPosition:'',
-          eligibility:'',
-          salary:'',
-          experience:'',
+  const handleChange = (event) => {
+    // Consider adding validation logic here to prevent unnecessary state updates
+    setJobDetails({
+      ...jobDetails,
+      [event.target.name]: event.target.value,
+    });
+  };
 
- 
+  const history = useHistory();
 
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(BASE_API_URL + "/postingJob", jobDetails);
+      console.log('Job details submitted:', response.data);
+
+      // Reset the form after successful submission
+      setJobDetails({
+        // ... reset form state
       });
-    
-      const handleChange = (e) => {
-        const value  = e.target.value;
-        setJobDetails ({
-          ...jobDetails,
-          [e.target.name]: value 
-        });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-
-      
-        try {
-          // Prepare API request details (URL, method, data)
-          const apiUrl = BASE_API_URL+"/postingJob"; // Replace with your API endpoint
-          const method = 'POST'; // Adjust method based on your API (POST or PUT)
-          const data = jobDetails;
-      
-          // Send the API request using axios
-          const response = await axios({
-            url: apiUrl,
-            method: method,
-            data: data,
-          });
-      
-          console.log('Job details submitted:', response.data); // Log API response for debugging
-      
-          // Handle successful submission (e.g., display success message, reset form)
-          setJobDetails({
-            userId:'',
-            userName:'',
-            companyName: '',
-            jobTitle: '',
-            requirements: '',
-            location: '',
-            jobType: '',
-            applicationDeadline: '',
-            numberOfPosition:'',
-            eligibility:'',
-            salary:'',
-            experience:'',
-          });
-      
-        } catch (error) {
-          console.error('Error submitting job details:', error);
-          // Handle errors appropriately (e.g., display error message to the user)
-        }
-      };
-    
-        console.log('Job details submitted:', jobDetails);
-        // Reset form after submission (optional)
-        setJobDetails({
-            userId:'',
-            userName:'',
-            companyName: '',
-            jobTitle: '',
-            requirements: '',
-            location: '',
-            jobType: '',
-            applicationDeadline: '',
-            numberOfPosition:'',
-            eligibility:'',
-            salary:'',
-            experience:'',
-        });
+      history.push('/hr-dashboard');
+    } catch (error) {
+      console.error('Error submitting job details:', error);
+      // Handle errors appropriately
+    }
+  };
       
     
 
@@ -147,8 +94,8 @@ const Jobs = () => {
                 <h2 style={{textAlign:'center'}}>Post a Job</h2>
                 <form className='hr-job-posting-form' onSubmit={handleSubmit}>
                     <div className='job-details'>
-                        <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='userId' value={jobDetails.userId} onChange={handleChange} required/></label>
-                        <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='userName' value={jobDetails.userName} onChange={handleChange} required/></label>
+                        <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='hrId' value={jobDetails.hrId} onChange={handleChange} required/></label>
+                        <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='hrName' value={jobDetails.Name} onChange={handleChange} required/></label>
                         <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value={jobDetails.companyName} onChange={handleChange} required/></label>
                     </div>
 
@@ -174,7 +121,7 @@ const Jobs = () => {
                     </div>
 
                     <div className='job-details'>
-                        <label htmlFor='no of positions'>Openings:<br/> <input type='text' id='no of positions' name='noOfPosition' value={jobDetails.numberOfPosition} onChange={handleChange} required /></label>
+                        <label htmlFor='no of positions'>Openings:<br/> <input type='number' id='no of positions' name='numberOfPosition' value={jobDetails.numberOfPosition} onChange={handleChange} required /></label>
                         <label htmlFor='experience'>Experience: <input type='text' id='experience' name='experience' value={jobDetails.experience} onChange={handleChange} required /></label>
                         <label htmlFor='salary'>Salary: <input type='text' id='salary' name='salary' value={jobDetails.salary} onChange={handleChange} required /></label>
                     </div>

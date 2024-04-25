@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
 const Companies = () => {
   const [formData, setFormData] = useState({
@@ -6,32 +10,43 @@ const Companies = () => {
     contactNumber: '',
     companyEmail: '',
     location: '',
+    discription: '', // Corrected typo
+    industry: '',
     date: '',
   });
+
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e) => {
+  const history = useHistory();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission logic here, such as sending data to backend
 
-    // Display success message
-    setSuccessMessage('Company details submitted successfully!');
-    // Clear form data
-    setFormData({
-      companyName: '',
-      contactNumber: '',
-      companyEmail: '',
-      location: '',
-      date: '',
-    });
+    try {
+      const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
+      console.log('Company details submitted:', response.data);
+
+      // Display success message with potential backend data (if applicable)
+      setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);  // Check for backend message
+
+      // Clear form data
+      setFormData({
+        companyName: '',
+        contactNumber: '',
+        companyEmail: '',
+        location: '',
+        discription: '',
+        industry: '',
+        date: '',
+      });
+      history.push('/hr-registeration')
+    } catch (error) {
+      console.error('Error during submission:', error);
+      alert('An error occurred during submission. Please try again later.'); // Generic error message
+    }
   };
 
   return (
@@ -39,7 +54,7 @@ const Companies = () => {
       <h2>Company Details</h2>
 
       <form id="companyForm" onSubmit={handleSubmit}>
-        <input type="hidden" id="redirectToError" value="false" />
+      
         <label htmlFor="companyName">Company Name:</label>
         <input
           type="text"
@@ -68,12 +83,30 @@ const Companies = () => {
           onChange={handleChange}
         />
 
+<label htmlFor="industry">Industry:</label>
+        <input
+          type="text"
+          id="industry"
+          name="industry"
+          value={formData.industry}
+          onChange={handleChange}
+        />
+
         <label htmlFor="location">Location:</label>
         <input
           type="text"
           id="location"
           name="location"
           value={formData.location}
+          onChange={handleChange}
+        />
+
+<label htmlFor="discription">Description:</label>
+        <input
+          type="text"
+          id="description"
+          name="discription"
+          value={formData.discription}
           onChange={handleChange}
         />
 

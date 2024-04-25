@@ -94,25 +94,25 @@ const CandidatesCompanies = () => {
           <input type='submit' value="Search"   />
             {/* <button><FontAwesomeIcon icon={faSearch} />search</button> */}
             </form>
+         </div>
 
-=======
         <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} /></button> 
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
 
         </div>
-        <div className="company">
+        <div className="companyJob">
             <h1>Job offers by Companies</h1>
             {/* return ( */}
-                <div className="">
+                <div className="cards">
                     {companies.length > 0 ? ( // Check if companies data is available
                      companies.map((company) => ( // Loop through companies array
-                       <div className="company-card" key={company.jobId}>   
-                               <p className="company-name">Company Name: <h1>{company.companyName}</h1></p>
-                               <h4>Job Role</h4>
-                               <h2>{company.jobTitle}</h2>
-                               <h4>Requirements</h4>
-                               <h2>{company.requirements}</h2>
+                       <div className="company-card-job" key={company.jobId}>   
+                               <p className="company-name">Company Name: <b>{company.companyName}</b></p>
+                               <p>Job Role  <b>{company.jobTitle}</b></p>
+                               
+                               <p>Requirements :</p>
+                               <b>{company.requirements}</b>
                                <p><b>Number of Positions: </b>{company.numberOfPosition}</p>
                                {/* Optionally display description: <p className="company-description">{company.description}</p> */}
                                <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
@@ -126,7 +126,7 @@ const CandidatesCompanies = () => {
         </div>
     </div>
   </div>
-  </div>
+  
   )
 }
 

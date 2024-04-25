@@ -1,45 +1,46 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
-import axios from 'axios';
+//import axios from 'axios';
 
 const Candidates = () => {
   const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const BASE_API_URL ="http://localhost:8080/api/jobbox" ; // Replace with your actual API base URL
+  //const BASE_API_URL ="http://localhost:8080/api/jobbox" ; // Replace with your actual API base URL
   const history = useHistory();
 
-  const validateLogin = async (userEmail, password) => {
-    try {
-      const response = await axios.post(`${BASE_API_URL}/login`, {
-        userEmail,
-        password,
-      });
 
-      if (response.data.success) {
-        // Login successful (handle successful login)
-        console.log('Login successful!');
-        history.push('/candiadte-dashboard'); 
+  // const validateLogin = async (userEmail, password) => {
+  //   try {
+  //     const response = await axios.post(`${BASE_API_URL}/login`, {
+  //       userEmail,
+  //       password,
+  //     });
+
+  //     if (response.data.success) {
+  //       // Login successful (handle successful login)
+  //       console.log('Login successful!');
+       
         
-        // You can redirect to a profile page or store a token here
-      } else {
-        // Login failed (display error message)
-        console.error('Login failed:', response.data.message);
-        alert('Invalid email or password. Please try again.'); // Alert user about login failure
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-      alert('An error occurred during login. Please try again later.'); // Generic error message
-    }
-  };
+  //       // You can redirect to a profile page or store a token here
+  //     } else {
+  //       // Login failed (display error message)
+  //       console.error('Login failed:', response.data.message);
+  //       alert('Invalid email or password. Please try again.'); // Alert user about login failure
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during login:', error);
+  //     alert('An error occurred during login. Please try again later.'); // Generic error message
+  //   }
+  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-   
+    history.push('/candiadte-dashboard'); 
 
-    await validateLogin(userEmail, password);
+    //await validateLogin(userEmail, password);
   };
 
   return (

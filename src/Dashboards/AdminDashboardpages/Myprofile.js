@@ -38,7 +38,7 @@ const Myprofile = ({ userType }) =>  {
     <FaUser /> <Link to="/my-profile">My Profile</Link>
   </section>
   <section id="contacts">
-    <FaComments /> <Link to="/contacts">Contacs</Link>
+    <FaComments /> <Link to="/contacts">Contacts</Link>
   </section>
   <section>
           <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import "./SinginCandi.css";
 
 
 
@@ -13,17 +15,20 @@ const CandidateSignup=()=> {
   // }
 
     const [user, setUser] = useState({
-      userName: '',
-      userEmail: '',
-      password: '',
-      confirmpassword: '',
-      userRole: '',
-      phone:'',
+      // userName: '',
+      // userEmail: '',
+      // password: '',
+      // confirmpassword: '',
+      // userRole: '',
+      // phone:'',
     });
-  
+    const history = useHistory();
     const handleChange = (e) => {
-      const value = e.target.value;
-      setUser({ ...user, [e.target.name]: value });
+      const { name, value } = e.target;
+      setUser(prevUser => ({
+        ...prevUser,
+        [name]: value,
+      }));
     };
   
     const validatePassword = () => {
@@ -45,33 +50,25 @@ const CandidateSignup=()=> {
       if (!validatePassword()) return; // Exit if password validation fails
     console.log(user.password);
       try {
+        console.log('User data before sending:', user);
         // Prepare API request details (URL, method, data)
-        // const apiUrl = BASE_API_URL + "/saveUser";
-        // const method = 'POST';
-       // const data = user;
+        const apiUrl = BASE_API_URL + "/saveUser";
+        const method = 'POST';
+       //const data = user;
 
         //console.console.log(data);
     
         // Send the API request using axios
-        const response = await axios
-        .post(BASE_API_URL + "/saveUser", user);
+        const response = await axios.post(apiUrl, user, { method });
       
     
         console.log('User details submitted:', response.data);
     
-        // After successful submission, reset the form
-        setUser({
-          userName: '',
-          userEmail: '',
-          password: '',
-          confirmpassword: '',
-          userRole: '',
-          phone: '',
-        });
+        
     
         // Redirect to success page or handle success message
        
-    
+        history.push('/CandidateRegisterSucessMsg')
       } catch (error) {
        // console.error('Error submitting user details:', error);
         // Handle errors appropriately (e.g., display error message to the user)
