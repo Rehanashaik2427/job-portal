@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-
+import companyService from '../Services/company.service';
 const Companies = () => {
   const [formData, setFormData] = useState({
     companyName: '',
     contactNumber: '',
     companyEmail: '',
+    industry:'',
     location: '',
-    date: '',
+    dateTime: '',
   });
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -18,27 +19,31 @@ const Companies = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const saveCompanyDetails = (e) => {
     e.preventDefault();
-    // Perform form submission logic here, such as sending data to backend
 
-    // Display success message
-    setSuccessMessage('Company details submitted successfully!');
-    // Clear form data
-    setFormData({
-      companyName: '',
-      contactNumber: '',
-      companyEmail: '',
-      location: '',
-      date: '',
+    companyService.saveCompany(formData).then((res) => {
+      setSuccessMessage('Company details submitted successfully!');
+      // Clear form data
+      setFormData({
+        companyName: '',
+        contactNumber: '',
+        companyEmail: '',
+        industry:'',
+        location: '',
+        dateTime: '',
+      });
+      console.log(formData);
+    }).catch((error) => {
+      console.log(error);
     });
   };
 
   return (
-    <div className="comapny-container">
+    <div className="company-container">
       <h2>Company Details</h2>
-
-      <form id="companyForm" onSubmit={handleSubmit}>
+      
+      <form id="companyForm" onSubmit={saveCompanyDetails}>
         <input type="hidden" id="redirectToError" value="false" />
         <label htmlFor="companyName">Company Name:</label>
         <input
@@ -68,6 +73,15 @@ const Companies = () => {
           onChange={handleChange}
         />
 
+        <label htmlFor="industry">Industry:</label>
+        <input
+          type="text"
+          id="industry"
+          name="industry"
+          value={formData.industry}
+          onChange={handleChange}
+        />
+
         <label htmlFor="location">Location:</label>
         <input
           type="text"
@@ -77,12 +91,12 @@ const Companies = () => {
           onChange={handleChange}
         />
 
-        <label htmlFor="date">DateTime:</label>
+        <label htmlFor="dateTime">Date and Time:</label>
         <input
-          type="date"
-          id="date"
-          name="date"
-          value={formData.date}
+          type="datetime-local"
+          id="dateTime"
+          name="dateTime"
+          value={formData.dateTime}
           onChange={handleChange}
           required
         />
