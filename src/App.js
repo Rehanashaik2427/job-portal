@@ -86,7 +86,7 @@ const App = () => {
           <Route path='/hr-registeration' component={HrRegistrationForm} />
           <Route path='/hr-signin' component={HrSignin} />
           <Route path='/hr-dashboard' component={HrDashboard} />
-          <Route path='/post-jobs' component={Jobs} />
+          <Route path='/post-jobss' component={Jobs} />
           <Route path='/posted-jobs' component={PostedJobs} />
           <Route path='/people' component={People} />
           <Route path='/hr-profile' component={HrProfile} />

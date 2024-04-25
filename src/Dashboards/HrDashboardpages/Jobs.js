@@ -1,21 +1,21 @@
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
-<<<<<<< HEAD
-import { useState } from 'react';
+
+//import { useState } from 'react';
 import axios from 'axios';
-=======
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
+
 
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const Jobs = () => {
     
     const [jobDetails, setJobDetails] = useState({
-<<<<<<< HEAD
-          hrId:'',
-          hrName:'',
+
+        userId:'',
+          userName:'',
           companyName: '',
           jobTitle: '',
           requirements: '',
@@ -24,31 +24,24 @@ const Jobs = () => {
           applicationDeadline: '',
           numberOfPosition:'',
           eligibility:'',
-=======
-        hrId: '',
-        hrName: '',
-        companyName: '',
-        title: '',
-        jobType: '',
-        eligibility: '',
-        applicationDeadline: '',
-        location: '',
-        requirements: '',
-        openings:' ',
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
+          salary:'',
+          experience:'',
+
+ 
+
       });
     
       const handleChange = (e) => {
-        const { name, value } = e.target;
-        setJobDetails((prevJobDetails) => ({
-          ...prevJobDetails,
-          [name]: value,
-        }));
+        const value  = e.target.value;
+        setJobDetails ({
+          ...jobDetails,
+          [e.target.name]: value 
+        });
       };
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-<<<<<<< HEAD
+
       
         try {
           // Prepare API request details (URL, method, data)
@@ -67,8 +60,8 @@ const Jobs = () => {
       
           // Handle successful submission (e.g., display success message, reset form)
           setJobDetails({
-            hrId:'',
-            hrName:'',
+            userId:'',
+            userName:'',
             companyName: '',
             jobTitle: '',
             requirements: '',
@@ -77,6 +70,8 @@ const Jobs = () => {
             applicationDeadline: '',
             numberOfPosition:'',
             eligibility:'',
+            salary:'',
+            experience:'',
           });
       
         } catch (error) {
@@ -84,26 +79,27 @@ const Jobs = () => {
           // Handle errors appropriately (e.g., display error message to the user)
         }
       };
-      
-=======
+    
         console.log('Job details submitted:', jobDetails);
         // Reset form after submission (optional)
         setJobDetails({
-          hrId: '',
-          hrName: '',
-          companyName: '',
-          title: '',
-          jobType: '',
-          eligibility: '',
-          applicationDeadline: '',
-          location: '',
-          requirements: '',
-          openings:' ',
+            userId:'',
+            userName:'',
+            companyName: '',
+            jobTitle: '',
+            requirements: '',
+            location: '',
+            jobType: '',
+            applicationDeadline: '',
+            numberOfPosition:'',
+            eligibility:'',
+            salary:'',
+            experience:'',
         });
-      };
+      
     
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
-  return (
+
+ return (
     <div className='hr-dashboard-container'>
         <div className='hr-leftside'>
             <nav id='logo'>
@@ -151,13 +147,13 @@ const Jobs = () => {
                 <h2 style={{textAlign:'center'}}>Post a Job</h2>
                 <form className='hr-job-posting-form' onSubmit={handleSubmit}>
                     <div className='job-details'>
-                        <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='userId' value='Hr ID' /></label>
-                        <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='userName' value='Hr NAME' /></label>
-                        <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value='COMPANY_NAME' /></label>
+                        <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='userId' value={jobDetails.userId} onChange={handleChange} required/></label>
+                        <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='userName' value={jobDetails.userName} onChange={handleChange} required/></label>
+                        <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value={jobDetails.companyName} onChange={handleChange} required/></label>
                     </div>
 
                     <div className='job-details'>
-                        <label htmlFor='title'>Job Title: <input type='text' id='title' name='title' value={jobDetails.title} onChange={handleChange} required /></label>
+                        <label htmlFor='title'>Job Title: <input type='text' id='title' name='jobTitle' value={jobDetails.jobTitle} onChange={handleChange} required /></label>
                         <label htmlFor='jobType'>Job Type:<br/> 
                             <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
                                 <option value=''>Select Job Type</option>
@@ -178,7 +174,7 @@ const Jobs = () => {
                     </div>
 
                     <div className='job-details'>
-                        <label htmlFor='no of positions'>Openings:<br/> <input type='text' id='no of positions' name='no of positions' value={jobDetails.openings} onChange={handleChange} required /></label>
+                        <label htmlFor='no of positions'>Openings:<br/> <input type='text' id='no of positions' name='noOfPosition' value={jobDetails.numberOfPosition} onChange={handleChange} required /></label>
                         <label htmlFor='experience'>Experience: <input type='text' id='experience' name='experience' value={jobDetails.experience} onChange={handleChange} required /></label>
                         <label htmlFor='salary'>Salary: <input type='text' id='salary' name='salary' value={jobDetails.salary} onChange={handleChange} required /></label>
                     </div>
@@ -229,7 +225,7 @@ const Jobs = () => {
 =======
                 <label htmlFor='requirements'>Requirements/Skills:<br/> <textarea id='requirements' name='requirements' value={jobDetails.requirements} onChange={handleChange} required /></label>
                 <label htmlFor='no of positions'>Openings:<br/> <textarea id='no of positions' name='no of positions' value={jobDetails.openings} onChange={handleChange} required /></label>
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
+
             </div>
             <div className='hr-submit-button' >
                 <button type='submit'>Submit</button>
@@ -238,7 +234,6 @@ const Jobs = () => {
       </div>
     </div>
   )
-  
-}
+};
 
 export default Jobs;

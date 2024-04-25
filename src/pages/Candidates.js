@@ -4,16 +4,16 @@ import './Home.css';
 import axios from 'axios';
 
 const Candidates = () => {
-  const [email, setEmail] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const BASE_API_URL ="http://localhost:8080/api/jobbox" ; // Replace with your actual API base URL
   const history = useHistory();
 
-  const validateLogin = async (email, password) => {
+  const validateLogin = async (userEmail, password) => {
     try {
       const response = await axios.post(`${BASE_API_URL}/login`, {
-        email,
+        userEmail,
         password,
       });
 
@@ -39,7 +39,7 @@ const Candidates = () => {
 
    
 
-    await validateLogin(email, password);
+    await validateLogin(userEmail, password);
   };
 
   return (
@@ -53,7 +53,7 @@ const Candidates = () => {
               id="login-email"
               name="userEmail"
               required
-              value={email}
+              value={userEmail}
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>

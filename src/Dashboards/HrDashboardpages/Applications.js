@@ -10,17 +10,17 @@ const Applications = () => {
         setFilterStatus(e.target.value);
     };
 
-    const filterApplications = () => {
-    const rows = document.getElementById('application').querySelectorAll('tr');
-    rows.forEach((row) => {
-        const rowStatus = row.cells[6].textContent.trim(); // Assuming status is in the 7th column
-        if (filterStatus === 'all' || rowStatus === filterStatus) {
-            row.style.display = ''; // Show the row
-        } else {
-            row.style.display = 'none'; // Hide the row
-        }
-    });
-};
+    // const filterApplications = () => {
+    // const rows = document.getElementById('application').querySelectorAll('tr');
+    // rows.forEach((row) => {
+    //     const rowStatus = row.cells[6].textContent.trim(); // Assuming status is in the 7th column
+    //     if (filterStatus === 'all' || rowStatus === filterStatus) {
+    //         row.style.display = ''; // Show the row
+    //     } else {
+    //         row.style.display = 'none'; // Hide the row
+    //     }
+    // });
+// };
 
   return (
     <div className='hr-dashboard-container'>

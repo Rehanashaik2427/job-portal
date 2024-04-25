@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-import bcrypt from 'bcrypt';
+
 
 
 
@@ -38,50 +38,49 @@ const CandidateSignup=()=> {
       }
       return true; // Password is valid
     };
-  
+  console.log("pss"+validatePassword);
     const submitUser = async (e) => {
       e.preventDefault();
-  
+    
       if (!validatePassword()) return; // Exit if password validation fails
-  
+    console.log(user.password);
       try {
-     
-
         // Prepare API request details (URL, method, data)
-        const apiUrl = BASE_API_URL+"/saveUser"; // Replace with your API endpoint
-        const method = 'POST'; // Adjust method based on your API (POST or PUT)
-        const data = user;
+        // const apiUrl = BASE_API_URL + "/saveUser";
+        // const method = 'POST';
+       // const data = user;
+
+        //console.console.log(data);
     
         // Send the API request using axios
-        const response = await axios({
-          url: apiUrl,
-          method: method,
-          data: data,
+        const response = await axios
+        .post(BASE_API_URL + "/saveUser", user);
+      
+    
+        console.log('User details submitted:', response.data);
+    
+        // After successful submission, reset the form
+        setUser({
+          userName: '',
+          userEmail: '',
+          password: '',
+          confirmpassword: '',
+          userRole: '',
+          phone: '',
         });
     
-        console.log('Job details submitted:', response.data); // Log API response for debugging
-    this.redirectToSuccessPage();
-        // Handle successful submission (e.g., display success message, reset form)
-      setUser({
-        userName: '',
-        userEmail: '',
-        password: '',
-        confirmpassword: '',
-        userRole: '',
-        phone:'',
-        
-        });
+        // Redirect to success page or handle success message
+       
     
       } catch (error) {
-        console.error('Error submitting job details:', error);
+       // console.error('Error submitting user details:', error);
         // Handle errors appropriately (e.g., display error message to the user)
       }
     };
+    
+    
   
-    const redirectToSuccessPage = (event) => {
-      event.preventDefault();
-      window.location.href = "/CandidateRegisterSucessMsg";
-    };
+   
   
   
 
@@ -106,13 +105,28 @@ const CandidateSignup=()=> {
             <input type="tel" id="phone" name="phone" value={user.phone}  onChange={handleChange} required />
           </div>
           <div className="candidate-form-group">
-            <label htmlFor="password">Password:</label>
-            <input type="text" id="password" name="password" value={user.password}  onChange={handleChange} required />
-          </div>
-          <div className="candidate-form-group">
-            <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="text" id="confirmPassword" name="confirmpassword" value={user.confirmpassword}   onChange={handleChange} required />
-          </div>
+  <label htmlFor="password">Password:</label>
+  <input
+    type="password"  // Change input type to "password"
+    id="password"
+    name="password"
+    value={user.password}
+    onChange={handleChange}
+    required
+  />
+</div>
+<div className="candidate-form-group">
+  <label htmlFor="confirmPassword">Confirm Password:</label>
+  <input
+    type="password"  // Change input type to "password"
+    id="confirmPassword"
+    name="confirmpassword"
+    value={user.confirmpassword}
+    onChange={handleChange}
+    required
+  />
+</div>
+
           <div className="candidate-form-group">
             <input type="submit" value="Sign Up" />
           </div>

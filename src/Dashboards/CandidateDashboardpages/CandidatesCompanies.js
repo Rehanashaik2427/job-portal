@@ -87,7 +87,7 @@ const CandidatesCompanies = () => {
     </div>
 
     <div className='rightside'>
-<<<<<<< HEAD
+
         <div className="search">
           <form onSubmit={searchJob}>
           <input type='text' id='jobRole' name='jobRole' value={jobRole} onChange={handleChange}/> 
@@ -97,8 +97,7 @@ const CandidatesCompanies = () => {
 
 =======
         <div className="candidate-search">
-            <button><FontAwesomeIcon icon={faSearch} />search</button>
->>>>>>> 3554ee9d792b32e7b90728b414bd75f43f791d18
+            <button><FontAwesomeIcon icon={faSearch} /></button> 
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
 
         </div>
@@ -126,6 +125,7 @@ const CandidatesCompanies = () => {
           {/* ); */}
         </div>
     </div>
+  </div>
   </div>
   )
 }
