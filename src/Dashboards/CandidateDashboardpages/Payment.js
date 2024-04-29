@@ -1,4 +1,4 @@
-import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
@@ -39,14 +39,11 @@ const Payment = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section> 
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-        <div className="search">
-          <button><FontAwesomeIcon icon={faSearch} />search</button>
-          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
-        </div>
+      
 
         <div className="payment-container">
           <div>
@@ -60,7 +57,7 @@ const Payment = () => {
 
           <div>
             <h2>Payment History</h2>
-            <p>Payments Details</p>
+            <p style={{textAlign:'center'}}>Payments Details</p>
             {/* Add payment history details here */}
           </div>
         </div>

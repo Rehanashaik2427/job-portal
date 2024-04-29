@@ -39,82 +39,60 @@ const CandiadteJobs = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section> 
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
         <div className="page">
+        <div className="top-right-content">
           <div className="candidate-search">
-            <button><FontAwesomeIcon icon={faSearch} />search</button>
-            <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
           </div>
+        </div>
 
           
-            <h1 style={{textAlign:'center'}}>Jobs</h1>
+            <h1 style={{textAlign:'center'}}>JOBS</h1>
             <div className='jobs-table'>
             <table className='jobs-table'>
-                <tr id="thead">
+                <tr id="thead" >
                     <th>Job Profile</th>
                     <th >Company Name</th>
                     <th >Post On</th>
-                    <th>Status & Actions</th>
+                    <th>Status</th>
                 </tr>
+
                 <tr>
-                    <td>
-                        Designer
-                    </td>
-                     <td>
-                        cisco
-                    </td>
-                    <td>
-                        04/04/2024
-                    </td>
-                     <td>
-                        Active
-                    </td>
+                    <td>Designer</td>
+                    <td>cisco</td>
+                    <td>02/04/2024</td>
+                    <td style={{color:'green'}} >Applied</td>
                 </tr>
+
                 <tr>
-                    <td>
-                       Developer
-                    </td>
-                     <td>
-                       Microsoft
-                    </td>
-                    <td>
-                        02/04/2024
-                    </td>
-                     <td>
-                        Active
-                    </td>
+                    <td>Developer</td>
+                    <td>Microsoft</td>
+                    <td>02/04/2024</td>
+                    <td style={{color:'red'}}>Not Applied</td>
                 </tr>
+
                 <tr>
-                    <td>
-                        Designer
-                    </td>
-                     <td>
-                        cisco
-                    </td>
-                    <td>
-                        04/04/2024
-                    </td>
-                     <td>
-                        Active
-                    </td>
+                    <td>Designer</td>
+                    <td>cisco</td>
+                    <td>15/02/2024</td>
+                    <td style={{color:'gray'}}>Deadline over</td>
                 </tr>
+
                 <tr>
-                    <td>
-                       Developer
-                    </td>
-                     <td>
-                       Microsoft
-                    </td>
-                    <td>
-                        02/04/2024
-                    </td>
-                     <td>
-                        Active
-                    </td>
+                    <td>Developer</td>
+                    <td>Microsoft</td>
+                    <td>02/04/2024</td>
+                    <td style={{color:'green'}}>Applied</td>
                 </tr>
+
             </table>
             </div>
             
@@ -123,9 +101,11 @@ const CandiadteJobs = () => {
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
             <p>Just add the name of your dream company and apply to them directly.</p>
-            <Link to="/dream-company" className="app">
-                <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
-            </Link>
+            
+              <Link to="/dream-company" className="app">
+                  <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
+              </Link>
+          
           </div>
         </div>
       </div>

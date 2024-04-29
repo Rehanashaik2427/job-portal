@@ -39,46 +39,53 @@ const CandidateDashboard = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section> 
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-        <div className="candidate-search">
-        <button>
-          <FontAwesomeIcon icon={faSearch} className='button'/>search</button>
-          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+      <div className="top-right-content">
+          <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+          </div>
         </div>
+
         <div className="my-dashboard-container">
-      <div>
-        <h3 className='status-info'>My application status</h3>
-        <div className="dashboard">
-          <div className="data">
-            <span>
-              <p>applied to</p>
-              <h2><b>500</b></h2>
-              <p>companies</p>
-            </span>
-          </div>
-          <div className="data">
-            <h1>5</h1>
-            <h4>resumes</h4>
-          </div>
-          <div className="data">
-            <h1>250</h1>
-            <h4>resume views</h4>
-          </div>
-          <div className="data">
-            <h1>50</h1>
-            <h4>shortlist</h4>
-          </div>
-          <div className="data">
-            <h1>500</h1>
-            <h4>companies</h4>
+          <div>
+            <div><h3 className='status-info'>My application status</h3></div>
+         
+            <div className="dashboard">
+              <div className="data">
+                <span>
+                  <h4>Applied to</h4>
+                  <h2><b>500</b></h2>
+                  <h4>companies</h4>
+                </span>
+              </div>
+              <div className="data">
+                <h1>5</h1>
+                <h4>resumes</h4>
+              </div>
+              <div className="data">
+                <h1>250</h1>
+                <h4>resume views</h4>
+              </div>
+              <div className="data">
+                <h1>50</h1>
+                <h4>shortlist</h4>
+              </div>
+              <div className="data">
+                <h1>500</h1>
+                <h4>companies</h4>
+              </div>
+            </div>
+            <div><h3 className='status-info'>My Resume Status  and Report</h3></div>
+            
           </div>
         </div>
-        <h3 className='status-info'>My resume status report</h3>
-      </div>
-    </div>
       </div>
     </div>
   );

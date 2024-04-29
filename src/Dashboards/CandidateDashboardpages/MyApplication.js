@@ -39,16 +39,21 @@ const MyApplication = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section> 
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-        <div className="candidate-search">
-            <button><FontAwesomeIcon icon={faSearch} />search</button>
-            <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+      <div className="top-right-content">
+          <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+          </div>
         </div>
         <div>
-            <h1 style={{textAlign:'center'}}>My APPLICATIONS</h1>
+            <h1 style={{textAlign:'center'}}>MY APPLICATIONS</h1>
             <div className='applications-table'>
             <table className='applications-table'>
                 <tr>
@@ -57,65 +62,33 @@ const MyApplication = () => {
                     <th>Resume Profile</th>
                     <th>Status & Actions</th>
                 </tr>
+
                 <tr>
-                    
-                     <td>
-                        cisco
-                    </td>
-                    <td>
-                        04/04/2024
-                    </td>
-                    <td>
-                        resume-1
-                    </td>
-                     <td>
-                        HR viewed|shortlisted
-                    </td>
+                    <td>cisco</td>
+                    <td>04/04/2024</td>
+                    <td>resume-1</td>
+                    <td style={{color:'green'}}>HR viewed</td>
                 </tr>
+
                 <tr>
-                   
-                     <td>
-                       Microsoft
-                    </td>
-                    <td>
-                        02/04/2024
-                    </td>
-                    <td>
-                        resume-2
-                    </td>
-                     <td>
-                        HR viewed|shortlisted
-                    </td>
+                  <td>Microsoft</td>
+                  <td>02/04/2024</td>
+                  <td>resume-2</td>
+                  <td style={{color:'gray'}}>shortlisted</td>
                 </tr>
+
                 <tr>
-                    
-                     <td>
-                        cisco
-                    </td>
-                    <td>
-                        04/04/2024
-                    </td>
-                    <td>
-                        resume-3
-                    </td>
-                     <td>
-                        HR viewed|shortlisted
-                    </td>
+                  <td>cisco</td>
+                  <td>04/04/2024</td>
+                  <td>resume-3</td>
+                  <td style={{color:'gray'}}>shortlisted</td>
                 </tr>
+
                 <tr>
-                    
-                     <td>
-                       Microsoft
-                    </td>
-                    <td>
-                        02/04/2024
-                    </td>
-                    <td>
-                        resume-1
-                    </td>
-                     <td>
-                        HR viewed|shortlisted
-                    </td>
+                  <td>Microsoft</td>
+                  <td>02/04/2024</td>
+                  <td>resume-1</td>
+                  <td style={{color:'green'}}>HR viewed</td>
                 </tr>
             </table>
               </div>

@@ -1,8 +1,11 @@
 
+import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Button, Col, Container, FormControl, InputGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Home.css';
+
 
 const Home = () => {
   return (
@@ -148,6 +151,40 @@ const Home = () => {
           </Col>
         </Row>
       </Container>
+
+      <Container className="contact-container">
+        <Row>
+          <Col>
+            <div className='contact'>
+              <div className='contact-details'>
+                <div className='connect'>
+                  <h1>Contact Us</h1>
+                  <p>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
+
+                  <div className='contact-info'>
+                    <div className='email'><FontAwesomeIcon icon={faEnvelope} /> Email: jobbox@mywebsite.com<br /></div>
+                    <div className='mobile'><FontAwesomeIcon icon={faPhone} /> Phone: +1 234 567 890<br /></div>
+                    <div className='address'><FontAwesomeIcon icon={faMapMarkerAlt} /> Address: 123 Job Portal Street, City, Country</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className='social-media'>
+              <ul>
+                <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+                <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              </ul>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+
     </div>
   )
 }
