@@ -42,6 +42,7 @@ import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
+import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
 
 
 
@@ -97,6 +98,7 @@ const App = () => {
           <Route path="/posted-jobs" component={PostedJobs} />
           <Route path="/post-jobs" component={Jobs} />
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
+          <Route path="/update-job" component={UpdateJob}/>
         </Switch>
       </BrowserRouter>
     </div>

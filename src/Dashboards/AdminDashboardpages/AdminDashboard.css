@@ -5,12 +5,16 @@
 .leftside{
     height: 100vh;
     width: 300px;
-    background-color: aqua;
+    background-color: rgb(214, 214, 247);
+}
+.leftside section link{
+    text-decoration-color: rgb(16, 15, 15);
 }
 .rightSide{
     height: 100vh;
     width: 100vw;
-    background-color: rgb(192, 231, 233);
+    background-color: rgb(241, 241, 241);
+    overflow:scroll;
 }
 .admin-details{
     height: 400px;
@@ -119,7 +123,6 @@ main {
 /* Allowing access */
 
 .user-table ,
-.company-table ,
 .access-table,.contacts-table,.admin-profile{
     width: 100%;
     border-collapse: collapse;
@@ -262,4 +265,37 @@ company details by admin */
 }
   .addDetails{
     justify-content: center;
+  }
+
+  .company-table1 {
+    width: 100%;
+    border-collapse: collapse;
+    /* margin-top: 20px; */
+    margin: 30px;
+  }
+  
+  .company-table1 th, .company-table1 td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+  }
+  
+  .company-table1 th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .company-table1 button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .company-table1 button .approved:hover {
+    background-color: #37ac3c;
+  }
+
+  .company-table1 button .reject:hover {
+    background-color:rgb(186, 25, 25);
   }

@@ -2,10 +2,13 @@ import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 
 const PostedJobs = () => {
     
+    const location = useLocation();
+    const userName = location.state?.userName;
     
   return (
     <div className='hr-dashboard-container'>
@@ -15,37 +18,30 @@ const PostedJobs = () => {
         </nav>
 
         <nav>
-            <h2>HR Name</h2>
+            <h2>Welcome {userName}</h2>
         </nav>   
         <section id="hr-dashboard">
-            <FontAwesomeIcon icon={faHouse} /> <Link to="/hr-dashboard"> Dashboard</Link>
-        </section>
-
-      
-        <section>
-            <FontAwesomeIcon icon={faBriefcase} /> <Link to='/post-jobs'>Jobs</Link>
-        </section>
-
-        <section>
-              <FontAwesomeIcon icon={faAddressCard} /> <Link to='/hr-applications'>Applications</Link>
-        </section>
-
-        <section>
-            <FontAwesomeIcon icon={faBriefcase} /> <Link to='/posted-jobs'>Posted Jobs</Link>
-        </section>
-
-        <section>
-            <FontAwesomeIcon icon={faUsers} /> <Link to='/people'>People</Link>
-        </section>
-
-        <section>
-            <FontAwesomeIcon icon={faUser} /> <Link to='/hr-profile'>Profile</Link>
-        </section>
-
-
-        <section>
-            <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
-        </section>
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName } }}>Dashboard</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName } }}>Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName } }}>Applications</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName } }}>Posted Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName } }}>People</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName } }}>Profile</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName } }}>Home</Link>
+                    </section>
+                
 
     </div>
 
@@ -53,10 +49,9 @@ const PostedJobs = () => {
         <div className="jobs_list">
             <table className="jobs_list_table" >
                 <tr>
-                    <th>Hr ID</th>
+                    
                     <th>Hr Name</th>
                     <th>Company Name</th>
-                    <th>Job ID</th>
                     <th>Job Title</th>
                     <th>Job Type</th>
                     <th>Job Description</th>
@@ -68,10 +63,9 @@ const PostedJobs = () => {
                 </tr>
 
                 <tr>
-                    <td>HR123</td>
+                   
                     <td>Swetha</td>
                     <td>XYZ Corp</td>
-                    <td>001</td>
                     <td>Software Engineer</td>
                     <td>Full Employment</td>
                     <td>Developing web applications using JavaScript, HTML, and CSS</td>
@@ -82,9 +76,9 @@ const PostedJobs = () => {
                     <td>2024-04-30 12:00 PM</td>
                 </tr>
                     <tr>
-                        <td>HR456</td>
+                        
                         <td>Mythri</td>
-                        <td>XYZ Corp</td>
+                        
                         <td>002</td>
                         <td>Data Analyst</td>
                         <td>Contract</td>
@@ -96,10 +90,9 @@ const PostedJobs = () => {
                         <td>2024-05-05 10:00 AM</td>
                     </tr>
                     <tr>
-                        <td>HR123</td>
+                       
                         <td>Swetha</td>
                         <td>XYZ Corp</td>
-                        <td>003</td>
                         <td>Graphic Designer</td>
                         <td>Freelancer</td>
                         <td>Creating graphic designs for marketing materials</td>
@@ -109,34 +102,7 @@ const PostedJobs = () => {
                         <td>1</td>
                         <td>2024-04-25 09:00 AM</td>
                     </tr>
-                    <tr>
-                        <td>HR123</td>
-                        <td>Swetha</td>
-                        <td>XYZ Corp</td>
-                        <td>004</td>
-                        <td>Sales Executive</td>
-                        <td>Full Employment</td>
-                        <td>Managing sales activities and client relationships</td>
-                        <td>Sales, Communication</td>
-                        <td>BTECH</td>
-                        <td>2024-04-13</td>
-                        <td>2</td>
-                        <td>2024-05-01 11:30 AM</td>
-                    </tr>
-                    <tr>
-                        <td>HR202</td>
-                        <td>Surendra</td>
-                        <td>XYZ Corp</td>
-                        <td>005</td>
-                        <td>Project Manager</td>
-                        <td>Contract</td>
-                        <td>Leading project teams and overseeing project delivery</td>
-                        <td>Project Management, Leadership</td>
-                        <td>BTECH, MTECH</td>
-                        <td>2024-04-14</td>
-                        <td>1</td>
-                        <td>2024-04-28 03:00 PM</td>
-                    </tr>
+                    
                 </table>
                 
         </div>

@@ -1,44 +1,44 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
+import './HrDashboard.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import "./HrReg.css";
 import axios from 'axios';
 const BASE_API_URL="http://localhost:8080/api/jobbox";
+//const HrRegistrationForm = () => {
+  // const [formData, setFormData] = useState({
+  //   userName: "",
+  //   userRole:"",
+  //   userEmail: "",
+  //   companyName: "",
+
+ // Import CSS file for styling
+
 const HrRegistrationForm = () => {
   const [formData, setFormData] = useState({
     userName: "",
-    userRole:"",
+    userRole: "HR",
     userEmail: "",
     companyName: "",
-=======
-import './HrDashboard.css'; // Import CSS file for styling
-
-const HrRegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    hrName: "",
-    hrId: "",
-    hrEmail: "",
-    companyId: "",
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
     password: "",
     confirmpassword: "",
   });
-<<<<<<< HEAD
+
   
  
-=======
+
   const [passwordMatchError, setPasswordMatchError] = useState(false);
 
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-<<<<<<< HEAD
+  const validatePassword = (event) => {
+   // event.preventDefault();
+
+    if (formData.password !== formData.confirmpassword) {
+
       alert("Passwords don't match! Please re-enter.");
       return false;
     }
@@ -65,8 +65,8 @@ const HrRegistrationForm = () => {
         data: data,
       });
   
-      console.log('Job details submitted:', response.data); // Log API response for debugging
-    history.push('/hr-RegSuccess')
+       
+    history.push("/hr-dashboard")
       
     setFormData({
       userName: '',
@@ -81,14 +81,9 @@ const HrRegistrationForm = () => {
     } catch (error) {
       console.error('Error submitting job details:', error);
       // Handle errors appropriately (e.g., display error message to the user)
-=======
+
       setPasswordMatchError(true);
-    } else {
-      setPasswordMatchError(false);
-      // Logic to handle form submission (e.g., send data to backend)
-      console.log("Form submitted successfully!");
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
-    }
+    } 
   };
 
   return (
@@ -98,19 +93,20 @@ const HrRegistrationForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">HR Name:</label>
-            <input type="text" id="hrName" name="hrName" value={formData.hrName} onChange={handleInputChange} required />
+            <input type="text" id="hrName" name="userName" value={formData.userName} onChange={handleInputChange} required />
           </div>
-          <div className="form-group">
-            <label htmlFor="hrId">HR ID:</label>
-            <input type="text" id="hrId" name="hrId" required />
-          </div>
+        
           <div className="form-group">
             <label htmlFor="hrEmail">Email ID:</label>
-            <input type="email" id="hrEmail" name="hrEmail" placeholder='name@companyname.com' required />
+            <input type="email" id="hrEmail" name="userEmail" placeholder='name@companyname.com' value={formData.userEmail} onChange={handleInputChange} required />
           </div>
+          {/* <div className="form-group">
+            <label htmlFor="role">Role:</label>
+            <input type="text" id="rolr" name="userRole" placeholder='HR' value={formData.userRole} onChange={handleInputChange} required />
+          </div> */}
           <div className="form-group">
-            <label htmlFor="companyId">Company ID:</label>
-            <input type="text" id="companyId" name="companyId" required />
+            <label htmlFor="companyId">Company Name:</label>
+            <input type="text" id="companyId" name="companyName" value={formData.companyName} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>

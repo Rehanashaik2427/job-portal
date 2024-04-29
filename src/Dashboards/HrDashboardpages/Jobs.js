@@ -1,229 +1,154 @@
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link,useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import './HrDashboard.css';
 
 const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
-=======
-import { Link } from "react-router-dom";
-import './HrDashboard.css';
-
-
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
 const Jobs = () => {
-  const [jobDetails, setJobDetails] = useState({
-    hrId: '',
-    hrName: '',
-    companyName: '',
-    
-<<<<<<< HEAD
-  });
 
-  const handleChange = (event) => {
-    // Consider adding validation logic here to prevent unnecessary state updates
-    setJobDetails({
-      ...jobDetails,
-      [event.target.name]: event.target.value,
-    });
-  };
+
+ 
+
+  const location = useLocation();
+    const userName = location.state?.userName;
+    const [jobs, setJobs] = useState([]);
+   
+    
+    const fetchJobs = async (userName) => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrName?userName=${userName}`);
+        console.log(response.data);
+        if (response.status === 200) {
+          setJobs(response.data);
+        } else {
+          console.error('Failed to fetch jobs data');
+        }
+      } catch (error) {
+        console.error('Error fetching jobs data:', error);
+      }
+    };
+    
+
+  useEffect(() => {
+    fetchJobs(userName);
+  }, [userName]);
 
   const history = useHistory();
 
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleUpdate = (jobId) => {
+    // Navigate to the update page with the job ID
+    history.push("/update-job", {jobId});
+    
+  };
+  
+  const handleDelete = async (jobId) => {
     try {
-      const response = await axios.post(BASE_API_URL + "/postingJob", jobDetails);
-      console.log('Job details submitted:', response.data);
-
-      // Reset the form after successful submission
-      setJobDetails({
-        // ... reset form state
-=======
-    const [jobDetails, setJobDetails] = useState({
-        hrId: '',
-        hrName: '',
-        companyName: '',
-        title: '',
-        jobType: '',
-        eligibility: '',
-        applicationDeadline: '',
-        location: '',
-        requirements: '',
-        openings:' ',
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
-      });
-      history.push('/hr-dashboard');
+      const response = await axios.delete(`${BASE_API_URL}/deleteJobs/${jobId}`);
+      if (response.status === 200) {
+        // Refresh jobs data after successful deletion
+        fetchJobs(userName);
+        console.log(`Job with ID ${jobId} deleted successfully`);
+      } else {
+        console.error('Failed to delete job');
+      }
     } catch (error) {
-      console.error('Error submitting job details:', error);
-      // Handle errors appropriately
+      console.error('Error deleting job:', error);
     }
   };
-      
+  
     
-<<<<<<< HEAD
+ 
 
- return (
-=======
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setJobDetails((prevJobDetails) => ({
-          ...prevJobDetails,
-          [name]: value,
-        }));
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Job details submitted:', jobDetails);
-        // Reset form after submission (optional)
-        setJobDetails({
-          hrId: '',
-          hrName: '',
-          companyName: '',
-          title: '',
-          jobType: '',
-          eligibility: '',
-          applicationDeadline: '',
-          location: '',
-          requirements: '',
-          openings:' ',
-        });
-      };
-    
   return (
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
     <div className='hr-dashboard-container'>
-        <div className='hr-leftside'>
-            <nav id='logo'>
-                <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
-            </nav>
-
-            <nav>
-                <h2>HR Name</h2>
-            </nav>   
-            <section id="hr-dashboard">
-                <FontAwesomeIcon icon={faHouse} /> <Link to="/hr-dashboard"> Dashboard</Link>
-            </section>
-
-          
-            <section>
-                <FontAwesomeIcon icon={faBriefcase} /> <Link to='/post-jobs'>Jobs</Link>
-            </section>
-
-            <section>
-                  <FontAwesomeIcon icon={faAddressCard} /> <Link to='/hr-applications'>Applications</Link>
-            </section>
-
-            <section>
-                <FontAwesomeIcon icon={faBriefcase} /> <Link to='/posted-jobs'>Posted Jobs</Link>
-            </section>
-
-            <section>
-                <FontAwesomeIcon icon={faUsers} /> <Link to='/people'>People</Link>
-            </section>
-
-            <section>
-                <FontAwesomeIcon icon={faUser} /> <Link to='/hr-profile'>Profile</Link>
-            </section>
-
-
-            <section>
-                <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
-            </section>
-
-        </div>
-
-        <div className='hr-rightside'>
-
-            <div className='hr-job-posting-form'>
-                <h2 style={{textAlign:'center'}}>Post a Job</h2>
-                <form className='hr-job-posting-form' onSubmit={handleSubmit}>
-                    <div className='job-details'>
-                        <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='hrId' value={jobDetails.hrId} onChange={handleChange} required/></label>
-                        <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='hrName' value={jobDetails.Name} onChange={handleChange} required/></label>
-                        <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value={jobDetails.companyName} onChange={handleChange} required/></label>
-                    </div>
-
-                    <div className='job-details'>
-                        <label htmlFor='title'>Job Title: <input type='text' id='title' name='jobTitle' value={jobDetails.jobTitle} onChange={handleChange} required /></label>
-                        <label htmlFor='jobType'>Job Type:<br/> 
-                            <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
-                                <option value=''>Select Job Type</option>
-                                <option value='fullTime'>Full Time</option>
-                                <option value='partTime'>Part Time</option>
-                                <option value='contract'>Contract</option>
-                                <option value='Intern'>Intern</option>
-                                <option value='Freelancer'>Freelancer</option>
-                            </select>
-                        </label>
-                        <label htmlFor='eligibility'>Eligibility: <input type='text' id='eligibility' name='eligibility' value={jobDetails.eligibility} onChange={handleChange} required /></label>
-                    </div>
-
-                    <div className='job-details'>
-                        <label id='applicationdate' htmlFor='applicationDeadline' >Application Deadline: <br/><input type='date' className='date' id='applicationDeadline' name='applicationDeadline' value={jobDetails.applicationDeadline} onChange={handleChange} required /></label>
-                        <label htmlFor='location'>Location: <input type='text' id='location' name='location' value={jobDetails.location} onChange={handleChange} required /></label>
-                        <label htmlFor='requirements'>Requirements/Skills:<br/> <textarea id='requirements' name='requirements' value={jobDetails.requirements} onChange={handleChange} required /></label>
-                    </div>
-
-                    <div className='job-details'>
-                        <label htmlFor='no of positions'>Openings:<br/> <input type='number' id='no of positions' name='numberOfPosition' value={jobDetails.numberOfPosition} onChange={handleChange} required /></label>
-                        <label htmlFor='experience'>Experience: <input type='text' id='experience' name='experience' value={jobDetails.experience} onChange={handleChange} required /></label>
-                        <label htmlFor='salary'>Salary: <input type='text' id='salary' name='salary' value={jobDetails.salary} onChange={handleChange} required /></label>
-                    </div>
-                    
-                    <div className='job-button'>
-                        <button >Post</button>
-                    </div>
-                    
-                </form>
-            </div>
+      {/* Left Side Navigation */}
+      <div className='hr-leftside'>
+        {/* Navigation Logo */}
+        <nav id='logo'>
+          <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
+        </nav>
+        {/* HR Name */}
+        <nav>
+                    <h2>Welcome {userName}</h2>
+                </nav>
+                
+                    <section id="hr-dashboard">
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName } }}>Dashboard</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName } }}>Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName } }}>Applications</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName } }}>Posted Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName } }}>People</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName } }}>Profile</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName } }}>Home</Link>
+                    </section>
+      </div>
+      {/* Right Side Content */}
+      <div className='hr-rightside'>
+      <div>
+  <h2>Jobs Posted by {userName}</h2>
+  <table id='jobTable'>
+    
+      <tr>
+        <th>Job Title</th>
+        <th>Job Type </th>
+        <th>Location</th>
+        <th>Requirements</th>
+        <th>Eligible</th>
+        <th>No of Position</th>
+        <th>Salary</th>
+        <th>Application DeadLine</th>
+        <th>Action</th>
         
-        {/* <form className='job-posting-form' onSubmit={handleSubmit}>
-            <h2 style={{textAlign:'center'}}>Post a Job</h2>
-            <div className='Job-details'>
-                <label htmlFor='hrId'>HR ID: <input type='text' id='hrId' name='hrId' value='HR_ID' /></label>
-                <label htmlFor='hrName'>HR Name: <input type='text' id='hrName' name='hrName' value='HR_NAME' /></label>
-                <label htmlFor='companyName'>Company Name: <input type='text' id='companyName' name='companyName' value='COMPANY_NAME' /></label>
-            </div>
+      </tr>
+   
+      {jobs.map(job => (
+        <tr key={job.id}>
+         
+          <td>{job.jobTitle}</td>
+          <td>{job.jobType}</td>
+          <td>{job.location}</td>
+          <td>{job.requirements}</td>
+          <td>{job.eligibility}</td>
+          <td>{job.numberOfPosition}</td>
+          <td>{job.salary}</td>
+          <td>{job.applicationDeadline}</td>
+          <td>
+            <button onClick={() => handleUpdate(job.jobId)}>Update</button>
+            <button onClick={() => handleDelete(job.jobId)}>Delete</button>
+          </td>
+          
+          
+          
+        </tr>
+      ))}
+   
+  </table>
+</div>
 
-            <div className='Job-details'>
-                <label htmlFor='title'>Job Title: <input type='text' id='title' name='title' value={jobDetails.title} onChange={handleChange} required /></label>
-                <label htmlFor='jobType'>Job Type:<br/> 
-                <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
-                    <option value=''>Select Job Type</option>
-                    <option value='fullTime'>Full Time</option>
-                    <option value='partTime'>Part Time</option>
-                    <option value='contract'>Contract</option>
-                    <option value='Intern'>Contract</option>
-                    <option value='Freelancer'>Contract</option>
-                </select>
-                </label>
-                <label htmlFor='eligibility'>Eligibility: <input type='text' id='eligibility' name='eligibility' value={jobDetails.eligibility} onChange={handleChange} required /></label>
-            </div>
+        
 
-            <div className='Job-details'>
-                <label htmlFor='applicationDeadline' >Application Deadline: <br/><input type='date' className='date' id='applicationDeadline' name='applicationDeadline' value={jobDetails.applicationDeadline} onChange={handleChange} required /></label>
-                <label htmlFor='location'>Location: <input type='text' id='location' name='location' value={jobDetails.location} onChange={handleChange} required /></label>
-                <label htmlFor='requirements'>Requirements/Skills:<br/> <textarea id='requirements' name='requirements' value={jobDetails.requirements} onChange={handleChange} required /></label>
-                <label htmlFor='no of positions'>Openings:<br/> <textarea id='no of positions' name='no of positions' value={jobDetails.openings} onChange={handleChange} required /></label>
-<<<<<<< HEAD
 
-=======
->>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
-            </div>
-            <div className='hr-submit-button' >
-                <button type='submit'>Submit</button>
-            </div>
-        </form> */}
+        
       </div>
     </div>
-  )
+  );
 };
 
 export default Jobs;
