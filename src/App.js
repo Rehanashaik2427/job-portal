@@ -28,7 +28,7 @@ import HrDashboard from './Dashboards/HrDashboardpages/HrDashboard';
 import HrProfile from './Dashboards/HrDashboardpages/HrProfile';
 import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
-import Jobs from './Dashboards/HrDashboardpages/Jobs';
+// import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
 import About from './pages/About';
@@ -40,6 +40,10 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
+import Jobs from './Dashboards/HrDashboardpages/Jobs';
+import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
+import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
+
 
 const App = () => {
   return (
@@ -86,11 +90,14 @@ const App = () => {
           <Route path='/hr-registeration' component={HrRegistrationForm} />
           <Route path='/hr-signin' component={HrSignin} />
           <Route path='/hr-dashboard' component={HrDashboard} />
-          <Route path='/post-jobs' component={Jobs} />
+          {/* <Route path='/post-jobss' component={Jobs} /> */}
           <Route path='/posted-jobs' component={PostedJobs} />
           <Route path='/people' component={People} />
           <Route path='/hr-profile' component={HrProfile} />
           <Route path="/posted-jobs" component={PostedJobs} />
+          <Route path="/post-jobs" component={Jobs} />
+          <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
+          <Route path="/update-job" component={UpdateJob}/>
         </Switch>
       </BrowserRouter>
     </div>

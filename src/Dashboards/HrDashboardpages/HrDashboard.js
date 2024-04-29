@@ -3,56 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from "react-router-dom";
 import './HrDashboard.css';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 const HrDashboard = () => {
 
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const location = useLocation();
+  const userName = location.state?.userName;
+  console.log(userName);
 
-//   useEffect(() => {
-//     const ctx = document.getElementById('myChart');
-//     if (ctx) {
-//       // Check if a chart instance already exists and destroy it
-//       if (chartRef.current) {
-//         chartRef.current.destroy();
-//       }
+  
 
-//       const myChart = new Chart(ctx, {
-//         type: 'pie',
-//         data: {
-//           labels: ['Posting Jobs', 'Total Applications', 'Shortlisted Candidates', 'Activities', 'Active Status'],
-//           datasets: [{
-//             label: 'Data',
-//             data: [1000, 3000, 200, 1000, 500],
-//             backgroundColor: [
-//               'rgba(255, 99, 132, 0.2)',
-//               'rgba(54, 162, 235, 0.2)',
-//               'rgba(255, 206, 86, 0.2)',
-//               'rgba(75, 192, 192, 0.2)',
-//               'rgba(153, 102, 255, 0.2)',
-//             ],
-//             borderColor: [
-//               'rgba(255, 99, 132, 1)',
-//               'rgba(54, 162, 235, 1)',
-//               'rgba(255, 206, 86, 1)',
-//               'rgba(75, 192, 192, 1)',
-//               'rgba(153, 102, 255, 1)',
-//             ],
-//             borderWidth: 2
-//           }]
-//         },
-//         options: {
-//           responsive: true,
-//           maintainAspectRatio: false,
-//           title: {
-//             display: true,
-//             text: 'Job Dashboard Data'
-//           }
-//         }
-//       });
-
-//       // Save the chart instance to the ref for future reference
-//       chartRef.current = myChart;
-//     }
-//   }, []);
 
   return (
     <div className='candidate-dashboard-container'>
@@ -61,29 +23,52 @@ const HrDashboard = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>HR Name</h2>
+          <h2> Welcome {userName}</h2>
         </nav>   
-        <section id="hr-dashboard">
-          <FontAwesomeIcon icon={faHouse} /> <Link to="/hr-dashboard"> Dashboard</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faBriefcase} /> <Link to='/post-jobs'>Jobs</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faAddressCard} /> <Link to='/hr-applications'>Applications</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faBriefcase} /> <Link to='/posted-jobs'>Posted Jobs</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faUsers} /> <Link to='/people'>People</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faUser} /> <Link to='/hr-profile'>Profile</Link>
-        </section>
-        <section>
-          <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
-        </section>
+        
+      <section id="hr-dashboard">
+        <FontAwesomeIcon icon={faHouse} /> <Link to={{
+          pathname: '/hr-dashboard',
+          state: { userName: userName }
+        }}>Dashboard</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{
+          pathname: '/post-jobs',
+          state: { userName: userName }
+        }}>Jobs</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{
+          pathname: '/hr-applications',
+          state: { userName: userName }
+        }}>Applications</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{
+          pathname: '/posted-jobs',
+          state: { userName: userName }
+        }}>Posted Jobs</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faUsers} /> <Link to={{
+          pathname: '/people',
+          state: { userName: userName }
+        }}>People</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faUser} /> <Link to={{
+          pathname: '/hr-profile',
+          state: { userName: userName }
+        }}>Profile</Link>
+      </section>
+      <section>
+        <FontAwesomeIcon icon={faHome} /> <Link to={{
+          pathname: '/',
+          state: { userName: userName }
+        }}>Home</Link>
+      </section>
+    
       </div>
       <div className='hr-rightside'>
         <div className="content">

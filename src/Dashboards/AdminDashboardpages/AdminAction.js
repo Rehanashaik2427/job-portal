@@ -1,33 +1,98 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './AdminAction.css';
+
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
 const AdminAction = () => {
-    const approveRequest = () => {
-        // Handle approve logic here, such as sending a request to the server
-        console.log('Request Approved');
-      };
-    
-      const rejectRequest = () => {
-        // Handle reject logic here, such as sending a request to the server
-        console.log('Request Rejected');
-      };
-  return (
-    <div>
-    <header>
-      <h2>Admin Dashboard</h2>
-    </header>
-    <main>
-      <div className="request">
-        <p>Join request for John Doe as Myntra HR</p>
-        <button className="approve-btn" onClick={approveRequest}>
-          Approve
-        </button>
-        <button className="reject-btn" onClick={rejectRequest}>
-          Reject
-        </button>
-      </div>
-    </main>
-  </div>
-  )
-}
+  const [hrDetails, setHRDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [approvalMessages, setApprovalMessages] = useState({});
 
-export default AdminAction
+  const fetchHRDetails = async () => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getHr`);
+      setHRDetails(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchHRDetails();
+  }, []);
+
+  const currentTime = new Date().toLocaleString();
+
+  const approveRequest = async (userEmail,userId) => {
+    console.log('Request Approved');
+    try {
+      const res = await axios.put(`${BASE_API_URL}/updateApprove?userEmail=${userEmail}&approvedOn=${currentTime}`);
+      console.log(res.data);
+      const updatedMessages = { ...approvalMessages, [userId]: 'Approval successful' };
+      setApprovalMessages(updatedMessages);
+     
+      // If needed, update the state or perform additional actions after successful approval
+    } catch (error) {
+      console.log('Error approving request:', error);
+      // Handle error here, e.g., show a notification to the user
+    }
+  };
+
+  const rejectRequest = async(userEmail) => {
+    console.log('Request Rejected');
+    // Handle reject request logic here
+    try {
+      const response = await axios.delete(`${BASE_API_URL}/deleteUser?userEmail=${userEmail}`);
+      console.log(response.data);
+
+     
+      // If needed, update the state or perform additional actions after successful approval
+    } catch (error) {
+      console.log('Error approving request:', error);
+      // Handle error here, e.g., show a notification to the user
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div className="admin-container">
+      <header className="admin-header">
+        <h2 style={{color:'wheat'}}>Admin Dashboard</h2>
+      </header>
+      <main>
+        {hrDetails.map(hr => (
+          <div className="request-container" key={hr.userId}>
+            <div className="hr-details">
+              <p>Name: {hr.userName} come to join as {hr.companyName} HR</p>
+              <p>Email: {hr.userEmail}</p>  
+              <h1>{hr.userStatus}</h1>
+            </div>
+            <div className="button-container">
+              <button className="approve-btn" onClick={() => approveRequest(hr.userEmail,hr.userId)}>
+                Approve
+              </button>
+              <button className="reject-btn" onClick={() => rejectRequest(hr.userEmail)}>
+                Reject
+              </button>
+            </div>
+            {approvalMessages[hr.userId] && <p className="approval-message">{approvalMessages[hr.userId]}</p>}
+          </div>
+        ))}
+      </main>
+    </div>
+  );
+  
+};
+
+export default AdminAction;

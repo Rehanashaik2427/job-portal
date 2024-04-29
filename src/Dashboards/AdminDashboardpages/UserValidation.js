@@ -4,13 +4,32 @@ import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
+import { useEffect,useState } from 'react';
+
+
+const BASE_API_URL="http://localhost:8080/api/jobbox";
 const UserValidation = () => {
-  const userData = [
-    { name: 'Ram', verifiedOn: '04/04/2024', userType: 'Candidate', status: 'Active' },
-    { name: 'Rahul', verifiedOn: '04/01/2024', userType: 'Candidate', status: 'Active' },
-    { name: 'Rajesh', verifiedOn: '04/04/2024', userType: 'HR', status: 'Active' },
-    { name: 'Rehana', verifiedOn: '04/03/2024', userType: 'Candidate', status: 'Active' },
-  ];
+
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`${BASE_API_URL}/displayUsers`); // Replace '/displayUsers' with your actual endpoint
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+ 
   return (
     <div className='body'>
     <div className='leftside'>
@@ -59,19 +78,25 @@ const UserValidation = () => {
  
           <tr >
             <th >User Name</th>
-            <th >Verified On</th>
             <th >User Type</th>
+            <th>Action Date</th>
             <th >Status & Actions</th>
           </tr>
-     
-          {userData.map((user, index) => (
-            <tr key={index} >
-              <td >{user.name}</td>
-              <td >{user.verifiedOn}</td>
-              <td >{user.userType}</td>
-              <td >{user.status}</td>
-            </tr>
-          ))}
+          {userData.map(user => (
+                <tr key={user.userId}>
+
+                  <td>{user.userName}</td>
+                  <td>{user.userRole}</td>
+                  <td>{user.approvedOn}</td>
+                  <td>{user.userEmail}</td>
+                  {/* <td>
+                   
+                  </td> */}
+                </tr>
+                              ))}
+
+         
+         
        
       </table>
     </div>
