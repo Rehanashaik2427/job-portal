@@ -139,7 +139,7 @@ body {
 
 /* About-css */
 
-.about-container {
+.about-container{
   display: flex;
   flex-direction: column;
   height: 100vh; /* Set height to full viewport height */

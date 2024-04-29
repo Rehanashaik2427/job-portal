@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-
+import './Home.css';
 const Companies = () => {
   const [formData, setFormData] = useState({
     companyName: '',
