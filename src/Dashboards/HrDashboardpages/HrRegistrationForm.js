@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import "./HrReg.css";
 import axios from 'axios';
@@ -9,23 +10,35 @@ const HrRegistrationForm = () => {
     userRole:"",
     userEmail: "",
     companyName: "",
+=======
+import './HrDashboard.css'; // Import CSS file for styling
+
+const HrRegistrationForm = () => {
+  const [formData, setFormData] = useState({
+    hrName: "",
+    hrId: "",
+    hrEmail: "",
+    companyId: "",
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
     password: "",
     confirmpassword: "",
   });
+<<<<<<< HEAD
   
  
+=======
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const validatePassword = () => {
-    // Optional password validation (add more rules as needed)
-    if (formData.password.length < 8) {
-      alert("Password must be at least 8 characters long.");
-      return false; // Prevent form submission
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (formData.password !== formData.confirmPassword) {
+<<<<<<< HEAD
       alert("Passwords don't match! Please re-enter.");
       return false;
     }
@@ -68,6 +81,13 @@ const HrRegistrationForm = () => {
     } catch (error) {
       console.error('Error submitting job details:', error);
       // Handle errors appropriately (e.g., display error message to the user)
+=======
+      setPasswordMatchError(true);
+    } else {
+      setPasswordMatchError(false);
+      // Logic to handle form submission (e.g., send data to backend)
+      console.log("Form submitted successfully!");
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
     }
   };
 
@@ -78,20 +98,19 @@ const HrRegistrationForm = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">HR Name:</label>
-            <input type="text" id="hrName" name="userName" value={formData.hrName} onChange={handleInputChange} required />
+            <input type="text" id="hrName" name="hrName" value={formData.hrName} onChange={handleInputChange} required />
           </div>
-         
+          <div className="form-group">
+            <label htmlFor="hrId">HR ID:</label>
+            <input type="text" id="hrId" name="hrId" required />
+          </div>
           <div className="form-group">
             <label htmlFor="hrEmail">Email ID:</label>
-            <input type="email" id="hrEmail" name="userEmail" placeholder='name@companyname.com' value={formData.userEmail}  onChange={handleInputChange}  required />
-          </div>
-          <div className="candidate-form-group">
-            <label htmlFor="userRole">Role:</label>
-            <input type="text" id="userRole" name="userRole" value={formData.userRole}  onChange={handleInputChange}  required />
+            <input type="email" id="hrEmail" name="hrEmail" placeholder='name@companyname.com' required />
           </div>
           <div className="form-group">
-            <label htmlFor="companyName">Company Name:</label>
-            <input type="text" id="companyId" name="companyName" onChange={handleInputChange}  required />
+            <label htmlFor="companyId">Company ID:</label>
+            <input type="text" id="companyId" name="companyId" required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
@@ -101,7 +120,9 @@ const HrRegistrationForm = () => {
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmpassword" value={formData.confirmpassword} onChange={handleInputChange} required />
           </div>
-          
+          {passwordMatchError && (
+            <p className="error-message">Password and confirm password do not match. Please check.</p>
+          )}
           <button type="submit">Register</button>
         </form>
       </div>
@@ -110,3 +131,4 @@ const HrRegistrationForm = () => {
 };
 
 export default HrRegistrationForm;
+

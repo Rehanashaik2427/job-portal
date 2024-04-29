@@ -1,12 +1,21 @@
 import React from 'react';
+<<<<<<< HEAD
 import { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import "./SinginCandi.css";
 
+=======
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
 
 
+class CandidateSignup extends React.Component {
+  redirectToSuccessPage = (event) => {
+    event.preventDefault();
+    window.location.href = "/CandidateRegisterSucessMsg";
+  }
 
+<<<<<<< HEAD
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandidateSignup=()=> {
   // redirectToSuccessPage = (event) => {
@@ -82,26 +91,26 @@ const CandidateSignup=()=> {
   
 
   
+=======
+  render() {
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
     return (
       <div className="signup-container">
-        <form id="signupForm" onSubmit={submitUser}>
+        <form id="signupForm" onSubmit={this.redirectToSuccessPage}>
           <div className="candidate-form-group">
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" name="userName" value={user.userName}    onChange={handleChange}  required />
+            <input type="text" id="name" name="name" className='candidate-name' required />
           </div>
           <div className="candidate-form-group">
             <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="userEmail" value={user.userEmail}    onChange={handleChange} required />
-          </div>
-          <div className="candidate-form-group">
-            <label htmlFor="userRole">Role:</label>
-            <input type="text" id="userRole" name="userRole" value={user.userRole}  onChange={handleChange}  required />
+            <input type="email" id="email" name="email" required />
           </div>
           <div className="candidate-form-group">
             <label htmlFor="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" value={user.phone}  onChange={handleChange} required />
+            <input type="tel" id="phone" name="phone" required />
           </div>
           <div className="candidate-form-group">
+<<<<<<< HEAD
   <label htmlFor="password">Password:</label>
   <input
     type="password"  // Change input type to "password"
@@ -124,6 +133,15 @@ const CandidateSignup=()=> {
   />
 </div>
 
+=======
+            <label htmlFor="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div className="candidate-form-group">
+            <label htmlFor="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+          </div>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
           <div className="candidate-form-group">
             <input type="submit" value="Sign Up" />
           </div>
@@ -131,6 +149,6 @@ const CandidateSignup=()=> {
       </div>
     );
   }
-
+}
 
 export default CandidateSignup;

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom'; // Import withRouter
 import './Home.css';
+<<<<<<< HEAD
 //import axios from 'axios';
 
 const Candidates = () => {
@@ -34,10 +35,21 @@ const Candidates = () => {
   //     alert('An error occurred during login. Please try again later.'); // Generic error message
   //   }
   // };
+=======
 
-  const handleSubmit = async (event) => {
+class Candidates extends React.Component {
+  state = {
+    loginSuccess: false // Add a state to track login success
+  };
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
+
+  redirectToSuccessPage = (event) => {
     event.preventDefault();
+    // Simulate login success by updating state
+    this.setState({ loginSuccess: true });
+  }
 
+<<<<<<< HEAD
     history.push('/candiadte-dashboard'); 
 
     //await validateLogin(userEmail, password);
@@ -57,30 +69,39 @@ const Candidates = () => {
               value={userEmail}
               onChange={(event) => setEmail(event.target.value)}
             />
+=======
+  render() {
+    return (
+      <div className="candidate-login-form">
+        <div id="login-form">
+          {/* Conditional rendering for login success message */}
+          {this.state.loginSuccess ? (
+            <div className="login-success-message">
+              Login successful! Welcome back! <Link to="/candiadte-dashboard">Click here to view your dashboard</Link>
+            </div>
+          ) : (
+            <form id="loginform" onSubmit={this.redirectToSuccessPage}>
+              <div className="candidate-login-form-group">
+                <label htmlFor="login-email">Email:</label>
+                <input type="email" id="login-email" name="login-email" required />
+              </div>
+              <div className="candidate-login-form-group">
+                <label htmlFor="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required />
+              </div>
+              <div className="candidate-login-form-group">
+                <button type="submit">Login</button>
+              </div>
+            </form>
+          )}
+          <div className="candidate-login-switch-form">
+            Don't have an account? <Link to="/candidate-signup">Signup</Link>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
           </div>
-          <div className="candidate-login-form-group">
-            <label htmlFor="login-password">Password:</label>
-            <input
-              type="password"
-              id="login-password"
-              name="password"
-              required
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </div>
-         
-        
-          <div className="candidate-login-form-group">
-            <button type="submit">Login</button>
-          </div>
-        </form>
-        <div className="candidate-login-switch-form">
-          Don't have an account? <Link to="/candidate-signup">Signup</Link>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default Candidates;
+export default withRouter(Candidates); // Wrap the component with withRouter

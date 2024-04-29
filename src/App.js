@@ -69,9 +69,10 @@ const App = () => {
           <Route path="/block-account" component={BlockAccount} />
           <Route path="/my-profile" component={Myprofile} />
           <Route path="/contacts" component={Contacts} />
+
           <Route path="/companyDetailsByAdmin" component={CompanyDetailsByAdmin} />
           <Route path="/companyDetailsAdded" component={CompanyAddedMsg} />
-          <Route path='/CandidateSucessMsg' component={CandidateSucessMsg} />
+          <Route path='/candidate-sucess-msg' component={CandidateSucessMsg} />
           <Route path='/candidate-signup' component={CandidateSignup} />
           <Route path='/CandidateRegisterSucessMsg' component={CandidateRegisterSucessMsg} />
           <Route path='/candiadte-dashboard' component={CandidateDashboard} />

@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
+=======
+import companyService from '../Services/company.service';
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
 const Companies = () => {
   const [formData, setFormData] = useState({
     companyName: '',
     contactNumber: '',
     companyEmail: '',
+    industry:'',
     location: '',
+<<<<<<< HEAD
     discription: '', // Corrected typo
     industry: '',
     date: '',
+=======
+    dateTime: '',
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
   });
 
   const [successMessage, setSuccessMessage] = useState('');
@@ -21,6 +30,7 @@ const Companies = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+<<<<<<< HEAD
   const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,11 +42,20 @@ const Companies = () => {
       // Display success message with potential backend data (if applicable)
       setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);  // Check for backend message
 
+=======
+
+  const saveCompanyDetails = (e) => {
+    e.preventDefault();
+
+    companyService.saveCompany(formData).then((res) => {
+      setSuccessMessage('Company details submitted successfully!');
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
       // Clear form data
       setFormData({
         companyName: '',
         contactNumber: '',
         companyEmail: '',
+<<<<<<< HEAD
         location: '',
         discription: '',
         industry: '',
@@ -47,14 +66,30 @@ const Companies = () => {
       console.error('Error during submission:', error);
       alert('An error occurred during submission. Please try again later.'); // Generic error message
     }
+=======
+        industry:'',
+        location: '',
+        dateTime: '',
+      });
+      console.log(formData);
+    }).catch((error) => {
+      console.log(error);
+    });
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
   };
 
   return (
-    <div className="comapny-container">
+    <div className="company-container">
       <h2>Company Details</h2>
+<<<<<<< HEAD
 
       <form id="companyForm" onSubmit={handleSubmit}>
       
+=======
+      
+      <form id="companyForm" onSubmit={saveCompanyDetails}>
+        <input type="hidden" id="redirectToError" value="false" />
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
         <label htmlFor="companyName">Company Name:</label>
         <input
           type="text"
@@ -83,7 +118,11 @@ const Companies = () => {
           onChange={handleChange}
         />
 
+<<<<<<< HEAD
 <label htmlFor="industry">Industry:</label>
+=======
+        <label htmlFor="industry">Industry:</label>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
         <input
           type="text"
           id="industry"
@@ -101,6 +140,7 @@ const Companies = () => {
           onChange={handleChange}
         />
 
+<<<<<<< HEAD
 <label htmlFor="discription">Description:</label>
         <input
           type="text"
@@ -111,11 +151,14 @@ const Companies = () => {
         />
 
         <label htmlFor="date">DateTime:</label>
+=======
+        <label htmlFor="dateTime">Date and Time:</label>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
         <input
-          type="date"
-          id="date"
-          name="date"
-          value={formData.date}
+          type="datetime-local"
+          id="dateTime"
+          name="dateTime"
+          value={formData.dateTime}
           onChange={handleChange}
           required
         />

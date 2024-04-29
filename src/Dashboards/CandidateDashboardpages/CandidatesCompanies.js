@@ -1,14 +1,10 @@
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-// Array to store company data
-
-const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandidatesCompanies = () => {
   const [companies, setCompanies] = useState([]); 
   const [jobRole, setJobRole] = useState('');
@@ -17,37 +13,8 @@ const CandidatesCompanies = () => {
     setJobRole({ ...jobRole, [e.target.name]: value });
   };
  
-  const searchJob= async ()=>{
-   
-    try {
-      const response = await axios.get(`${BASE_API_URL}/search/${jobRole}`);
-      const data = response.data; // Access the data directly
-      setCompanies(data);
-    } catch (error) {
-      //console.error('Error fetching companies:', error);
-      // Handle errors appropriately
-    }
-  };
-
-  // useEffect(() => {
-    
-  // }, []); //
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(BASE_API_URL+"/displayJobs");
-      const data = response.data; // Access the data directly
-      setCompanies(data);
-    } catch (error) {
-      console.error('Error fetching companies:', error);
-      // Handle errors appropriately
-    }
-  };
+ 
   
-  useEffect(() => {
-    fetchData();
-    searchJob();
-  }, []); // Empty dependency array ensures fetching data only once on mount
   
   return (
     <div className="candidate-dashboard-container">
@@ -87,6 +54,7 @@ const CandidatesCompanies = () => {
     </div>
 
     <div className='rightside'>
+<<<<<<< HEAD
 
         <div className="search">
           <form onSubmit={searchJob}>
@@ -98,11 +66,15 @@ const CandidatesCompanies = () => {
 
         <div className="candidate-search">
             <button><FontAwesomeIcon icon={faSearch} /></button> 
+=======
+        <div className="candidate-search">
+            <button><FontAwesomeIcon icon={faSearch} />search</button>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
             <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
-
         </div>
         <div className="companyJob">
             <h1>Job offers by Companies</h1>
+<<<<<<< HEAD
             {/* return ( */}
                 <div className="cards">
                     {companies.length > 0 ? ( // Check if companies data is available
@@ -123,6 +95,24 @@ const CandidatesCompanies = () => {
                            )}
                  </div>
           {/* ); */}
+=======
+            <div className="company-card">
+                <p className="company-name">Company A</p>
+                <h3>Job Role</h3>
+                <h3>Backend Developer</h3>
+                <p>Number of Positions: 10</p>
+                {/* <p className="company-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel libero euismod.</p> */}
+                <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
+            </div>
+            <div className="company-card">
+                <p className="company-name">Company B</p>
+                <h3>Job Role</h3>
+                <h3>Business Executive</h3>
+                <p>Number of Positions: 18</p>
+                {/* <p className="company-description">Vestibulum nec justo vel libero euismod, vehicula nisl vel, aliquam justo.</p> */}
+                <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
+            </div>
+>>>>>>> 6b17a2a43d049a6e99c4904b6dcf9d968d79be08
         </div>
     </div>
   </div>
