@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
 const Companies = () => {
   const [formData, setFormData] = useState({
     companyName: '',
     contactNumber: '',
     companyEmail: '',
-    industry: '',
     location: '',
     discription: '', // Corrected typo
     date: '',
   });
 
   const [successMessage, setSuccessMessage] = useState('');
-  const history = useHistory();
+  const [errorMessage,setErrorMessage]=useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,25 +20,18 @@ const Companies = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
-      console.log('Company details submitted:', response.data);
-      setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);
-      setFormData({
-        companyName: '',
-        contactNumber: '',
-        companyEmail: '',
-        industry: '',
-        location: '',
-        discription: '',
-        date: '',
-      });
-      history.push('/hr-registration');
-    } catch (error) {
-      console.error('Error during submission:', error);
-      alert('Company already exists, please register as a HR');
-      history.push('/hr-registration');
-    }
+    // Perform form submission logic here, such as sending data to backend
+
+    // Display success message
+    setSuccessMessage('Company details submitted successfully!');
+    // Clear form data
+    setFormData({
+      companyName: '',
+      contactNumber: '',
+      companyEmail: '',
+      location: '',
+      date: '',
+    });
   };
 
   return (
@@ -91,15 +79,8 @@ const Companies = () => {
           value={formData.location}
           onChange={handleChange}
         />
-        <label htmlFor="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="discription"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <label htmlFor="date">Date:</label>
+
+        <label htmlFor="date">DateTime:</label>
         <input
           type="date"
           id="date"
@@ -111,6 +92,9 @@ const Companies = () => {
         <input type="submit" value="Submit" />
         {successMessage && (
           <p className="success-message">{successMessage}</p>
+        )}
+        {errorMessage && (
+          <p className="error-message">{errorMessage}</p>
         )}
       </form>
     </div>

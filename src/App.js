@@ -45,7 +45,6 @@ import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrati
 import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
 
 
-
 const App = () => {
   return (
     <div>

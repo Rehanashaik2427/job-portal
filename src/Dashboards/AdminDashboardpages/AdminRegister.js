@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
-import './Admin.css';
+import './Admin.css'; // Import custom CSS file
 
 const AdminRegister = () => {
   const [email, setEmail] = useState("");
@@ -9,25 +10,25 @@ const AdminRegister = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    history.push("/admin-dashboard"); // Fix: replace pushState with push
+    history.push("/admin-dashboard");
   }
 
   return (
-    <div className="admin-from-container">
-    <form className='form-container' onSubmit={handleSubmit}>
-      <div className='form-group'>
-        <label>Email:</label>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div className='form-group'>
-        <label>Password:</label>
-        <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <div className='admin-button'>
-        <button type="submit">Login</button>
-      </div>
-    </form>
-  </div>
+    <div className="admin-form-container">
+      <Form className='form-container' onSubmit={handleSubmit}>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email:</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+        </Form.Group>
+        <div className='admin-button'>
+          <Button variant="primary" type="submit">Login</Button>
+        </div>
+      </Form>
+    </div>
   );
 };
 
