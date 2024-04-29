@@ -41,7 +41,6 @@ import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
 
-
 const App = () => {
   return (
     <div>

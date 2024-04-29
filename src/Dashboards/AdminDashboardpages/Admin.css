@@ -1,35 +1,29 @@
-.admin-from-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Adjust as needed */
-    text-align: center;
-  }
-  
-  .form-container {
-    width: 400px; /* Adjust the width of the form container */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff;
-  }
-  
-  .admin-button{
-    width: 40%;  
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-    width: 90%;
-   
-  }
-  .form-group label{
-    text-align: left;
-  }
-  .admin-form-details {
-    width: 80%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
+.admin-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  background-color: rgb(197, 210, 223); 
+}
+
+.form-container {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid skyblue;
+  border-radius: 5px;
+  background-color:skyblue;
+}
+
+.admin-button {
+  height: 50px;
+  font-size: 24px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  text-align: left;
+}
