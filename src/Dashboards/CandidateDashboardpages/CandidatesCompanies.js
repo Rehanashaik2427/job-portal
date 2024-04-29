@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
-import './CandidateDashboard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import './CandidateDashboard.css';
 
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandidatesCompanies = () => {
@@ -74,15 +74,18 @@ const CandidatesCompanies = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section>
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-        <div className="search">
-          <form onSubmit={searchJob}>
-            <input type='text' id='jobRole' name='jobRole' value={jobRole} onChange={handleChange} />
-            <input type='submit' value="Search" />
-          </form>
+      <div className="top-right-content">
+          <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+          </div>
         </div>
 
         <div className="companyJob">

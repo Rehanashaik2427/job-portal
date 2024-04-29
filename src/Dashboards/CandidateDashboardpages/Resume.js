@@ -46,16 +46,21 @@ const Resume = () => {
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
         </section> 
         <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+        <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-        <div className="candidate-search">
-          <button><FontAwesomeIcon icon={faSearch} />search</button>
-          <FontAwesomeIcon icon={faUser} id="user" className='icon'/>
+      <div className="top-right-content">
+          <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+          </div>
         </div>
         <div>
-          <h1>My Resumes</h1>
+          <h1 style={{textAlign:'center'}}>MY RESUMES</h1>
           <div className="span">
             <span className="resume">
               <h3>resume-1</h3>
@@ -73,16 +78,17 @@ const Resume = () => {
               <h3>resume-5</h3>
             </span>
           </div>
-          <div>
+          <div className='adding-resumes'>
             <h2>Add new Resume</h2>
-            <input type="file" placeholder="Resume" />
+            <input type="file" placeholder="Resume"/>
             <input type="submit" value="ADD" onClick={handleAddResume} />
-          </div>
-          {showMessage && (
-            <div>
+            {showMessage && (
+            <div className='success-message'>
               <p>Your resume has been added successfully!</p>
             </div>
           )}
+          </div>
+       
         </div>
       </div>
     </div>

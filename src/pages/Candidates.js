@@ -1,28 +1,56 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
+import axios from 'axios';
 
 const Candidates = () => {
-  const [userEmail, setUserEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const history = useHistory();
+  const [formData, setFormData] = useState({
+    userEmail: "",
+    password: "",
+  });
+  
+  const history = useHistory(); // Initialize useHistory
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    history.push('/candiadte-dashboard');
-    // Simulated login validation - replace with actual validation logic
-    // if (userEmail === 'example@example.com' && password === 'password') {
-    //   // Clear login error if any
-    //   setLoginError('');
-
-    //   // Redirect to candidate dashboard on successful login
-     
-    // } else {
-    //   // Display login error if credentials are incorrect
-    //   setLoginError('Invalid email or password. Please try again.');
-    // }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
+
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+
+  
+
+  const getUser = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
+      console.log(response.data.userName);
+      return response.data.userName;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const user = await getUser(formData.userEmail);
+      
+      if (user) {
+        const userName = user;
+        const userEmail=formData.userEmail;
+        console.log(userName)
+        console.log(userEmail);
+        history.push("/candiadte-dashboard",{userName}, {userEmail});
+      } else {
+        
+        console.error('User data not found or userName is missing');
+      }
+    } catch (error) {
+    
+      console.error('Error fetching user:', error);
+    }
+  };
+  
 
   return (
     <div className="candidate-login-form">
@@ -31,11 +59,11 @@ const Candidates = () => {
           <form id="loginform" onSubmit={handleSubmit}>
             <div className="candidate-login-form-group">
               <label htmlFor="login-email">Email:</label>
-              <input type="email" id="login-email" name="userEmail" required />
+              <input type="email" id="login-email" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
             </div>
             <div className="candidate-login-form-group">
               <label htmlFor="login-password">Password:</label>
-              <input type="password" id="login-password" name="password" required />
+              <input type="password" id="login-password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
             <div className="candidate-login-form-group">
               <button type="submit">Login</button>
