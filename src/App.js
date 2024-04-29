@@ -43,6 +43,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
 import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
+import AddJob from './Dashboards/HrDashboardpages/AddJob';
 
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
           <Route path="/post-jobs" component={Jobs} />
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
+          <Route path="/addJob" component={AddJob}/>
         </Switch>
       </BrowserRouter>
     </div>

@@ -20,7 +20,7 @@ const CandidateSignup=()=> {
       userEmail: '',
       password: '',
       confirmpassword: '',
-      userRole: '',
+      userRole: 'Candidate',
       phone:'',
     });
     const history = useHistory();
@@ -87,10 +87,10 @@ const CandidateSignup=()=> {
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" name="userEmail"  value={user.userEmail}  onChange={handleChange} required />
           </div>
-          <div className="candidate-form-group">
+          {/* <div className="candidate-form-group">
             <label htmlFor="role">UserRole:</label>
             <input type="text" id="role" name="userRole" value={user.userRole}  onChange={handleChange} required />
-          </div>
+          </div> */}
           <div className="candidate-form-group">
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={user.phone}  onChange={handleChange} required />

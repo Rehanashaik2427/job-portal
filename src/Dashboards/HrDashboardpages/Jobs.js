@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Link,useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
@@ -16,12 +17,16 @@ const Jobs = () => {
 
   const location = useLocation();
     const userName = location.state?.userName;
+    const userEmail=location.state?.userEmail;
+    console.log(userEmail);
+    console.log(userName);
+
     const [jobs, setJobs] = useState([]);
    
     
-    const fetchJobs = async (userName) => {
+    const fetchJobs = async (userEmail) => {
       try {
-        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrName?userName=${userName}`);
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
         console.log(response.data);
         if (response.status === 200) {
           setJobs(response.data);
@@ -35,15 +40,15 @@ const Jobs = () => {
     
 
   useEffect(() => {
-    fetchJobs(userName);
-  }, [userName]);
+    fetchJobs(userEmail);
+  }, [userEmail]);
 
   const history = useHistory();
 
   const handleUpdate = (jobId) => {
     // Navigate to the update page with the job ID
     history.push("/update-job", {jobId});
-    
+
   };
   
   const handleDelete = async (jobId) => {
@@ -51,7 +56,7 @@ const Jobs = () => {
       const response = await axios.delete(`${BASE_API_URL}/deleteJobs/${jobId}`);
       if (response.status === 200) {
         // Refresh jobs data after successful deletion
-        fetchJobs(userName);
+       // fetchJobs(userEmail);
         console.log(`Job with ID ${jobId} deleted successfully`);
       } else {
         console.error('Failed to delete job');
@@ -60,6 +65,8 @@ const Jobs = () => {
       console.error('Error deleting job:', error);
     }
   };
+
+
   
     
  
@@ -78,26 +85,30 @@ const Jobs = () => {
                 </nav>
                 
                     <section id="hr-dashboard">
-                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName } }}>Dashboard</Link>
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName } }}>Jobs</Link>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail:userEmail }}}>Jobs</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName } }}>Applications</Link>
+                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName, userEmail:userEmail } }}>Applications</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName } }}>Posted Jobs</Link>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>Posted Jobs</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName } }}>People</Link>
+                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName, userEmail:userEmail }}}>People</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName } }}>Profile</Link>
+                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail:userEmail } }}>Profile</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName } }}>Home</Link>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
                     </section>
+
+
+                    <h3>Help</h3>
+        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
       </div>
       {/* Right Side Content */}
       <div className='hr-rightside'>
@@ -140,6 +151,9 @@ const Jobs = () => {
       ))}
    
   </table>
+  <div>
+  <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Another Job</Link>
+  </div>
 </div>
 
         

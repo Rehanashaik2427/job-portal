@@ -224,3 +224,32 @@ section {
   background-color: skyblue;
   font-size: 15px;
 }
+
+.jobs_list #jobTable1{
+  
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  
+  #jobTable1 th,
+  #jobTable1 td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #jobTable1 th {
+    background-color:white;
+  }
+  
+  #jobTable1 tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #jobTable1 tr:hover {
+    background-color: #ddd;
+  }
+  

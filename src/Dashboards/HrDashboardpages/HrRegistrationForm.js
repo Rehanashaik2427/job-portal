@@ -18,6 +18,7 @@ const HrRegistrationForm = () => {
     userName: "",
     userRole: "HR",
     userEmail: "",
+    phone:"",
     companyName: "",
     password: "",
     confirmpassword: "",
@@ -66,11 +67,12 @@ const HrRegistrationForm = () => {
       });
   
        
-    history.push("/hr-dashboard")
+    history.push("/hr-RegSuccess")
       
     setFormData({
       userName: '',
       userEmail: '',
+      phone:'',
       password: '',
       confirmpassword: '',
       userRole: '',
@@ -107,6 +109,10 @@ const HrRegistrationForm = () => {
           <div className="form-group">
             <label htmlFor="companyId">Company Name:</label>
             <input type="text" id="companyId" name="companyName" value={formData.companyName} onChange={handleInputChange} required />
+          </div>
+          <div className="candidate-form-group">
+            <label htmlFor="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" value={formData.phone}  onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
