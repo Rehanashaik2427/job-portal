@@ -25,15 +25,10 @@ const Companies = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
       console.log('Company details submitted:', response.data);
-
-      // Display success message with potential backend data (if applicable)
-      setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);  // Check for backend message
-
-      // Clear form data
+      setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);
       setFormData({
         companyName: '',
         contactNumber: '',
@@ -43,12 +38,11 @@ const Companies = () => {
         discription: '',
         date: '',
       });
-
-      history.push('/hr-registeration');
+      history.push('/hr-registration');
     } catch (error) {
       console.error('Error during submission:', error);
-      alert('Company already exist , register as a HR');
-      history.push('/hr-registeration') // Generic error message
+      alert('Company already exists, please register as a HR');
+      history.push('/hr-registration');
     }
   };
 
@@ -102,13 +96,13 @@ const Companies = () => {
           type="text"
           id="description"
           name="discription"
-          value={formData.discription}
+          value={formData.description}
           onChange={handleChange}
         />
-        <label htmlFor="dateTime">Date and Time:</label>
+        <label htmlFor="date">Date:</label>
         <input
-          type="datetime-local"
-          id="dateTime"
+          type="date"
+          id="date"
           name="date"
           value={formData.date}
           onChange={handleChange}
