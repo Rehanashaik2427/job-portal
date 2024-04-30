@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import './HrDashboard.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import "./HrReg.css";
 import axios from 'axios';
 const BASE_API_URL="http://localhost:8080/api/jobbox";
-//const HrRegistrationForm = () => {
-  // const [formData, setFormData] = useState({
-  //   userName: "",
-  //   userRole:"",
-  //   userEmail: "",
-  //   companyName: "",
 
- // Import CSS file for styling
 
 const HrRegistrationForm = () => {
+  const location=useLocation();
+  const companyName=location.state?.companyName;
+  console.log(companyName);
   const [formData, setFormData] = useState({
     userName: "",
     userRole: "HR",
     userEmail: "",
     phone:"",
-    companyName: "",
+    companyName:companyName,
     password: "",
     confirmpassword: "",
   });
@@ -106,13 +102,13 @@ const HrRegistrationForm = () => {
             <label htmlFor="role">Role:</label>
             <input type="text" id="rolr" name="userRole" placeholder='HR' value={formData.userRole} onChange={handleInputChange} required />
           </div> */}
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="companyId">Company Name:</label>
             <input type="text" id="companyId" name="companyName" value={formData.companyName} onChange={handleInputChange} required />
-          </div>
-          <div className="candidate-form-group">
+          </div> */}
+          <div className="form-group">
             <label htmlFor="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" value={formData.phone}  onChange={handleInputChange} required />
+            <input type="tel" id="password" name="phone" value={formData.phone}  onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>

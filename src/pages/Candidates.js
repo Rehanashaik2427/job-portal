@@ -40,7 +40,7 @@ const Candidates = () => {
         const userEmail=formData.userEmail;
         console.log(userName)
         console.log(userEmail);
-        history.push("/candiadte-dashboard",{userName}, {userEmail});
+        history.push('/candiadte-dashboard',{userName}, {userEmail});
       } else {
         
         console.error('User data not found or userName is missing');

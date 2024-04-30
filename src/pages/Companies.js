@@ -11,9 +11,11 @@ const Companies = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    description: '', // Corrected typo
+    discription: '', // Corrected typo
     date: '',
   });
+  const companyName=formData.companyName;
+  console.log(companyName);
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -36,14 +38,15 @@ const Companies = () => {
         companyEmail: '',
         industry: '',
         location: '',
-        description: '',
+        discription: '',
         date: '',
       });
-      history.push('/hr-registeration');
+      history.push('/hr-registeration',{companyName});
     } catch (error) {
       console.error('Error during submission:', error);
       setErrorMessage('Company already exists, please register as a HR');
-      history.push('/hr-registration');
+      alert('Company already exists, please register as a HR')
+      history.push('/hr-registeration',{companyName});
     }
   };
 
@@ -98,7 +101,7 @@ const Companies = () => {
           type="text"
           id="description"
           name="discription"
-          value={formData.description}
+          value={formData.discription}
           onChange={handleChange}
         />
 
