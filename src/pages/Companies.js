@@ -35,68 +35,47 @@ const Companies = () => {
   };
 
   return (
-    <div className="company-container">
-      <h2>Company Details</h2>
-      <form id="companyForm" onSubmit={handleSubmit}>
-        <label htmlFor="companyName">Company Name:</label>
-        <input
-          type="text"
-          id="companyName"
-          name="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="contactNumber">Contact Number:</label>
-        <input
-          type="tel"
-          id="contactNumber"
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleChange}
-        />
-        <label htmlFor="companyEmail">Company Email:</label>
-        <input
-          type="email"
-          id="companyEmail"
-          name="companyEmail"
-          value={formData.companyEmail}
-          onChange={handleChange}
-        />
-        <label htmlFor="industry">Industry:</label>
-        <input
-          type="text"
-          id="industry"
-          name="industry"
-          value={formData.industry}
-          onChange={handleChange}
-        />
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-        />
+    <div className='company-details'>
+      <div className='company-container'>
+      <h2 style={{textAlign:'center'}}>Fill Company Details</h2>
+      
+    <form id="companyForm" onSubmit={handleSubmit}>
+  <div className='company-form-group'>
+    <label htmlFor="companyName">Company Name:</label>
+    <input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} required />
+  </div>
+  <div className='company-form-group'>
+    <label htmlFor="contactNumber">Contact Number:</label>
+    <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
+  </div>
+  <div className='company-form-group'>
+    <label htmlFor="companyEmail">Company Email:</label>
+    <input type="email" id="companyEmail" name="companyEmail" value={formData.companyEmail} onChange={handleChange} />
+  </div>
+  <div className='company-form-group'>
+    <label htmlFor="industry">Industry:</label>
+    <input type="text" id="industry" name="industry" value={formData.industry} onChange={handleChange} />
+  </div>
+  <div className='company-form-group'>
+    <label htmlFor="location">Location:</label>
+    <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} />
+  </div>
+  <div className='company-form-group'>
+    <label htmlFor="date">DateTime:</label>
+    <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
+  </div>
+  <div>
+    <button type="submit" style={{textAlign:'center'}}>Submit</button>  
+  </div>
+  {successMessage && (
+    <p className="success-message">{successMessage}</p>
+  )}
+  {errorMessage && (
+    <p className="error-message">{errorMessage}</p>
+  )}
+</form>
 
-        <label htmlFor="date">DateTime:</label>
-        <input
-          type="date"
-          id="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        <input type="submit" value="Submit" />
-        {successMessage && (
-          <p className="success-message">{successMessage}</p>
-        )}
-        {errorMessage && (
-          <p className="error-message">{errorMessage}</p>
-        )}
-      </form>
+      </div>
     </div>
   );
 };

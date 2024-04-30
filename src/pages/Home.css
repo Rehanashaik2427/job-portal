@@ -234,3 +234,103 @@ body {
 }
 
 
+.home-contact-container{
+  background-color: gray;
+}
+
+.home-contact-info{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+  flex-direction: column;
+  color: black;
+}
+.home-social-media {
+  text-align: center;
+}
+
+.list-inline {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  list-style: none;
+  padding: 12px;
+}
+
+.list-inline-item {
+  margin: 40px; /* Adjust as needed */
+  margin-right: 200px;
+}
+
+.list-inline-item:last-child {
+  margin-right: 0;
+}
+
+
+
+/* companies */
+.company-details ,.candidate-login-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5; /* Light background color */
+}
+
+.company-container , #login-form{
+  background-color: #fff; /* Form background color */
+  padding: 40px; /* Increased padding for more breathing room */
+  border-radius: 10px; /* Larger rounded corners for a softer look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More prominent box-shadow */
+  max-width: 450px; /* Slightly narrower form for better readability on smaller screens */
+  margin: 0 auto;
+}
+
+.company-container h2 {
+  text-align: center;
+  margin-bottom: 25px; /* Slightly larger margin for title */
+  font-size: 2em; /* Larger heading size */
+  color: #333; /* Darker heading color */
+}
+
+.company-form-group , .candidate-login-form-group{
+  margin-bottom: 20px; /* Consistent spacing between form groups */
+}
+
+.company-form-group label ,.candidate-login-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333; /* Darker label color for better contrast */
+}
+
+.company-form-group input[type="text"],
+.company-form-group input[type="email"],
+.company-form-group input[type="password"] ,
+.company-form-group input[type="tel"],
+.company-form-group input[type="date"] ,
+.candidate-login-form-group input[type="email"] ,
+.candidate-login-form-group input[type="password"]{
+  width: 100%;
+  padding: 15px; /* Increased padding for more comfortable typing */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px; /* Larger font size for improved readability */
+}
+
+.company-form-group button {
+  background-color: #4CAF50; /* Primary button color */
+  color: white;
+  padding: 12px 25px; /* Adjusted padding for better button proportions */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.company-form-group input[type="submit"]:hover {
+  background-color: #3e8e41; /* Darker shade on hover */
+}
+
