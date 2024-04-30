@@ -1,12 +1,60 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import axios from 'axios';
+
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
 const DreamCompany = () => {
   const [showMessage, setShowMessage] = useState(false);
+  const location=useLocation();
+  const userName=location.state?.userName;
+  const userEmail=location.state?.userEmail;
+ 
 
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({
+    companyName: '',
+    contactNumber: '',
+    companyEmail: '',
+    industry: '',
+    location: '',
+    discription: '', // Corrected typo
+    date: '',
+  });
+  const companyName=formData.companyName;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
+      console.log('Company details submitted:', response.data);
+      
+      setFormData({
+        companyName: '',
+        contactNumber: '',
+        companyEmail: '',
+        industry: '',
+        location: '',
+        discription: '',
+        date: '',
+      });
+
+     
+    } catch (error) {
+      console.error('Error during submission:', error);
+      
+      alert('Company already exists, please register as a HR')
+      
+    }
+
     setShowMessage(true);
   };
 
@@ -16,7 +64,7 @@ const DreamCompany = () => {
         <form onSubmit={handleSubmit} className="centered-form">
           <div className="form-group">
             <label htmlFor="companyName">Company Name:</label>
-            <input type="text" id="companyName" name="companyName" required />
+            <input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="resume">Resume:</label>
@@ -29,7 +77,10 @@ const DreamCompany = () => {
         <div className="success-message">
           <h1>Congratulations</h1>
           <h3>You successfully applied to your Dream Company</h3>
-          <h3><Link to="/candiadte-dashboard">Go back to dashboard</Link></h3>
+          <h3><Link   to={{
+          pathname: '/candidate-dashboard',
+          state: { userName: userName, userEmail:userEmail }
+        }}>Go back to dashboard</Link></h3>
         </div>
       )}
         </form>

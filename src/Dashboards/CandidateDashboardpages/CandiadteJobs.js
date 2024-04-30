@@ -42,13 +42,13 @@ const CandiadteJobs = () => {
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
-          pathname: '/candiadte-dashboard',
+          pathname: '/candidate-dashboard',
           state: { userName: userName, userEmail:userEmail }
         }}> Dashboard</Link>
         </section>
         <section id="jobs">
           <FontAwesomeIcon icon={faLayerGroup} /> <Link  to={{
-          pathname: '/candiadte-jobs',
+          pathname: '/candidate-jobs',
           state: { userName: userName, userEmail:userEmail }
         }} >Jobs</Link>
         </section>
@@ -141,7 +141,10 @@ const CandiadteJobs = () => {
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
             <p>Just add the name of your dream company and apply to them directly.</p>
             
-              <Link to="/dream-company" className="app">
+              <Link  to={{
+          pathname: '/dream-company',
+          state: { userName: userName, userEmail:userEmail }
+        }} className="app">
                   <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
               </Link>
           

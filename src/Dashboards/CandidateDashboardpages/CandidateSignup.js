@@ -39,9 +39,9 @@ const CandidateRegistrationForm = () => {
     if (!validatePassword()) return; // Exit if password validation fails
 
     try {
-      // Prepare API request details (URL, method, data)
-      const apiUrl = BASE_API_URL+"/saveUser"; // Replace with your API endpoint
-      const method = 'POST'; // Adjust method based on your API 
+      
+      const apiUrl = BASE_API_URL+"/saveUser"; 
+      const method = 'POST'; 
       const data = user;
   
       // Send the API request using axios

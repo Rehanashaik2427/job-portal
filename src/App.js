@@ -76,8 +76,8 @@ const App = () => {
           <Route path='/candidate-sucess-msg' component={CandidateSucessMsg} />
           <Route path='/candidate-signup' component={CandidateSignup} />
           <Route path='/CandidateRegisterSucessMsg' component={CandidateRegisterSucessMsg} />
-          <Route path='/candiadte-dashboard' component={CandidateDashboard} />
-          <Route path='/candiadte-jobs'  component={CandiadteJobs} />
+          <Route path='/candidate-dashboard' component={CandidateDashboard} />
+          <Route path='/candidate-jobs'  component={CandiadteJobs} />
           <Route path='/candidate-companies' component={CandidatesCompanies}/>
           <Route path='/my-application' component={MyApplication} />
           <Route path='/payment' component={Payment} />

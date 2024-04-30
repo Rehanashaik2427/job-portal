@@ -34,15 +34,15 @@ const Candidates = () => {
   const handleSubmit = async () => {
     try {
       const user = await getUser(formData.userEmail);
-      
       if (user) {
         const userName = user;
         const userEmail=formData.userEmail;
         console.log(userName)
         console.log(userEmail);
-        history.push('/candiadte-dashboard',{userName}, {userEmail});
+      
+        history.push('/candidate-dashboard',{userName}, {userEmail});
       } else {
-        
+        debugger
         console.error('User data not found or userName is missing');
       }
     } catch (error) {
@@ -56,7 +56,7 @@ const Candidates = () => {
     <div className="candidate-login-form">
       <div id="login-form">
         
-          <form id="loginform" onSubmit={handleSubmit}>
+          <form id="loginform"  >
             <div className="candidate-login-form-group">
               <label htmlFor="login-email">Email:</label>
               <input type="email" id="login-email" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
@@ -66,7 +66,7 @@ const Candidates = () => {
               <input type="password" id="login-password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
             <div className="candidate-login-form-group">
-              <button type="submit">Login</button>
+              <button type="submit" onClick={handleSubmit}>Login</button>
             </div>
           </form>
         
