@@ -79,6 +79,7 @@ const UserValidation = () => {
           <tr >
             <th >User Name</th>
             <th >User Role</th>
+            <th >User Email</th>
             <th>Action Date</th>
             <th >Status & Actions</th>
           </tr>
@@ -87,8 +88,10 @@ const UserValidation = () => {
 
                   <td>{user.userName}</td>
                   <td>{user.userRole}</td>
-                  <td>{user.approvedOn}</td>
                   <td>{user.userEmail}</td>
+                  <td>{user.approvedOn}</td>
+                  <td>{user.userStatus}</td>
+                  
                  
                 </tr>
                               ))}

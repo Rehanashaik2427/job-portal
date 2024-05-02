@@ -8,6 +8,8 @@ const Candidates = () => {
     userEmail: "",
     password: "",
   });
+
+
   
   const history = useHistory(); // Initialize useHistory
 
@@ -24,7 +26,13 @@ const Candidates = () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
       console.log(response.data.userName);
-      return response.data.userName;
+      if( response.data.password!==formData.password){
+        alert('Invalid email or password. Please try again.');
+        return;
+      }
+     
+      
+     else return response.data;
     } catch (error) {
       console.error('Error fetching user:', error);
       return null;
@@ -35,7 +43,7 @@ const Candidates = () => {
     try {
       const user = await getUser(formData.userEmail);
       if (user) {
-        const userName = user;
+        const userName = user.userName;
         const userEmail=formData.userEmail;
         console.log(userName)
         console.log(userEmail);

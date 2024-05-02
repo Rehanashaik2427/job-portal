@@ -47,16 +47,18 @@ const HrRegistrationForm = () => {
       const apiUrl = BASE_API_URL + "/saveUser";
       const method = 'POST';
       const data = formData;
+      console.log(formData);
 
       const response = await axios({
         url: apiUrl,
         method: method,
         data: data,
       });
+      console.log(response.data);
 
       if (response.status === 200) {
-        alert('Registration successful! Please sign in.');
-        history.push("/hr-dashboard");
+        // alert('Registration successful! Please sign in.');
+        history.push("/hr-RegSuccess");
       } else {
         setRegistrationError("Error submitting job details. Please try again later.");
       }

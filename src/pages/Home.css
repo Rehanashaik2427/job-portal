@@ -313,7 +313,7 @@ body {
 .candidate-login-form-group input[type="email"] ,
 .candidate-login-form-group input[type="password"]{
   width: 100%;
-  padding: 15px; /* Increased padding for more comfortable typing */
+  padding: 15px; 
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -321,13 +321,15 @@ body {
 }
 
 .company-form-group button {
-  background-color: #4CAF50; /* Primary button color */
-  color: white;
-  padding: 12px 25px; /* Adjusted padding for better button proportions */
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background-color: #007bff; 
+  color: #fff; 
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .company-form-group input[type="submit"]:hover {
@@ -399,66 +401,80 @@ body {
 }
 
 
+/* Overall form styling */
 .candidate-login-form {
-  max-width: 400px;
-  margin: 150px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  background-color: #f0f0f0; 
+  padding: 2rem;
 }
 
+/* Login form container */
 #login-form {
-  text-align: center;
+  background-color: #fff; 
+  border: 1px solid #ddd; 
+  border-radius: 5px; 
+  padding: 3rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  width: 300px;
 }
 
-#loginform {
-  display: grid;
-  grid-gap: 10px;
-}
-
+/* Form group styling */
 .candidate-login-form-group {
-  display: grid;
-  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
 }
 
+/* Label styling */
 .candidate-login-form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
   font-weight: bold;
 }
 
-.candidate-login-form-group input[type="email"],
-.candidate-login-form-group input[type="password"] {
-  width: 95%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Input styling */
+.candidate-login-form-group input {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc; 
+  border-radius: 3px; 
+  box-sizing: border-box;
 }
 
-.candidate-login-form-group button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 25px;
+/* Input on focus */
+.candidate-login-form-group input:focus {
+  outline: none; 
+  border-color: #888; 
+}
+
+/* Login button styling */
+.candidate-login-form-group button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background-color: #007bff; 
+  color: #fff; 
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.candidate-login-form-group button[type="submit"]:hover {
-  background-color: #0056b3;
-}
+/* Login button hover */
+.candidate-login-form-group button:hover {
+  background-color: #0069d9; 
 
-.candidate-login-switch-form {
-  margin-top: 10px;
-  text-align: center;
-}
-
+/* Link styling */
 .candidate-login-switch-form a {
-  color: #007bff;
+  color: #007bff; 
   text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
+/* Link hover */
 .candidate-login-switch-form a:hover {
-  text-decoration: underline;
+  color: #0069d9; 
 }
-
+}
