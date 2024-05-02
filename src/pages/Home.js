@@ -162,7 +162,7 @@ const Home = () => {
               <div className='home-contact-details'>
                 <div className='home-connect'>
                   <h1 style={{textAlign:'center'}}>Contact Us</h1>
-                  <p>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
+                  <p style={{textAlign:'center'}}>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
 
                   <div className='home-contact-info' style={{ textAlign: 'center' }}>
                     <h3 className='home-email'>
