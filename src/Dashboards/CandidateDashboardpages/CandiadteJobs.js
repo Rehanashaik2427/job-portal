@@ -113,6 +113,7 @@ const CandiadteJobs = () => {
                   <th>Application DeadLine</th>
                   <th>Experience</th>
                   <th>Eligibility</th>
+                  <th>Requirements</th>
                   <th>Status & Actions</th>
                 </tr>
               
@@ -123,8 +124,9 @@ const CandiadteJobs = () => {
                     <td>{job.applicationDeadline}</td>
                     <td>{job.experience}</td>
                     <td>{job.eligibility}</td>
+                    <td>{job.requirements}</td>
                     
-                    <td><button>Apply</button></td>
+                    <td><Link to="/applied-success-msg"><button ><h4>Apply</h4></button></Link></td>
                   </tr>
                 ))}
              
