@@ -4,11 +4,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandidatesCompanies = () => {
   const [companies, setCompanies] = useState([]);
   const [jobRole, setJobRole] = useState('');
+  const location = useLocation();
+  const userName=location.state?.userName;
+  const userEmail=location.state?.userEmail;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,34 +49,54 @@ const CandidatesCompanies = () => {
       <div className='left-side'>
         <nav id='logo'>
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
-        </nav>
-        <nav>
-          <h2>Candidate Name</h2>
+        </nav> <nav>
+          <h2>{userName}</h2>
         </nav>
         <section id="dashboard">
-          <FontAwesomeIcon icon={faHouse} /> <Link to="/candiadte-dashboard"> Dashboard</Link>
+          <FontAwesomeIcon icon={faHouse} /> <Link   to={{
+          pathname: '/candidate-dashboard',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Dashboard</Link>
         </section>
         <section id="jobs">
-          <FontAwesomeIcon icon={faLayerGroup} /> <Link to="/candiadte-jobs">Jobs</Link>
+          <FontAwesomeIcon icon={faLayerGroup} /> <Link  to={{
+          pathname: '/candidate-jobs',
+          state: { userName: userName, userEmail:userEmail }
+        }} >Jobs</Link>
         </section>
         <section id="companies">
-          <FontAwesomeIcon icon={faBuilding} /> <Link to="/candidate-companies"> Companies</Link>
+          <FontAwesomeIcon icon={faBuilding} /> <Link  to={{
+          pathname: '/candidate-companies',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Companies</Link>
         </section>
         <section id="my-application">
-          <FontAwesomeIcon icon={faFileLines} /> <Link to="/my-application">My Application</Link>
+          <FontAwesomeIcon icon={faFileLines} /> <Link to={{
+          pathname: '/my-application',
+          state: { userName: userName, userEmail:userEmail }
+        }}>My Application</Link>
         </section>
         <section id="my-resume">
-          <FontAwesomeIcon icon={faFile} /> <Link to="/resume"> My Resume</Link>
+          <FontAwesomeIcon icon={faFile} /> <Link to={{
+          pathname: '/resume',
+          state: { userName: userName, userEmail:userEmail }
+        }}> My Resume</Link>
         </section>
         <section id="my-profile">
-          <FontAwesomeIcon icon={faUser} /> <Link to="/profile"> My Profile</Link>
+          <FontAwesomeIcon icon={faUser} /> <Link to={{
+          pathname: '/profile',
+          state: { userName: userName, userEmail:userEmail }
+        }}> My Profile</Link>
         </section>
         <section id="payment">
-          <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link to="/payment"> Payments/Credits</Link>
+          <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link  to={{
+          pathname: '/payment',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Payments/Credits</Link>
         </section>
         <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section>
+        </section> 
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
@@ -89,7 +113,7 @@ const CandidatesCompanies = () => {
         </div>
 
         <div className="companyJob">
-          <h1>Job offers by Companies</h1>
+          <h1> Companies that we have</h1>
           <div className="cards">
             {companies.length > 0 ? (
               companies.map((company) => (
@@ -98,8 +122,8 @@ const CandidatesCompanies = () => {
                   <p>Company Email <b>{company.companyEmail}</b></p>
                   <p>Industry : <b>{company.industry}</b></p>
                   
-                  {/* <p><b>Number of Positions: </b>{company.numberOfPosition}</p> */}
-                  <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
+                  
+                  <Link to="/applied-success-msg"><button className='com'><h3>View</h3></button></Link>
                 </div>
               ))
             ) : (

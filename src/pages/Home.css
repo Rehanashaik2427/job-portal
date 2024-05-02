@@ -334,3 +334,131 @@ body {
   background-color: #3e8e41; /* Darker shade on hover */
 }
 
+
+.company-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.company-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.company-container form {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.company-container label {
+  font-weight: bold;
+}
+
+.company-container input[type="text"],
+.company-container input[type="email"],
+.company-container input[type="tel"],
+.company-container input[type="date"] {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.company-container input[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.company-container input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.company-container .success-message,
+.company-container .error-message {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.company-container .success-message {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.company-container .error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+
+.candidate-login-form {
+  max-width: 400px;
+  margin: 150px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+#login-form {
+  text-align: center;
+}
+
+#loginform {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.candidate-login-form-group {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.candidate-login-form-group label {
+  font-weight: bold;
+}
+
+.candidate-login-form-group input[type="email"],
+.candidate-login-form-group input[type="password"] {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.candidate-login-form-group button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.candidate-login-form-group button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.candidate-login-switch-form {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.candidate-login-switch-form a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.candidate-login-switch-form a:hover {
+  text-decoration: underline;
+}
+

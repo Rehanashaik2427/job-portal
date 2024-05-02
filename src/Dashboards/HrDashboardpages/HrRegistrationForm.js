@@ -1,19 +1,21 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom'; // Changed import to include useLocation
 import './HrDashboard.css';
-import './HrReg.css';
+import "./HrReg.css";
 
 const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
 const HrRegistrationForm = () => {
+  const location = useLocation(); // Added useLocation hook to access location state
+  const companyName = location.state?.companyName;
+  console.log(companyName);
   const [formData, setFormData] = useState({
     userName: "",
     userRole: "HR",
     userEmail: "",
     phone: "",
-    companyName: "",
-    PhoneNumber: "",
+    companyName: companyName, // Set companyName from location state
     password: "",
     confirmpassword: "",
   });
@@ -91,11 +93,6 @@ const HrRegistrationForm = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="companyId">Company Name:</label>
-            <input type="text" id="companyId" name="companyName" value={formData.companyName} onChange={handleInputChange} required />
-          </div>
-
-          <div className="candidate-form-group">
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
           </div>

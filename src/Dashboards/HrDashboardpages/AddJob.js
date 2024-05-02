@@ -137,9 +137,9 @@ return(
               <label htmlFor='jobType'>Job Type:<br/> 
                 <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
                   <option value=''>Select Job Type</option>
-                  <option value='fullTime'>Full Time</option>
-                  <option value='partTime'>Part Time</option>
-                  <option value='contract'>Contract</option>
+                  <option value='FullTime'>Full Time</option>
+                  <option value='PartTime'>Part Time</option>
+                  <option value='Contract'>Contract</option>
                   <option value='Intern'>Intern</option>
                   <option value='Freelancer'>Freelancer</option>
                 </select>

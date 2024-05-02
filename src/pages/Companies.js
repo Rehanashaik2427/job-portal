@@ -11,7 +11,7 @@ const Companies = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    description: '',
+    discription: '', // Corrected typo
     date: '',
   });
 
@@ -36,14 +36,15 @@ const Companies = () => {
         companyEmail: '',
         industry: '',
         location: '',
-        description: '',
+        discription: '',
         date: '',
       });
-      history.push('/hr-registeration');
+      history.push('/hr-registeration', { companyName: formData.companyName });
     } catch (error) {
       console.error('Error during submission:', error);
       setErrorMessage('Company already exists, please register as a HR');
-      history.push('/hr-registration');
+      alert('Company already exists, please register as a HR')
+      history.push('/hr-registeration', { companyName: formData.companyName });
     }
   };
 
@@ -74,7 +75,7 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
-            <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
+            <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>

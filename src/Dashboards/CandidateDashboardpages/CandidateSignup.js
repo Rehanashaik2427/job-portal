@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+
+const BASE_API_URL="http://localhost:8080/api/jobbox";
 
 const CandidateRegistrationForm = () => {
   const [user, setUser] = useState({
@@ -8,41 +12,66 @@ const CandidateRegistrationForm = () => {
     userRole: 'Candidate',
     phone: '',
     password: '',
-    confirmPassword: ''
+    confirmpassword: ''
   });
 
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const history = useHistory();
 
+  const validatePassword = (event) => {
+    // event.preventDefault();
+ 
+     if (user.password !== user.confirmpassword) {
+ 
+       alert("Passwords don't match! Please re-enter.");
+       return false;
+     }
+     return true; // Password is valid
+   }
+
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (user.password !== user.confirmPassword) {
-      setPasswordMatchError(true);
-      return;
-    }
-    // Reset error state
-    setPasswordMatchError(false);
-    // Add your form submission logic here
-    console.log('Form submitted:', user);
-    // Redirect to dashboard
-    history.push("/candiadte-dashboard");
-    // Reset form fields after submission
-    setUser({
-      userName: '',
-      userEmail: '',
 
-      password: '',
-      confirmpassword: '',
-      userRole: 'Candidate',
-      phone:'',
+    if (!validatePassword()) return; // Exit if password validation fails
 
+    try {
+      
+      const apiUrl = BASE_API_URL+"/saveUser"; 
+      const method = 'POST'; 
+      const data = user;
+  
+      // Send the API request using axios
+      const response = await axios({
+        url: apiUrl,
+        method: method,
+        data: data,
+      });
 
-    });
-  };
+      console.log(response.password);
+      history.push("/candidates")
+      
+      setUser({
+        userName: '',
+        userEmail: '',
+        phone:'',
+        password: '',
+        userRole: '',
+      
+        
+        });
+    
+      } catch (error) {
+        console.error('Error submitting job details:', error);
+        // Handle errors appropriately (e.g., display error message to the user)
+  
+        setPasswordMatchError(true);
+      } 
+    };
+
 
   return (
     <div className="centered-form">
@@ -75,7 +104,7 @@ const CandidateRegistrationForm = () => {
           </div>
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} className="form-control" required />
+            <input type="password" id="confirmPassword" name="confirmpassword" value={user.confirmpassword} onChange={handleChange} className="form-control" required />
           </div>
           {passwordMatchError && (
             <p className="error-message">Password and confirm password do not match. Please check.</p>

@@ -1,10 +1,38 @@
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
+
 const AddCompanyDetails = () => {
+
+
+  const BASE_API_URL="http://localhost:8080/api/jobbox";
+
+
+
+  const [companyData, setCompanyData] = useState([]);
+
+  useEffect(() => {
+    fetchCompanyData();
+  }, []);
+
+  const fetchCompanyData = async () => {
+    try {
+      const response = await fetch(`${BASE_API_URL}/displayCompanies`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch company data');
+      }
+      const data = await response.json();
+      
+      setCompanyData(data);
+     
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className='body'>
     <div className='leftside'>
@@ -55,25 +83,16 @@ const AddCompanyDetails = () => {
             <th>Add Detail</th>
           </tr>
 
-          <tr>
-            <td>comapny 1</td>
-            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
+          {companyData.map((company) => (
+      <tr key={company.companyId}>
+            <td>{company.companyName}</td>
+            <td><Link to={{
+          pathname: '/companyDetailsByAdmin',
+          state: { companyName:company.companyName }
+        }}>ADD</Link></td>
           </tr>
               
-          <tr>
-            <td>comapny 2</td>
-            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
-          </tr>
-
-          <tr>
-            <td>comapny 3</td>
-            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
-          </tr>
-
-          <tr>
-            <td>comapny 4</td>
-            <td><Link to="/companyDetailsByAdmin">ADD</Link></td>
-          </tr>
+            ))}
       </table>
 
        

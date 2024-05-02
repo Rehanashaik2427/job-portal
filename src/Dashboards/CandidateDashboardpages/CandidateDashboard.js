@@ -20,25 +20,46 @@ const CandidateDashboard = () => {
           <h2>{userName}</h2>
         </nav>
         <section id="dashboard">
-          <FontAwesomeIcon icon={faHouse} /> <Link to="/candiadte-dashboard"> Dashboard</Link>
+          <FontAwesomeIcon icon={faHouse} /> <Link   to={{
+          pathname: '/candidate-dashboard',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Dashboard</Link>
         </section>
         <section id="jobs">
-          <FontAwesomeIcon icon={faLayerGroup} /> <Link to="/candiadte-jobs">Jobs</Link>
+          <FontAwesomeIcon icon={faLayerGroup} /> <Link  to={{
+          pathname: '/candidate-jobs',
+          state: { userName: userName, userEmail:userEmail }
+        }} >Jobs</Link>
         </section>
         <section id="companies">
-          <FontAwesomeIcon icon={faBuilding} /> <Link to="/candidate-companies"> Companies</Link>
+          <FontAwesomeIcon icon={faBuilding} /> <Link  to={{
+          pathname: '/candidate-companies',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Companies</Link>
         </section>
         <section id="my-application">
-          <FontAwesomeIcon icon={faFileLines} /> <Link to="/my-application">My Application</Link>
+          <FontAwesomeIcon icon={faFileLines} /> <Link to={{
+          pathname: '/my-application',
+          state: { userName: userName, userEmail:userEmail }
+        }}>My Application</Link>
         </section>
         <section id="my-resume">
-          <FontAwesomeIcon icon={faFile} /> <Link to="/resume"> My Resume</Link>
+          <FontAwesomeIcon icon={faFile} /> <Link to={{
+          pathname: '/resume',
+          state: { userName: userName, userEmail:userEmail }
+        }}> My Resume</Link>
         </section>
         <section id="my-profile">
-          <FontAwesomeIcon icon={faUser} /> <Link to="/profile"> My Profile</Link>
+          <FontAwesomeIcon icon={faUser} /> <Link to={{
+          pathname: '/profile',
+          state: { userName: userName, userEmail:userEmail }
+        }}> My Profile</Link>
         </section>
         <section id="payment">
-          <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link to="/payment"> Payments/Credits</Link>
+          <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link  to={{
+          pathname: '/payment',
+          state: { userName: userName, userEmail:userEmail }
+        }}> Payments/Credits</Link>
         </section>
         <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
