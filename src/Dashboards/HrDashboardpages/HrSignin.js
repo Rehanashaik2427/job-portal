@@ -33,10 +33,13 @@ const HrSignin = () => {
   const handleLogin = async () => {
     try {
       const user = await getUser(formData.userEmail);
+      
       if (user) {
         const userName = user;
+        const userEmail=formData.userEmail;
         console.log(userName)
-        history.push("/hr-dashboard", { userName });
+        console.log(userEmail);
+        history.push("/hr-dashboard", {userEmail});
       } else {
         // Handle case where user data is not found or userName is not available
         console.error('User data not found or userName is missing');

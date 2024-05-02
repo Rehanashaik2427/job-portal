@@ -5,7 +5,7 @@ const CandidateRegistrationForm = () => {
   const [user, setUser] = useState({
     userName: '',
     userEmail: '',
-    userRole: '',
+    userRole: 'Candidate',
     phone: '',
     password: '',
     confirmPassword: ''
@@ -34,10 +34,13 @@ const CandidateRegistrationForm = () => {
     setUser({
       userName: '',
       userEmail: '',
-      userRole: '',
-      phone: '',
+
       password: '',
-      confirmPassword: ''
+      confirmpassword: '',
+      userRole: 'Candidate',
+      phone:'',
+
+
     });
   };
 
@@ -54,8 +57,15 @@ const CandidateRegistrationForm = () => {
             <label htmlFor="email">Email:</label>
             <input type="email" id="email" name="userEmail" value={user.userEmail} onChange={handleChange} className="form-control" required />
           </div>
+
+          {/* <div className="candidate-form-group">
+            <label htmlFor="role">UserRole:</label>
+            <input type="text" id="role" name="userRole" value={user.userRole}  onChange={handleChange} required />
+          </div> */}
+         
         
           <div className="form-group">
+
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={user.phone} onChange={handleChange} className="form-control" required />
           </div>

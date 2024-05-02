@@ -4,11 +4,36 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
+
+const BASE_API_URL="http://localhost:8080/api/jobbox";
 const PostedJobs = () => {
     
     const location = useLocation();
     const userName = location.state?.userName;
+    const userEmail=location.state?.userEmail;
+
+    const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
+        setJobs(response.data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    if (userEmail) {
+      fetchJobs();
+    }
+  }, [userEmail]);
+
+
     
   return (
     <div className='hr-dashboard-container'>
@@ -21,87 +46,60 @@ const PostedJobs = () => {
             <h2>Welcome {userName}</h2>
         </nav>   
         <section id="hr-dashboard">
-                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName } }}>Dashboard</Link>
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName } }}>Jobs</Link>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs',state: { userName: userName, userEmail:userEmail } }}>Jobs</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName } }}>Applications</Link>
+                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName, userEmail:userEmail } }}>Applications</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName } }}>Posted Jobs</Link>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName, userEmail:userEmail } }}>Posted Jobs</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName } }}>People</Link>
+                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName, userEmail:userEmail } }}>People</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName } }}>Profile</Link>
+                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail:userEmail } }}>Profile</Link>
                     </section>
                     <section>
-                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName } }}>Home</Link>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
                     </section>
+
+                    <h3>Help</h3>
+        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
                 
 
     </div>
 
     <div className='hr-rightside'>
         <div className="jobs_list">
-            <table className="jobs_list_table" >
+            <table id='jobTable1' >
                 <tr>
                     
                     <th>Hr Name</th>
                     <th>Company Name</th>
                     <th>Job Title</th>
                     <th>Job Type</th>
-                    <th>Job Description</th>
                     <th>Skills</th>
                     <th>Eligible Candidates</th>
-                    <th>Date</th>
                     <th>Vacancy</th>
                     <th>Application Deadline</th>
                 </tr>
 
-                <tr>
-                   
-                    <td>Swetha</td>
-                    <td>XYZ Corp</td>
-                    <td>Software Engineer</td>
-                    <td>Full Employment</td>
-                    <td>Developing web applications using JavaScript, HTML, and CSS</td>
-                    <td>JavaScript, HTML, CSS</td>
-                    <td>BE, BTECH, MTECH</td>
-                    <td>2024-04-10</td>
-                    <td>3</td>
-                    <td>2024-04-30 12:00 PM</td>
+                {jobs.map(job => (
+                <tr key={job.id}>
+                  <td>{job.hrName}</td>
+                  <td>{job.companyName}</td>
+                  <td>{job.jobTitle}</td>
+                  <td>{job.jobType}</td>
+                  <td>{job.requirements}</td>
+                  <td>{job.eligibility}</td>
+                  <td>{job.numberOfPosition}</td>
+                  <td>{job.applicationDeadline}</td>
                 </tr>
-                    <tr>
-                        
-                        <td>Mythri</td>
-                        
-                        <td>002</td>
-                        <td>Data Analyst</td>
-                        <td>Contract</td>
-                        <td>Analyzing data using Python and SQL</td>
-                        <td>Python, SQL</td>
-                        <td>BE, MTECH</td>
-                        <td>2024-04-11</td>
-                        <td>2</td>
-                        <td>2024-05-05 10:00 AM</td>
-                    </tr>
-                    <tr>
-                       
-                        <td>Swetha</td>
-                        <td>XYZ Corp</td>
-                        <td>Graphic Designer</td>
-                        <td>Freelancer</td>
-                        <td>Creating graphic designs for marketing materials</td>
-                        <td>Adobe Photoshop, Illustrator</td>
-                        <td>BTECH, Degree</td>
-                        <td>2024-04-12</td>
-                        <td>1</td>
-                        <td>2024-04-25 09:00 AM</td>
-                    </tr>
+              ))}
                     
                 </table>
                 

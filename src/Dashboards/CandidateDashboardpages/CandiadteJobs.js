@@ -3,8 +3,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
 
+
+const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandiadteJobs = () => {
+
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(BASE_API_URL+"/displayJobs"); // Assuming backend is running on the same host
+        setJobs(response.data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -58,40 +79,32 @@ const CandiadteJobs = () => {
             <h1 style={{textAlign:'center'}}>JOBS</h1>
             <div className='jobs-table'>
             <table className='jobs-table'>
-                <tr id="thead" >
-                    <th>Job Profile</th>
-                    <th >Company Name</th>
-                    <th >Post On</th>
-                    <th>Status</th>
-                </tr>
 
+            
                 <tr>
-                    <td>Designer</td>
-                    <td>cisco</td>
-                    <td>02/04/2024</td>
-                    <td style={{color:'green'}} >Applied</td>
+                  <th>Job Profile</th>
+                  <th>Company Name</th>
+                  <th>Application DeadLine</th>
+                  <th>Experience</th>
+                  <th>Eligibility</th>
+                  <th>Status & Actions</th>
                 </tr>
+              
+                {jobs.map(job => (
+                  <tr key={job.id}>
+                    <td>{job.jobTitle}</td>
+                    <td>{job.companyName}</td>
+                    <td>{job.applicationDeadline}</td>
+                    <td>{job.experience}</td>
+                    <td>{job.eligibility}</td>
+                    
+                    <td><button>Apply</button></td>
+                  </tr>
+                ))}
+             
 
-                <tr>
-                    <td>Developer</td>
-                    <td>Microsoft</td>
-                    <td>02/04/2024</td>
-                    <td style={{color:'red'}}>Not Applied</td>
-                </tr>
+               
 
-                <tr>
-                    <td>Designer</td>
-                    <td>cisco</td>
-                    <td>15/02/2024</td>
-                    <td style={{color:'gray'}}>Deadline over</td>
-                </tr>
-
-                <tr>
-                    <td>Developer</td>
-                    <td>Microsoft</td>
-                    <td>02/04/2024</td>
-                    <td style={{color:'green'}}>Applied</td>
-                </tr>
 
             </table>
             </div>

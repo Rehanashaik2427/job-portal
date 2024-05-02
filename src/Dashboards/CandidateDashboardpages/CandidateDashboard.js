@@ -1,10 +1,15 @@
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';// Import Link from react-router-dom
 import './CandidateDashboard.css';
 
 const CandidateDashboard = () => {
+  const location = useLocation();
+  const userName=location.state?.userName;
+  const userEmail=location.state?.userEmail;
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -12,7 +17,7 @@ const CandidateDashboard = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>Candidate Name</h2>
+          <h2>{userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link to="/candiadte-dashboard"> Dashboard</Link>

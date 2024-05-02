@@ -18,10 +18,10 @@ const CandidatesCompanies = () => {
   const [jobs, setJobs] = useState([]);
   
   // Function to fetch jobs from the database
-  const fetchJobs = async () => {
+  const fetchCompany = async () => {
     try {
-      const response = await axios.get(BASE_API_URL+"/displayJobs"); // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      setJobs(response.data); // Set the fetched jobs to state
+      const response = await axios.get(BASE_API_URL+"/displayCompanies"); // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
+      setCompanies(response.data); // Set the fetched jobs to state
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
@@ -29,7 +29,7 @@ const CandidatesCompanies = () => {
 
   // useEffect hook to fetch jobs when the component mounts
   useEffect(() => {
-    fetchJobs();
+    fetchCompany();
   }, []);
 
 
@@ -91,14 +91,14 @@ const CandidatesCompanies = () => {
         <div className="companyJob">
           <h1>Job offers by Companies</h1>
           <div className="cards">
-            {jobs.length > 0 ? (
-              jobs.map((company) => (
-                <div className="company-card-job" key={company.jobId}>
+            {companies.length > 0 ? (
+              companies.map((company) => (
+                <div className="company-card-job" key={company.companyId}>
                   <p className="company-name">Company Name: <b>{company.companyName}</b></p>
-                  <p>Job Role <b>{company.jobTitle}</b></p>
-                  <p>Requirements :</p>
-                  <b>{company.requirements}</b>
-                  <p><b>Number of Positions: </b>{company.numberOfPosition}</p>
+                  <p>Company Email <b>{company.companyEmail}</b></p>
+                  <p>Industry : <b>{company.industry}</b></p>
+                  
+                  {/* <p><b>Number of Positions: </b>{company.numberOfPosition}</p> */}
                   <Link to="/applied-success-msg"><button><h3>Apply</h3></button></Link>
                 </div>
               ))

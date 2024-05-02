@@ -11,6 +11,7 @@ const HrRegistrationForm = () => {
     userName: "",
     userRole: "HR",
     userEmail: "",
+    phone: "",
     companyName: "",
     PhoneNumber: "",
     password: "",
@@ -51,19 +52,21 @@ const HrRegistrationForm = () => {
         data: data,
       });
 
-      history.push("/hr-dashboard");
+      if (response.status === 200) {
+        alert('Registration successful! Please sign in.');
+        history.push("/hr-dashboard");
+      } else {
+        setRegistrationError("Error submitting job details. Please try again later.");
+      }
 
       setFormData({
         userName: '',
         userEmail: '',
-        PhoneNumber: '',
+        phone: '',
         password: '',
         confirmpassword: '',
         userRole: '',
       });
-
-      // Display success message or perform any other actions after successful registration
-      alert('Registration successful! Please sign in.');
 
     } catch (error) {
       console.error('Error submitting job details:', error);
@@ -88,8 +91,13 @@ const HrRegistrationForm = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="companyId">Phone Number:</label>
-            <input type="text" id="companyId" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleInputChange} required />
+            <label htmlFor="companyId">Company Name:</label>
+            <input type="text" id="companyId" name="companyName" value={formData.companyName} onChange={handleInputChange} required />
+          </div>
+
+          <div className="candidate-form-group">
+            <label htmlFor="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
           </div>
 
           <div className="form-group">
