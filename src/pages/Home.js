@@ -1,8 +1,11 @@
 
-import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { Button, Col, Container, FormControl, InputGroup, Row } from 'react-bootstrap';
+
 import { Link } from 'react-router-dom';
 import './Home.css';
 
@@ -152,35 +155,48 @@ const Home = () => {
         </Row>
       </Container>
 
-      <Container className="contact-container">
+      <Container className="home-contact-container">
         <Row>
           <Col>
-            <div className='contact'>
-              <div className='contact-details'>
-                <div className='connect'>
-                  <h1>Contact Us</h1>
-                  <p>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
+            <div className='contact-info'>
+              <div className='home-contact-details'>
+                <div className='home-connect'>
+                  <h1 style={{textAlign:'center'}}>Contact Us</h1>
+                  <p style={{textAlign:'center'}}>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
 
-                  <div className='contact-info'>
-                    <div className='email'><FontAwesomeIcon icon={faEnvelope} /> Email: jobbox@mywebsite.com<br /></div>
-                    <div className='mobile'><FontAwesomeIcon icon={faPhone} /> Phone: +1 234 567 890<br /></div>
-                    <div className='address'><FontAwesomeIcon icon={faMapMarkerAlt} /> Address: 123 Job Portal Street, City, Country</div>
+                  <div className='home-contact-info' style={{ textAlign: 'center' }}>
+                    <h3 className='home-email'>
+                      <FontAwesomeIcon icon={faEnvelope} />{' '}
+                      <a href='mailto:jobbox@mywebsite.com'>Email: jobbox@mywebsite.com</a>
+                    </h3>
+                    <h3 className='home-mobile'>
+                      <FontAwesomeIcon icon={faPhone} />{' '}
+                      <a href='tel:+1234567890'>Phone: +1 234 567 890</a><br />
+                    </h3>
+                    <h3 className='home-address'>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />{' '}
+                      <a href='geo:latitude,longitude?q=123+Job+Portal+Street,+City,+Country'>Address: 123 Job Portal Street, City, Country</a>
+                    </h3>
                   </div>
+
                 </div>
               </div>
             </div>
-          </Col>
+            </Col>
         </Row>
-        <Row>
-          <Col>
-            <div className='social-media'>
-              <ul>
-                <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-                <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-                <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              </ul>
-            </div>
+
+        <Row className='home-social-media'>
+          <Col className='home-social-media'>
+          <div className='home-social-media text-center' style={{textAlign:'center'}}>
+            <ul className='list-inline d-flex justify-content-center'>
+              <li className='list-inline-item mr-3'><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} /> Instagram</a></li>
+              <li className='list-inline-item mr-3'><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faTwitter} /> Twitter</a></li>
+              <li className='list-inline-item mr-3'><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faFacebook} /> Facebook</a></li>
+              <li className='list-inline-item'><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} /> LinkedIn</a></li>
+            </ul>
+          </div>
+
+
           </Col>
         </Row>
       </Container>

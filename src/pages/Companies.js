@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
@@ -14,8 +14,6 @@ const Companies = () => {
     discription: '', // Corrected typo
     date: '',
   });
-  const companyName=formData.companyName;
-  console.log(companyName);
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,88 +39,59 @@ const Companies = () => {
         discription: '',
         date: '',
       });
-      history.push('/hr-registeration',{companyName});
+      history.push('/hr-registeration', { companyName: formData.companyName });
     } catch (error) {
       console.error('Error during submission:', error);
       setErrorMessage('Company already exists, please register as a HR');
       alert('Company already exists, please register as a HR')
-      history.push('/hr-registeration',{companyName});
+      history.push('/hr-registeration', { companyName: formData.companyName });
     }
   };
 
   return (
-    <div className="company-container">
-      <h2>Company Details</h2>
-      <form id="companyForm" onSubmit={handleSubmit}>
-        <label htmlFor="companyName">Company Name:</label>
-        <input
-          type="text"
-          id="companyName"
-          name="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="contactNumber">Contact Number:</label>
-        <input
-          type="tel"
-          id="contactNumber"
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleChange}
-        />
-        <label htmlFor="companyEmail">Company Email:</label>
-        <input
-          type="email"
-          id="companyEmail"
-          name="companyEmail"
-          value={formData.companyEmail}
-          onChange={handleChange}
-        />
-        <label htmlFor="industry">Industry:</label>
-        <input
-          type="text"
-          id="industry"
-          name="industry"
-          value={formData.industry}
-          onChange={handleChange}
-        />
-        <label htmlFor="location">Location:</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-        />
-
-<label htmlFor="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="discription"
-          value={formData.discription}
-          onChange={handleChange}
-        />
-
-
-        <label htmlFor="date">DateTime:</label>
-        <input
-          type="date"
-          id="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        <input type="submit" value="Submit" />
-        {successMessage && (
-          <p className="success-message">{successMessage}</p>
-        )}
-        {errorMessage && (
-          <p className="error-message">{errorMessage}</p>
-        )}
-      </form>
+    <div className='company-details'>
+      <div className='company-container'>
+        <h2 style={{ textAlign: 'center' }}>Fill Company Details</h2>
+        <form id="companyForm" onSubmit={handleSubmit}>
+          <div className='company-form-group'>
+            <label htmlFor="companyName">Company Name:</label>
+            <input type="text" id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} required />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="contactNumber">Contact Number:</label>
+            <input type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="companyEmail">Company Email:</label>
+            <input type="email" id="companyEmail" name="companyEmail" value={formData.companyEmail} onChange={handleChange} />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="industry">Industry:</label>
+            <input type="text" id="industry" name="industry" value={formData.industry} onChange={handleChange} />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="location">Location:</label>
+            <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="description">Description:</label>
+            <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
+          </div>
+          <div className='company-form-group'>
+            <label htmlFor="date">DateTime:</label>
+            <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
+          </div>
+          <div>
+            <button type="submit" style={{ textAlign: 'center' }}>Submit</button>
+          </div>
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+          {errorMessage && (
+            <p className="error-message">{errorMessage}</p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

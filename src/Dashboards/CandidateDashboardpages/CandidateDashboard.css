@@ -85,9 +85,6 @@ text-decoration: none;
     display: flex;
     margin-left: 30px;
     margin-right: 50px;
-    /* margin: 30px; */
-   
-    /* border: 1px solid black; */
 
 }
 .table tr{
@@ -99,14 +96,13 @@ text-decoration: none;
 }
 #thead{
     background-color: rgb(163, 209, 240);
-    /* margin-right: 20px;
-    width: 95%; */
+
 }
 table {
     border-collapse: collapse;
 }
 table, th, td ,tr{
-    /* border: 1px solid; */
+
     width: 260px;
     text-align: left;
 
