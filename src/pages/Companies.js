@@ -1,8 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
+import { Link } from 'react-router-dom';
+import './Home.css';
 
 const Companies = () => {
   const [formData, setFormData] = useState({
@@ -11,13 +9,12 @@ const Companies = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    discription: '', // Corrected typo
+    description: '',
     date: '',
   });
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,28 +23,65 @@ const Companies = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const exists = await checkCompanyExists(formData.companyName);
+    if (exists) {
+      setErrorMessage("Company already exists. Please try again.");
+      return;
+    }
+
     try {
-      const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
-      console.log('Company details submitted:', response.data);
-      setSuccessMessage(`Company details submitted successfully! ${response.data?.message || ''}`);
-      setFormData({
-        companyName: '',
-        contactNumber: '',
-        companyEmail: '',
-        industry: '',
-        location: '',
-        discription: '',
-        date: '',
-      });
-      history.push('/hr-registeration', { companyName: formData.companyName });
+      const response = await saveCompanyData(formData);
+      if (response.ok) {
+        setSuccessMessage("Company added successfully");
+        setFormData({
+          companyName: '',
+          contactNumber: '',
+          companyEmail: '',
+          industry: '',
+          location: '',
+          description: '',
+          date: '',
+        });
+      }
+      else if (response.status === 409) {
+        setErrorMessage("Company already exists. Please try again.");
+      }
+       else {
+        setErrorMessage("Company already exists.");
+      }
     } catch (error) {
-      console.error('Error during submission:', error);
-      setErrorMessage('Company already exists, please register as a HR');
-      alert('Company already exists, please register as a HR')
-      history.push('/hr-registeration', { companyName: formData.companyName });
+      setErrorMessage("Error adding company. Please try again.");
     }
   };
 
+  const checkCompanyExists = async (companyName) => {
+    try {
+      const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
+      const data = await response.json();
+      return data.exists;
+    } 
+    catch (error) {
+      return false;
+    }
+  };
+
+  const saveCompanyData = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:9090/api/companies/company", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      return response;
+    } 
+    catch (error) {
+      throw new Error("Error adding company. Please try again.");
+    }
+  };
+
+  
+  
   return (
     <div className='company-details'>
       <div className='company-container'>
@@ -75,7 +109,7 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
-            <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
+            <input type="text" id="description" name="description" value={formData.discription} onChange={handleChange} />
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>
@@ -84,13 +118,16 @@ const Companies = () => {
           <div>
             <button type="submit" style={{ textAlign: 'center' }}>Submit</button>
           </div>
-          {successMessage && (
-            <p className="success-message">{successMessage}</p>
-          )}
-          {errorMessage && (
-            <p className="error-message">{errorMessage}</p>
-          )}
+        
         </form>
+        {errorMessage && (
+          <div className="error-message">{errorMessage}
+          <Link to='/hr-registeration'>Click here to fill your details</Link>
+          </div> // Display error message
+        )}
+        {successMessage && (
+          <div className="success-message">{successMessage}</div> // Display success message in green color
+        )}
       </div>
     </div>
   );

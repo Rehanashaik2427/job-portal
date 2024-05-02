@@ -1,28 +1,19 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom'; // Changed import to include useLocation
 import './HrDashboard.css';
-import "./HrReg.css";
-
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
+import './HrReg.css';
 
 const HrRegistrationForm = () => {
-  const location = useLocation(); // Added useLocation hook to access location state
-  const companyName = location.state?.companyName;
-  console.log(companyName);
   const [formData, setFormData] = useState({
-    userName: "",
-    userRole: "HR",
-    userEmail: "",
-    phone: "",
-    companyName: companyName, // Set companyName from location state
-    password: "",
-    confirmpassword: "",
+    userName: '',
+    userEmail: '',
+    phone: '',
+    date: '',
+    password: '',
+    confirmPassword: '',
   });
-
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [registrationError, setRegistrationError] = useState("");
-  const history = useHistory();
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -30,57 +21,63 @@ const HrRegistrationForm = () => {
   };
 
   const validatePassword = () => {
-    if (formData.password !== formData.confirmpassword) {
-      setPasswordMatchError(true);
+    const { password, confirmPassword } = formData;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
+    const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
+    if (!isValidPassword) {
+      setPasswordCriteriaError(true);
       return false;
     }
-    setPasswordMatchError(false);
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validatePassword()) return;
-
-    try {
-      const apiUrl = BASE_API_URL + "/saveUser";
-      const method = 'POST';
-      const data = formData;
-
-      const response = await axios({
-        url: apiUrl,
-        method: method,
-        data: data,
+  const saveUserDetails = async (formData)=>{
+    try{
+      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
+        method:"POST",
+        headers :{"Content-Type":"application/json"},
+        body:JSON.stringify(formData),
       });
-
-      if (response.status === 200) {
-        alert('Registration successful! Please sign in.');
-        history.push("/hr-dashboard");
-      } else {
-        setRegistrationError("Error submitting job details. Please try again later.");
-      }
-
-      setFormData({
-        userName: '',
-        userEmail: '',
-        phone: '',
-        password: '',
-        confirmpassword: '',
-        userRole: '',
-      });
-
-    } catch (error) {
-      console.error('Error submitting job details:', error);
-      setRegistrationError("Error submitting job details. Please try again later.");
+      return response;
     }
+    catch(error){
+      throw new Error("Invalid user details");
+    }
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setPasswordCriteriaError(false); // Reset password criteria error on form submission
+    if (!validatePassword()) {
+      setPasswordMatchError(true);
+      
+    }
+    // Simulating registration success
+    setRegistrationSuccess(true);
+    console.log("Form Data:", formData);
+    saveUserDetails(formData); // Log the form data
+    setFormData({
+      userName: '',
+      userEmail: '',
+      phone: '',
+      date: '',
+      password: '',
+      confirmPassword: '',
+    });
   };
 
   return (
     <div className="centered-form">
       <div className="form-container">
         <h2 style={{ textAlign: 'center' }}>HR Registration Form</h2>
-        {registrationError && <p className="error-message">{registrationError}</p>}
+        {passwordMatchError && (
+          <p className="error-message">Password and confirm password do not match</p>
+        )}
+        {passwordCriteriaError && (
+          <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>
+        )}
+        {registrationSuccess && (
+          <p className="success-message">Your details have been successfully stored. You will receive a confirmation email within 24 hours.</p>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">HR Name:</label>
@@ -89,12 +86,17 @@ const HrRegistrationForm = () => {
 
           <div className="form-group">
             <label htmlFor="hrEmail">Email ID:</label>
-            <input type="email" id="hrEmail" name="userEmail" placeholder='name@companyname.com' value={formData.userEmail} onChange={handleInputChange} required />
+            <input type="email" id="hrEmail" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
           </div>
 
           <div className="form-group">
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required />
           </div>
 
           <div className="form-group">
@@ -104,12 +106,8 @@ const HrRegistrationForm = () => {
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmpassword" value={formData.confirmpassword} onChange={handleInputChange} required />
+            <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
           </div>
-
-          {passwordMatchError && (
-            <p className="error-message">Password and confirm password do not match. Please check.</p>
-          )}
 
           <button type="submit">Register</button>
         </form>
