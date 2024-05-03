@@ -4,54 +4,54 @@ import axios from 'axios'; // Import useHistory for programmatic navigation
 
 const HrSignin = () => {
   const [formData, setFormData] = useState({
-    userEmail: "",
-    password: "",
+    userEmail: '',
+    password: '',
   });
-  
-  const history = useHistory(); // Initialize useHistory
+
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = 'http://localhost:8080/api/jobbox';
 
-  
-
-  const getUser = async (userEmail) => {
+  const getUser = async (userEmail, password) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
-      console.log(response.data.userName);
-      if( response.data.password!==formData.password){
-        alert('Invalid email or password. Please try again.');
-        return;
+      const response = await axios.get(
+        `${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`
+      );
+
+      if (!response.data) {
+        throw new Error('Invalid email or password. Please try again.');
       }
-      else
+
       return response.data;
     } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
+      throw new Error('Error fetching user: ' + error.message);
     }
   };
 
-  const handleLogin = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
     try {
-      const user = await getUser(formData.userEmail);
-      
+      const user = await getUser(formData.userEmail, formData.password);
       if (user) {
-        const userName = user.userName;
-        const userEmail=formData.userEmail;
-        console.log(userName)
+        // Redirect to dashboard after successful login
+        console.log(user);
+        const userEmail=user.userEmail;
+        const userName=user.userName;
         console.log(userEmail);
-        history.push("/hr-dashboard", {userEmail});
+        console.log(userName);
+        history.push('/hr-dashboard', { userName },{userEmail});
       } else {
-        // Handle case where user data is not found or userName is not available
-        console.error('User data not found or userName is missing');
+        throw new Error('User data not found');
       }
     } catch (error) {
-      // Handle error when fetching user data
-      console.error('Error fetching user:', error);
+      alert(error.message); // Display error message
+      console.error('Error:', error.message);
     }
   };
   
@@ -60,7 +60,7 @@ const HrSignin = () => {
     <div className="centered-form"> {/* Apply centered styling to the form */}
       <div className="form-container">
         <h2>HR Sign In</h2>
-        <form onSubmit={(event) => event.preventDefault()}>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="userEmail">Email:</label>
             <input type="email" id="userEmail" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
@@ -70,7 +70,7 @@ const HrSignin = () => {
             <input style={{height:'20%'}}type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
-            <button style={{backgroundColor:'skyblue', height:'40px' , width:'100px',fontSize:'16px'}}type="button" onClick={handleLogin}>Login</button>
+            <button style={{backgroundColor:'skyblue', height:'40px' , width:'100px',fontSize:'16px'}}type="button" onClick={handleSubmit}>Login</button>
           </div>
         </form>
       </div>
@@ -79,3 +79,4 @@ const HrSignin = () => {
 };
 
 export default HrSignin;
+//   history.push("/hr-dashboard", {userEmail});

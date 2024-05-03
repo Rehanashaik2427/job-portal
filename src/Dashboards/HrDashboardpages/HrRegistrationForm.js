@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
 import './HrDashboard.css';
 import './HrReg.css';
+import axios from 'axios';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
+
+
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 const HrRegistrationForm = () => {
+const location=useLocation();
+const companyName=location.state?.companyName;
+
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
+    userRole:'HR',
+    companyName:companyName,
     phone: '',
-    date: '',
+    appliedDate: '',
     password: '',
     confirmPassword: '',
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
+  const [registrationError, setRegistrationError] = useState(false);
+
+  const passwordHint = 'Password must be at least 8 characters long and include uppercase, lowercase, numbers, and special characters.';
+
+ 
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -31,12 +46,9 @@ const HrRegistrationForm = () => {
     return true;
   };
 
+  const history = useHistory();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validatePassword()) return;
-
+  const saveUserDetails = async (formData) => {
     try {
       const apiUrl = BASE_API_URL + "/saveUser";
       const method = 'POST';
@@ -51,8 +63,9 @@ const HrRegistrationForm = () => {
       console.log(response.data);
 
       if (response.status === 200) {
-        // alert('Registration successful! Please sign in.');
-        history.push("/hr-RegSuccess");
+        // Successful registration:
+        setRegistrationSuccess(true); // Show success message
+        history.push("/hr-RegSuccess"); // Redirect to success page
       } else {
         setRegistrationError("Error submitting job details. Please try again later.");
       }
@@ -62,49 +75,37 @@ const HrRegistrationForm = () => {
         userEmail: '',
         phone: '',
         password: '',
-        confirmpassword: '',
-        userRole: '',
+        confirmPassword: '',
       });
 
     } catch (error) {
       console.error('Error submitting job details:', error);
       setRegistrationError("Error submitting job details. Please try again later.");
     }
-  const saveUserDetails = async (formData)=>{
-    try{
-      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
-        method:"POST",
-        headers :{"Content-Type":"application/json"},
-        body:JSON.stringify(formData),
-      });
-      return response;
+  };
 
-    }
-    catch(error){
-      throw new Error("Invalid user details");
-    }
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPasswordCriteriaError(false); // Reset password criteria error on form submission
+    setPasswordCriteriaError(false); // Reset password criteria error on submission
+
     if (!validatePassword()) {
       setPasswordMatchError(true);
-      
+      return;
     }
-    // Simulating registration success
-    setRegistrationSuccess(true);
+
     console.log("Form Data:", formData);
-    saveUserDetails(formData); // Log the form data
+    saveUserDetails(formData); // Submit data and handle success/error
+
     setFormData({
       userName: '',
       userEmail: '',
       phone: '',
-      date: '',
+      appliedDate: '',
       password: '',
       confirmPassword: '',
     });
   };
-};
+
 
   return (
     <div className="centered-form">
@@ -137,12 +138,13 @@ const HrRegistrationForm = () => {
 
           <div className="form-group">
             <label htmlFor="date">Date:</label>
-            <input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required />
+            <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleInputChange} required />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input type="password" id="password" name="password" placeholder={passwordHint} value={formData.password} onChange={handleInputChange}  required />
+            {/* <p className="password-hint">{passwordHint}</p> */}
           </div>
 
           <div className="form-group">

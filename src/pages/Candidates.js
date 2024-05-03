@@ -5,57 +5,54 @@ import axios from 'axios';
 
 const Candidates = () => {
   const [formData, setFormData] = useState({
-    userEmail: "",
-    password: "",
+    userEmail: '',
+    password: '',
   });
 
-
-  
-  const history = useHistory(); // Initialize useHistory
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = 'http://localhost:8080/api/jobbox';
 
-  
-
-  const getUser = async (userEmail) => {
+  const getUser = async (userEmail, password) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
-      console.log(response.data.userName);
-      if( response.data.password!==formData.password){
-        alert('Invalid email or password. Please try again.');
-        return;
+      const response = await axios.get(
+        `${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`
+      );
+
+      if (!response.data) {
+        throw new Error('Invalid email or password. Please try again.');
       }
-     
-      
-     else return response.data;
+
+      return response.data;
     } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
+      throw new Error('Error fetching user: ' + error.message);
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+
     try {
-      const user = await getUser(formData.userEmail);
+      const user = await getUser(formData.userEmail, formData.password);
       if (user) {
-        const userName = user.userName;
-        const userEmail=formData.userEmail;
-        console.log(userName)
+        // Redirect to dashboard after successful login
+        console.log(user);
+        const userEmail=user.userEmail;
+        const userName=user.userName;
         console.log(userEmail);
-      
-        history.push('/candidate-dashboard',{userName}, {userEmail});
+        console.log(userName);
+        history.push('/candidate-dashboard', { userName },{userEmail});
       } else {
-        debugger
-        console.error('User data not found or userName is missing');
+        throw new Error('User data not found');
       }
     } catch (error) {
-    
-      console.error('Error fetching user:', error);
+      alert(error.message); // Display error message
+      console.error('Error:', error.message);
     }
   };
   

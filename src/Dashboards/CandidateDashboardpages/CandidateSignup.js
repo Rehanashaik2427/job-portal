@@ -10,12 +10,12 @@ const CandidateRegistrationForm = () => {
     userName: '',
     userEmail: '',
     phone: '',
- 
+    appliedDate:'',
     userRole:"Candidate",
     password: '',
     confirmPassword: '',
   });
-  const history=useHistory();
+  const history = useHistory();
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
@@ -25,83 +25,36 @@ const CandidateRegistrationForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validatePassword()) {
+      return;
+    }
+    try {
+      const response = await axios.post(`${BASE_API_URL}/saveUser`, formData);
+      console.log(response.data); // Assuming the response contains relevant data
+      setRegistrationSuccess(true);
+      
+    } catch (error) {
+      console.error('Error registering candidate:', error);
+    }
+  };
+
   const validatePassword = () => {
     const { password, confirmPassword } = formData;
-    console.log(password,confirmPassword);
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
     const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
-   
+
     if (!isValidPassword) {
       setPasswordCriteriaError(true);
       return false;
     }
 
-    if(password > 12){
+    if (password.length > 12) {
       setPasswordCriteriaError(true);
       return false;
-   }
+    }
     return true;
-  };
-
- 
-  const saveUserDetails = async (formData)=>{
-    try {
-      
-      // const apiUrl = BASE_API_URL+"/saveUser"; 
-      // const method = 'POST'; 
-      // const data = formData;
-      // console.log(formData);
-  
-      // // Send the API request using axios
-      // const response = await axios({
-      //   url: apiUrl,
-      //   method: method,
-      //   data: data,
-      // });
-
-      const response = await fetch(BASE_API_URL+"/saveUser",{
-        method:"POST",
-        headers :{"Content-Type":"application/json"},
-        body:JSON.stringify(formData),
-      });
-    
-      console.log(response.data);
-  
-
-      console.log(response.password);
-      history.push("/candidates")
-      
-     
-      
-      return response;
-
-        
-      }
-    catch(error){
-      throw new Error("Invalid user details");
-    }
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setPasswordCriteriaError(false); // Reset password criteria error on form submission
-    if (!validatePassword()) {
-      setPasswordMatchError(true);
-      
-    }
-    
-    else{
-      setRegistrationSuccess(true);
-      console.log("Form Data:", formData);
-      saveUserDetails(formData); // Log the form data
-      setFormData({
-        userName: '',
-        userEmail: '',
-        phone: '',
-      
-        password: '',
-        confirmPassword: '',
-      });}
-    
   };
 
 
@@ -124,6 +77,12 @@ const CandidateRegistrationForm = () => {
             <label htmlFor="role">UserRole:</label>
             <input type="text" id="role" name="userRole" value={user.userRole}  onChange={handleChange} required />
           </div> */}
+
+          
+<div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleChange} required />
+          </div>
          
         
           <div className="form-group">

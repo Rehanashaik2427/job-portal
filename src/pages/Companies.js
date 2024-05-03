@@ -13,8 +13,11 @@ const Companies = () => {
     date: '',
   });
 
+  const companyName=formData.companyName;
+
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage2, setErrorMessage2] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +27,11 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const exists = await checkCompanyExists(formData.companyName);
-    if (exists) {
-      setErrorMessage("Company already exists. Please try again.");
-      return;
-    }
+    // const exists = await checkCompanyExists(formData.companyName);
+    // if (exists) {
+    //   setErrorMessage("Company already exists. Please try again.");
+    //   return;
+    // }
 
     try {
       const response = await saveCompanyData(formData);
@@ -44,31 +47,31 @@ const Companies = () => {
           date: '',
         });
       }
-      else if (response.status === 409) {
+      else if (response.status === 406) {
         setErrorMessage("Company already exists. Please try again.");
       }
        else {
         setErrorMessage("Company already exists.");
       }
     } catch (error) {
-      setErrorMessage("Error adding company. Please try again.");
+      setErrorMessage2("Error adding company. Please try again.");
     }
   };
 
-  const checkCompanyExists = async (companyName) => {
-    try {
-      const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
-      const data = await response.json();
-      return data.exists;
-    } 
-    catch (error) {
-      return false;
-    }
-  };
+  // const checkCompanyExists = async (companyName) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:8080/api/jobbox/checkExists/${companyName}`);
+  //     const data = await response.json();
+  //     return data.exists;
+  //   } 
+  //   catch (error) {
+  //     return false;
+  //   }
+  // };
 
   const saveCompanyData = async (formData) => {
     try {
-      const response = await fetch("http://localhost:9090/api/companies/company", {
+      const response = await fetch("http://localhost:8080/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -122,11 +125,17 @@ const Companies = () => {
         </form>
         {errorMessage && (
           <div className="error-message">{errorMessage}
-          <Link to='/hr-registeration'>Click here to fill your details</Link>
+          <Link to={{ pathname: '/hr-registeration', state: { companyName } }}>Click here to fill your details</Link>
+          </div> // Display error message
+        )}
+        {errorMessage2 && (
+          <div className="error-message">{errorMessage2}
           </div> // Display error message
         )}
         {successMessage && (
-          <div className="success-message">{successMessage}</div> // Display success message in green color
+          <div className="success-message">{successMessage}
+            <Link to={{ pathname: '/hr-registeration', state: { companyName } }}>Click here to fill your details</Link>
+          </div> // Display success message in green color
         )}
       </div>
     </div>
