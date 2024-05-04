@@ -15,6 +15,7 @@ const Candidates = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+ // const userEmail=formData.userEmail;
 
   const BASE_API_URL = 'http://localhost:8080/api/jobbox';
 
@@ -36,7 +37,7 @@ const Candidates = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-
+   // history.push('/candidate-dashboard',{userEmail});
     try {
       const user = await getUser(formData.userEmail, formData.password);
       if (user) {

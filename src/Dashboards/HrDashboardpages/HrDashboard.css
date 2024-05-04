@@ -110,14 +110,52 @@ section {
 
 
   #jobTable {
-    margin: 60px;
-    
-    width: 90%;
-    height: 80%;
+    width: 98%;
+    border-collapse: collapse;
+    margin: 10px;
   }
-  table, th, td {
-    border:1px solid black;
+  
+  #jobTable th, #jobTable td {
+    padding: 8px;
+    text-align: left;
   }
+  
+  #jobTable th {
+    background-color:rgb(118, 177, 157);
+  }
+  
+  #jobTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #jobTable tr:hover {
+    background-color: #ddd;
+  }
+  
+  #jobTable th, #jobTable td {
+    border: 1px solid #ddd; /* Add border to cells */
+  }
+  
+  .addJob {
+    clear: both; /* Clear floats */
+    margin-top: 30px; 
+    margin-left: 1050px;/* Add some spacing */
+  }
+  
+  .addJob a {
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .addJob a:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  
 
   .jobs_list,.jobs_list_table,.people{
     width: 100%;

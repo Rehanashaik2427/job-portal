@@ -151,7 +151,7 @@ const Jobs = () => {
       ))}
    
   </table>
-  <div>
+  <div className='addJob'>
   <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Another Job</Link>
   </div>
 </div>

@@ -150,17 +150,59 @@ table, th, td ,tr{
 /* candidate job */
 /* My Apllicatons*/
 
-.jobs-table , .applications-table{
+ /* .applications-table{
   margin: 12px;
   width: 98%;
+  border: none;
 }
-.jobs-table th ,.applications-table th{
+.applications-table th{
   background-color: rgb(154, 184, 204);
   text-align: center;
 }
-.jobs-table td , .applications-table td{
+ .applications-table td{
   text-align: center;
+} */
+
+
+.jobs-table , .applications-table{
+  border-collapse: collapse;
+  width: 98%;
+  border: none;
+  margin: 10px;
 }
+
+.jobs-table th,.applications-table th,
+.jobs-table td, .applications-table td {
+  padding: 8px;
+  text-align: left;
+}
+
+.jobs-table th, .applications-table th {
+  background-color:rgb(110, 180, 156);
+}
+
+.jobs-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+.jobs-table tr:hover {
+  background-color: #ddd;
+}
+
+.jobs-table th, .applications-table th,
+.jobs-table td, .applications-table td {
+  border: none; /* Removes borders */
+}
+
+.applications-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.applications-table:hover{
+  background-color: #ddd;
+}
+
 
 
 .dream{

@@ -32,10 +32,10 @@ const HrSignin = () => {
       throw new Error('Error fetching user: ' + error.message);
     }
   };
-
+//const userEmail=formData.userEmail;
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-
+    //history.push('/hr-dashboard', {userEmail});
     try {
       const user = await getUser(formData.userEmail, formData.password);
       if (user) {
@@ -53,7 +53,7 @@ const HrSignin = () => {
       alert(error.message); // Display error message
       console.error('Error:', error.message);
     }
-  };
+   };
   
 
   return (

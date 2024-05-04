@@ -2,6 +2,7 @@ import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.m
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import "./Addjob.css";
 
 
 
@@ -136,7 +137,7 @@ return(
               <label htmlFor='title'>Job Title: <input type='text' id='title' name='jobTitle' value={jobDetails.jobTitle} onChange={handleChange} required /></label>
               <label htmlFor='jobType'>Job Type:<br/> 
                 <select id='jobType' name='jobType' value={jobDetails.jobType} onChange={handleChange} required>
-                  <option value=''>Select Job Type</option>
+                  <option value=''><p>Select Job Type</p></option>
                   <option value='FullTime'>Full Time</option>
                   <option value='PartTime'>Part Time</option>
                   <option value='Contract'>Contract</option>
