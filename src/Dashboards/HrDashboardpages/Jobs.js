@@ -114,24 +114,25 @@ const Jobs = () => {
       <div className='hr-rightside'>
       <div>
   <h2>Jobs Posted by {userName}</h2>
+
+  
+  
+  {jobs.length > 0 && (
   <table id='jobTable'>
-    
-      <tr>
-        <th>Job Title</th>
-        <th>Job Type </th>
-        <th>Location</th>
-        <th>Requirements</th>
-        <th>Eligible</th>
-        <th>No of Position</th>
-        <th>Salary</th>
-        <th>Application DeadLine</th>
-        <th>Action</th>
-        
-      </tr>
-   
-      {jobs.map(job => (
+    <tr>
+      <th>Job Title</th>
+      <th>Job Type </th>
+      <th>Location</th>
+      <th>Requirements</th>
+      <th>Eligible</th>
+      <th>No of Position</th>
+      <th>Salary</th>
+      <th>Application DeadLine</th>
+      <th>Action</th>
+    </tr>
+    {jobs.map(job => (
+      job.jobId !== 0 && (
         <tr key={job.id}>
-         
           <td>{job.jobTitle}</td>
           <td>{job.jobType}</td>
           <td>{job.location}</td>
@@ -144,15 +145,20 @@ const Jobs = () => {
             <button onClick={() => handleUpdate(job.jobId)}>Update</button>
             <button onClick={() => handleDelete(job.jobId)}>Delete</button>
           </td>
-          
-          
-          
         </tr>
-      ))}
-   
+      )
+    ))}
   </table>
+)}
+{jobs.length === 0 && (
+  <section>
+    <h2 colSpan="9">You have not posted any jobs yet.</h2>
+  </section>
+)}
+
+
   <div className='addJob'>
-  <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Another Job</Link>
+  <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Job</Link>
   </div>
 </div>
 

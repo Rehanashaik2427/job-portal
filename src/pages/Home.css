@@ -21,9 +21,11 @@ body {
   }
   
   .nav-links {
-    display: flex; /* Make the navigation links horizontal */
+    /* display: flex; Make the navigation links horizontal */
+   display:  flex;
     color: black;
     list-style: none;
+    transition:  box-shadow 0.3s ease, background-color 0.3s ease,transform 0.3s ease;;
   
     font-size: 19px;
    
@@ -31,14 +33,18 @@ body {
 
 
   .nav-links a {
-    text-decoration: none; /* Remove underline from navigation links */
+    /* text-decoration: none; Remove underline from navigation links */
     color: black; /* Set the text color for the links */
     margin:28px;
+
+
   }
 
   .nav-links a:hover{
-    background-color: #ddd;
+    font-size: 25px;
     color: black;
+    transform: scale(1.05); 
+
   }
 
  .top-heading{

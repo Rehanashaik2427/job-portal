@@ -45,7 +45,7 @@ const HrSignin = () => {
         const userName=user.userName;
         console.log(userEmail);
         console.log(userName);
-        history.push('/hr-dashboard', { userName },{userEmail});
+        history.push('/hr-dashboard', {userEmail});
       } else {
         throw new Error('User data not found');
       }

@@ -115,7 +115,7 @@ const AddJob=()=>{
             experience: '',
             salary: '',
           });
-          history.push("/post-jobs",{userEmail},{userName})
+          history.push("/jodAddSuccess",{userEmail})
 
         } catch (error) {
           console.error('Error posting job details:', error);

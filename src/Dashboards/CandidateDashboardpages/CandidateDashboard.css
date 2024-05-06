@@ -163,6 +163,13 @@ table, th, td ,tr{
   text-align: center;
 } */
 
+.jobs-table-div{
+
+  height: 500px;
+  overflow: scroll;
+
+}
+
 
 .jobs-table , .applications-table{
   border-collapse: collapse;
@@ -174,11 +181,13 @@ table, th, td ,tr{
 .jobs-table th,.applications-table th,
 .jobs-table td, .applications-table td {
   padding: 8px;
-  text-align: left;
+  text-align: center;
+
+  
 }
 
 .jobs-table th, .applications-table th {
-  background-color:rgb(110, 180, 156);
+  background-color:rgb(179, 236, 216);
 }
 
 .jobs-table tr:nth-child(even) {
@@ -192,7 +201,7 @@ table, th, td ,tr{
 
 .jobs-table th, .applications-table th,
 .jobs-table td, .applications-table td {
-  border: none; /* Removes borders */
+  border: none; 
 }
 
 .applications-table tr:nth-child(even) {
@@ -396,5 +405,46 @@ button.com:hover {
   background-color: lightblue;
 }
 
+#settings-container {
+   position: absolute; 
+  top: 17%;
+  left: 93%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(127, 142, 168);
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999; /* Ensure it appears on top of other content */
+}
+
+#settings-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#settings-container ul li {
+  padding: 12px 0;
+  border-bottom: 1px solid #ced4da; /* Light border color */
+  color: #495057; /* Text color */
+  font-size: 16px; /* Font size */
+}
+
+#settings-container ul li:last-child {
+  border-bottom: none;
+}
+
+#settings-container ul li:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
 
 

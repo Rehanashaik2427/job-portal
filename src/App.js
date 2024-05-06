@@ -44,6 +44,7 @@ import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
 import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
 import AddJob from './Dashboards/HrDashboardpages/AddJob';
+import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 
 
 const App = () => {
@@ -100,6 +101,7 @@ const App = () => {
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
           <Route path="/addJob" component={AddJob}/>
+          <Route path="/jodAddSuccess" component={JobAdded}/>
         </Switch>
       </BrowserRouter>
     </div>
