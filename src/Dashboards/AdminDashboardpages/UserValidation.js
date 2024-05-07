@@ -1,20 +1,15 @@
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './AdminDashboard.css';
 
-
-const BASE_API_URL="http://localhost:8080/api/jobbox";
 const UserValidation = () => {
-
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${BASE_API_URL}/displayUsers`); // Replace '/displayUsers' with your actual endpoint
+        const response = await fetch('http://localhost:8080/api/jobbox/displayUsers');
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
@@ -28,7 +23,6 @@ const UserValidation = () => {
     fetchUserData();
   }, []);
 
- 
   return (
     <div className='body'>
       <div className='leftside'>
@@ -49,7 +43,7 @@ const UserValidation = () => {
             <FaBuilding />  <Link to="/company-validation">Validation Company</Link>
           </section>
           <section id="allowingAccess">
-            <FaUniversalAccess /> <Link to="/allowing-access">Acess</Link>
+            <FaUniversalAccess /> <Link to="/allowing-access">Access</Link>
           </section>
           <section id="blockAccount">
             <FaUserLock /> <Link to="/block-account">Block Account</Link>
@@ -64,38 +58,40 @@ const UserValidation = () => {
             <FaComments /> <Link to="/contacts">Contacts</Link>
           </section>
           <section>
-            <FontAwesomeIcon icon={faHome} /> <Link to='/'>Home</Link>
-          </section>  
+            <FaHome /> <Link to='/'>Home</Link>
+          </section>
         </div>
       </div>
 
-    <div className="rightSide">
-
-     
-      <div className='user-table-list'>
-      <h2>Users List</h2>
-        <table id="user-table" className="user-table">
-          <tr>
-            <th >User Name</th>
-            <th >User Role</th>
-            <th>Action Date</th>
-            <th >Status & Actions</th>
-          </tr>
-
-          {userData.map(user => (
-            <tr key={user.userId}>
-              <td>{user.userName}</td>
-              <td>{user.userRole}</td>
-              <td>{user.approvedOn}</td>
-              <td>{user.userEmail}</td>
-            </tr>
-          ))}
-
-        </table>
+      <div className="rightSide">
+        <div className='user-table-list'>
+          <h2>Users List</h2>
+          <table id="user-table" className="user-table">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>User Role</th>
+                <th>User Email</th>
+                <th>Action Date</th>
+                <th>Status & Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userData.map(user => (
+                <tr key={user.userId}>
+                  <td>{user.userName}</td>
+                  <td>{user.userRole}</td>
+                  <td>{user.userEmail}</td>
+                  <td>{user.approvedOn}</td>
+                  <td>{user.userStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default UserValidation
+export default UserValidation;

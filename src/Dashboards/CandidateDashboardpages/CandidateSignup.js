@@ -6,73 +6,58 @@ import { useHistory } from 'react-router-dom';
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 
 const CandidateRegistrationForm = () => {
-  const [user, setUser] = useState({
+  const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
-    userRole: 'Candidate',
     phone: '',
     date:'',
+    appliedDate:'',
+    userRole:"Candidate",
     password: '',
-    confirmpassword: ''
+    confirmPassword: '',
   });
-
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
   const history = useHistory();
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
 
-  const validatePassword = (event) => {
-    // event.preventDefault();
- 
-     if (user.password !== user.confirmpassword) {
- 
-       alert("Passwords don't match! Please re-enter.");
-       return false;
-     }
-     return true; // Password is valid
-   }
-
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validatePassword()) return; // Exit if password validation fails
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validatePassword()) {
+      return;
+    }
     try {
+      const response = await axios.post(`${BASE_API_URL}/saveUser`, formData);
+      console.log(response.data); // Assuming the response contains relevant data
+      setRegistrationSuccess(true);
       
-      const apiUrl = BASE_API_URL+"/saveUser"; 
-      const method = 'POST'; 
-      const data = user;
-  
-      // Send the API request using axios
-      const response = await axios({
-        url: apiUrl,
-        method: method,
-        data: data,
-      });
+    } catch (error) {
+      console.error('Error registering candidate:', error);
+    }
+  };
 
-      console.log(response.password);
-      history.push("/candidates")
-      
-      setUser({
-        userName: '',
-        userEmail: '',
-        phone:'',
-        date:'',
-        password: '',
-        userRole: '',
-      
-        
-        });
-    
-      } catch (error) {
-        console.error('Error submitting job details:', error);
-        // Handle errors appropriately (e.g., display error message to the user)
-  
-        setPasswordMatchError(true);
-      } 
-    };
+  const validatePassword = () => {
+    const { password, confirmPassword } = formData;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
+    const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
+
+    if (!isValidPassword) {
+      setPasswordCriteriaError(true);
+      return false;
+    }
+
+    if (password.length > 12) {
+      setPasswordCriteriaError(true);
+      return false;
+    }
+    return true;
+  };
+
 
 
   return (
@@ -86,15 +71,42 @@ const CandidateRegistrationForm = () => {
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input type="text" id="name" name="userName" value={user.userName} onChange={handleChange}  required />
+            <input type="text" id="name" name="userName" value={user.userName} onChange={handleChange} className="form-control" required />
+
+            <input type="text" id="name" name="userName" value={formData.userName} onChange={handleChange} className="form-control" required />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email ID:</label>
             <input type="email" id="email" name="userEmail" value={user.userEmail} onChange={handleChange} required />
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="userEmail" value={user.userEmail} onChange={handleChange} className="form-control" required />
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="userEmail" value={formData.userEmail} onChange={handleChange} className="form-control" required />
           </div>
+
+          {/* <div className="candidate-form-group">
+            <label htmlFor="role">UserRole:</label>
+            <input type="text" id="role" name="userRole" value={user.userRole}  onChange={handleChange} required />
+          </div> */}
+         
+
+          {/* <div className="candidate-form-group">
+            <label htmlFor="role">UserRole:</label>
+            <input type="text" id="role" name="userRole" value={user.userRole}  onChange={handleChange} required />
+          </div> */}
+
+          
+<div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleChange} required />
+          </div>
+         
         
           <div className="form-group">
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={user.phone} onChange={handleChange} required />
+            <input type="tel" id="phone" name="phone" value={user.phone} onChange={handleChange} className="form-control" required />
+            <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="form-control" required />
           </div>
 
           <div className="form-group">
@@ -106,19 +118,38 @@ const CandidateRegistrationForm = () => {
           <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" name="password" value={user.password} onChange={handleChange}  required />
-          </div>
+            <input type="password" id="password" name="password" value={user.password} onChange={handleChange} className="form-control" required />
+            <input type="text" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />          </div>
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" value={user.confirmPassword} onChange={handleChange} required />
+            <input type="password" id="confirmPassword" name="confirmpassword" value={user.confirmpassword} onChange={handleChange} className="form-control" required />
+            <input type="text" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="form-control" required />
           </div>
           
         
          
        
           <button type="submit">Register</button>
+          {passwordMatchError && (
+            <p className="error-message">Password and confirm password do not match. Please check.</p>
+          )}
+          <button type="submit" className="btn btn-primary">Register</button>
+
+          <button type="submit" className="btn btn-primary">Register</button>
         </form>
       </div>
+      {passwordMatchError && (
+          <p className="error-message">Password and confirm password do not match</p>
+        )}
+        {passwordCriteriaError && (
+          <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>
+        )}
+        {registrationSuccess && (
+          <p className="success-message">Your details have been successfully stored. You will receive a confirmation email within 24 hours.</p>
+        )}
+
     </div>
   );
 };

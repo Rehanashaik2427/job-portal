@@ -4,11 +4,57 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';// Import Link from react-router-dom
 import './CandidateDashboard.css';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const userName=location.state?.userName;
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  
   const userEmail=location.state?.userEmail;
+  console.log(userEmail);
+ 
+
+  const [userData, setUserData] = useState();
+  const [userName,setUserName]=useState();
+  
+ 
+
+  const fetchUserData = async (userEmail) => {
+    try {
+        const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+            params: {
+              userEmail: userEmail
+            }
+          });
+
+          console.log(response.data);
+          
+          
+           setUserName(response.data.userName);
+          
+          
+      setUserData(response.data);
+      
+    } catch (error) {
+      
+      setUserData(null);
+    }
+  };
+
+  useEffect(() => {
+   
+      fetchUserData(userEmail);
+    
+  }, [userEmail]);
+
+  console.log(userName);
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
 
   return (
     <div className="candidate-dashboard-container">
@@ -75,9 +121,23 @@ const CandidateDashboard = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+          
           </div>
+         
+    
         </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li>Sing out</li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+
 
         <div className="my-dashboard-container">
           <div>

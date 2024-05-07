@@ -17,7 +17,7 @@ const PostedJobs = () => {
     const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    const fetchJobs = async () => {
+    const fetchJobs = async (userEmail) => {
       try {
         const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
         setJobs(response.data);
@@ -27,7 +27,7 @@ const PostedJobs = () => {
     };
 
     if (userEmail) {
-      fetchJobs();
+      fetchJobs(userEmail);
     }
   }, [userEmail]);
 

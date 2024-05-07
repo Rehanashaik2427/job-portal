@@ -263,9 +263,9 @@ company details by admin */
   }
 
   .company-table1 {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
-    /* margin-top: 20px; */
+     margin-right: 20px;
     margin: 30px;
   }
   
@@ -280,20 +280,22 @@ company details by admin */
   }
   
   .company-table1 button {
-    background-color: #4CAF50;
-    color: white;
+    /* background-color: #4CAF50;  */
+    color: black; 
     padding: 6px 10px;
-    border: none;
-    cursor: pointer;
+     border: none;
+     cursor: pointer; 
   }
   
-  .company-table1 button .approved:hover {
-    background-color: #37ac3c;
+  .company-table1 button .approved {
+    background-color: #0ee719;
+    border: none;
   }
 
-  .company-table1 button .reject:hover {
-    background-color:rgb(186, 25, 25);
+  .company-table1 button .reject {
+    background-color:rgb(218, 21, 21);
+    border: none;
   }
-
+s
 
  

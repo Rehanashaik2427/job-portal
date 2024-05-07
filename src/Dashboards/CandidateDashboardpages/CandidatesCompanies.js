@@ -44,6 +44,12 @@ const CandidatesCompanies = () => {
     console.log("Searching for job with role:", jobRole);
   };
 
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -108,9 +114,23 @@ const CandidatesCompanies = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+          
           </div>
+         
+    
         </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li>Sing out</li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+
 
         <div className="companyJob">
           <h1> Companies that we have</h1>

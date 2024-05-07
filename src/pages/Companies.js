@@ -15,8 +15,11 @@ const Companies = () => {
     date: '',
   });
 
+  const companyName=formData.companyName;
+
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage2, setErrorMessage2] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +31,7 @@ const Companies = () => {
 
     const exists = await checkCompanyExists(formData.companyName);
     if (exists) {
-      setErrorMessage("Company already exists!!");
+      setErrorMessage("Company already exists. Please try again.");
       return;
     }
 
@@ -46,14 +49,18 @@ const Companies = () => {
           description: '',
           date: '',
         });
-      } else if (response.status === 409) {
+      }
+      else if (response.status === 409) {
+        setErrorMessage("Company already exists. Please try again.");
+      }
+       else {
         setErrorMessage("Company already exists.");
         history.push('/hr-registeration', { companyName: formData.companyName });
       } else {
         setErrorMessage("Error adding company. Please try again.");
       }
     } catch (error) {
-      setErrorMessage("Error adding company. Please try again.");
+      setErrorMessage2("Error adding company. Please try again.");
     }
   };
 
@@ -62,14 +69,15 @@ const Companies = () => {
       const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
       const data = await response.json();
       return data.exists;
-    } catch (error) {
+    } 
+    catch (error) {
       return false;
     }
   };
 
   const saveCompanyData = async (formData) => {
     try {
-      const response = await fetch("http://localhost:9090/api/companies/company", {
+      const response = await fetch("http://localhost:8080/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -120,13 +128,11 @@ const Companies = () => {
         </form>
         {errorMessage && (
           <div className="error-message">{errorMessage}
-            <Link to='/hr-registeration' onClick={() => history.push('/hr-registeration', { companyName: formData.companyName })}>Click here to fill your details</Link>
-          </div>
+          <Link to='/hr-registeration'>Click here to fill your details</Link>
+          </div> // Display error message
         )}
         {successMessage && (
-          <div className="success-message">{successMessage}
-            <Link to='/hr-registeration' onClick={() => history.push('/hr-registeration', { companyName: formData.companyName })}>Click here to fill your details</Link>
-          </div>
+          <div className="success-message">{successMessage}</div> // Display success message in green color
         )}
       </div>
     </div>

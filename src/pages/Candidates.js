@@ -4,52 +4,51 @@ import './Home.css';
 
 const Candidates = () => {
   const [formData, setFormData] = useState({
-    userEmail: "",
-    password: "",
+    userEmail: '',
+    password: '',
   });
-  
-  const history = useHistory(); // Initialize useHistory
+
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+ // const userEmail=formData.userEmail;
 
-  //const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
   
 
-  // const getUser = async (userEmail) => {
-  //   try {
-  //     const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
-  //     console.log(response.data.userName);
-  //     return response.data.userName;
-  //   } catch (error) {
-  //     console.error('Error fetching user:', error);
-  //     return null;
-  //   }
-  // };
+  const getUser = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
+      console.log(response.data.userName);
+      return response.data.userName;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+  };
 
   const handleSubmit = async () => {
-    history.push('/candidate-dashboard');
-
-    // try {
-    //   const user = await getUser(formData.userEmail);
-    //   if (user) {
-    //     const userName = user;
-    //     const userEmail=formData.userEmail;
-    //     console.log(userName)
-    //     console.log(userEmail);
+    try {
+      const user = await getUser(formData.userEmail);
+      if (user) {
+        const userName = user;
+        const userEmail=formData.userEmail;
+        console.log(userName)
+        console.log(userEmail);
       
-    //     history.push('/candidate-dashboard',{userName}, {userEmail});
-    //   } else {
-    //     debugger
-    //     console.error('User data not found or userName is missing');
-    //   }
-    // } catch (error) {
+        history.push('/candidate-dashboard',{userName}, {userEmail});
+      } else {
+        debugger
+        console.error('User data not found or userName is missing');
+      }
+    } catch (error) {
     
-    //   console.error('Error fetching user:', error);
-    // }
+      console.error('Error fetching user:', error);
+    }
   };
   
 

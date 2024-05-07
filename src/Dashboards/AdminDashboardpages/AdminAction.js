@@ -9,6 +9,7 @@ const AdminAction = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [approvalMessages, setApprovalMessages] = useState({});
+  const [rejectMessages, setRejectMessages] = useState({});
 
   const fetchHRDetails = async () => {
     try {
@@ -29,8 +30,9 @@ const AdminAction = () => {
 
   const approveRequest = async (userEmail,userId) => {
     console.log('Request Approved');
+    const approved="Approved";
     try {
-      const res = await axios.put(`${BASE_API_URL}/updateApprove?userEmail=${userEmail}&approvedOn=${currentTime}`);
+      const res = await axios.put(`${BASE_API_URL}/updateApprove?userEmail=${userEmail}&approvedOn=${currentTime}&userStatus=${approved}`);
       console.log(res.data);
       const updatedMessages = { ...approvalMessages, [userId]: 'Approval successful' };
       setApprovalMessages(updatedMessages);
@@ -42,12 +44,16 @@ const AdminAction = () => {
     }
   };
 
-  const rejectRequest = async(userEmail) => {
+  const rejectRequest = async(userEmail,userId) => {
     console.log('Request Rejected');
+    const rejected="Rejected";
     // Handle reject request logic here
     try {
-      const response = await axios.delete(`${BASE_API_URL}/deleteUser?userEmail=${userEmail}`);
-      console.log(response.data);
+      const res = await axios.put(`${BASE_API_URL}/updateApprove?userEmail=${userEmail}&approvedOn=${currentTime}&userStatus=${rejected}`);
+      console.log(res.data);
+
+      const updatedMessages = { ...rejectMessages, [userId]: 'Rejected' };
+      setRejectMessages(updatedMessages);
 
      
       // If needed, update the state or perform additional actions after successful approval
@@ -87,6 +93,7 @@ const AdminAction = () => {
               </button>
             </div>
             {approvalMessages[hr.userId] && <p className="approval-message">{approvalMessages[hr.userId]}</p>}
+            {rejectMessages[hr.userId] && <p className="reject-message">{rejectMessages[hr.userId]}</p>}
           </div>
         ))}
       </main>

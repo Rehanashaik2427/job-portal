@@ -31,6 +31,12 @@ const CandiadteJobs = () => {
     fetchJobs();
   }, []);
 
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -97,13 +103,25 @@ const CandiadteJobs = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+          
           </div>
+         
+    
         </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li>Sing out</li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
 
           
             <h1 style={{textAlign:'center'}}>JOBS</h1>
-            <div className='jobs-table'>
             <table className='jobs-table'>
 
             
@@ -116,9 +134,23 @@ const CandiadteJobs = () => {
                   <th>Requirements</th>
                   <th>Status & Actions</th>
                 </tr>
-              
+                </table>
+            <div className='jobs-table-div'>
+            <table className='jobs-table'>
+
+            
+                {/* <tr>
+                  <th>Job Profile</th>
+                  <th>Company Name</th>
+                  <th>Application DeadLine</th>
+                  <th>Experience</th>
+                  <th>Eligibility</th>
+                  <th>Requirements</th>
+                  <th>Status & Actions</th>
+                </tr>
+               */}
                 {jobs.map(job => (
-                  <tr key={job.id}>
+                  <tr key={job.id} id='job-table-list'>
                     <td>{job.jobTitle}</td>
                     <td>{job.companyName}</td>
                     <td>{job.applicationDeadline}</td>

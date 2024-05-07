@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import './HrDashboard.css';
 import './HrReg.css';
 
+
+
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 const HrRegistrationForm = () => {
-  const location = useLocation();
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
+    userRole:'HR',
+    companyName:companyName,
     phone: '',
     date: '',
-    userRole: 'HR',
     password: '',
     confirmPassword: '',
      companyName: '', // Added companyName to formData state
@@ -19,16 +21,6 @@ const HrRegistrationForm = () => {
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
 
-useEffect(() => {
-  if (location.state && location.state.companyName) {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      companyName: location.state.companyName,
-    }));
-  }
-}, [location.state]);
-
-  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
@@ -58,45 +50,42 @@ useEffect(() => {
   };
 
 
-  const saveUserDetails = async (formData) => {
-    try {
-      const response = await fetch("http://localhost:9090/api/userdetails/registerUser", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          // Include company name in the user details
-          // companyName: formData.companyName, // No need to include companyName here
-        }),
+  const saveUserDetails = async (formData)=>{
+    try{
+      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
+        method:"POST",
+        headers :{"Content-Type":"application/json"},
+        body:JSON.stringify(formData),
       });
       return response;
-    } catch (error) {
+    }
+    catch(error){
       throw new Error("Invalid user details");
     }
-  };
-
-  const handleSubmit = async (e) => {
+  }
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setPasswordCriteriaError(false); // Reset password criteria error on form submission
-    if (!validatePassword()) {
-      setPasswordMatchError(false);
-      return;
-    }
+    setPasswordCriteriaError(false); // Reset password criteria error on submission
 
+    if (!validatePassword()) {
+      setPasswordMatchError(true);
+      
+    }
     // Simulating registration success
     setRegistrationSuccess(true);
     console.log("Form Data:", formData);
-    await saveUserDetails(formData); // Log the form data
+    saveUserDetails(formData); // Log the form data
     setFormData({
       userName: '',
       userEmail: '',
       phone: '',
-      date: '',
+      appliedDate: '',
       password: '',
       confirmPassword: '',
       
     });
   };
+
 
   return (
     <div className="centered-form">
@@ -129,12 +118,13 @@ useEffect(() => {
 
           <div className="form-group">
             <label htmlFor="date">Date:</label>
-            <input type="date" id="date" name="date" value={formData.date} onChange={handleInputChange} required />
+            <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleInputChange} required />
           </div>
 
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input type="password" id="password" name="password" placeholder={passwordHint} value={formData.password} onChange={handleInputChange}  required />
+            {/* <p className="password-hint">{passwordHint}</p> */}
           </div>
 
           <div className="form-group">

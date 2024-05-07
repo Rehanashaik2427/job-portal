@@ -16,6 +16,12 @@ const Resume = () => {
     // Additional logic to handle adding the resume can be added here
   };
 
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -81,9 +87,23 @@ const Resume = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+          
           </div>
+         
+    
         </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li>Sing out</li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+
         <div>
           <h1 style={{textAlign:'center'}}>MY RESUMES</h1>
           <div className="span">

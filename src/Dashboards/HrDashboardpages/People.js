@@ -15,6 +15,7 @@ const People = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            console.log(userEmail)
             try {
                 const response = await axios.get(BASE_API_URL + "/getHrEachCompany", { params: { userEmail } });
                 setPeople(response.data);
@@ -58,6 +59,9 @@ const People = () => {
                     <section>
                         <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
                     </section>
+
+                    <h3>Help</h3>
+        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
     </div>
 
     <div className='hr-rightside'>

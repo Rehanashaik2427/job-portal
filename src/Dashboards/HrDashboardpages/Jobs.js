@@ -105,58 +105,54 @@ const Jobs = () => {
                       </section>
 
 
-                      <h3>Help</h3>
-          <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
-        </div>
-        
-          {/* Right Side Content */}
-          <div className='hr-rightside'>
-          
-            <h2>Jobs Posted by {userName}</h2>
-
-            <table id='jobTable' className="jobTable">
-              
-                <tr>
-                  <th>Job Title</th>
-                  <th>Job Type </th>
-                  <th>Location</th>
-                  <th>Requirements</th>
-                  <th>Eligible</th>
-                  <th>No of Positions</th>
-                  <th>Salary</th>
-                  <th>Application DeadLine</th>
-                  <th>Action</th>
-                  
-                </tr>
+                    <h3>Help</h3>
+        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+      </div>
+      {/* Right Side Content */}
+      <div className='hr-rightside'>
+      <div>
+  <h2>Jobs Posted by {userName}</h2>
+  <table id='jobTable'>
     
-                {jobs.map(job => (
-                  <tr key={job.id}>
-                  
-                    <td>{job.jobTitle}</td>
-                    <td>{job.jobType}</td>
-                    <td>{job.location}</td>
-                    <td>{job.requirements}</td>
-                    <td>{job.eligibility}</td>
-                    <td>{job.numberOfPosition}</td>
-                    <td>{job.salary}</td>
-                    <td>{job.applicationDeadline}</td>
-                    <td>
-                      <button onClick={() => handleUpdate(job.jobId)}>Update</button>
-                      <button onClick={() => handleDelete(job.jobId)}>Delete</button>
-                    </td>
-                    
-                    
-                    
-                  </tr>
-                ))}
-            
-            </table>
-
-            <div>
-              <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Another Job</Link>
-            </div>
-
-          </div>
+      <tr>
+        <th>Job Title</th>
+        <th>Job Type </th>
+        <th>Location</th>
+        <th>Requirements</th>
+        <th>Eligible</th>
+        <th>No of Position</th>
+        <th>Salary</th>
+        <th>Application DeadLine</th>
+        <th>Action</th>
+        
+      </tr>
+   
+      {jobs.map(job => (
+        <tr key={job.id}>
+         
+          <td>{job.jobTitle}</td>
+          <td>{job.jobType}</td>
+          <td>{job.location}</td>
+          <td>{job.requirements}</td>
+          <td>{job.eligibility}</td>
+          <td>{job.numberOfPosition}</td>
+          <td>{job.salary}</td>
+          <td>{job.applicationDeadline}</td>
+          <td>
+            <button onClick={() => handleUpdate(job.jobId)}>Update</button>
+            <button onClick={() => handleDelete(job.jobId)}>Delete</button>
+          </td>
+          
+          
+          
+        </tr>
+      ))}
+   
+  </table>
+  <div>
+  <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Another Job</Link>
+  </div>
+</div>
 
         
     </div>
