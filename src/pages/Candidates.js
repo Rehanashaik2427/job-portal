@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
-import axios from 'axios';
 
 const Candidates = () => {
   const [formData, setFormData] = useState({
@@ -16,56 +15,58 @@ const Candidates = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  //const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
   
 
-  const getUser = async (userEmail) => {
-    try {
-      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
-      console.log(response.data.userName);
-      return response.data.userName;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
-    }
-  };
+  // const getUser = async (userEmail) => {
+  //   try {
+  //     const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
+  //     console.log(response.data.userName);
+  //     return response.data.userName;
+  //   } catch (error) {
+  //     console.error('Error fetching user:', error);
+  //     return null;
+  //   }
+  // };
 
   const handleSubmit = async () => {
-    try {
-      const user = await getUser(formData.userEmail);
-      if (user) {
-        const userName = user;
-        const userEmail=formData.userEmail;
-        console.log(userName)
-        console.log(userEmail);
+    history.push('/candidate-dashboard');
+
+    // try {
+    //   const user = await getUser(formData.userEmail);
+    //   if (user) {
+    //     const userName = user;
+    //     const userEmail=formData.userEmail;
+    //     console.log(userName)
+    //     console.log(userEmail);
       
-        history.push('/candidate-dashboard',{userName}, {userEmail});
-      } else {
-        debugger
-        console.error('User data not found or userName is missing');
-      }
-    } catch (error) {
+    //     history.push('/candidate-dashboard',{userName}, {userEmail});
+    //   } else {
+    //     debugger
+    //     console.error('User data not found or userName is missing');
+    //   }
+    // } catch (error) {
     
-      console.error('Error fetching user:', error);
-    }
+    //   console.error('Error fetching user:', error);
+    // }
   };
   
 
   return (
-    <div className="candidate-login-form">
-      <div id="login-form">
-        
-          <form id="loginform"  >
-            <div className="candidate-login-form-group">
+    <div className="centered-form">
+      <div className="form-container">
+          <h2>Candidate SignIn</h2>
+          <form >
+            <div className="form-group">
               <label htmlFor="login-email">Email:</label>
               <input type="email" id="login-email" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
             </div>
-            <div className="candidate-login-form-group">
+            <div className="form-group">
               <label htmlFor="login-password">Password:</label>
               <input type="password" id="login-password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
-            <div className="candidate-login-form-group">
+            <div className="form-group">
               <button type="submit" onClick={handleSubmit}>Login</button>
             </div>
           </form>

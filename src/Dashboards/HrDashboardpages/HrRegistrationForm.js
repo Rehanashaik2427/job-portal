@@ -1,22 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import './HrReg.css';
 
 const HrRegistrationForm = () => {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
     phone: '',
     date: '',
+    userRole: 'HR',
     password: '',
     confirmPassword: '',
+     companyName: '', // Added companyName to formData state
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
 
+useEffect(() => {
+  if (location.state && location.state.companyName) {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      companyName: location.state.companyName,
+    }));
+  }
+}, [location.state]);
+
+  
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+  
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -24,37 +41,52 @@ const HrRegistrationForm = () => {
     const { password, confirmPassword } = formData;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
     const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
+
     if (!isValidPassword) {
       setPasswordCriteriaError(true);
       return false;
     }
+
+    if (password > 12 || password< 8) {
+      setPasswordCriteriaError(true);
+      return false;
+    }
     return true;
+
+
+    
   };
 
-  const saveUserDetails = async (formData)=>{
-    try{
-      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
-        method:"POST",
-        headers :{"Content-Type":"application/json"},
-        body:JSON.stringify(formData),
+
+  const saveUserDetails = async (formData) => {
+    try {
+      const response = await fetch("http://localhost:9090/api/userdetails/registerUser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          // Include company name in the user details
+          // companyName: formData.companyName, // No need to include companyName here
+        }),
       });
       return response;
-    }
-    catch(error){
+    } catch (error) {
       throw new Error("Invalid user details");
     }
-  }
-  const handleSubmit = (e) => {
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setPasswordCriteriaError(false); // Reset password criteria error on form submission
     if (!validatePassword()) {
-      setPasswordMatchError(true);
-      
+      setPasswordMatchError(false);
+      return;
     }
+
     // Simulating registration success
     setRegistrationSuccess(true);
     console.log("Form Data:", formData);
-    saveUserDetails(formData); // Log the form data
+    await saveUserDetails(formData); // Log the form data
     setFormData({
       userName: '',
       userEmail: '',
@@ -62,6 +94,7 @@ const HrRegistrationForm = () => {
       date: '',
       password: '',
       confirmPassword: '',
+      
     });
   };
 
@@ -80,7 +113,7 @@ const HrRegistrationForm = () => {
         )}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="hrName">HR Name:</label>
+            <label htmlFor="hrName">Name:</label>
             <input type="text" id="hrName" name="userName" value={formData.userName} onChange={handleInputChange} required />
           </div>
 
@@ -108,6 +141,7 @@ const HrRegistrationForm = () => {
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
           </div>
+          
 
           <button type="submit">Register</button>
         </form>

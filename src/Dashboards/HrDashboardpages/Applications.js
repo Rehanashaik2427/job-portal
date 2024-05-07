@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 
@@ -64,7 +64,7 @@ const Applications = () => {
                         </select>
                     </div>
                     <br />
-                    <table id='application' >
+                    <table id='jobTable' className="jobTable" >
                         
                             <tr style={{textAlign:'center'}}>
                                 <th>Job Title</th>

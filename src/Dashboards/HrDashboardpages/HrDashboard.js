@@ -1,12 +1,10 @@
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from "react-router-dom";
-import './HrDashboard.css';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './HrDashboard.css';
 
 
 const HrDashboard = () => {
@@ -141,20 +139,7 @@ const HrDashboard = () => {
                 <div className="box">
                     <h2>Activities</h2>
                         <img src="https://cdn-icons-png.flaticon.com/128/15597/15597760.png" className="animated-icons" alt="Activities Icon" />
-                        <table>
-                            <tr>
-                                <td>Posting jobs</td>
-                                <td >1000+</td>
-                            </tr>
-                            <tr>
-                                <td>Total Applications</td>
-                                <td >3000+</td>
-                            </tr>
-                            <tr>
-                                <td>Shortlisted-Candidates</td>
-                                <td >200+</td>
-                            </tr>
-                        </table>
+                     
                 </div>
             </div>
         </div>

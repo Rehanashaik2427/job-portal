@@ -55,7 +55,7 @@ const AllowingAccess = () => {
       <div>
         <h2 style={{textAlign:'center'}}>Access Dashboard</h2>
         <div className="access-table">
-        <table className="access-table">
+        <table id="user-table" className="user-table">
     
     <tr >
       <th >User</th>

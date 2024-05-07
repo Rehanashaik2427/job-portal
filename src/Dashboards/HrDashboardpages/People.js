@@ -1,11 +1,9 @@
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
 
 const People = () => {
     const BASE_API_URL = "http://localhost:8080/api/jobbox";
@@ -65,7 +63,7 @@ const People = () => {
     <div className='hr-rightside'>
     
         <div className="jobs_list">
-        <table id='jobTable1'>
+        <table id='jobTable' className="jobTable">
             
                     <tr>
                         <th>HR ID</th>

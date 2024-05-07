@@ -54,7 +54,7 @@ const Contacts = () => {
       <h2 style={{textAlign:'center'}}>Request from the Users</h2>
       <div className="help">
       <div className='contacts-table'>
-      <table className='contacts-table'>
+      <table id="user-table" className="user-table">
 
     <tr>
       <th>User</th>

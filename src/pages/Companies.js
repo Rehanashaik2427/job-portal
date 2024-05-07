@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
 
 const Companies = () => {
+  const history = useHistory();
+
   const [formData, setFormData] = useState({
     companyName: '',
     contactNumber: '',
@@ -26,7 +28,7 @@ const Companies = () => {
 
     const exists = await checkCompanyExists(formData.companyName);
     if (exists) {
-      setErrorMessage("Company already exists. Please try again.");
+      setErrorMessage("Company already exists!!");
       return;
     }
 
@@ -34,6 +36,7 @@ const Companies = () => {
       const response = await saveCompanyData(formData);
       if (response.ok) {
         setSuccessMessage("Company added successfully");
+        history.push('/hr-registeration', { companyName: formData.companyName });
         setFormData({
           companyName: '',
           contactNumber: '',
@@ -43,12 +46,11 @@ const Companies = () => {
           description: '',
           date: '',
         });
-      }
-      else if (response.status === 409) {
-        setErrorMessage("Company already exists. Please try again.");
-      }
-       else {
+      } else if (response.status === 409) {
         setErrorMessage("Company already exists.");
+        history.push('/hr-registeration', { companyName: formData.companyName });
+      } else {
+        setErrorMessage("Error adding company. Please try again.");
       }
     } catch (error) {
       setErrorMessage("Error adding company. Please try again.");
@@ -60,8 +62,7 @@ const Companies = () => {
       const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
       const data = await response.json();
       return data.exists;
-    } 
-    catch (error) {
+    } catch (error) {
       return false;
     }
   };
@@ -74,14 +75,11 @@ const Companies = () => {
         body: JSON.stringify(formData),
       });
       return response;
-    } 
-    catch (error) {
+    } catch (error) {
       throw new Error("Error adding company. Please try again.");
     }
   };
 
-  
-  
   return (
     <div className='company-details'>
       <div className='company-container'>
@@ -109,7 +107,7 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
-            <input type="text" id="description" name="description" value={formData.discription} onChange={handleChange} />
+            <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>
@@ -122,11 +120,13 @@ const Companies = () => {
         </form>
         {errorMessage && (
           <div className="error-message">{errorMessage}
-          <Link to='/hr-registeration'>Click here to fill your details</Link>
-          </div> // Display error message
+            <Link to='/hr-registeration' onClick={() => history.push('/hr-registeration', { companyName: formData.companyName })}>Click here to fill your details</Link>
+          </div>
         )}
         {successMessage && (
-          <div className="success-message">{successMessage}</div> // Display success message in green color
+          <div className="success-message">{successMessage}
+            <Link to='/hr-registeration' onClick={() => history.push('/hr-registeration', { companyName: formData.companyName })}>Click here to fill your details</Link>
+          </div>
         )}
       </div>
     </div>

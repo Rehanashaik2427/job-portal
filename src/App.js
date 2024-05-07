@@ -29,8 +29,15 @@ import HrProfile from './Dashboards/HrDashboardpages/HrProfile';
 import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
 // import Jobs from './Dashboards/HrDashboardpages/Jobs';
+import AddJob from './Dashboards/HrDashboardpages/AddJob';
+import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
+import JobTitles from './Dashboards/HrDashboardpages/JobTitles';
+import JobType from './Dashboards/HrDashboardpages/JobType';
+import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
+import RequirementsAndSkills from './Dashboards/HrDashboardpages/RequirementsAndSkills';
+import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
 import About from './pages/About';
 import CandidateSucessMsg from './pages/CandidateSucessMsg';
 import Candidates from './pages/Candidates';
@@ -40,10 +47,6 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
-import Jobs from './Dashboards/HrDashboardpages/Jobs';
-import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
-import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
-import AddJob from './Dashboards/HrDashboardpages/AddJob';
 
 
 const App = () => {
@@ -100,6 +103,9 @@ const App = () => {
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
           <Route path="/addJob" component={AddJob}/>
+          <Route path="/requirements-and-skills" component={RequirementsAndSkills} />
+          <Route path='/job-titles' component={JobTitles} />
+          <Route path='/job-type' component={JobType} />
         </Switch>
       </BrowserRouter>
     </div>
