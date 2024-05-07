@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers ,faSearch,faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
@@ -15,6 +15,14 @@ const Applications = () => {
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail=location.state?.userEmail;
+
+    const [showSettings, setShowSettings] = useState(false);
+
+    const toggleSettings = () => {
+      setShowSettings(!showSettings);
+    };
+  
+  
 
     return (
         <div className='candidate-dashboard-container'>
@@ -54,7 +62,30 @@ const Applications = () => {
             </div>
             <main>
                 <section className="applications">
-                    <div className="filter">
+                    
+                    <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+          
+          </div>
+         
+    
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+
+<div className="filter">
+                        
                         <label htmlFor="status">Filter by Status:</label>
                         <select id="status" onChange={handleFilterChange} value={filterStatus}>
                             <option value="all">All</option>

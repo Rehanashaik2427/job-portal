@@ -1,4 +1,4 @@
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers,faSearch,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from "react-router-dom";
@@ -29,6 +29,13 @@ const People = () => {
             fetchData();
         }
     }, [userEmail]);
+
+    const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
 
     
   return (
@@ -67,6 +74,28 @@ const People = () => {
     </div>
 
     <div className='hr-rightside'>
+    <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+          
+        
+         
+    
+        </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+      
     
         <div className="jobs_list">
         <table id='jobTable1'>

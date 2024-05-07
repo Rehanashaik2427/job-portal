@@ -1,4 +1,4 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ const CandiadteJobs = () => {
   const userEmail=location.state?.userEmail;
 
   const [jobs, setJobs] = useState([]);
+  const [applyjobs, setApplyJobs] = useState([]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -36,6 +37,28 @@ const CandiadteJobs = () => {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+  
+  const applyJob= async(jobId)=>{
+    console.log(jobId);
+    console.log(userEmail);
+
+    const appliedOn = new Date().toLocaleString();
+
+    try {
+      const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}`);
+ 
+      setApplyJobs(response.data);
+      console.log(response.data);
+      if(response.data)
+        {
+          alert("You have successfully apply this job");
+        }
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
+
+  
 
   return (
     <div className="candidate-dashboard-container">
@@ -88,9 +111,9 @@ const CandiadteJobs = () => {
           state: { userName: userName, userEmail:userEmail }
         }}> Payments/Credits</Link>
         </section>
-        <section id="Home">
+        {/* <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section> 
+        </section>  */}
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
@@ -103,7 +126,7 @@ const CandiadteJobs = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
          
@@ -113,7 +136,7 @@ const CandiadteJobs = () => {
         <div id="settings-container">
           {/* Your settings options here */}
           <ul>
-            <li>Sing out</li>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting 2</li>
             {/* Add more settings as needed */}
           </ul>
@@ -158,7 +181,7 @@ const CandiadteJobs = () => {
                     <td>{job.eligibility}</td>
                     <td>{job.requirements}</td>
                     
-                    <td><Link to="/applied-success-msg"><button ><h4>Apply</h4></button></Link></td>
+                    <td><button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button></td>
                   </tr>
                 ))}
              

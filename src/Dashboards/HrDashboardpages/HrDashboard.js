@@ -1,4 +1,4 @@
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers,faSearch,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from "react-router-dom";
@@ -56,6 +56,12 @@ const HrDashboard = () => {
  // const userName=userData.userName;
 
   console.log(userName);
+
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
 
 
   return (
@@ -118,6 +124,28 @@ const HrDashboard = () => {
       </div>
       <div className='hr-rightside'>
         <div className="content">
+        <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+          
+          </div>
+         
+    
+        </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting 2</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+      
             <div className="box-container">
 
                 {/* First row - first box */}
@@ -164,7 +192,7 @@ const HrDashboard = () => {
             </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

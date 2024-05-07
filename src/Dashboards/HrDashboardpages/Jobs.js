@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers,faSearch,faSignOutAlt, faSpaghettiMonsterFlying } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
@@ -66,6 +66,12 @@ const Jobs = () => {
     }
   };
 
+  const [showSettings, setShowSettings] = useState(false);
+
+    const toggleSettings = () => {
+      setShowSettings(!showSettings);
+    };
+
 
   
     
@@ -112,62 +118,90 @@ const Jobs = () => {
       </div>
       {/* Right Side Content */}
       <div className='hr-rightside'>
-      <div>
-  <h2>Jobs Posted by {userName}</h2>
+   
+       <div className="candidate-search">
+            <input type='text' placeholder='serach'></input>
+            <button>
+              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+            </button>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+          
+        
+         
+    
+        </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting</li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+      
+
+               
+        
+    
+      
+      
+              <h2>Jobs Posted by {userName}</h2>
 
   
   
-  {jobs.length > 0 && (
-  <table id='jobTable'>
-    <tr>
-      <th>Job Title</th>
-      <th>Job Type </th>
-      <th>Location</th>
-      <th>Requirements</th>
-      <th>Eligible</th>
-      <th>No of Position</th>
-      <th>Salary</th>
-      <th>Application DeadLine</th>
-      <th>Action</th>
-    </tr>
-    {jobs.map(job => (
-      job.jobId !== 0 && (
-        <tr key={job.id}>
-          <td>{job.jobTitle}</td>
-          <td>{job.jobType}</td>
-          <td>{job.location}</td>
-          <td>{job.requirements}</td>
-          <td>{job.eligibility}</td>
-          <td>{job.numberOfPosition}</td>
-          <td>{job.salary}</td>
-          <td>{job.applicationDeadline}</td>
-          <td>
-            <button onClick={() => handleUpdate(job.jobId)}>Update</button>
-            <button onClick={() => handleDelete(job.jobId)}>Delete</button>
-          </td>
-        </tr>
-      )
-    ))}
-  </table>
+                                {jobs.length > 0 && (
+                                <table id='jobTable'>
+                                  <tr>
+                                    <th>Job Title</th>
+                                    <th>Job Type </th>
+                                    <th>Location</th>
+                                    <th>Requirements</th>
+                                    <th>Eligible</th>
+                                    <th>No of Position</th>
+                                    <th>Salary</th>
+                                    <th>Application DeadLine</th>
+                                    <th>Action</th>
+                                  </tr>
+                                  {jobs.map(job => (
+                                    job.jobId !== 0 && (
+                                      <tr key={job.id}>
+                                        <td>{job.jobTitle}</td>
+                                        <td>{job.jobType}</td>
+                                        <td>{job.location}</td>
+                                        <td>{job.requirements}</td>
+                                        <td>{job.eligibility}</td>
+                                        <td>{job.numberOfPosition}</td>
+                                        <td>{job.salary}</td>
+                                        <td>{job.applicationDeadline}</td>
+                                        <td>
+                                          <button onClick={() => handleUpdate(job.jobId)}>Update</button>
+                                          <button onClick={() => handleDelete(job.jobId)}>Delete</button>
+                                        </td>
+                                      </tr>
+                                    )
+                                  ))}
+                                </table>
 )}
-{jobs.length === 0 && (
-  <section>
-    <h2 colSpan="9">You have not posted any jobs yet.</h2>
-  </section>
-)}
+                          {jobs.length === 0 && (
+                            <section>
+                              <h2 colSpan="9">You have not posted any jobs yet.</h2>
+                            </section>
+                          )}
 
 
-  <div className='addJob'>
-  <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Job</Link>
-  </div>
-</div>
-
-        
-
-
-        
-      </div>
+                          <div className='addJob'>
+                          <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail:userEmail } }}>Add Job</Link>
+                          </div>
     </div>
+
+        
+
+
+    </div>
+ 
+   
   );
 };
 
