@@ -56,7 +56,7 @@ const CandidatesCompanies = () => {
         <nav id='logo'>
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav> <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{

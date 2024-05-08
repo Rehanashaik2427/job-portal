@@ -210,7 +210,7 @@ table, th, td ,tr{
   background-color: #f2f2f2;
 }
 
-.applications-table:hover{
+.applications-table tr:hover{
   background-color: #ddd;
 }
 

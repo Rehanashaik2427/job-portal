@@ -43,7 +43,7 @@ const fetchApplications= async()=>
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -124,7 +124,7 @@ const fetchApplications= async()=>
             <table className='applications-table'>
                 <tr>
                     <th>Company Name</th>
-
+                    <th>Job Title</th>
                     <th >Applied On</th>
                     <th>Resume Profile</th>
                     <th>Status & Actions</th>
@@ -134,7 +134,7 @@ const fetchApplications= async()=>
                 {applications.map(application => (
             <tr key={application.id}>
               <td>{application.companyName}</td>
-            
+              <td>{application.jobRole}</td>
               <td>{application.appliedOn}</td>
               <td>{application.resume}</td>
               <td>{application.applicationStatus}</td>

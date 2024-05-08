@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers ,faSearch,faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
+import axios from 'axios';
 
 const Applications = () => {
+    const BASE_API_URL = "http://localhost:8080/api/jobbox";
     const [filterStatus, setFilterStatus] = useState('all');
 
     const handleFilterChange = (e) => {
@@ -17,10 +19,49 @@ const Applications = () => {
     const userEmail=location.state?.userEmail;
 
     const [showSettings, setShowSettings] = useState(false);
+    const [applications,setApplications]=useState([]);
 
     const toggleSettings = () => {
       setShowSettings(!showSettings);
     };
+
+    const fetchApplications=async()=>
+        {
+            try{
+                const response= await axios.get(`${BASE_API_URL}/getApplicationsByHR?userEmail=${userEmail}`);
+                console.log(response.data);
+                setApplications(response.data);
+
+            }catch(error)
+            {
+                console.log(error);
+            }
+        };
+
+        useEffect(()=>{
+            fetchApplications();
+        }, [])
+
+
+        const updateStatus = async (applicationId, newStatus) => {
+            console.log(applicationId);
+            console.log(newStatus);
+            try {
+                const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
+                console.log(response.data);
+                fetchApplications(); 
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        const history=useHistory();
+
+        const viewDetails=async(applicationId)=>{
+            history.push('/applicationDetails',{applicationId})
+
+        }
+
   
   
 
@@ -99,15 +140,30 @@ const Applications = () => {
                         
                             <tr style={{textAlign:'center'}}>
                                 <th>Job Title</th>
-                                <th>Company ID</th>
+                                <th>Company Name</th>
                                 <th>Resume ID</th>
                                 <th>Date/Time</th>
                                 <th>Application Status</th>
+                                <th>View Details</th>
+                                <th>Application Action</th>
+                               
                             </tr>
                         
-                        <tbody>
-                            {/* Your application data here */}
-                        </tbody>
+                            {applications.map(application => (
+            <tr key={application.id}>
+              <td>{application.jobRole}</td>
+              <td>{application.companyName}</td>
+              <td>{application.resumeId}</td>
+              <td>{application.appliedOn}</td>
+              <td>{application.applicationStatus}</td>
+            <td><button onClick={()=>viewDetails(application.applicationId)}>View</button></td>
+              <td>
+              <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')}>Select</button>
+             <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')}>Reject</button>
+                
+              </td>
+            </tr>
+          ))}
                     </table>
                 </section>
             </main>

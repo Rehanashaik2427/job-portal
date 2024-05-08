@@ -41,6 +41,7 @@ const CompanyValidation = () => {
       console.log(res.data);
       const updatedMessages = { ...approvalMessages, [companyId]: 'Approval successful' };
       setApprovalMessages(updatedMessages);
+      setCompanyData();
      
       // If needed, update the state or perform additional actions after successful approval
     } catch (error) {
@@ -59,6 +60,7 @@ const CompanyValidation = () => {
       console.log(res.data);
       const updatedMessages = { ...rejectMessages, [companyId]: 'Rejected Company' };
       setrejectMessages(updatedMessages);
+      setCompanyData();
      
       // If needed, update the state or perform additional actions after successful approval
     } catch (error) {

@@ -19,7 +19,7 @@ const CandiadteJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [applyjobs, setApplyJobs] = useState([]);
 
-  useEffect(() => {
+ 
     const fetchJobs = async () => {
       try {
         const response = await axios.get(BASE_API_URL+"/displayJobs"); // Assuming backend is running on the same host
@@ -28,7 +28,7 @@ const CandiadteJobs = () => {
         console.error('Error fetching jobs:', error);
       }
     };
-
+    useEffect(() => {
     fetchJobs();
   }, []);
 
@@ -47,16 +47,25 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}`);
  
-      setApplyJobs(response.data);
+     // setApplyJobs(response.data);
       console.log(response.data);
+      setApplyJobs([...applyjobs, jobId]);
+  
       if(response.data)
         {
           alert("You have successfully apply this job");
+        
         }
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
+    // fetchJobs();
   };
+
+  useEffect(() => {
+    // Update localStorage whenever appliedJobs changes
+    localStorage.setItem('appliedJobs', JSON.stringify(applyjobs));
+}, [applyjobs]);
 
   
 
@@ -67,7 +76,7 @@ const CandiadteJobs = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -137,7 +146,7 @@ const CandiadteJobs = () => {
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting 2</li>
+            <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
         </div>
@@ -180,8 +189,12 @@ const CandiadteJobs = () => {
                     <td>{job.experience}</td>
                     <td>{job.eligibility}</td>
                     <td>{job.requirements}</td>
-                    
-                    <td><button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button></td>
+                    <td> {applyjobs.includes(job.jobId) ? (
+                               <h4>Applied</h4>
+                                    ) : (
+                      <button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button>
+                      )}
+                     </td>
                   </tr>
                 ))}
              

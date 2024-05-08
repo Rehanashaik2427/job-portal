@@ -25,7 +25,7 @@ const Payment = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -77,7 +77,7 @@ const Payment = () => {
       </div>
 
       <div className='rightside'>
-        <div className='payment-div' >
+                           <div className='payment-div' >
                               <div className="candidate-search">
                                     {/* <input type='text' placeholder='serach'></input>
                                     <button>
@@ -85,10 +85,10 @@ const Payment = () => {
                                     </button> */}
                                     <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleSettings}/></div>
                                   
-                                  </div>
+                              </div>
                                 
                             
-                                </div>
+                            </div>
                                 {showSettings && (
                                 <div id="settings-container">
                                   {/* Your settings options here */}
@@ -107,7 +107,7 @@ const Payment = () => {
           <div>
             <h2>Payment Via</h2>
             <section className="payment-options">
-              <h2 className='payment-option'><FontAwesomeIcon icon={faCreditCard} /> Credit/Debit card</h2>
+              <h2 className='payment-option'><FontAwesomeIcon icon={faCreditCard}  /> Credit/Debit card</h2>
               <h2 className='payment-option'><FontAwesomeIcon icon={faPaperclip} /> UPI payments</h2>
               <h2 className='payment-option'><FontAwesomeIcon icon={faGlobe} /> Net Banking</h2>
             </section>
