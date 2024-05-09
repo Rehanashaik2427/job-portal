@@ -4,13 +4,13 @@ import './HrReg.css';
 
 
 
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
+//const BASE_API_URL = "http://localhost:8080/api/jobbox";
 const HrRegistrationForm = () => {
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
     userRole:'HR',
-    companyName:companyName,
+    
     phone: '',
     date: '',
     password: '',
@@ -123,7 +123,7 @@ const HrRegistrationForm = () => {
 
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder={passwordHint} value={formData.password} onChange={handleInputChange}  required />
+            <input type="password" id="password" name="password"  value={formData.password} onChange={handleInputChange}  required />
             {/* <p className="password-hint">{passwordHint}</p> */}
           </div>
 

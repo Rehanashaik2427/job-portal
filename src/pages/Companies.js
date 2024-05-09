@@ -15,7 +15,7 @@ const Companies = () => {
     date: '',
   });
 
-  const companyName=formData.companyName;
+  const companyName = formData.companyName;
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -49,13 +49,8 @@ const Companies = () => {
           description: '',
           date: '',
         });
-      }
-      else if (response.status === 409) {
+      } else if (response.status === 409) {
         setErrorMessage("Company already exists. Please try again.");
-      }
-       else {
-        setErrorMessage("Company already exists.");
-        history.push('/hr-registeration', { companyName: formData.companyName });
       } else {
         setErrorMessage("Error adding company. Please try again.");
       }
@@ -69,8 +64,7 @@ const Companies = () => {
       const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
       const data = await response.json();
       return data.exists;
-    } 
-    catch (error) {
+    } catch (error) {
       return false;
     }
   };
@@ -124,15 +118,15 @@ const Companies = () => {
           <div>
             <button type="submit" style={{ textAlign: 'center' }}>Submit</button>
           </div>
-        
         </form>
         {errorMessage && (
-          <div className="error-message">{errorMessage}
-          <Link to='/hr-registeration'>Click here to fill your details</Link>
-          </div> // Display error message
+          <div className="error-message">
+            {errorMessage}
+            <Link to='/hr-registeration'>Click here to fill your details</Link>
+          </div>
         )}
         {successMessage && (
-          <div className="success-message">{successMessage}</div> // Display success message in green color
+          <div className="success-message">{successMessage}</div>
         )}
       </div>
     </div>
