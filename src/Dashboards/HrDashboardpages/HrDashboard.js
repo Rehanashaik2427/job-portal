@@ -1,13 +1,11 @@
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers,faSearch,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from "react-router-dom";
-import './HrDashboard.css';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './HrDashboard.css';
+import HrLeftSide from './HrLeftSide';
 
 const HrDashboard = () => {
 
@@ -18,7 +16,8 @@ const HrDashboard = () => {
   const userEmail=location.state?.userEmail;
 
   console.log(userEmail);
- 
+
+  
 
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
@@ -63,89 +62,38 @@ const HrDashboard = () => {
     setShowSettings(!showSettings);
   };
 
+  const user = {
+   userName: userName,
+   
+    userEmail: userEmail,
+  };
+
 
   return (
     <div className='candidate-dashboard-container'>
-      <div className='hr-leftside'>
-        <nav id='logo'>
-          <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
-        </nav>
-        <nav>
-          <h2> Welcome {userName} </h2>
-         
-        </nav>   
-        
-      <section id="hr-dashboard">
-        <FontAwesomeIcon icon={faHouse} /> <Link to={{
-          pathname: '/hr-dashboard',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Dashboard</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{
-          pathname: '/post-jobs',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Jobs</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{
-          pathname: '/hr-applications',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Applications</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{
-          pathname: '/posted-jobs',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Posted Jobs</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faUsers} /> <Link to={{
-          pathname: '/people',
-          state: { userName: userName, userEmail:userEmail }
-        }}>People</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faUser} /> <Link to={{
-          pathname: '/hr-profile',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Profile</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faHome} /> <Link to={{
-          pathname: '/',
-          state: { userName: userName, userEmail:userEmail }
-        }}>Home</Link>
-      </section>
-
-      <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
-    
+         <div className='hr-leftside'>
+        <HrLeftSide user={user} />
       </div>
+
       <div className='hr-rightside'>
-        <div className="content">
-        <div className="candidate-search">
+       
+      <div className="candidate-search">
             <input type='text' placeholder='serach'></input>
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
-          
-          </div>
-         
-    
         </div>
         {showSettings && (
         <div id="settings-container">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting 2</li>
+            <li>Setting</li>
             {/* Add more settings as needed */}
           </ul>
         </div>
       )}
-      
             <div className="box-container">
 
                 {/* First row - first box */}
@@ -174,20 +122,7 @@ const HrDashboard = () => {
                 <div className="box">
                     <h2>Activities</h2>
                         <img src="https://cdn-icons-png.flaticon.com/128/15597/15597760.png" className="animated-icons" alt="Activities Icon" />
-                        <table>
-                            <tr>
-                                <td>Posting jobs</td>
-                                <td >1000+</td>
-                            </tr>
-                            <tr>
-                                <td>Total Applications</td>
-                                <td >3000+</td>
-                            </tr>
-                            <tr>
-                                <td>Shortlisted-Candidates</td>
-                                <td >200+</td>
-                            </tr>
-                        </table>
+                     
                 </div>
             </div>
         </div>

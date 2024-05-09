@@ -15,63 +15,59 @@ const Candidates = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
- // const userEmail=formData.userEmail;
+ const userEmail=formData.userEmail;
 
-  const BASE_API_URL = 'http://localhost:8080/api/jobbox';
+ const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
-  const getUser = async (userEmail, password) => {
+  
+
+  const getUser = async (userEmail) => {
     try {
-      const response = await axios.get(
-        `${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`
-      );
-
-      if (!response.data) {
-        throw new Error('Invalid email or password. Please try again.');
-      }
-
-      return response.data;
+      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
+      console.log(response.data.userName);
+      return response.data.userName;
     } catch (error) {
-      throw new Error('Error fetching user: ' + error.message);
+      console.error('Error fetching user:', error);
+      return null;
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
-   // history.push('/candidate-dashboard',{userEmail});
+  const handleSubmit = async () => {
+    // history.push('/candidate-dashboard')
     try {
-      const user = await getUser(formData.userEmail, formData.password);
+      const user = await getUser(formData.userEmail);
       if (user) {
-        // Redirect to dashboard after successful login
-        console.log(user);
-        const userEmail=user.userEmail;
-        const userName=user.userName;
+        const userName = user;
+        const userEmail=formData.userEmail;
+        console.log(userName)
         console.log(userEmail);
-        console.log(userName);
-        history.push('/candidate-dashboard',{userEmail});
+      
+        history.push('/candidate-dashboard', {userEmail});
       } else {
-        throw new Error('User data not found');
+        debugger
+        console.error('User data not found or userName is missing');
       }
     } catch (error) {
-      alert(error.message); // Display error message
-      console.error('Error:', error.message);
+    
+      console.error('Error fetching user:', error);
     }
   };
   
 
   return (
-    <div className="candidate-login-form">
-      <div id="login-form">
-        
-          <form id="loginform"  >
-            <div className="candidate-login-form-group">
+    <div className="centered-form">
+      <div className="form-container">
+          <h2>Candidate SignIn</h2>
+          <form >
+            <div className="form-group">
               <label htmlFor="login-email">Email:</label>
               <input type="email" id="login-email" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
             </div>
-            <div className="candidate-login-form-group">
+            <div className="form-group">
               <label htmlFor="login-password">Password:</label>
               <input type="password" id="login-password" name="password" value={formData.password} onChange={handleInputChange} required />
             </div>
-            <div className="candidate-login-form-group">
+            <div className="form-group">
               <button type="submit" onClick={handleSubmit}>Login</button>
             </div>
           </form>

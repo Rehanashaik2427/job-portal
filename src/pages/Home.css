@@ -35,9 +35,7 @@ body {
 .nav-links a {
   /* text-decoration: none; Remove underline from navigation links */
   color: black; /* Set the text color for the links */
-  margin:28px;
-
-
+  margin:23px
 }
 
 .nav-links li a {
@@ -69,8 +67,8 @@ margin-left: 500px;
 }
 
 .home-button{
-background-color: #70a0d4;
-height: 50px;
+  background-color:rgb(57, 149, 185);
+  height: 50px;
 font-size: 24px;
 }
 .head{
@@ -99,7 +97,7 @@ to {
 
 
 .info {
-background-color: rgb(164, 233, 245);
+  background-color:rgb(194, 250, 250);
 text-align: center !important;
 
 }
@@ -259,7 +257,7 @@ padding: 12px;
 
 
 .home-contact-container{
-background-color: gray;
+background-color:rgb(157, 248, 248);
 }
 
 .home-contact-info{

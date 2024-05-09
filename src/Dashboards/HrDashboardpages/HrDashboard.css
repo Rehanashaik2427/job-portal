@@ -94,13 +94,10 @@ section {
   }
   
   
-  /* .hr-rightside {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-  }
-   */
-
+/* filetr */
+.filter{
+  margin-left: 12px;
+}
 
   /* #application {
     margin: 60px;
@@ -168,59 +165,11 @@ section {
 
   
 
-  #jobTable {
-    width: 98%;
-    border-collapse: collapse;
-    margin: 10px;
-  }
-  
-  #jobTable th, #jobTable td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  #jobTable th {
-    background-color:rgb(118, 177, 157);
-  }
-  
-  #jobTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  #jobTable tr:hover {
-    background-color: #ddd;
-  }
-  
-  #jobTable th, #jobTable td {
-    border: 1px solid #ddd; /* Add border to cells */
-  }
-  
-  .addJob {
-    clear: both; /* Clear floats */
-    margin-top: 30px; 
-    margin-left: 1050px;/* Add some spacing */
-  }
-  
-  .addJob a {
-    text-decoration: none;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-  }
-  
-  .addJob a:hover {
-    background-color: #0056b3;
-  }
-  
-  
-  
 
-  .jobs_list,.jobs_list_table,.people{
-    width: 100%;
-    height: 100%;
-  }
+ 
 
+ 
+  
 
   
 
@@ -243,14 +192,12 @@ section {
   
   .boxp {
     flex-basis: calc(33.33% - 20px); /* Adjust the width of each box */
-    /* padding: 20px; */
     height: 120%;
     width: 40%;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin: 5px;
-    /* border: 0.1px double black; */
 
    
   }
@@ -321,14 +268,17 @@ section {
   background-color: skyblue;
   font-size: 15px;
 }
-
-.jobs_list #jobTable1{
+/*tables rights*/
+ #jobTable1{
   
     width: 90%;
     border-collapse: collapse;
     margin-top: 100px;
     margin-left: 20px;
     margin-right: 20px;
+  }
+  #jobTable1 th{
+    background-color: rgb(188, 250, 229);
   }
   
   #jobTable1 th,
@@ -338,9 +288,6 @@ section {
     text-align: left;
   }
   
-  #jobTable1 th {
-    background-color:white;
-  }
   
   #jobTable1 tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -350,6 +297,7 @@ section {
     background-color: #ddd;
   }
   
+
   .not-yet {
     background-color: #b5e2e0;
     padding: 20px;
@@ -377,3 +325,207 @@ section {
   }
   
   
+
+
+
+
+
+
+
+
+  .job-titles-container ,.requirements-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Adjust the gap between input boxes */
+    
+  }
+  
+  .job-titles-container span , .requirements-container span{
+    width: 15%; /* Adjust the width for 3 items per row */
+    margin: 10px; /* Adjust the bottom margin for spacing */
+  }
+  
+  .job-titles-container input , .requirements-container input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 12%;
+    border:2px solid #e5e7eb;
+    box-sizing: border-box;
+  }
+  
+  .note {
+    width: 40%;
+    background-color: beige;
+    height: 20%;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto; /* Center horizontally */
+  }
+  
+  .note p {
+    text-align: center;
+  }
+.footer-buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px;
+
+}
+.footer-buttons button{
+  margin-right: 20px;
+}
+  
+.jobtype ,.eligible-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.jobtype-form {
+  width: 50%; /* Adjust width as needed */
+}
+
+.jobtype-heading ,.location ,.eligible-heading,.others{
+  text-align: center;
+}
+
+.jobtype-group,.eligible-group {
+  width: 80%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin: 12px;
+}
+
+.jobtype-group label {
+  text-align: center; /* Center text within label */
+  margin-left: 8px; /* Add margin for better spacing */
+}
+
+.jobtype-group input[type="checkbox"] {
+  margin-right: 8px; /* Add margin to the right of the checkbox */
+  vertical-align: middle; /* Align the checkbox vertically with the label */
+}
+.jobtype-group ,.location-group{
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.jobtype-group.selected {
+  background-color: skyblue;
+}
+
+.jobtype-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+
+/* 
+location */
+.location {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.location h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.location p {
+  font-size: 16px;
+}
+
+.location-container {
+  display: flex;
+  justify-content: center;
+}
+
+.location-container form {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.first-column,
+.second-column,
+.third-column {
+  flex: 1;
+}
+
+.location-group {
+  margin: 10px;
+}
+
+.location-group input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.location-group label {
+  font-size: 16px;
+}
+.center-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+
+
+.eligible-group {
+  width: 100%;
+  border: 1px solid black;
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.post-button button {
+  background-color: skyblue;
+  height: 40px;
+  width: 120px;
+  font-size: 16px;
+}
+.positions ,.deadline{
+   margin: 15px;
+   padding: 10px
+}
+.positions h3,.deadline h3{
+  text-decoration: underline;
+}
+
+
+.addJob {
+  margin-top: 20px;
+}
+
+.addJob a {
+  display: inline-block;
+ margin-left:90%;
+
+  padding: 10px 20px;
+  background-color: #0967f3;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.addJob a:hover {
+  background-color: #0575f5;
+}
+
+

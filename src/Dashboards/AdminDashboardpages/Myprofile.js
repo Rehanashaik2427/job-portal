@@ -48,7 +48,7 @@ const Myprofile = ({ userType }) =>  {
 
     <div className='rightside'>
       <div className='admin-profile'>
-         <table className='admin-profile'>
+         <table id="user-table" className="user-table" >
             <tr>
               <th>Company Name</th>
               <th>Company Type</th>
