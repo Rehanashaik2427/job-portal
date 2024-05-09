@@ -94,25 +94,46 @@ section {
   }
   
   
+/* filetr */
+.filter{
+  margin-left: 12px;
+}
 
-
-  #application {
+  /* #application {
     margin: 60px;
     
     width: 90%;
     height: 80%;
+  } */
+  #application {
+    width: 90%;
+    border-collapse: collapse;
   }
-
+  
+  #application th,
+  #application td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  #application th {
+    text-align: center;
+    background-color: #f2f2f2;
+  }
+  
+  #application tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #application tr:hover {
+    background-color: #ddd;
+  }
+  
 
  
  /* Hr-rightside -tables */
  
-  #jobTable {
-    margin: 60px;
-    
-    width: 90%;
-    height: 80%;
-  }
+
   table, th, td {
     border:1px solid black;
   }
@@ -123,7 +144,9 @@ section {
   }
   .jobTable {
     border-collapse: collapse; /* Remove spacing between cells */
-    width: 100%;
+    width: 98%;
+    margin: 12px;
+
   }
   
   .jobTable th,
@@ -450,4 +473,16 @@ location */
 }
 .positions h3,.deadline h3{
   text-decoration: underline;
+}
+
+
+.addJob{
+  display: flex;
+  justify-content: center;
+
+}
+.addJob button{
+  width: 20%;
+  height: 20%;
+  font-size: 20px;
 }

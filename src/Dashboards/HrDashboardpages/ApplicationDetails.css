@@ -1,0 +1,57 @@
+/* Container styling */
+.application-details-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* Job and candidate details styling */
+.jobdetails,
+.candidatedetails {
+    width: 45%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgb(177, 223, 241); /* Light blue background */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Header styling */
+.jobdetails h2,
+.candidatedetails h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #2c3e50; /* Dark blue text */
+}
+
+/* Text content styling */
+.jobdetails p,
+.candidatedetails p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #333; /* Dark gray text */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .application-details-container {
+        align-items: center;
+    }
+
+    .jobdetails,
+    .candidatedetails {
+        width: 80%;
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+}
+
+/* Hover effect */
+.jobdetails:hover,
+.candidatedetails:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}

@@ -1,15 +1,41 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser ,faSignOutAlt} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 const MyApplication = () => {
 
+  const BASE_API_URL="http://localhost:8080/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
   const userEmail=location.state?.userEmail;
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
+  const [applications,setApplications]=useState([]);
+const fetchApplications= async()=>
+  {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/applications?userEmail=${userEmail}`);
+      setApplications(response.data); 
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch applications when component mounts
+    fetchApplications();
+  }, []);
+
+
   return (
     <div className="candidate-dashboard-container">
       <div className='left-side'>
@@ -17,7 +43,7 @@ const MyApplication = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -61,9 +87,9 @@ const MyApplication = () => {
           state: { userName: userName, userEmail:userEmail }
         }}> Payments/Credits</Link>
         </section>
-        <section id="Home">
+        {/* <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section> 
+        </section>  */}
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
@@ -75,47 +101,50 @@ const MyApplication = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+          
           </div>
+         
+    
         </div>
+        {showSettings && (
+        <div id="settings-container">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
+            {/* Add more settings as needed */}
+          </ul>
+        </div>
+      )}
+
         <div>
             <h1 style={{textAlign:'center'}}>MY APPLICATIONS</h1>
             <div className='applications-table'>
             <table className='applications-table'>
                 <tr>
                     <th>Company Name</th>
+                    <th>Job Title</th>
                     <th >Applied On</th>
                     <th>Resume Profile</th>
                     <th>Status & Actions</th>
+                  
+                  
                 </tr>
+                {applications.map(application => (
+            <tr key={application.id}>
+              <td>{application.companyName}</td>
+              <td>{application.jobRole}</td>
+              <td>{application.appliedOn}</td>
+              <td>{application.resume}</td>
+              <td>{application.applicationStatus}</td>
+             
+            </tr>
+               ))}
 
-                <tr>
-                    <td>cisco</td>
-                    <td>04/04/2024</td>
-                    <td>resume-1</td>
-                    <td style={{color:'green'}}>HR viewed</td>
-                </tr>
+               
 
-                <tr>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>resume-2</td>
-                  <td style={{color:'gray'}}>shortlisted</td>
-                </tr>
-
-                <tr>
-                  <td>cisco</td>
-                  <td>04/04/2024</td>
-                  <td>resume-3</td>
-                  <td style={{color:'gray'}}>shortlisted</td>
-                </tr>
-
-                <tr>
-                  <td>Microsoft</td>
-                  <td>02/04/2024</td>
-                  <td>resume-1</td>
-                  <td style={{color:'green'}}>HR viewed</td>
-                </tr>
+                
             </table>
               </div>
                

@@ -23,15 +23,16 @@ import MyApplication from './Dashboards/CandidateDashboardpages/MyApplication';
 import Payment from './Dashboards/CandidateDashboardpages/Payment';
 import Profile from './Dashboards/CandidateDashboardpages/Profile';
 import Resume from './Dashboards/CandidateDashboardpages/Resume';
+import AddJob from './Dashboards/HrDashboardpages/AddJob';
 import Applications from './Dashboards/HrDashboardpages/Applications';
 import HrDashboard from './Dashboards/HrDashboardpages/HrDashboard';
 import HrProfile from './Dashboards/HrDashboardpages/HrProfile';
 import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
-import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
-// import Jobs from './Dashboards/HrDashboardpages/Jobs';
-import AddJob from './Dashboards/HrDashboardpages/AddJob';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
+import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
+import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
+import Others from './Dashboards/HrDashboardpages/Others';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
 import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
@@ -91,7 +92,6 @@ const App = () => {
           <Route path='/hr-registeration' component={HrRegistrationForm} />
           <Route path='/hr-signin' component={HrSignin} />
           <Route path='/hr-dashboard' component={HrDashboard} />
-          {/* <Route path='/post-jobss' component={Jobs} /> */}
           <Route path='/posted-jobs' component={PostedJobs} />
           <Route path='/people' component={People} />
           <Route path='/hr-profile' component={HrProfile} />
@@ -100,7 +100,8 @@ const App = () => {
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
           <Route path="/addJob" component={AddJob}/>
-          
+          <Route path="/jodAddSuccess" component={JobAdded}/>
+          <Route path='/others' component={Others} />
         </Switch>
       </BrowserRouter>
     </div>

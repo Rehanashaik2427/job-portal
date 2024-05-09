@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import JobTitles from './JobTitles';
 import JobType from './JobType';
+import Others from './Others';
 import RequirementsAndSkills from './RequirementsAndSkills';
 import SetLocation from './SetLocation';
-
 const AddJob = () => {
   const [step, setStep] = useState(1);
   const [jobTitle, setJobTitle] = useState('');
 
+  const handleAddJob = (jobDetails) => {
+    // Add your job submission logic here, potentially using an API call
+    console.log("Job details:", jobDetails);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
@@ -63,6 +67,7 @@ const AddJob = () => {
         <div className='job-post-details'>
           <SetLocation step={step} setStep={setStep} />
           {/* Include other job details input fields */}
+          <Others addJob={handleAddJob} /> 
         </div>
       )}
     </div>

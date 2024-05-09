@@ -1,4 +1,4 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom'; 
@@ -63,7 +63,7 @@ const CandidateDashboard = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -107,9 +107,9 @@ const CandidateDashboard = () => {
           state: { userName: userName, userEmail:userEmail }
         }}> Payments/Credits</Link>
         </section>
-        <section id="Home">
+        {/* <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section> 
+        </section>  */}
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
@@ -121,7 +121,7 @@ const CandidateDashboard = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
          
@@ -131,7 +131,7 @@ const CandidateDashboard = () => {
         <div id="settings-container">
           {/* Your settings options here */}
           <ul>
-            <li>Sing out</li>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting 2</li>
             {/* Add more settings as needed */}
           </ul>

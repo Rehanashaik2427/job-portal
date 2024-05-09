@@ -1,11 +1,19 @@
-import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faUser,faSearch,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './CandidateDashboard.css';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useState } from 'react';
 
 const Payment = () => {
+
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
 
   const location = useLocation();
   const userName=location.state?.userName;
@@ -17,7 +25,7 @@ const Payment = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -61,21 +69,45 @@ const Payment = () => {
           state: { userName: userName, userEmail:userEmail }
         }}> Payments/Credits</Link>
         </section>
-        <section id="Home">
+        {/* <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section> 
+        </section>  */}
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
 
       <div className='rightside'>
-      
+                           <div className='payment-div' >
+                              <div className="candidate-search">
+                                    {/* <input type='text' placeholder='serach'></input>
+                                    <button>
+                                      <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+                                    </button> */}
+                                    <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleSettings}/></div>
+                                  
+                              </div>
+                                
+                            
+                            </div>
+                                {showSettings && (
+                                <div id="settings-container">
+                                  {/* Your settings options here */}
+                                  <ul>
+                                    <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+                                    <li>Setting 2</li>
+                                    {/* Add more settings as needed */}
+                                  </ul>
+                                </div>
+                              )}
+
+ 
+     
 
         <div className="payment-container">
           <div>
             <h2>Payment Via</h2>
             <section className="payment-options">
-              <h2 className='payment-option'><FontAwesomeIcon icon={faCreditCard} /> Credit/Debit card</h2>
+              <h2 className='payment-option'><FontAwesomeIcon icon={faCreditCard}  /> Credit/Debit card</h2>
               <h2 className='payment-option'><FontAwesomeIcon icon={faPaperclip} /> UPI payments</h2>
               <h2 className='payment-option'><FontAwesomeIcon icon={faGlobe} /> Net Banking</h2>
             </section>
@@ -87,8 +119,9 @@ const Payment = () => {
             {/* Add payment history details here */}
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
+        
   );
 }
 

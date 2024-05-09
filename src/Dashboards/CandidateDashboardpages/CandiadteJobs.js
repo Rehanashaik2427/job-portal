@@ -1,4 +1,4 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,8 +17,9 @@ const CandiadteJobs = () => {
   const userEmail=location.state?.userEmail;
 
   const [jobs, setJobs] = useState([]);
+  const [applyjobs, setApplyJobs] = useState([]);
 
-  useEffect(() => {
+ 
     const fetchJobs = async () => {
       try {
         const response = await axios.get(BASE_API_URL+"/displayJobs"); // Assuming backend is running on the same host
@@ -27,7 +28,7 @@ const CandiadteJobs = () => {
         console.error('Error fetching jobs:', error);
       }
     };
-
+    useEffect(() => {
     fetchJobs();
   }, []);
 
@@ -36,6 +37,37 @@ const CandiadteJobs = () => {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+  
+  const applyJob= async(jobId)=>{
+    console.log(jobId);
+    console.log(userEmail);
+
+    const appliedOn = new Date().toLocaleString();
+
+    try {
+      const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}`);
+ 
+     // setApplyJobs(response.data);
+      console.log(response.data);
+      setApplyJobs([...applyjobs, jobId]);
+  
+      if(response.data)
+        {
+          alert("You have successfully apply this job");
+        
+        }
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+    // fetchJobs();
+  };
+
+  useEffect(() => {
+    // Update localStorage whenever appliedJobs changes
+    localStorage.setItem('appliedJobs', JSON.stringify(applyjobs));
+}, [applyjobs]);
+
+  
 
   return (
     <div className="candidate-dashboard-container">
@@ -44,7 +76,7 @@ const CandiadteJobs = () => {
           <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
         </nav>
         <nav>
-          <h2>{userName}</h2>
+          <h2>Welcome {userName}</h2>
         </nav>
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
@@ -88,9 +120,9 @@ const CandiadteJobs = () => {
           state: { userName: userName, userEmail:userEmail }
         }}> Payments/Credits</Link>
         </section>
-        <section id="Home">
+        {/* <section id="Home">
           <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section> 
+        </section>  */}
         <h3>Help</h3>
         <h3><Link to="/contact">Contact us</Link></h3>
       </div>
@@ -103,7 +135,7 @@ const CandiadteJobs = () => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{backgroundColor:'skyblue'}} onClick={toggleSettings}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
          
@@ -113,8 +145,8 @@ const CandiadteJobs = () => {
         <div id="settings-container">
           {/* Your settings options here */}
           <ul>
-            <li>Sing out</li>
-            <li>Setting 2</li>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
         </div>
@@ -157,8 +189,12 @@ const CandiadteJobs = () => {
                     <td>{job.experience}</td>
                     <td>{job.eligibility}</td>
                     <td>{job.requirements}</td>
-                    
-                    <td><Link to="/applied-success-msg"><button ><h4>Apply</h4></button></Link></td>
+                    <td> {applyjobs.includes(job.jobId) ? (
+                               <h4>Applied</h4>
+                                    ) : (
+                      <button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button>
+                      )}
+                     </td>
                   </tr>
                 ))}
              

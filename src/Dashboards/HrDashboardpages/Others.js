@@ -21,10 +21,23 @@ const Others = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Add your form submission logic here, including the selectedDate and positions values
-        console.log("positions",positions);
-        console.log("due date",selectedDate)
+        console.log("positions", positions);
+        console.log("due date", selectedDate)
         // Assuming you want to go to step 0 after form submission
-     
+        // Add the job details to the Jobs component
+        // const jobDetails = {
+        //     jobId: 1, // Assuming you have a way to generate a unique job ID
+        //     jobTitle: 'Your Job Title',
+        //     jobType: 'Your Job Type',
+        //     location: 'Your Location',
+        //     requirements: 'Your Requirements',
+        //     eligibility: 'Your Eligibility',
+        //     numberOfPosition: positions,
+        //     salary: 'Your Salary',
+        //     applicationDeadline: selectedDate ? selectedDate.toLocaleDateString() : 'N/A', // Format date if selected
+        // };
+        // addJob(jobDetails);
+
         setShowSuccessMessage(true); // Show success message
     };
 
@@ -71,7 +84,7 @@ const Others = () => {
                             <button onClick={handleBack}>Back</button>
                         </div>
 
-                        <div className='post-button' onClick={handleSubmit}> 
+                        <div className='post-button' onClick={handleSubmit}>
                             <button type="submit" style={{ backgroundColor: 'skyblue' }}>Post</button>
                         </div>
                     </div>

@@ -36,6 +36,7 @@ const AdminAction = () => {
       console.log(res.data);
       const updatedMessages = { ...approvalMessages, [userId]: 'Approval successful' };
       setApprovalMessages(updatedMessages);
+      fetchHRDetails();
      
       // If needed, update the state or perform additional actions after successful approval
     } catch (error) {
@@ -54,6 +55,7 @@ const AdminAction = () => {
 
       const updatedMessages = { ...rejectMessages, [userId]: 'Rejected' };
       setRejectMessages(updatedMessages);
+      fetchHRDetails();
 
      
       // If needed, update the state or perform additional actions after successful approval
