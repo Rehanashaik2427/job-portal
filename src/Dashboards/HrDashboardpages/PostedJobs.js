@@ -72,9 +72,9 @@ const PostedJobs = () => {
     </div>
 
     <div className='hr-rightside'>
-        <div className="jobs_list">
+        <div >
         <h2>Jobs</h2>
-            <table id='jobTable' className="jobTable" >
+            <table id='jobTable' className="jobTable">
                 <tr>  
                     <th>Hr Name</th>
                     <th>Company Name</th>

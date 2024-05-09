@@ -100,6 +100,7 @@ const App = () => {
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
           <Route path="/addJob" component={AddJob}/>
+          
         </Switch>
       </BrowserRouter>
     </div>

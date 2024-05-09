@@ -105,7 +105,7 @@ section {
 
 
  
- 
+ /* Hr-rightside -tables */
  
   #jobTable {
     margin: 60px;
@@ -326,10 +326,128 @@ section {
   margin-right: 20px;
 }
   
-.jobtype-heading{
+.jobtype ,.eligible-list{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   text-align: center;
 }
-.jobtype-group{
-  border: 1px solid black;
+
+.jobtype-form {
+  width: 50%; /* Adjust width as needed */
+}
+
+.jobtype-heading ,.location ,.eligible-heading,.others{
   text-align: center;
+}
+
+.jobtype-group,.eligible-group {
+  width: 80%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin: 12px;
+}
+
+.jobtype-group label {
+  text-align: center; /* Center text within label */
+  margin-left: 8px; /* Add margin for better spacing */
+}
+
+.jobtype-group input[type="checkbox"] {
+  margin-right: 8px; /* Add margin to the right of the checkbox */
+  vertical-align: middle; /* Align the checkbox vertically with the label */
+}
+.jobtype-group ,.location-group{
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.jobtype-group.selected {
+  background-color: skyblue;
+}
+
+.jobtype-group input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+
+/* 
+location */
+.location {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.location h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.location p {
+  font-size: 16px;
+}
+
+.location-container {
+  display: flex;
+  justify-content: center;
+}
+
+.location-container form {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.first-column,
+.second-column,
+.third-column {
+  flex: 1;
+}
+
+.location-group {
+  margin: 10px;
+}
+
+.location-group input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.location-group label {
+  font-size: 16px;
+}
+.center-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+
+
+.eligible-group {
+  width: 100%;
+  border: 1px solid black;
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.post-button button {
+  background-color: skyblue;
+  height: 40px;
+  width: 120px;
+  font-size: 16px;
+}
+.positions ,.deadline{
+   margin: 15px;
+   padding: 10px
+}
+.positions h3,.deadline h3{
+  text-decoration: underline;
 }

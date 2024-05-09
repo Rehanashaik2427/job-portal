@@ -29,7 +29,8 @@ const HrSignin = () => {
   //   }
   // };
 
-  // const handleLogin = async () => {
+   const handleLogin = async () => {
+    history.push("/hr-dashboard")
   //   try {
   //     const user = await getUser(formData.userEmail);
       
@@ -47,7 +48,7 @@ const HrSignin = () => {
   //     // Handle error when fetching user data
   //     console.error('Error fetching user:', error);
   //   }
-  // };
+   };
   
 
   return (
@@ -64,7 +65,7 @@ const HrSignin = () => {
             <input style={{height:'20%'}}type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
-            <button >Login</button>
+            <button onClick={handleLogin}>Login</button>
           </div>
         </form>
       </div>
@@ -73,4 +74,3 @@ const HrSignin = () => {
 };
 
 export default HrSignin;
-//   history.push("/hr-dashboard", {userEmail});

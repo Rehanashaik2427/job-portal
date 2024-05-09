@@ -66,7 +66,7 @@ const People = () => {
 
     <div className='hr-rightside'>
     
-        <div className="jobs_list">
+        <div >
         <table id='jobTable' className="jobTable">
             
                     <tr>
