@@ -34,6 +34,7 @@ const CandidateRegistrationForm = () => {
       const response = await axios.post(`${BASE_API_URL}/saveUser`, formData);
       console.log(response.data); // Assuming the response contains relevant data
       setRegistrationSuccess(true);
+      history.push('/CandidateRegisterSucessMsg')
       
     } catch (error) {
       console.error('Error registering candidate:', error);
@@ -92,11 +93,11 @@ const CandidateRegistrationForm = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="text" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />
+            <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} className="form-control" required />
           </div>
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input type="text" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="form-control" required />
+            <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className="form-control" required />
           </div>
 
           <button type="submit" className="btn btn-primary">Register</button>

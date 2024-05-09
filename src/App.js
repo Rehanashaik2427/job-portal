@@ -46,6 +46,7 @@ import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
 import AddJob from './Dashboards/HrDashboardpages/AddJob';
 import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
+import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 
 
 const App = () => {
@@ -104,6 +105,7 @@ const App = () => {
           <Route path="/addJob" component={AddJob}/>
           <Route path="/jodAddSuccess" component={JobAdded}/>
           <Route path="/applicationDetails" component={ApplicationDetails} />
+          <Route path='/viewApplications' component={ViewApplications} />
         </Switch>
       </BrowserRouter>
     </div>

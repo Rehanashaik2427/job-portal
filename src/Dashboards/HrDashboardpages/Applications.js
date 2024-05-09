@@ -5,66 +5,51 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 import axios from 'axios';
+import ViewApplications from './ViewApplications';
 
 const Applications = () => {
     const BASE_API_URL = "http://localhost:8080/api/jobbox";
-    const [filterStatus, setFilterStatus] = useState('all');
-
-    const handleFilterChange = (e) => {
-        setFilterStatus(e.target.value);
-    };
-
+   
+    
+    
+const history=useHistory();
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail=location.state?.userEmail;
 
     const [showSettings, setShowSettings] = useState(false);
-    const [applications,setApplications]=useState([]);
-
     const toggleSettings = () => {
-      setShowSettings(!showSettings);
-    };
-
-    const fetchApplications=async()=>
-        {
-            try{
-                const response= await axios.get(`${BASE_API_URL}/getApplicationsByHR?userEmail=${userEmail}`);
-                console.log(response.data);
-                setApplications(response.data);
-
-            }catch(error)
-            {
-                console.log(error);
-            }
-        };
-
-        useEffect(()=>{
-            fetchApplications();
-        }, [])
-
-
-        const updateStatus = async (applicationId, newStatus) => {
-            console.log(applicationId);
-            console.log(newStatus);
-            try {
-                const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
-                console.log(response.data);
-                fetchApplications(); 
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        const history=useHistory();
-
-        const viewDetails=async(applicationId)=>{
-            history.push('/applicationDetails',{applicationId})
-
+        setShowSettings(!showSettings);
+      };
+   
+    const [jobs, setJobs] = useState([]);
+   
+    
+    const fetchJobs = async (userEmail) => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
+        console.log(response.data);
+        if (response.status === 200) {
+          setJobs(response.data);
+        } else {
+          console.error('Failed to fetch jobs data');
         }
+      } catch (error) {
+        console.error('Error fetching jobs data:', error);
+      }
+    };
+    
+
+  useEffect(() => {
+    fetchJobs(userEmail);
+  }, [userEmail]);
 
   
-  
+  const viewApplications = (jobId) => {
+    // Navigate to the update page with the job ID
+    history.push("/viewApplications", {jobId});
 
+  };
     return (
         <div className='candidate-dashboard-container'>
             <div className='hr-leftside'>
@@ -98,11 +83,11 @@ const Applications = () => {
                     </section>
 
                     <h3>Help</h3>
-        <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
+                     <h3><Link to="../Jobbox_FrontPage/others.html">Contact us</Link></h3>
                 
             </div>
-            <main>
-                <section className="applications">
+            <div className='hr-rightside'>
+                <div className="applications">
                     
                     <div className="candidate-search">
             <input type='text' placeholder='serach'></input>
@@ -124,49 +109,40 @@ const Applications = () => {
           </ul>
         </div>
       )}
+             {jobs.length > 0 && (
+                                <table id='jobTable'>
+                                  <tr>
+                                    <th>Job Title</th>
+                                  
+                                    <th>Application DeadLine</th>
+                                    <th>Action</th>
+                                  </tr>
+                                  {jobs.map(job => (
+                                    job.jobId !== 0 && (
+                                      <tr key={job.id}>
+                                        <td>{job.jobTitle}</td>
+                                     
+                                        <td>{job.applicationDeadline}</td>
+                                        <td>
+                                          <button onClick={() => viewApplications(job.jobId)}>ViewApplications</button>
 
-<div className="filter">
-                        
-                        <label htmlFor="status">Filter by Status:</label>
-                        <select id="status" onChange={handleFilterChange} value={filterStatus}>
-                            <option value="all">All</option>
-                            <option value="Shortlisted">Shortlisted</option>
-                            <option value="Under Review">Under Review</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-                    <br />
-                    <table id='application' >
-                        
-                            <tr style={{textAlign:'center'}}>
-                                <th>Job Title</th>
-                                <th>Company Name</th>
-                                <th>Resume ID</th>
-                                <th>Date/Time</th>
-                                <th>Application Status</th>
-                                <th>View Details</th>
-                                <th>Application Action</th>
-                               
-                            </tr>
-                        
-                            {applications.map(application => (
-            <tr key={application.id}>
-              <td>{application.jobRole}</td>
-              <td>{application.companyName}</td>
-              <td>{application.resumeId}</td>
-              <td>{application.appliedOn}</td>
-              <td>{application.applicationStatus}</td>
-            <td><button onClick={()=>viewDetails(application.applicationId)}>View</button></td>
-              <td>
-              <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')}>Select</button>
-             <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')}>Reject</button>
-                
-              </td>
-            </tr>
-          ))}
-                    </table>
-                </section>
-            </main>
+                                        </td>
+                                      </tr>
+                                    )
+                                  ))}
+                                </table>
+)}
+                          {jobs.length === 0 && (
+                            <section className='not-yet'>
+                              <h2 >You have not posted any jobs yet. Post Now</h2>
+                            </section>
+                          )}
+
+
+                   
+                  
+                </div>
+            </div>
         </div>
     );
 }

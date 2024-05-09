@@ -185,8 +185,8 @@ const Jobs = () => {
                                 </table>
 )}
                           {jobs.length === 0 && (
-                            <section>
-                              <h2 colSpan="9">You have not posted any jobs yet.</h2>
+                            <section className='not-yet'>
+                              <h2 >You have not posted any jobs yet. Post Now</h2>
                             </section>
                           )}
 

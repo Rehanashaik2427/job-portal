@@ -9,11 +9,11 @@ const Companies = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    description: '',
+    discription: '',
     date: '',
   });
 
-  const companyName=formData.companyName;
+
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -43,7 +43,7 @@ const Companies = () => {
           companyEmail: '',
           industry: '',
           location: '',
-          description: '',
+          discription: '',
           date: '',
         });
       }
@@ -83,7 +83,7 @@ const Companies = () => {
     }
   };
 
-  
+  const companyName=formData.companyName;
   
   return (
     <div className='company-details'>
@@ -112,7 +112,7 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
-            <input type="text" id="description" name="description" value={formData.discription} onChange={handleChange} />
+            <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>
