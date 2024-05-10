@@ -32,6 +32,7 @@ import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrati
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
 import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
+import JodDetails from './Dashboards/HrDashboardpages/JodDetails';
 import Others from './Dashboards/HrDashboardpages/Others';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
@@ -102,6 +103,7 @@ const App = () => {
           <Route path="/addJob" component={AddJob}/>
           <Route path="/jodAddSuccess" component={JobAdded}/>
           <Route path='/others' component={Others} />
+          <Route path='/job-details' component={JodDetails} />
         </Switch>
       </BrowserRouter>
     </div>
