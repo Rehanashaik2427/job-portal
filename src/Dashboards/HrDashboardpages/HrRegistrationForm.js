@@ -31,7 +31,7 @@ const HrRegistrationForm = () => {
 
   const validatePassword = () => {
     const { password, confirmPassword } = formData;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()_+])[A-Za-z\d!@#$%^&()_+]{8,12}$/;
     const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
 
     if (!isValidPassword) {
@@ -52,7 +52,7 @@ const HrRegistrationForm = () => {
 
   const saveUserDetails = async (formData)=>{
     try{
-      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
+      const response = await fetch("http://localhost:8080/api/jobbox/saveUser",{
         method:"POST",
         headers :{"Content-Type":"application/json"},
         body:JSON.stringify(formData),
