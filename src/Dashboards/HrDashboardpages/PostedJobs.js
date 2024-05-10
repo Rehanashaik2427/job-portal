@@ -2,27 +2,55 @@ import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 
 const PostedJobs = () => {
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
   const location = useLocation();
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;
 
   const [jobs, setJobs] = useState([]);
+  const fetchJobs = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
+      console.log(response.data);
+      if (response.status === 200) {
+        setJobs(response.data);
+      } else {
+        console.error('Failed to fetch jobs data');
+      }
+    } catch (error) {
+      console.error('Error fetching jobs data:', error);
+    }
+  };
+  
+
+useEffect(() => {
+  fetchJobs(userEmail);
+}, [userEmail]);
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {
       setShowSettings(!showSettings);
   };
 
-  return (
-    <div className='hr-dashboard-container'>
-      <div className='hr-leftside'>
-        <HrLeftSide />
-      </div>
+  const user = {
+    userName: userName,
+    
+     userEmail: userEmail,
+   };
+ 
+ 
+   return (
+     <div className='candidate-dashboard-container'>
+          <div className='hr-leftside'>
+         <HrLeftSide user={user} />
+       </div>
 
       <div className='hr-rightside'>
         <div className="candidate-search">
@@ -44,7 +72,7 @@ const PostedJobs = () => {
         )}
         <div>
           <div className="jobs_list">
-            <table className='jobTable'>
+            <table id='jobTable1'>
               <thead>
                 <tr>
                   <th>Hr Name</th>

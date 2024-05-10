@@ -47,6 +47,16 @@ import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
 
+// import Jobs from './Dashboards/HrDashboardpages/Jobs';
+// import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
+// import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
+// import AddJob from './Dashboards/HrDashboardpages/AddJob';
+// import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
+import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
+import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
+import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
+
+
 
 const App = () => {
   return (
@@ -102,8 +112,12 @@ const App = () => {
           <Route path="/update-job" component={UpdateJob}/>
           <Route path="/addJob" component={AddJob}/>
           <Route path="/jodAddSuccess" component={JobAdded}/>
+          <Route path="/applicationDetails" component={ApplicationDetails} />
+          <Route path='/viewApplications' component={ViewApplications} />
+          <Route path='hr-leftSide' component={HrLeftSide}/>
           <Route path='/others' component={Others} />
           <Route path='/job-details' component={JodDetails} />
+
         </Switch>
       </BrowserRouter>
     </div>

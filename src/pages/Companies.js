@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const Companies = () => {
   const history = useHistory();
@@ -11,11 +13,11 @@ const Companies = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    description: '',
+    discription: '',
     date: '',
   });
-
   const companyName = formData.companyName;
+
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,11 +31,11 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const exists = await checkCompanyExists(formData.companyName);
-    if (exists) {
-      setErrorMessage("Company already exists. Please try again.");
-      return;
-    }
+    // const exists = await checkCompanyExists(formData.companyName);
+    // if (exists) {
+    //   setErrorMessage("Company already exists. Please try again.");
+    //   return;
+    // }
 
     try {
       const response = await saveCompanyData(formData);
@@ -46,7 +48,7 @@ const Companies = () => {
           companyEmail: '',
           industry: '',
           location: '',
-          description: '',
+          discription: '',
           date: '',
         });
       } else if (response.status === 409) {
@@ -59,15 +61,15 @@ const Companies = () => {
     }
   };
 
-  const checkCompanyExists = async (companyName) => {
-    try {
-      const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
-      const data = await response.json();
-      return data.exists;
-    } catch (error) {
-      return false;
-    }
-  };
+  // const checkCompanyExists = async (companyName) => {
+  //   try {
+  //     const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
+  //     const data = await response.json();
+  //     return data.exists;
+  //   } catch (error) {
+  //     return false;
+  //   }
+  // };
 
   const saveCompanyData = async (formData) => {
     try {
@@ -81,6 +83,8 @@ const Companies = () => {
       throw new Error("Error adding company. Please try again.");
     }
   };
+
+  
 
   return (
     <div className='company-details'>
@@ -109,7 +113,11 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
+
+            <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
+
             <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
+
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>

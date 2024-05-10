@@ -36,12 +36,18 @@ const People = () => {
     };
 
 
-
-    return (
-        <div className='hr-dashboard-container'>
-            <div className='hr-leftside'>
-                <HrLeftSide />
-            </div>
+    const user = {
+        userName: userName,
+        
+         userEmail: userEmail,
+       };
+     
+     
+       return (
+         <div className='candidate-dashboard-container'>
+              <div className='hr-leftside'>
+             <HrLeftSide user={user} />
+           </div>
 
             <div className='hr-rightside'>
                 <div className="candidate-search">
@@ -62,7 +68,7 @@ const People = () => {
                     </div>
                 )}
                 <div>
-                    <table id='jobTable' className="jobTable">
+                    <table id='jobTable1' >
                         <tr>
                             <th>HR ID</th>
                             <th>HR Name</th>

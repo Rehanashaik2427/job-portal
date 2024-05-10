@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const HrSignin = () => {
   const [formData, setFormData] = useState({
@@ -14,40 +15,40 @@ const HrSignin = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  //const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
   
 
-  // const getUser = async (userEmail) => {
-  //   try {
-  //     const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
-  //     console.log(response.data.userName);
-  //     return response.data.userName;
-  //   } catch (error) {
-  //     console.error('Error fetching user:', error);
-  //     return null;
-  //   }
-  // };
+  const getUser = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
+      console.log(response.data.userName);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
+    }
+  };
 
    const handleLogin = async () => {
-    history.push("/hr-dashboard")
-  //   try {
-  //     const user = await getUser(formData.userEmail);
+    // history.push("/hr-dashboard")
+    try {
+      const user = await getUser(formData.userEmail);
       
-  //     if (user) {
-  //       const userName = user;
-  //       const userEmail=formData.userEmail;
-  //       console.log(userName)
-  //       console.log(userEmail);
-  //       history.push("/hr-dashboard", {userEmail});
-  //     } else {
-  //       // Handle case where user data is not found or userName is not available
-  //       console.error('User data not found or userName is missing');
-  //     }
-  //   } catch (error) {
-  //     // Handle error when fetching user data
-  //     console.error('Error fetching user:', error);
-  //   }
+      if (user) {
+        const userName = user;
+        const userEmail=formData.userEmail;
+        console.log(userName)
+        console.log(userEmail);
+        history.push("/hr-dashboard", {userEmail});
+      } else {
+        // Handle case where user data is not found or userName is not available
+        console.error('User data not found or userName is missing');
+      }
+    } catch (error) {
+      // Handle error when fetching user data
+      console.error('Error fetching user:', error);
+    }
    };
   
 

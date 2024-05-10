@@ -16,7 +16,8 @@ const HrDashboard = () => {
   const userEmail=location.state?.userEmail;
 
   console.log(userEmail);
- 
+
+  
 
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
@@ -61,14 +62,21 @@ const HrDashboard = () => {
     setShowSettings(!showSettings);
   };
 
+  const user = {
+   userName: userName,
+   
+    userEmail: userEmail,
+  };
+
 
   return (
     <div className='candidate-dashboard-container'>
          <div className='hr-leftside'>
-        <HrLeftSide />
+        <HrLeftSide user={user} />
       </div>
 
       <div className='hr-rightside'>
+       
       <div className="candidate-search">
             <input type='text' placeholder='serach'></input>
             <button>

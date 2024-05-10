@@ -1,25 +1,55 @@
-import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser ,faHouse,faBriefcase,faAddressCard,faUsers,faHome,} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { default as React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
+
+
+
+// import ViewApplications from './ViewApplications';
+
 import HrLeftSide from './HrLeftSide';
+
 
 const Applications = () => {
     const BASE_API_URL = "http://localhost:8080/api/jobbox";
-    const [filterStatus, setFilterStatus] = useState('all');
-
-    const handleFilterChange = (e) => {
-        setFilterStatus(e.target.value);
-    };
-
+   
+    
+    
+const history=useHistory();
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
 
     const [showSettings, setShowSettings] = useState(false);
+
+    
+    const [jobs, setJobs] = useState([]);
+   
+    
+    const fetchJobs = async (userEmail) => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
+        console.log(response.data);
+        if (response.status === 200) {
+          setJobs(response.data);
+        } else {
+          console.error('Failed to fetch jobs data');
+        }
+      } catch (error) {
+        console.error('Error fetching jobs data:', error);
+      }
+    };
+    
+
+  useEffect(() => {
+    fetchJobs(userEmail);
+  }, [userEmail]);
+
+ // const history = useHistory();
+  
     const [applications, setApplications] = useState([]);
 
     const toggleSettings = () => {
@@ -54,82 +84,96 @@ const Applications = () => {
         }
     };
 
-    const history = useHistory();
+  
 
-    const viewDetails = async (applicationId) => {
-        history.push('/applicationDetails', { applicationId })
+    const viewApplications = async (jobId) => {
+        history.push('/viewApplications', { jobId })
 
     }
 
-    return (
-        <div className='candidate-dashboard-container'>
+
+  
+    const user = {
+      userName: userName,
+      
+       userEmail: userEmail,
+     };
+   
+   
+     return (
+       <div className='candidate-dashboard-container'>
             <div className='hr-leftside'>
-                <HrLeftSide />
-            </div>
-
+           <HrLeftSide user={user} />
+         </div>
             <div className='hr-rightside'>
-                <div className='application-nav'>
+                <div className="applications">
+                    
                     <div className="candidate-search">
-                        <input type='text' placeholder='serach'></input>
-                        <button>
-                            <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-                        </button>
-                        <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
+                          <input type='text' placeholder='serach'></input>
+                          <button>
+                            <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+                          </button>
+                          <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+                        
                     </div>
-                    {showSettings && (
-                        <div id="settings-container">
-                            {/* Your settings options here */}
-                            <ul>
-                                <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-                                <li>Setting</li>
-                                {/* Add more settings as needed */}
-                            </ul>
-                        </div>
-                    )}
+         
+    
+                                    {showSettings && (
+                                    <div id="settings-container">
+                                      {/* Your settings options here */}
+                                      <ul>
+                                        <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+                                        <li>Setting 2</li>
+                                        {/* Add more settings as needed */}
+                                      </ul>
+                                    </div>
+                                  )}
+                                      <div className='job-list'>
+                                        {jobs.length > 0 && (
+                                                            <table id='jobTable1'>
+                                                              <tr>
+                                                                <th>Job Title</th>
+                                                              
+                                                                <th>Application DeadLine</th>
+                                                                <th>Action</th>
+                                                              </tr>
+                                                              {jobs.map(job => (
+                                                                job.jobId !== 0 && (
+                                                                  <tr key={job.id}>
+                                                                    <td>{job.jobTitle}</td>
+                                                                
+                                                                    <td>{job.applicationDeadline}</td>
+                                                                    <td>
+                                                                      <button onClick={() => viewApplications(job.jobId)}>ViewApplications</button>
 
-                    <div className="filter">
-                        <label htmlFor="status">Filter by Status:</label>
-                        <select id="status" onChange={handleFilterChange} value={filterStatus}>
-                            <option value="all">All</option>
-                            <option value="Shortlisted">Shortlisted</option>
-                            <option value="Under Review">Under Review</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-                </div>
+                                                                    </td>
+                                                                  </tr>
+                                                                )
+                                                              ))}
+                                                            </table>
+                            )}
+                                                      {jobs.length === 0 && (
+                                                        <section className='not-yet'>
+                                                          <h2 >You have not posted any jobs yet. Post Now</h2>
+                                                        </section>
+                                                      )}
+
+</div>
+                   
+            
 
                 <div>
-                    <table id='jobTable' className="jobTable" >
-                        <tr style={{ textAlign: 'center' }}>
-                            <th>Job Title</th>
-                            <th>Company Name</th>
-                            <th>Resume ID</th>
-                            <th>Date/Time</th>
-                            <th>Application Status</th>
-                            <th>View Details</th>
-                            <th>Application Action</th>
-                        </tr>
-                        {applications.map(application => (
-                            <tr key={application.id}>
-                                <td>{application.jobRole}</td>
-                                <td>{application.companyName}</td>
-                                <td>{application.resumeId}</td>
-                                <td>{application.appliedOn}</td>
-                                <td>{application.applicationStatus}</td>
-                                <td><button onClick={() => viewDetails(application.applicationId)}>View</button></td>
-                                <td>
-                                    <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')}>Select</button>
-                                    <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')}>Reject</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </table>
-                </div>
-            </div>
+                  
+             </div>
+         </div> 
+         </div>   
+         
+           </div> 
 
 
 
-        </div>
+
+     
     );
 }
 
