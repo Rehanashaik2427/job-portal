@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Link } from "react-router-dom";
+import JodDetails from './JodDetails';
 import Salary from './Salary';
 const Others = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [positions, setPositions] = useState(0);
-    const [step, setStep] = useState(1);
-    const [salary, setSalary] = useState(false);
+    const [salary, setSalary] = useState('');
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
+    const [step, setStep] = useState(1);
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
@@ -20,25 +19,8 @@ const Others = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your form submission logic here, including the selectedDate and positions values
-        console.log("positions", positions);
-        console.log("due date", selectedDate)
-        // Assuming you want to go to step 0 after form submission
-        // Add the job details to the Jobs component
-        // const jobDetails = {
-        //     jobId: 1, // Assuming you have a way to generate a unique job ID
-        //     jobTitle: 'Your Job Title',
-        //     jobType: 'Your Job Type',
-        //     location: 'Your Location',
-        //     requirements: 'Your Requirements',
-        //     eligibility: 'Your Eligibility',
-        //     numberOfPosition: positions,
-        //     salary: 'Your Salary',
-        //     applicationDeadline: selectedDate ? selectedDate.toLocaleDateString() : 'N/A', // Format date if selected
-        // };
-        // addJob(jobDetails);
-
-        setShowSuccessMessage(true); // Show success message
+        
+        //setShowSuccessMessage(true); // Show success message
     };
 
     const handleBack = () => {
@@ -46,6 +28,14 @@ const Others = () => {
         setSalary(true);
     };
 
+    const handleNext = () => {
+        // Log the selected job type as a string
+        console.log(selectedDate);
+        console.log(positions);
+        if (step === 1) {
+          setStep(2); // Move to the next step
+        }
+      };
     return (
         <div>
             {step === 1 && (
@@ -80,23 +70,26 @@ const Others = () => {
                                 />
                             </div>
                         </div>
+                        
                         <div className='footer-buttons'>
                             <button onClick={handleBack}>Back</button>
+                            <button onClick={handleNext}>Next</button>
                         </div>
 
-                        <div className='post-button' onClick={handleSubmit}>
+                        {/* <div className='post-button' onClick={handleSubmit}>
                             <button type="submit" style={{ backgroundColor: 'skyblue' }}>Post</button>
-                        </div>
+                        </div> */}
                     </div>
-                    {showSuccessMessage && (
+                    {/* {showSuccessMessage && (
                         <div className="success-message">
                             <p>Successfully Posted!</p>
                             <Link to="/post-jobs">Click here to go to dashboard</Link>
                         </div>
-                    )}
+                    )} */}
                 </div>
             )}
 
+            {step === 2 && <JodDetails />}
             {step === 0 && <Salary />}
         </div>
     );

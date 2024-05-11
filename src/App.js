@@ -32,6 +32,7 @@ import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrati
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
 import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
+import JodDetails from './Dashboards/HrDashboardpages/JodDetails';
 import Others from './Dashboards/HrDashboardpages/Others';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
@@ -52,8 +53,8 @@ import TermsAndConditions from './pages/TermsAndConditions';
 // import AddJob from './Dashboards/HrDashboardpages/AddJob';
 // import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
-import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
+import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 
 
 
@@ -115,6 +116,7 @@ const App = () => {
           <Route path='/viewApplications' component={ViewApplications} />
           <Route path='hr-leftSide' component={HrLeftSide}/>
           <Route path='/others' component={Others} />
+          <Route path='/job-details' component={JodDetails} />
 
         </Switch>
       </BrowserRouter>

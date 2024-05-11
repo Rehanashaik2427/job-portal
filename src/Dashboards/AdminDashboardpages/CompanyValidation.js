@@ -52,6 +52,7 @@ const CompanyValidation = () => {
  
 
   const [rejectMessages, setrejectMessages] = useState({});
+  
   const rejectCompany = async (companyId,companyName) => {
     console.log('Request Rejected');
     try {

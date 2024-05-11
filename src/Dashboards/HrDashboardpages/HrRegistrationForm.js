@@ -33,7 +33,7 @@ const HrRegistrationForm = () => {
 
   const validatePassword = () => {
     const { password, confirmPassword } = formData;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()_+])[A-Za-z\d!@#$%^&()_+]{8,12}$/;
     const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
 
     if (!isValidPassword) {
@@ -54,7 +54,11 @@ const HrRegistrationForm = () => {
 
   const saveUserDetails = async (formData)=>{
     try{
+
       const response = await fetch(BASE_API_URL,{
+
+     
+
         method:"POST",
         headers :{"Content-Type":"application/json"},
         body:JSON.stringify(formData),
@@ -88,7 +92,7 @@ const HrRegistrationForm = () => {
       
     });
   };
-
+  
 
   return (
     <div className="centered-form">
