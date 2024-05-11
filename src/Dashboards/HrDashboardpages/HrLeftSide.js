@@ -19,8 +19,8 @@ function HrLeftSide  ({ user })  {
       <nav>
         <h2>Welcome {userName}</h2>
       </nav>
-      <section id="hr-dashboard">
-                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
+                    <section id="hr-dashboard">
+                    <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
                     </section>
                     <section>
                         <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail:userEmail }}}>Jobs</Link>
@@ -37,12 +37,10 @@ function HrLeftSide  ({ user })  {
                     <section>
                         <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail:userEmail } }}>Profile</Link>
                     </section>
-                    <section>
-                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
-                    </section>
+                  
 
-      <h3>Help</h3>
-      <h3><Link to="/contact">Contact us</Link></h3>
+                    <h3>Help</h3>
+                    <h3><Link to="/contact">Contact us</Link></h3>
     </div>
   );
 };

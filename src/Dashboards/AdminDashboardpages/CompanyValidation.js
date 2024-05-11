@@ -1,10 +1,11 @@
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
 
 const BASE_API_URL="http://localhost:8080/api/jobbox";
@@ -40,7 +41,7 @@ const CompanyValidation = () => {
       console.log(res.data);
       const updatedMessages = { ...approvalMessages, [companyId]: 'Approval successful' };
       setApprovalMessages(updatedMessages);
-      setCompanyData();
+      fetchCompanyData();
      
       // If needed, update the state or perform additional actions after successful approval
     } catch (error) {
@@ -59,7 +60,7 @@ const CompanyValidation = () => {
       console.log(res.data);
       const updatedMessages = { ...rejectMessages, [companyId]: 'Rejected Company' };
       setrejectMessages(updatedMessages);
-      setCompanyData();
+      fetchCompanyData();
      
       // If needed, update the state or perform additional actions after successful approval
     } catch (error) {
@@ -112,7 +113,7 @@ const CompanyValidation = () => {
     <div className="rightSide">
         <h2 style={{textAlign:'center'}}>Details of Company Validation</h2>
         <div className='company-table'>
-        <table id="user-table" className="user-table">
+        <table className='company-table1'>
   
     <tr>
       <th>Company Name</th>

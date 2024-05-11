@@ -5,10 +5,12 @@ import { Link, useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Jobs = () => {
   const BASE_API_URL = "http://localhost:8080/api/jobbox";
   const location = useLocation();
+  const history=useHistory();
   const [showSettings, setShowSettings] = useState(false);
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -35,6 +37,22 @@ const userName = location.state?.userName;
 useEffect(() => {
   fetchJobs(userEmail);
 }, [userEmail]);
+
+const handleUpdate =async(jobId)=>{
+  history.push('/update-job',{jobId})
+}
+const handleDelete =async(jobId)=>{
+ try{
+  const response=await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
+  if(response.ok)
+    {
+alert("Job Deleted successFully");
+fetchJobs(userEmail);
+    }
+ }catch(error){
+console.log(error);
+ }
+}
 
 const user = {
   userName: userName,
@@ -67,6 +85,7 @@ const user = {
           </ul>
         </div>
       )}
+      <h2>Job posted by {userName}</h2>
         <div className='job-list'>
           {/* <h2>Jobs Posted by </h2> */}
          
@@ -99,8 +118,8 @@ const user = {
                                         <td>{job.salary}</td>
                                         <td>{job.applicationDeadline}</td>
                                         <td>
-                                          {/* <button onClick={() => handleUpdate(job.jobId)}>Update</button>
-                                          <button onClick={() => handleDelete(job.jobId)}>Delete</button> */}
+                                          <button onClick={() => handleUpdate(job.jobId)}>Update</button>
+                                          <button onClick={() => handleDelete(job.jobId)}>Delete</button>
                                         </td>
                                       </tr>
                                     )

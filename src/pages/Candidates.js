@@ -15,43 +15,35 @@ const Candidates = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
- const userEmail=formData.userEmail;
+  const userEmail=formData.userEmail;
+  const password=formData.password;
 
  const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
   
 
-  const getUser = async (userEmail) => {
-    try {
-      const response = await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
-      console.log(response.data.userName);
-      return response.data.userName;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
-    }
-  };
+
 
   const handleSubmit = async () => {
-    // history.push('/candidate-dashboard')
+
     try {
-      const user = await getUser(formData.userEmail);
-      if (user) {
-        const userName = user;
-        const userEmail=formData.userEmail;
-        console.log(userName)
-        console.log(userEmail);
-      
-        history.push('/candidate-dashboard', {userEmail});
-      } else {
-        debugger
-        console.error('User data not found or userName is missing');
-      }
+      const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
+      console.log(response.data);
+      if(response.data)
+      history.push('/candidate-dashboard', {userEmail});
+    else{
+      alert("invalid userName or password")
+    }
     } catch (error) {
-    
       console.error('Error fetching user:', error);
+     
     }
   };
+     
+      
+       
+     
+  
   
 
   return (

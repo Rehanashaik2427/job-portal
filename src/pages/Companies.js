@@ -31,11 +31,7 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const exists = await checkCompanyExists(formData.companyName);
-    // if (exists) {
-    //   setErrorMessage("Company already exists. Please try again.");
-    //   return;
-    // }
+    
 
     try {
       const response = await saveCompanyData(formData);
@@ -51,25 +47,15 @@ const Companies = () => {
           discription: '',
           date: '',
         });
-      } else if (response.status === 409) {
+      } else  {
         setErrorMessage("Company already exists. Please try again.");
-      } else {
-        setErrorMessage("Error adding company. Please try again.");
-      }
+      } 
     } catch (error) {
       setErrorMessage2("Error adding company. Please try again.");
     }
   };
 
-  // const checkCompanyExists = async (companyName) => {
-  //   try {
-  //     const response = await fetch(`http://localhost:9090/api/companies/checkExists/${companyName}`);
-  //     const data = await response.json();
-  //     return data.exists;
-  //   } catch (error) {
-  //     return false;
-  //   }
-  // };
+ 
 
   const saveCompanyData = async (formData) => {
     try {
@@ -116,7 +102,7 @@ const Companies = () => {
 
             <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
 
-            <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
+            
 
           </div>
           <div className='company-form-group'>

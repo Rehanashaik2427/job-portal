@@ -17,11 +17,13 @@ const HrSignin = () => {
 
   const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
+  const password=formData.password;
+  const userEmail=formData.userEmail;
   
 
-  const getUser = async (userEmail) => {
+  const getUser = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
       console.log(response.data.userName);
       return response.data;
     } catch (error) {
@@ -33,10 +35,10 @@ const HrSignin = () => {
    const handleLogin = async () => {
     // history.push("/hr-dashboard")
     try {
-      const user = await getUser(formData.userEmail);
+      const user = await getUser();
       
       if (user) {
-        const userName = user;
+        const userName = user.userName;
         const userEmail=formData.userEmail;
         console.log(userName)
         console.log(userEmail);

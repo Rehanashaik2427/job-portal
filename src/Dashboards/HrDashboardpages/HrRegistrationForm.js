@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import './HrDashboard.css';
 import './HrReg.css';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
-//const BASE_API_URL = "http://localhost:8080/api/jobbox";
+const BASE_API_URL = "http://localhost:8080/api/jobbox";
 const HrRegistrationForm = () => {
+  const history =useHistory();
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
@@ -18,7 +20,7 @@ const HrRegistrationForm = () => {
      companyName: '', // Added companyName to formData state
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+ 
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
 
   const handleInputChange = (event) => {
@@ -52,7 +54,7 @@ const HrRegistrationForm = () => {
 
   const saveUserDetails = async (formData)=>{
     try{
-      const response = await fetch("http://localhost:9090/api/userdetails/registerUser",{
+      const response = await fetch(BASE_API_URL,{
         method:"POST",
         headers :{"Content-Type":"application/json"},
         body:JSON.stringify(formData),
@@ -72,9 +74,10 @@ const HrRegistrationForm = () => {
       
     }
     // Simulating registration success
-    setRegistrationSuccess(true);
-    console.log("Form Data:", formData);
-    saveUserDetails(formData); // Log the form data
+    
+    // console.log("Form Data:", formData);
+     saveUserDetails(formData);
+    history.pushState('/hr-RegSuccess') // Log the form data
     setFormData({
       userName: '',
       userEmail: '',
@@ -97,9 +100,7 @@ const HrRegistrationForm = () => {
         {passwordCriteriaError && (
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>
         )}
-        {registrationSuccess && (
-          <p className="success-message">Your details have been successfully stored. You will receive a confirmation email within 24 hours.</p>
-        )}
+      
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">Name:</label>
