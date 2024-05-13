@@ -7,10 +7,14 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import CandidateLeftSide from './CandidateLeftSide';
 
 
 const BASE_API_URL="http://localhost:8080/api/jobbox";
 const CandiadteJobs = () => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(5);
 
   const location = useLocation();
   const userName=location.state?.userName;
@@ -67,65 +71,27 @@ const CandiadteJobs = () => {
     localStorage.setItem('appliedJobs', JSON.stringify(applyjobs));
 }, [applyjobs]);
 
+  // Get current jobs
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   
 
+  const user = {
+    userName: userName,
+    
+     userEmail: userEmail,
+   };
+
   return (
-    <div className="candidate-dashboard-container">
-      <div className='left-side'>
-        <nav id='logo'>
-          <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
-        </nav>
-        <nav>
-          <h2>Welcome {userName}</h2>
-        </nav>
-        <section id="dashboard">
-          <FontAwesomeIcon icon={faHouse} /> <Link   to={{
-          pathname: '/candidate-dashboard',
-          state: { userName: userName, userEmail:userEmail }
-        }}> Dashboard</Link>
-        </section>
-        <section id="jobs">
-          <FontAwesomeIcon icon={faLayerGroup} /> <Link  to={{
-          pathname: '/candidate-jobs',
-          state: { userName: userName, userEmail:userEmail }
-        }} >Jobs</Link>
-        </section>
-        <section id="companies">
-          <FontAwesomeIcon icon={faBuilding} /> <Link  to={{
-          pathname: '/candidate-companies',
-          state: { userName: userName, userEmail:userEmail }
-        }}> Companies</Link>
-        </section>
-        <section id="my-application">
-          <FontAwesomeIcon icon={faFileLines} /> <Link to={{
-          pathname: '/my-application',
-          state: { userName: userName, userEmail:userEmail }
-        }}>My Application</Link>
-        </section>
-        <section id="my-resume">
-          <FontAwesomeIcon icon={faFile} /> <Link to={{
-          pathname: '/resume',
-          state: { userName: userName, userEmail:userEmail }
-        }}> My Resume</Link>
-        </section>
-        <section id="my-profile">
-          <FontAwesomeIcon icon={faUser} /> <Link to={{
-          pathname: '/profile',
-          state: { userName: userName, userEmail:userEmail }
-        }}> My Profile</Link>
-        </section>
-        <section id="payment">
-          <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link  to={{
-          pathname: '/payment',
-          state: { userName: userName, userEmail:userEmail }
-        }}> Payments/Credits</Link>
-        </section>
-        {/* <section id="Home">
-          <FontAwesomeIcon icon={faHome} /> <Link to="/"> Home</Link>
-        </section>  */}
-        <h3>Help</h3>
-        <h3><Link to="/contact">Contact us</Link></h3>
-      </div>
+    <div className='candidate-dashboard-container'>
+    <div className='left-side'>
+   <CandidateLeftSide user={user} />
+ </div>
 
       <div className='rightside'>
         <div className="page">
@@ -164,23 +130,9 @@ const CandiadteJobs = () => {
                   <th>Experience</th>
                   <th>Eligibility</th>
                   <th>Requirements</th>
-                  <th>Status & Actions</th>
+                  <th>Job status</th>
+                  <th>Actions</th>
                 </tr>
-                </table>
-            <div className='jobs-table-div'>
-            <table className='jobs-table'>
-
-            
-                {/* <tr>
-                  <th>Job Profile</th>
-                  <th>Company Name</th>
-                  <th>Application DeadLine</th>
-                  <th>Experience</th>
-                  <th>Eligibility</th>
-                  <th>Requirements</th>
-                  <th>Status & Actions</th>
-                </tr>
-               */}
                 {jobs.map(job => (
                   <tr key={job.id} id='job-table-list'>
                     <td>{job.jobTitle}</td>
@@ -189,6 +141,7 @@ const CandiadteJobs = () => {
                     <td>{job.experience}</td>
                     <td>{job.eligibility}</td>
                     <td>{job.requirements}</td>
+                    <td></td>
                     <td> {applyjobs.includes(job.jobId) ? (
                                <h4>Applied</h4>
                                     ) : (
@@ -203,7 +156,14 @@ const CandiadteJobs = () => {
 
 
             </table>
-            </div>
+<ul>
+  {Array.from({ length: Math.ceil(jobs.length / jobsPerPage) }, (_, index) => index + 1).map((number) => (
+    <li key={number}>
+      <button onClick={() => paginate(number)}>{number}</button>
+    </li>
+  ))}
+</ul>
+            
             
             
 
