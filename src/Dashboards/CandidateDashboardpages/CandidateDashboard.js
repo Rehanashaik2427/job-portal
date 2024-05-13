@@ -11,7 +11,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:9090/api/jobbox";
   
   const userEmail=location.state?.userEmail;
   console.log(userEmail);
@@ -191,20 +191,34 @@ useEffect(() => {
                 <h4>resume views</h4>
               </div>
               <div className="data">
-              <h2><b> {countOfshortlistedApplications !== null ? (
-        <p> {countOfshortlistedApplications}</p>
-      ) : (
-        <p>Loading...</p>
-      )}</b></h2>
-                <h4>shortlist</h4>
+              <Link to={{
+          pathname: '/my-application',
+          state: { userName: userName, userEmail:userEmail,applicationStatus:"Shortlisted" }
+        }}><h2><b> {countOfshortlistedApplications !== null ? (
+          <p> {countOfshortlistedApplications}</p>
+        ) : (
+          <p>Loading...</p>
+        )}</b></h2>
+                  <h4>shortlist</h4></Link>
+              
               </div>
               <div className="data">
-              <h2><b> {countOfTotalCompanies !== null ? (
-        <p> {countOfTotalCompanies}</p>
-      ) : (
-        <p>Loading...</p>
-      )}</b></h2>
-                <h4>companies</h4>
+              <Link
+  to={{
+    pathname: '/candidate-companies',
+    state: { userName: userName, userEmail: userEmail }
+  }}
+>
+  <h2>
+    {countOfTotalCompanies !== null ? (
+      <p>{countOfTotalCompanies}</p>
+    ) : (
+      <p>Loading...</p>
+    )}
+  </h2>
+  <h4>companies</h4>
+</Link>
+
               </div>
             </div>
             {/* <div><h3 className='status-info'>My Resume Status  and Report</h3></div> */}

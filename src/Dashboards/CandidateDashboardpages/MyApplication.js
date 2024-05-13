@@ -10,11 +10,13 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const MyApplication = () => {
 
-  const BASE_API_URL="http://localhost:8080/api/jobbox";
+  const BASE_API_URL="http://localhost:9090/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
   const userEmail=location.state?.userEmail;
+  const applicationStatus=location.state?.applicationStatus;
   const [showSettings, setShowSettings] = useState(false);
+  //const [applicationStatus, setApplicationStatus] = useState(null);
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -31,10 +33,50 @@ const fetchApplications= async()=>
     }
   };
 
-  useEffect(() => {
-    // Fetch applications when component mounts
-    fetchApplications();
-  }, []);
+
+  
+
+  const fetchApplicationsByStatus= async()=>
+    {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userEmail=${userEmail}`);
+        setApplications(response.data); 
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+  
+    useEffect(() => {
+      // Fetch applications when component mounts
+      if (applicationStatus) {
+        fetchApplicationsByStatus();
+      } else {
+        fetchApplications();
+      }
+    }, []);
+
+    
+
+    const [search, setSearch] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      
+      try {
+        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userEmail=${userEmail}`);
+        setApplications(response.data); 
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+      
+     
+      console.log("Search submitted:", search);
+    };
+  
 
   const user = {
     userName: userName,
@@ -51,10 +93,18 @@ const fetchApplications= async()=>
       <div className='rightside'>
       <div className="top-right-content">
           <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
-            <button>
-              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
-            </button>
+          <form className="candidate-search" onSubmit={handleSubmit}>
+      <input
+        type='text'
+        name='search'
+        placeholder='Search'
+        value={search}
+        onChange={handleSearchChange}
+      />
+      <button type="submit">
+        <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+      </button>
+    </form>
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
@@ -73,7 +123,10 @@ const fetchApplications= async()=>
       )}
 
         <div>
-            <h1 style={{textAlign:'center'}}>MY APPLICATIONS</h1>
+     
+        {applications.length > 0 && (
+         <div>
+         <h1 style={{ textAlign: 'center' }}>MY APPLICATIONS</h1>
             <div className='applications-table'>
             <table className='applications-table'>
                 <tr>
@@ -82,8 +135,6 @@ const fetchApplications= async()=>
                     <th >Applied On</th>
                     <th>Resume Profile</th>
                     <th>Status & Actions</th>
-                  
-                  
                 </tr>
                 {applications.map(application => (
             <tr key={application.id}>
@@ -95,12 +146,11 @@ const fetchApplications= async()=>
              
             </tr>
                ))}
-
-               
-
-                
             </table>
               </div>
+              </div>
+              )}
+              {applications.length === 0 && <h1>No application found.</h1>}
                
         </div>
       </div>

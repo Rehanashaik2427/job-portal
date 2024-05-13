@@ -10,11 +10,10 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
-const BASE_API_URL="http://localhost:8080/api/jobbox";
+const BASE_API_URL="http://localhost:9090/api/jobbox";
 const CandiadteJobs = () => {
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [jobsPerPage] = useState(5);
+  
 
   const location = useLocation();
   const userName=location.state?.userName;
@@ -72,14 +71,50 @@ const CandiadteJobs = () => {
 }, [applyjobs]);
 
   // Get current jobs
-  const indexOfLastJob = currentPage * jobsPerPage;
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 5;
+  const indexOfLastJob= currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const nPage=Math.ceil(jobs.length/jobsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
+  // function  prePage(){
+  //   if(currentPage!==indexOfFirstJob){
+  //     setCurrentPage(currentPage-1);
+  //   }
+  //   }
+    
+    function changeCurrentPage(id)
+    {
+    setCurrentPage(id);
+    }
+    
+    // function nextPage(){
+    //   if(currentPage!==indexOfLastJob){
+    //     setCurrentPage(currentPage+1);
+    //   }
+    // }
 
   // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+ // const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try{
+      const response = await axios.get(`${BASE_API_URL}/searchJobs?search=${search}`);
+      setJobs(response.data);
+
+    }catch(error){
+console.log("No data Found"+error);
+    }
+    console.log("Search submitted:", search);
+  };
 
   const user = {
     userName: userName,
@@ -97,10 +132,21 @@ const CandiadteJobs = () => {
         <div className="page">
         <div className="top-right-content">
           <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
-            <button>
-              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
-            </button>
+       
+          <form className="candidate-search" onSubmit={handleSubmit}>
+      <input
+        type='text'
+        name='search'
+        placeholder='Search'
+        value={search}
+        onChange={handleSearchChange}
+      />
+      <button type="submit">
+        <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+      </button>
+    </form>
+           
+          
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
@@ -119,50 +165,84 @@ const CandiadteJobs = () => {
       )}
 
           
-            <h1 style={{textAlign:'center'}}>JOBS</h1>
-            <table className='jobs-table'>
+{jobs.length > 0 && (
+  <div>
+    <div>
+    <h1 style={{textAlign:'center'}}>JOBS</h1>
+    <table className='jobs-table'>
+   
+        <tr>
+          <th>Job Profile</th>
+          <th>Company Name</th>
+          <th>Application Deadline</th>
+          <th>Experience</th>
+          <th>Eligibility</th>
+          <th>Requirements</th>
+          <th>Job status</th>
+          <th>Actions</th>
+        </tr>
+     
+     
+        {currentJobs.map(job => (
+          <tr key={job.id} id='job-table-list'>
+            <td>{job.jobTitle}</td>
+            <td>{job.companyName}</td>
+            <td>{job.applicationDeadline}</td>
+            <td>{job.experience}</td>
+            <td>{job.eligibility}</td>
+            <td>{job.requirements}</td>
+            <td></td>
+            <td>
+              {applyjobs.includes(job.jobId) ? (
+                <h4>Applied</h4>
+              ) : (
+                <button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button>
+              )}
+            </td>
+          </tr>
+        ))}
+      
+    </table>
+    </div>
+  {/*
+)}
+{jobs.length === 0 && <h1>No jobs found.</h1>} */}
 
-            
-                <tr>
-                  <th>Job Profile</th>
-                  <th>Company Name</th>
-                  <th>Application DeadLine</th>
-                  <th>Experience</th>
-                  <th>Eligibility</th>
-                  <th>Requirements</th>
-                  <th>Job status</th>
-                  <th>Actions</th>
-                </tr>
-                {jobs.map(job => (
-                  <tr key={job.id} id='job-table-list'>
-                    <td>{job.jobTitle}</td>
-                    <td>{job.companyName}</td>
-                    <td>{job.applicationDeadline}</td>
-                    <td>{job.experience}</td>
-                    <td>{job.eligibility}</td>
-                    <td>{job.requirements}</td>
-                    <td></td>
-                    <td> {applyjobs.includes(job.jobId) ? (
-                               <h4>Applied</h4>
-                                    ) : (
-                      <button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button>
-                      )}
-                     </td>
-                  </tr>
-                ))}
-             
+<nav>
+  <ul className='pagination'>
+    {/* <li className='page-item'>
+       <a href='#' className='page-link' onClick={prePage}>Prev</a> x
+      <Link to={{
+        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
+        state: { userName: userName,userEmail:userEmail } // Pass user data as state
+      }} className='page-link'onClick={prePage}>Prev</Link>
+    </li> */}
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            {/* <a href='#' className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</a> */}
+            <Link to={{
+        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
+        state: { userName: userName,userEmail:userEmail } // Pass user data as state
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
 
-               
+{/* <li className='page-item'>
+       <a href='#' className='page-link' onClick={nextPage}>Next</a> 
+      <Link to={{
+        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
+        state: { userName: userName,userEmail:userEmail } // Pass user data as state
+      }} className='page-link'onClick={nextPage}>next</Link>
+    </li> */}
 
+  </ul>
+</nav>
+</div>
+)}
+{jobs.length === 0 && <h1>No jobs found.</h1>}
 
-            </table>
-<ul>
-  {Array.from({ length: Math.ceil(jobs.length / jobsPerPage) }, (_, index) => index + 1).map((number) => (
-    <li key={number}>
-      <button onClick={() => paginate(number)}>{number}</button>
-    </li>
-  ))}
-</ul>
             
             
             

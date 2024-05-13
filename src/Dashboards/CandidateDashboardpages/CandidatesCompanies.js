@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
-const BASE_API_URL="http://localhost:8080/api/jobbox";
+const BASE_API_URL="http://localhost:9090/api/jobbox";
 const CandidatesCompanies = () => {
   const [companies, setCompanies] = useState([]);
   const [jobRole, setJobRole] = useState('');
@@ -16,12 +16,12 @@ const CandidatesCompanies = () => {
   const userName=location.state?.userName;
   const userEmail=location.state?.userEmail;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setJobRole(value);
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setJobRole(value);
+  // };
 
-  const [jobs, setJobs] = useState([]);
+  // const [jobs, setJobs] = useState([]);
   
   // Function to fetch jobs from the database
   const fetchCompany = async () => {
@@ -40,11 +40,24 @@ const CandidatesCompanies = () => {
 
 
 
-  const searchJob = (e) => {
-    e.preventDefault();
-    // Perform search operation
-    console.log("Searching for job with role:", jobRole);
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try{
+      const response = await axios.get(`${BASE_API_URL}/searchCompany?search=${search}`);
+      setCompanies(response.data);
+
+    }catch(error){
+console.log("No data Found"+error);
+    }
+    console.log("Search submitted:", search);
+  };
+
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -69,10 +82,19 @@ const CandidatesCompanies = () => {
       <div className='rightside'>
       <div className="top-right-content">
           <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
-            <button>
-              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
-            </button>
+          <form className="candidate-search" onSubmit={handleSubmit}>
+      <input
+        type='text'
+        name='search'
+        placeholder='Search'
+        value={search}
+        onChange={handleSearchChange}
+      />
+      <button type="submit">
+        <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+      </button>
+    </form>
+           
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           
           </div>
@@ -84,7 +106,7 @@ const CandidatesCompanies = () => {
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting 2</li>
+            <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
         </div>

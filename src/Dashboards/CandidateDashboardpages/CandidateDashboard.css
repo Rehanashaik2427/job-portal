@@ -537,3 +537,97 @@ button.com:hover {
   line-height: 1.5;
 }
 
+
+/*  Candidate search*/
+
+.candidate-search input[type='text'] {
+  padding: 8px 12px; /* Adjust padding as needed */
+  width: 100px;
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.candidate-search input[type='text']:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #007bff; /* Border color on focus */
+}
+.candidate-search button {
+  background-color: transparent; /* Transparent background */
+  border: 1px solid rgb(158, 158, 248);
+   /* Remove default button border */
+  cursor: pointer; /* Show pointer cursor */
+}
+
+/* Adjust button icon size */
+.candidate-search button .button {
+  font-size: 16px; /* Adjust icon size as needed */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+.pagination .page-item {
+  margin: 0 2px;
+}
+
+.pagination .page-link {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination .page-link:hover {
+  background-color: #f2f2f2;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+
+/*My Profile css*/
+.profile-container {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-item {
+  margin-bottom: 10px;
+}
+
+.profile-label {
+  font-weight: bold;
+}
+
+.profile-value {
+  margin-left: 10px;
+  color: #333;
+}
+
+.profile-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+  background-color: #0056b3;
+}
+
