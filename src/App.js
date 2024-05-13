@@ -55,6 +55,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
+import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
 
 
 
@@ -117,6 +118,7 @@ const App = () => {
           <Route path='hr-leftSide' component={HrLeftSide}/>
           <Route path='/others' component={Others} />
           <Route path='/job-details' component={JodDetails} />
+          <Route path='/companyPage' component={CompamyPage} />
 
         </Switch>
       </BrowserRouter>

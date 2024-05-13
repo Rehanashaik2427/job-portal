@@ -15,8 +15,10 @@ const Candidates = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const userEmail=formData.userEmail;
   const password=formData.password;
+
 
  const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
@@ -24,16 +26,46 @@ const Candidates = () => {
 
 
 
-  const handleSubmit = async () => {
 
+//   const handleSubmit = async () => {
+
+//     try {
+//       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
+//       console.log(response.data);
+//       if(response.data)
+//       history.push('/candidate-dashboard', {userEmail});
+//     else{
+//       alert("invalid userName or password")
+//     }
+//   }
+// }
+  const getUser = async () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
-      console.log(response.data);
-      if(response.data)
-      history.push('/candidate-dashboard', {userEmail});
-    else{
-      alert("invalid userName or password")
+      console.log(response.data.userName);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return null;
     }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    
+    try {
+      const user = await getUser();
+      if (user) {
+        const userName = user.userName;
+        const userEmail = formData.userEmail;
+        console.log(userName);
+        console.log(userEmail);
+  
+        history.push('/candidate-dashboard', { userEmail });
+      } else {
+        console.error('User data not found or userName is missing');
+      }
+
     } catch (error) {
       console.error('Error fetching user:', error);
      
@@ -43,6 +75,7 @@ const Candidates = () => {
       
        
      
+  
   
   
 

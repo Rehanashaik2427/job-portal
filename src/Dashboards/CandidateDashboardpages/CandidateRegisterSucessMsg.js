@@ -8,7 +8,7 @@ const CandidateRegisterSucessMsg = () => {
     <div className="sucess-msg-container" style={{textAlign:'center'}}>
     <h2>Registration Successful</h2>
     <p>Welcome!</p>
-    <Link to='/candiadte-dashboard'>click here to see your details</Link>
+    <Link to='/candidates'>click here for login</Link>
   </div>
   )
 }

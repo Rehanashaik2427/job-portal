@@ -27,21 +27,7 @@ const CandidateRegistrationForm = () => {
     if (!validatePassword()) {
       return;
     }
-    // Simulate form submission (replace this with your actual API call)
-    // setTimeout(() => {
-    //   setRegistrationSuccess(true);
-
-    //   history.push('/CandidateRegisterSucessMsg')
-      
-    // } catch (error) {
-    //   console.error('Error registering candidate:', error);
-    // }
-
-    //   history.push('/login'); // Redirect after successful registration
-    // }, 1000); // Simulating a delay
-
-    // Replace the setTimeout block above with your actual API call to register the candidate
-    // Example:
+    
     try {
       const response = await fetch('http://localhost:8080/api/jobbox/saveUser', {
         method: 'POST',
@@ -52,7 +38,10 @@ const CandidateRegistrationForm = () => {
         throw new Error('Failed to register candidate');
       }
       setRegistrationSuccess(true);
-      history.push('/candidates'); // Redirect after successful registration
+
+      //history.push('/candidates'); // Redirect after successful registration
+      history.push('/CandidateRegisterSucessMsg'); // Redirect after successful registration
+
     } catch (error) {
       console.error('Error registering candidate:', error);
     }
@@ -120,12 +109,16 @@ const CandidateRegistrationForm = () => {
           <p className="error-message">Password and confirm password do not match</p>
         )}
 
+
        
         {passwordCriteriaError && (
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>
         )}
         
         </div> 
+
+    
+
   );
 };
 
