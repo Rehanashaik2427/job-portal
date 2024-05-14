@@ -11,7 +11,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const BASE_API_URL = "http://localhost:9090/api/jobbox";
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
   
   const userEmail=location.state?.userEmail;
   console.log(userEmail);
@@ -19,6 +19,7 @@ const CandidateDashboard = () => {
 
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
+  const [userId,setUserId]=useState();
   
  
 
@@ -34,6 +35,7 @@ const CandidateDashboard = () => {
           
           
            setUserName(response.data.userName);
+           setUserId(response.data.userId);
           
           
       setUserData(response.data);
@@ -76,7 +78,7 @@ const CandidateDashboard = () => {
 
 
 const [countOfTotalCompanies, setCountOfTotalCompanies] = useState(null);
-const fetchTotalCompanies = async (userEmail) => {
+const fetchTotalCompanies = async () => {
   try {
     const response = await axios.get(`${BASE_API_URL}/getCountOfTotalCompany`);
 
@@ -173,13 +175,16 @@ useEffect(() => {
             <div className="dashboard">
               <div className="data">
                 <span>
+                 
+                  <Link to={{ pathname: '/candidate-companies',state:{userName: userName, userEmail:userEmail,userId:userId}  }}>
                   <h4>Applied to</h4>
                   <h2><b> {countOfCompanies !== null ? (
         <p> {countOfCompanies}</p>
       ) : (
         <p>Loading...</p>
       )}</b></h2>
-                  <h4>companies</h4>
+                  <h4>companies</h4></Link>
+               
                 </span>
               </div>
               <div className="data">

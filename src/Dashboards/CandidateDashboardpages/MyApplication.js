@@ -10,7 +10,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const MyApplication = () => {
 
-  const BASE_API_URL="http://localhost:9090/api/jobbox";
+  const BASE_API_URL="http://localhost:8080/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
   const userEmail=location.state?.userEmail;
