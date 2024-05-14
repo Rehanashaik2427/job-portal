@@ -27,9 +27,9 @@ const CandidateRegistrationForm = () => {
     if (!validatePassword()) {
       return;
     }
-    
+    const BASE_API_URL="http://localhost:8081/api/jobbox";
     try {
-      const response = await fetch('http://localhost:8080/api/jobbox', {
+      const response = await fetch('http://localhost:8081/api/jobbox', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

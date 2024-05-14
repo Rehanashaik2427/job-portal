@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
-const BASE_API_URL="http://localhost:8080/api/jobbox";
+const BASE_API_URL="http://localhost:8081/api/jobbox";
 const CandidatesCompanies = () => {
   const [companies, setCompanies] = useState([]);
   

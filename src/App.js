@@ -56,6 +56,7 @@ import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
+import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
 
 
 
@@ -119,6 +120,7 @@ const App = () => {
           <Route path='/others' component={Others} />
           <Route path='/job-details' component={JodDetails} />
           <Route path='/companyPage' component={CompamyPage} />
+          <Route path='/resumeAdd' component={ResumeAdd} />
 
         </Switch>
       </BrowserRouter>

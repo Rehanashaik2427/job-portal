@@ -11,7 +11,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL="http://localhost:8081/api/jobbox";
   
   const userEmail=location.state?.userEmail;
   console.log(userEmail);
@@ -19,7 +19,6 @@ const CandidateDashboard = () => {
 
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
-  const [userId,setUserId]=useState();
   
  
 
@@ -35,7 +34,6 @@ const CandidateDashboard = () => {
           
           
            setUserName(response.data.userName);
-           setUserId(response.data.userId);
           
           
       setUserData(response.data);
@@ -55,7 +53,7 @@ const CandidateDashboard = () => {
 
 
   const [countOfCompanies, setCountOfCompanies] = useState(null);
-  const fetchApplications = async (userEmail) => {
+  const fetchApplicationsCompanies = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfAppliedCompany`, {
         params: {
@@ -72,10 +70,31 @@ const CandidateDashboard = () => {
   };  
   useEffect(() => {
    
-    fetchApplications(userEmail);
+    fetchApplicationsCompanies(userEmail);
   
 }, [userEmail]);
 
+const [countOfResune, setCountOfResumes] = useState(null);
+  const fetchCountResumes = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getCountOfResumes`, {
+        params: {
+          userEmail: userEmail
+        }
+      });
+  
+      console.log(response.data);
+      setCountOfResumes(response.data);
+    } catch (error) {
+      console.error('Error fetching applications:', error);
+      setCountOfCompanies(null);
+    }
+  };  
+  useEffect(() => {
+   
+    fetchCountResumes(userEmail);
+  
+}, [userEmail]);
 
 const [countOfTotalCompanies, setCountOfTotalCompanies] = useState(null);
 const fetchTotalCompanies = async () => {
@@ -175,21 +194,30 @@ useEffect(() => {
             <div className="dashboard">
               <div className="data">
                 <span>
-                 
-                  <Link to={{ pathname: '/candidate-companies',state:{userName: userName, userEmail:userEmail,userId:userId}  }}>
                   <h4>Applied to</h4>
                   <h2><b> {countOfCompanies !== null ? (
         <p> {countOfCompanies}</p>
       ) : (
         <p>Loading...</p>
       )}</b></h2>
-                  <h4>companies</h4></Link>
-               
+                  <h4>companies</h4>
                 </span>
               </div>
               <div className="data">
-                <h1>5</h1>
-                <h4>resumes</h4>
+                 <Link
+  to={{
+    pathname: '/resume',
+    state: { userName: userName, userEmail: userEmail }
+  }}
+>
+  <h2>
+    {countOfResune !== null ? (
+      <p>{countOfResune}</p>
+    ) : (
+      <p>Loading...</p>
+    )}
+  </h2>
+                <h4>resumes</h4> </Link>
               </div>
               <div className="data">
                 <h1>250</h1>

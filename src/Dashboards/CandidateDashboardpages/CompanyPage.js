@@ -6,7 +6,7 @@ import './CandidateDashboard.css';
 
 const CompamyPage= ()=> {
 
-    const BASE_API_URL="http://localhost:8080/api/jobbox";
+  const BASE_API_URL="http://localhost:8081/api/jobbox";
     const location=useLocation();
     const companyId=location.state?.companyId;
     const userName=location.state?.userName;

@@ -8,9 +8,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
+import ResumeSelectionPopup from './ResumeSelectionPopup';
 
-
-const BASE_API_URL="http://localhost:8080/api/jobbox";
+const BASE_API_URL="http://localhost:8081/api/jobbox";
 const CandiadteJobs = () => {
 
   
@@ -21,6 +21,8 @@ const CandiadteJobs = () => {
 
   const [jobs, setJobs] = useState([]);
   const [applyjobs, setApplyJobs] = useState([]);
+  const [showResumePopup, setShowResumePopup] = useState(false);
+
 
  
     const fetchJobs = async () => {
@@ -40,35 +42,57 @@ const CandiadteJobs = () => {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
-  
-  const applyJob= async(jobId)=>{
+  ////////////////////
+  const [selectedJobId, setSelectedJobId] = useState(null);
+
+  const handleApplyButtonClick = (jobId) => {
+    setSelectedJobId(jobId);
+    setShowResumePopup(true);
+};
+
+const handleResumeSelect = async (resumeUrl) => {
+    if (selectedJobId && resumeUrl) {
+        await applyJob(selectedJobId, resumeUrl);
+        setSelectedJobId(null); // Reset selected job id
+        setShowResumePopup(false); // Close the resume selection popup
+    }
+};
+  ///////////////////////////
+  const applyJob = async (jobId, resumeUrl) => {
     console.log(jobId);
     console.log(userEmail);
 
     const appliedOn = new Date().toLocaleString();
 
     try {
-      const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}`);
- 
-     // setApplyJobs(response.data);
-      console.log(response.data);
-      setApplyJobs([...applyjobs, jobId]);
-  
-      if(response.data)
-        {
-          alert("You have successfully apply this job");
-        
+        const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}&resumeUrl=${resumeUrl}`);
+
+        // setApplyJobs(response.data);
+        console.log(response.data);
+        setApplyJobs([...applyjobs, jobId]);
+
+        if (response.data) {
+            alert("You have successfully applied for this job");
+
         }
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+        console.error('Error fetching jobs:', error);
     }
     // fetchJobs();
-  };
+};
 
-  useEffect(() => {
-    // Update localStorage whenever appliedJobs changes
-    localStorage.setItem('appliedJobs', JSON.stringify(applyjobs));
-}, [applyjobs]);
+const [resumes, setResumes] = useState([]);
+useEffect(() => {
+  // Fetch resumes data from the backend
+  axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`)
+      .then(response => {
+          setResumes(response.data);
+      })
+      .catch(error => {
+          console.error('Error fetching resumes:', error);
+      });
+}, []);
+
 
   // Get current jobs
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,6 +121,20 @@ const CandiadteJobs = () => {
 
   // Change page
  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+ const [applications,setApplications]=useState([]);
+const fetchApplications= async()=>
+  {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/applications?userEmail=${userEmail}`);
+      setApplications(response.data); 
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
+  useEffect(() => {
+      fetchApplications();
+  }, []);
 
   const [search, setSearch] = useState('');
 
@@ -129,6 +167,18 @@ console.log("No data Found"+error);
  </div>
 
       <div className='rightside'>
+      {showResumePopup && (
+            <div className="modal">
+                <div className="modal-content">
+                    <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+                    <ResumeSelectionPopup
+                        resumes={resumes}
+                        onSelectResume={handleResumeSelect}
+                        onClose={() => setShowResumePopup(false)}
+                    />
+                </div>
+            </div>
+        )}
         <div className="page">
         <div className="top-right-content">
           <div className="candidate-search">
@@ -193,11 +243,11 @@ console.log("No data Found"+error);
             <td>{job.requirements}</td>
             <td></td>
             <td>
-              {applyjobs.includes(job.jobId) ? (
-                <h4>Applied</h4>
-              ) : (
-                <button onClick={() => applyJob(job.jobId)}><h4>Apply</h4></button>
-              )}
+                { applications.some(application => application.jobId === job.jobId) ? (
+                    <h4>Applied</h4>
+                ) : (
+                    <button onClick={() => handleApplyButtonClick(job.jobId)}><h4>Apply</h4></button>
+                 )}
             </td>
           </tr>
         ))}
@@ -264,5 +314,27 @@ console.log("No data Found"+error);
     </div>
   );
 };
+const ResumeSelectionModal = ({ resumes, onClose, onSelectResume }) => {
+  const handleResumeSelect = (e) => {
+      const selectedResumeUrl = e.target.value;
+      onSelectResume(selectedResumeUrl);
+  };
+
+  return (
+      <div className="modal">
+          <div className="modal-content">
+              <span className="close" onClick={onClose}>&times;</span>
+              <h2>Select Resume</h2>
+              <select onChange={handleResumeSelect}>
+                  <option value="">Select Resume</option>
+                  {resumes.map(resume => (
+                      <option key={resume.resumeId} value={resume.fileName}>{resume.message}</option>
+                  ))}
+              </select>
+          </div>
+      </div>
+  );
+};
+
 
 export default CandiadteJobs;

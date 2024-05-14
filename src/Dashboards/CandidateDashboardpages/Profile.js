@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
 const Profile = () => {
-  const BASE_API_URL="http://localhost:8080/api/jobbox";
+  const BASE_API_URL="http://localhost:8081/api/jobbox";
   const [userData,setUserData]=useState();
   const getUser=async()=>{
     try{
