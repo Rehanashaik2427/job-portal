@@ -74,7 +74,7 @@ const CandidateDashboard = () => {
   
 }, [userEmail]);
 
-const [countOfResune, setCountOfResumes] = useState(null);
+const [countOfResume, setCountOfResumes] = useState(null);
   const fetchCountResumes = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfResumes`, {
@@ -193,7 +193,12 @@ useEffect(() => {
          
             <div className="dashboard">
               <div className="data">
-                <span>
+              <Link
+  to={{
+    pathname: '/candidate-companies',
+    state: { userName: userName, userEmail: userEmail }
+  }}
+>
                   <h4>Applied to</h4>
                   <h2><b> {countOfCompanies !== null ? (
         <p> {countOfCompanies}</p>
@@ -201,7 +206,7 @@ useEffect(() => {
         <p>Loading...</p>
       )}</b></h2>
                   <h4>companies</h4>
-                </span>
+                  </Link>
               </div>
               <div className="data">
                  <Link
@@ -211,8 +216,8 @@ useEffect(() => {
   }}
 >
   <h2>
-    {countOfResune !== null ? (
-      <p>{countOfResune}</p>
+    {countOfResume !== null ? (
+      <p>{countOfResume}</p>
     ) : (
       <p>Loading...</p>
     )}

@@ -7,6 +7,8 @@ import axios from 'axios';
 import React, { useEffect, useId, useState } from 'react';
 
 const AddJob = () => {
+
+const AddJob= () => {
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
 console.log('Location state:', location.state);
@@ -21,6 +23,7 @@ console.log('Location state:', location.state);
     userEmail : userData?.userEmail||'',
     userName : userData?.userName||'',
     jobTitle: userData?.jobTitle || '',
+    hrId: userData?.jobTitle || userData,
     jobType: userData?.jobType || '',
     location: userData?.location || '',
     salary: userData?.salary || '',
@@ -56,6 +59,8 @@ console.log('Location state:', location.state);
       
       // Handle the response from the backend (e.g., show success message)
       console.log('Job posted successfully:', response.data);
+     
+      setUserData(response.data);
     } catch (error) {
       // Handle any errors (e.g., show error message)
       console.error('Error posting job:', error);
@@ -68,6 +73,7 @@ console.log('Location state:', location.state);
       userName: userName,
        userEmail: userEmail,
      };
+
 
      const handleChange = (e) => {
       const { name, value } = e.target;
@@ -137,5 +143,5 @@ console.log('Location state:', location.state);
     </div>
   )
 }
-
-export default AddJob
+}
+export default AddJob;
