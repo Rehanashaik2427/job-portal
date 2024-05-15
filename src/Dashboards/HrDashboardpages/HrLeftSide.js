@@ -8,14 +8,14 @@ import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 function HrLeftSide({ user }) {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const [userData, setUserData] = useState();
   const [userName, setUserName] = useState();
   const history = useHistory();
   const userEmail = location.state?.userEmail;
 
-
+console.log(user);
   useEffect(() => {
     if (location.state && location.state.userName) {
       setUserName(location.state.userName);
@@ -49,7 +49,7 @@ function HrLeftSide({ user }) {
         <img src="https://jobbox.com.tr/wp-content/uploads/2022/12/jobbox-1-e1672119718429.png" alt="jobboxlogo" />
       </nav>
       <nav>
-        <h2>{userName}</h2>
+        <h2>Welcome {userName}</h2>
       </nav>
       <section id="hr-dashboard">
         <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail: userEmail } }}>Dashboard</Link>

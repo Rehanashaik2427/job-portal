@@ -16,6 +16,7 @@ const Companies = () => {
   });
   const companyName = formData.companyName;
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,6 +30,11 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isSubmitting) {
+      return; // Prevent multiple submissions
+    }
+  
+    setIsSubmitting(true); // Set submitting flag
     
 
     try {
@@ -51,13 +57,14 @@ const Companies = () => {
     } catch (error) {
       setErrorMessage2("Error adding company. Please try again.");
     }
+    finally {
+      setIsSubmitting(false); // Reset submitting flag
+    }
   };
-
- 
 
   const saveCompanyData = async (formData) => {
     try {
-      const response = await fetch("http://localhost:8080/api/jobbox/saveCompany", {
+      const response = await fetch("http://localhost:8081/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -67,8 +74,6 @@ const Companies = () => {
       throw new Error("Error adding company. Please try again.");
     }
   };
-
-  
 
   return (
     <div className='company-details'>
@@ -97,17 +102,14 @@ const Companies = () => {
           </div>
           <div className='company-form-group'>
             <label htmlFor="description">Description:</label>
-
             <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
-
-
           </div>
           <div className='company-form-group'>
             <label htmlFor="date">DateTime:</label>
             <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
           </div>
           <div>
-            <button type="submit" style={{ textAlign: 'center' }}>Submit</button>
+            <button type="submit" disabled={isSubmitting} style={{ textAlign: 'center' }}>Submit</button>
           </div>
         </form>
         {errorMessage && (

@@ -3,11 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './HrDashboard.css';
 import './HrReg.css';
 
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
-
-
-
-//const BASE_API_URL = "http://localhost:8080/api/jobbox";
+const BASE_API_URL = "http://localhost:8081/api/jobbox";
 
 const HrRegistrationForm = () => {
   const history = useHistory(); 
@@ -15,139 +11,108 @@ const HrRegistrationForm = () => {
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
-    userRole:'HR',   
+    userRole: 'HR',   
     phone: '',
-    date: '',
+    appliedDate: '',
     password: '',
     confirmPassword: '',
-    companyName: '', // Added companyName to formData state
   });
-  const [passwordMatchError, setPasswordMatchError] = useState(false); // State for password match error
-  const [passwordCriteriaError, setPasswordCriteriaError] = useState(false); // State for password criteria error
- 
- 
 
-
-    const handleInputChange = (event) => {
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
+ 
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
     setPasswordMatchError(false); 
     setPasswordCriteriaError(false);
   };
+
   const validatePassword = () => {
     const { password } = formData;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
     const isValidPassword = passwordRegex.test(password);
 
     if (!isValidPassword) {
-      setPasswordCriteriaError(true); // Set password criteria error if validation fails
+      setPasswordCriteriaError(true);
       return false;
     }
 
     return true;
   };
 
-
-
-  const saveUserDetails = async (formData)=>{
-    try{
-      const response = await fetch("http://localhost:8080/api/jobbox/saveUser",{
-        method:"POST",
-        headers :{"Content-Type":"application/json"},
-        body:JSON.stringify(formData),
+  const saveUserDetails = async (formData) => {
+    try {
+      const response = await fetch(`${BASE_API_URL}/saveUser`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
       return response;
-    }
-    catch(error){
+    } catch (error) {
       throw new Error("Invalid user details");
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-     if (formData.password !== formData.confirmPassword) { // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
       setPasswordMatchError(true);
-      return; // Stop form submission if passwords don't match
+      return;
     }
-    if (!validatePassword()) { // Check password criteria
-      return; // Stop form submission if password criteria are not met
+    if (!validatePassword()) {
+      return;
     }
 
-    // Simulating registration success
-    console.log("Form Data:", formData);
     try {
-      const response = saveUserDetails(formData); // Log the form data
-      console.log("Response:", response);
-      history.push('/hr-RegSuccess');
+      const response = await saveUserDetails(formData);
+      if (response.ok) {
+        console.log("User registered successfully");
+        history.push('/hr-RegSuccess');
+      } else {
+        console.error("Error registering user");
+      }
     } catch (error) {
       console.error("Error saving user details:", error);
     }
-    // saveUserDetails(formData); 
-    console.log("Form Data:", formData);
-    saveUserDetails(formData); // Log the form data
-
-    
-    // console.log("Form Data:", formData);
-     saveUserDetails(formData);
-    history.pushState('/hr-RegSuccess') // Log the form data
-    setFormData({
-      userName: '',
-      userEmail: '',
-      phone: '',
-      appliedDate: '',
-      password: '',
-      confirmPassword: '',
-      
-    });
   };
-
-
 
   return (
     <div className="centered-form">
       <div className="form-container">
         <h2 style={{ textAlign: 'center' }}>HR Registration Form</h2>
-        {passwordMatchError && ( // Display error message if passwords don't match
+        {passwordMatchError && (
           <p className="error-message">Password and confirm password do not match</p>
         )}
-         {passwordCriteriaError && ( // Display error message if password criteria are not met
+        {passwordCriteriaError && (
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 15 characters</p>
         )}
-      
-      
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">Name:</label>
             <input type="text" id="hrName" name="userName" value={formData.userName} onChange={handleInputChange} required />
           </div>
-
           <div className="form-group">
             <label htmlFor="hrEmail">Email ID:</label>
             <input type="email" id="hrEmail" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
           </div>
-
           <div className="form-group">
             <label htmlFor="phone">Phone Number:</label>
             <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
           </div>
-
           <div className="form-group">
             <label htmlFor="date">Date:</label>
             <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleInputChange} required />
           </div>
-
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password"  value={formData.password} onChange={handleInputChange}  required />
+            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
-
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} required />
           </div>
-          
-
           <button type="submit">Register</button>
         </form>
       </div>
