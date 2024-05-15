@@ -5,7 +5,7 @@ import HrLeftSide from "./HrLeftSide";
 
 
 const AddJob= () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const userName = location.state?.userName; // Use location.state directly for userName
@@ -14,6 +14,7 @@ const AddJob= () => {
   
   const [formData, setFormData] = useState({
     jobTitle: userData?.jobTitle || '',
+    hrId: userData?.jobTitle || userData,
     jobType: userData?.jobType || '',
     location: userData?.location || '',
     salary: userData?.salary || '',
@@ -30,7 +31,7 @@ const AddJob= () => {
 
   const fetchUserData = async (userEmail) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+      const response = await axios.get(`${BASE_API_URL}/getUserId`, {
         params: {
           userEmail: userEmail
         }
@@ -46,8 +47,15 @@ const AddJob= () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    try {
+      const responce=await axios.post('http://localhost:8081/api/jobbox/postingJob', formData);
+      setFormData(responce.data);
+      alert('Form data submitted successfully');
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+    }
     
     console.log(userName); 
   };

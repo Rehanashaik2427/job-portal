@@ -6,7 +6,7 @@ import HrLeftSide from "./HrLeftSide";
 
 
 const UpdateJob = () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
 
   const [userData, setUserData] = useState();
