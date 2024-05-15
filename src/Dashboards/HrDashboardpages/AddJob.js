@@ -1,84 +1,122 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom';
-import Eligible from './Eligibile';
-import JobTitles from './JobTitles';
-import JobType from './JobType';
-import Others from './Others';
-import RequirementsAndSkills from './RequirementsAndSkills';
-import Salary from './Salary';
-import SetLocation from './SetLocation';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import HrLeftSide from "./HrLeftSide";
 
-const AddJob = () => {
-  const [step, setStep] = useState(1);
-  const [jobTitle, setJobTitle] = useState('');
-  const [jobDetails, setJobDetails] = useState({
-    jobTitle: JobTitles,
-    requirementsAndSkills: RequirementsAndSkills,
-    jobType:JobType,
-    location: Location,
-    Eligible:Eligible,
-    salary: Salary,
-    others:Others
+
+const AddJob= () => {
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const location = useLocation();
+  const userEmail = location.state?.userEmail;
+  const userName = location.state?.userName; // Use location.state directly for userName
+  const [userData, setUserData] = useState();
+ 
+  
+  const [formData, setFormData] = useState({
+    jobTitle: userData?.jobTitle || '',
+    jobType: userData?.jobType || '',
+    location: userData?.location || '',
+    salary: userData?.salary || '',
+    postingdate: userData?.postingdate || '',
+    qualifications: userData?.qualifications || '',
+    deadline: userData?.deadline || '',
+    positions: userData?.positions || '',
+    jobsummary: userData?.jobsummary || ''
   });
-  const history = useHistory();
 
-  const handleAddJob = (newJobDetails) => {
-    
-    setJobDetails({ ...jobDetails, ...newJobDetails });
-    // Add your job submission logic here, potentially using an API call
-    console.log("Final Job Details:", JSON.stringify(jobDetails));
+  useEffect(() => {
+    fetchUserData(userEmail);
+  }, [userEmail]);
 
-    // Navigate to JobDetails with job details as JSON string
-    history.push('/job-details', JSON.stringify(jobDetails));
+  const fetchUserData = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+        params: {
+          userEmail: userEmail
+        }
+      });
+      setUserData(response.data);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Job details:', jobTitle);
-    // Reset form fields after submission
-    setJobTitle('');
-    // Move to the next step after form submission
-    setStep(2);
-  };
-
-  const handleJobTitleSelect = (title) => {
-    setJobTitle(title);
-    // Move to the next step after selecting a job title
-    setStep(2);
+    
+    console.log(userName); 
   };
 
   return (
-    <div className="add-job-container">
-      {step === 1 && (
-        <div className='job-post-details'>
-          <form onSubmit={handleSubmit}>
-            <JobTitles onSelect={handleJobTitleSelect} />
-            {/* Include other job details input fields */}
-          </form>
-        </div>
-      )}
-      {step === 2 && (
-        <div className='job-post-details'>
-          <RequirementsAndSkills step={step} setStep={setStep} />
-          {/* Include other job details input fields */}
-        </div>
-      )}
+    <div className='candidate-dashboard-container'>
+      <div className="hr-leftside">
+        <HrLeftSide user={userName} />
+      </div>
 
-      {step === 3 && (
-        <div className='job-post-details'>
-          <JobType step={step} setStep={setStep} />
-          {/* Include other job details input fields */}
-        </div>
-      )}
-      {step === 4 && (
-        <div className='job-post-details'>
-          <SetLocation step={step} setStep={setStep} />
-          {/* Include other job details input fields */}
-          <Others addJob={handleAddJob} />
-        </div>
-      )}
+      <div className='hr-rightside'>
+        
+        <form className="job-posting-form" onSubmit={handleSubmit}>
+        
+          <div>
+            <h2 style={{ textDecoration: 'underline' }}>Job Details </h2>
+            <div className='job-details-row'>
+              <div className='job-form-group'>
+                <label htmlFor="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleChange}  />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="jobType">Job Type:</label>
+                <input type="text" id="jobType" name="jobType" value={formData.jobType} onChange={handleChange}  />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="postingdate">Posting Date:</label>
+                <input type="date" id="postingdate" name="postingdate" value={formData.postingdate} onChange={handleChange}  />
+              </div>
+            </div>
+            <div className='job-details-row'>
+              <div className='job-form-group'>
+                <label htmlFor="skills">Skills:</label>
+                <input type="text" id="skills" name="skills" value={formData.skills || ''} onChange={handleChange}  />
+              </div>
+
+              <div className='job-form-group'>
+                <label htmlFor="positions">Number of Positions:</label>
+                <input type="number" id="positions" name="positions" value={formData.positions} onChange={handleChange}  />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="deadline">Application Deadline:</label>
+                <input type="date" id="deadline" name="deadline" value={formData.deadline} onChange={handleChange} />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="jobsummary">Job summary: (Add Additional Information)</label>
+                <textarea
+                  id="jobsummary"
+                  name="jobsummary"
+                  value={formData.jobsummary}
+                  onChange={handleChange}
+                  className="fullWidthTextarea"
+                />
+              </div>
+
+              <div className='job-form-group-button'>
+                <button type='submit'>post</button>
+              </div>
+            </div>
+         
+          </div>
+  
+        </form>
+      </div>
     </div>
   );
-};
 
+
+};
 export default AddJob;
+
+

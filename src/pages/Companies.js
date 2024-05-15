@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
-import axios from 'axios';
-import { useEffect } from 'react';
 
 const Companies = () => {
   const history = useHistory();
@@ -116,7 +114,6 @@ const Companies = () => {
 
             <input type="text" id="description" name="discription" value={formData.discription} onChange={handleChange} />
 
-            <input type="text" id="description" name="description" value={formData.description} onChange={handleChange} />
 
           </div>
           <div className='company-form-group'>

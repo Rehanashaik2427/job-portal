@@ -64,7 +64,6 @@ const HrDashboard = () => {
 
   const user = {
    userName: userName,
-   
     userEmail: userEmail,
   };
 

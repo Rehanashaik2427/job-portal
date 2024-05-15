@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 const HrSignin = () => {
   const [formData, setFormData] = useState({
@@ -19,37 +19,62 @@ const HrSignin = () => {
 
   
 
+  // const getUser = async (userEmail) => {
+  //   try {
+  //     const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
+  //     console.log(response.data.userName);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error fetching user:', error);
+  //     return null;
+  //   }
+  // };
+
   const getUser = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
-      console.log(response.data.userName);
-      return response.data;
+      return response.data; // This includes the user's data, including the username
     } catch (error) {
       console.error('Error fetching user:', error);
       return null;
     }
   };
+  
 
-   const handleLogin = async () => {
-    // history.push("/hr-dashboard")
+  //  const handleLogin = async () => {
+  //   // history.push("/hr-dashboard")
+  //   try {
+  //     const user = await getUser(formData.userEmail);
+      
+  //     if (user) {
+  //       const userName = user;
+  //       const userEmail=formData.userEmail;
+       
+  //       console.log(userName)
+  //       console.log(userEmail);
+  //       history.push("/hr-dashboard", {userEmail,userName});
+  //     } else {
+  //       // Handle case where user data is not found or userName is not available
+  //       console.error('User data not found or userName is missing');
+  //     }
+  //   } catch (error) {
+  //     // Handle error when fetching user data
+  //     console.error('Error fetching user:', error);
+  //   }
+  //  };
+  const handleLogin = async () => {
     try {
       const user = await getUser(formData.userEmail);
-      
       if (user) {
-        const userName = user;
-        const userEmail=formData.userEmail;
-        console.log(userName)
-        console.log(userEmail);
-        history.push("/hr-dashboard", {userEmail});
+        const userName = user.userName; // Retrieve the username from the user object
+        history.push("/hr-dashboard", { userName, userEmail: formData.userEmail });
       } else {
-        // Handle case where user data is not found or userName is not available
-        console.error('User data not found or userName is missing');
+        console.error('User data not found');
       }
     } catch (error) {
-      // Handle error when fetching user data
       console.error('Error fetching user:', error);
     }
-   };
+  };
   
 
   return (

@@ -1,194 +1,176 @@
-import { useState } from "react";
-import axios from "axios";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect } from "react";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { FaEdit, FaSave } from "react-icons/fa";
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import HrLeftSide from "./HrLeftSide";
 
 
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
-const UpdateJob=()=>{
+const UpdateJob = () => {
+  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const location = useLocation();
 
-    const [jobDetails, setJobDetails] = useState({
-        hrId: '',
-        hrName: '',
-        companyName: '',
-        jobTitle: '',
-        jobType: '',
-        eligibility: '',
-        applicationDeadline: '',
-        location: '',
-        requirements: '',
-        numberOfPosition: '',
-        experience: '',
-        salary: '',
-      });
-    
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setJobDetails((prevJobDetails) => ({
-          ...prevJobDetails,
-          [name]: value,
-        }));
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log('Job details submitted:', jobDetails);
-        try {
-          const response = await axios.post(BASE_API_URL + "/postingJob", jobDetails);
-          console.log('Job details submitted:', response.data);
-          // Reset the form after successful submission
-          setJobDetails({
-            
-            jobTitle: '',
-            jobType: '',
-            eligibility: '',
-            applicationDeadline: '',
-            location: '',
-            requirements: '',
-            numberOfPosition: '',
-            experience: '',
-            salary: '',
-          });
-        } catch (error) {
-          console.error('Error posting job details:', error);
+  const [userData, setUserData] = useState();
+  const [userName, setUserName] = useState();
+  const [editable, setEditable] = useState(false); // State for tracking editable state
+  const [editableJobDetails, setEditableJobDetails] = useState(false); // State for tracking editable state of Job Details
+  const [editableDescription, setEditableDescription] = useState(false); // State for tracking editable state of Job Description
+
+  const userEmail = location.state?.userEmail;
+  const [jobDetails, setJobDetails] = useState({
+    jobTitle: userData?.jobTitle || '',
+    jobType: userData?.jobType || '',
+    location: userData?.location || '',
+    salary: userData?.salary || '',
+    postingdate: userData?.postingdate || '',
+    qualifications: userData?.qualifications || '',
+    deadline: userData?.deadline || '',
+    positions: userData?.positions || ''
+  });
+  const [isEditing, setIsEditing] = useState(false);
+
+  console.log(userEmail);
+
+  const fetchUserData = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+        params: {
+          userEmail: userEmail
         }
-      };
-      const location = useLocation();
-      const jobId = location.state?.jobId;
-      console.log(jobId);
-      const [job, setJob] = useState([]);
+      });
 
-      useEffect(() => {
-        const fetchJob = async (jobId) => {
-          try {
-            const response = await axios.get(`${BASE_API_URL}/getJobsByjobId/${jobId}`);
-            setJob(response.data);
-          } catch (error) {
-            console.error('Error fetching job:', error);
-          }
-        };
-        fetchJob(jobId);
-      }, [jobId]);
-      return (
-        <div className='hr-job-posting-form'>
-          <h2 style={{textAlign:'center'}}>Post a Job</h2>
-          {job && (
-            <form className='hr-job-posting-form' onSubmit={handleSubmit}>
-              <div className='job-details'>
-                <label htmlFor='title'>Job Title: 
-                  <input 
-                    type='text' 
-                    id='title' 
-                    name='jobTitle' 
-                    value={jobDetails.jobTitle} 
-                    onChange={handleChange} 
-                    placeholder={job.jobTitle} 
-                    required 
-                  />
-                </label>
-                <label htmlFor='jobType'>Job Type:<br/> 
-                  <select 
-                    id='jobType' 
-                    name='jobType'  
-                    value={jobDetails.jobType} 
-                    onChange={handleChange} 
-                    placeholder={job.jobType}
-                    required
-                  >
-                    <option value=''>Select Job Type</option>
-                    <option value='fullTime'>Full Time</option>
-                    <option value='partTime'>Part Time</option>
-                    <option value='contract'>Contract</option>
-                    <option value='Intern'>Intern</option>
-                    <option value='Freelancer'>Freelancer</option>
-                  </select>
-                </label>
-                <label htmlFor='eligibility'>Eligibility: 
-                  <input 
-                    type='text' 
-                    id='eligibility' 
-                    name='eligibility' 
-                    value={jobDetails.eligibility} 
-                    onChange={handleChange} 
-                    required 
-                  />
-                </label>
+      // console.log(response.data);
+      setUserName(response.data.userName);
+      setUserData(response.data);
+
+    } catch (error) {
+
+      setUserData(null);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchUserData(userEmail);
+
+  }, [userEmail]);
+
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+    setEditable(!editable); // Toggle editable state
+  };
+
+  const user = {
+    userName: userName,
+
+    userEmail: userEmail,
+  };
+
+  const [formData, setFormData] = useState({
+    jobTitle: userData?.jobTitle || '',
+    jobType: userData?.jobType || '',
+    location: userData?.location || '',
+    salary: userData?.salary || '',
+    postingdate: userData?.postingdate || '',
+    qualifications: userData?.qualifications || '',
+    deadline: userData?.deadline || '',
+    positions: userData?.positions || '',
+    jobsummary: userData?.jobsummary || ''
+  });
+  const toggleMenu = () => {
+    const leftSide = document.querySelector('.hr-leftside');
+    leftSide.classList.toggle('active');
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleEditJobDetails = () => {
+    setEditableJobDetails(true);
+    //setIsEditing(true);
+  };
+
+  const handleSaveJobDetails = () => {
+    setEditableJobDetails(false);
+    //setIsEditing(false); // Disable editing after saving
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you can handle form submission, e.g., send data to backend
+    console.log(formData);
+  };
+
+  return (
+    <div className='candidate-dashboard-container'>
+      <div className="hr-leftside">
+        <HrLeftSide user={user} />
+      </div>
+
+      <div className='hr-rightside'>
+        
+        <form className="job-posting-form" onSubmit={handleSubmit}>
+        
+          <div>
+            <h2 style={{ textDecoration: 'underline' }}>Job Details </h2>
+            <div className='job-details-row'>
+              <div className='job-form-group'>
+                <label htmlFor="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleChange} disabled={!editableJobDetails} />
               </div>
-              <div className='job-details'>
-                <label id='applicationdate' htmlFor='applicationDeadline' >
-                  Application Deadline: <br/>
-                  <input 
-                    type='date' 
-                    className='date' 
-                    id='applicationDeadline' 
-                    name='applicationDeadline' 
-                    value={jobDetails.applicationDeadline} 
-                    onChange={handleChange} 
-                    placeholder={job.applicationDeadline}
-                    required 
-                  />
-                </label>
-                <label htmlFor='location'>Location: 
-                  <input 
-                    type='text' 
-                    id='location' 
-                    name='location' 
-                    value={jobDetails.location} 
-                    onChange={handleChange}  
-                    placeholder={job.location}
-                    required 
-                  />
-                </label>
-                <label htmlFor='requirements'>Requirements/Skills:<br/> 
-                  <textarea 
-                    id='requirements' 
-                    name='requirements' 
-                    value={jobDetails.requirements} 
-                    onChange={handleChange} 
-                    required 
-                  />
-                </label>
+              <div className='job-form-group'>
+                <label htmlFor="jobType">Job Type:</label>
+                <input type="text" id="jobType" name="jobType" value={formData.jobType} onChange={handleChange} disabled={!editableJobDetails} />
               </div>
-              <div className='job-details'>
-                <label htmlFor='openings'>Openings:<br/> 
-                  <input 
-                    type='number' 
-                    id='openings' 
-                    name='numberOfPosition' 
-                    value={jobDetails.openings} 
-                    onChange={handleChange} 
-                    required 
-                  />
-                </label>
-                <label htmlFor='experience'>Experience: 
-                  <input 
-                    type='text' 
-                    id='experience' 
-                    name='experience' 
-                    value={jobDetails.experience} 
-                    onChange={handleChange} 
-                    required 
-                  />
-                </label>
-                <label htmlFor='salary'>Salary: 
-                  <input 
-                    type='text' 
-                    id='salary' 
-                    name='salary' 
-                    value={jobDetails.salary} 
-                    onChange={handleChange} 
-                    required 
-                  />
-                </label>
+              <div className='job-form-group'>
+                <label htmlFor="postingdate">Posting Date:</label>
+                <input type="date" id="postingdate" name="postingdate" value={formData.postingdate} onChange={handleChange} disabled={!editableJobDetails} />
               </div>
-              <div className='job-button'>
-                <button type="submit">Post</button>
+            </div>
+            <div className='job-details-row'>
+              <div className='job-form-group'>
+                <label htmlFor="skills">Skills:</label>
+                <input type="text" id="skills" name="skills" value={formData.skills || ''} onChange={handleChange} disabled={!editableJobDetails} />
               </div>
-            </form>
-          )}
-        </div>
-      );
-      
+
+              <div className='job-form-group'>
+                <label htmlFor="positions">Number of Positions:</label>
+                <input type="number" id="positions" name="positions" value={formData.positions} onChange={handleChange} disabled={!editableJobDetails} />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="deadline">Application Deadline:</label>
+                <input type="date" id="deadline" name="deadline" value={formData.deadline} onChange={handleChange} disabled={!editableJobDetails} />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="jobsummary">Job summary: Add Additional Information</label>
+                <textarea
+                  id="jobsummary"
+                  name="jobsummary"
+                  value={formData.jobsummary}
+                  onChange={handleChange}
+                  className="fullWidthTextarea"
+                  disabled={!editableJobDetails} // Add disabled attribute based on editableDescription state
+                />
+              </div>
+            </div>
+            <div className='job-save-edit-buttons'>
+              {editableJobDetails ? (
+                <button onClick={handleSaveJobDetails}><FaSave /> </button>
+              ) : (
+                <button onClick={handleEditJobDetails}><FaEdit /></button>
+              )}
+            </div>
+          </div>
+
+
+  
+        </form>
+      </div>
+    </div>
+  );
+
 
 };
 export default UpdateJob;
