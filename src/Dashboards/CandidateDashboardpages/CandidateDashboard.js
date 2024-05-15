@@ -144,10 +144,10 @@ useEffect(() => {
 
 
   console.log(userName);
-  const [showSettings, setShowSettings] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
   
   const user = {
@@ -169,23 +169,27 @@ useEffect(() => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleSettings}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleModal}/></div>
           
           </div>
          
     
         </div>
-        {showSettings && (
-        <div id="settings-container">
-          {/* Your settings options here */}
-          <ul>
-            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting </li>
-            {/* Add more settings as needed */}
-          </ul>
+        {showModal && (
+        <div id="modal-container">
+          <div id="settings-modal">
+            <ul>
+              <li>
+                <FontAwesomeIcon icon={faSignOutAlt} />
+                <Link to="/">Sign out</Link>
+              </li>
+              <li>Setting</li>
+              {/* Add more settings as needed */}
+            </ul>
+            <button onClick={toggleModal}>Close</button>
+          </div>
         </div>
       )}
-
 
         <div className="my-dashboard-container">
           <div>
@@ -193,15 +197,15 @@ useEffect(() => {
          
             <div className="dashboard">
               <div className="data">
-                <span>
-                  <h4>Applied to</h4>
-                  <h2><b> {countOfCompanies !== null ? (
-        <p> {countOfCompanies}</p>
+             
+                               <h4>Applied To </h4>
+                              <h2> {countOfCompanies !== null ? (
+                                   <p> {countOfCompanies}</p>
       ) : (
         <p>Loading...</p>
-      )}</b></h2>
+      )}</h2>
                   <h4>companies</h4>
-                </span>
+                  
               </div>
               <div className="data">
                  <Link

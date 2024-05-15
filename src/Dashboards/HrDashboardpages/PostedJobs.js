@@ -9,7 +9,7 @@ import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 
 const PostedJobs = () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;

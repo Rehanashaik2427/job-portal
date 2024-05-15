@@ -76,6 +76,22 @@ const fetchApplications= async()=>
      
       console.log("Search submitted:", search);
     };
+
+    // const [messages, setMessages] = useState({});
+
+    // const handleJob = async (jobId) => {
+    //   try {
+    //     const response = await axios.get(`${BASE_API_URL}/displayJobs/${jobId}`);// Assuming backend is running on the same host
+    //     if (response.data) {
+    //       setMessages("Available") ;
+    //     } else {
+    //       setMessages("Close") ;
+    //     }
+    //   } catch (error) {
+    //     console.error('Error fetching jobs:', error);
+    //   }
+    // };
+   
   
 
   const user = {
@@ -112,13 +128,16 @@ const fetchApplications= async()=>
     
         </div>
         {showSettings && (
-        <div id="settings-container">
+        <div id="modal-container">
+        <div id="settings-modal">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
         </div>
       )}
 
@@ -135,14 +154,17 @@ const fetchApplications= async()=>
                     <th >Applied On</th>
                     <th>Resume Profile</th>
                     <th>Status & Actions</th>
+                    {/* <th>Job Status</th> */}
                 </tr>
                 {applications.map(application => (
             <tr key={application.id}>
               <td>{application.companyName}</td>
               <td>{application.jobRole}</td>
               <td>{application.appliedOn}</td>
-              <td>{application.resume}</td>
+              <td>{application.resumeUrl}</td>
               <td>{application.applicationStatus}</td>
+              {/* <td><button onClick={handleJob(application.jobId)}>View</button></td> */}
+            
              
             </tr>
                ))}
@@ -158,4 +180,4 @@ const fetchApplications= async()=>
   )
 }
 
-export default MyApplication
+export default MyApplication;

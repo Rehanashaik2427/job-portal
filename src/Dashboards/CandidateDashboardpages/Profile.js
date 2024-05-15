@@ -62,13 +62,16 @@ console.log(error);
     
         </div>
         {showSettings && (
-        <div id="settings-container">
+       <div id="modal-container">
+       <div id="settings-modal">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting 2</li>
+            <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
         </div>
       )}
        

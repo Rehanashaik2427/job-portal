@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./ApplicationDetails.css";
 const ApplicationDetails = () => {
-    const BASE_API_URL = "http://localhost:8080/api/jobbox";
+    const BASE_API_URL = "http://localhost:8081/api/jobbox";
     const location = useLocation();
     const applicationId = location.state?.applicationId;
     const [application, setApplication] = useState();

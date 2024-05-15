@@ -62,7 +62,8 @@ const handleResumeSelect = async (resumeUrl) => {
     console.log(jobId);
     console.log(userEmail);
 
-    const appliedOn = new Date().toLocaleString();
+    const appliedOn = new Date().toLocaleDateString();
+
 
     try {
         const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}&resumeUrl=${resumeUrl}`);
@@ -119,8 +120,7 @@ useEffect(() => {
     //   }
     // }
 
-  // Change page
- // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
 
  const [applications,setApplications]=useState([]);
 const fetchApplications= async()=>
@@ -204,13 +204,16 @@ console.log("No data Found"+error);
     
         </div>
         {showSettings && (
-        <div id="settings-container">
+        <div id="modal-container">
+        <div id="settings-modal">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
         </div>
       )}
 
@@ -228,7 +231,7 @@ console.log("No data Found"+error);
           <th>Experience</th>
           <th>Eligibility</th>
           <th>Requirements</th>
-          <th>Job status</th>
+         
           <th>Actions</th>
         </tr>
      
@@ -241,7 +244,7 @@ console.log("No data Found"+error);
             <td>{job.experience}</td>
             <td>{job.eligibility}</td>
             <td>{job.requirements}</td>
-            <td></td>
+           
             <td>
                 { applications.some(application => application.jobId === job.jobId) ? (
                     <h4>Applied</h4>
@@ -314,27 +317,27 @@ console.log("No data Found"+error);
     </div>
   );
 };
-const ResumeSelectionModal = ({ resumes, onClose, onSelectResume }) => {
-  const handleResumeSelect = (e) => {
-      const selectedResumeUrl = e.target.value;
-      onSelectResume(selectedResumeUrl);
-  };
+// const ResumeSelectionModal = ({ resumes, onClose, onSelectResume }) => {
+//   const handleResumeSelect = (e) => {
+//       const selectedResumeUrl = e.target.value;
+//       onSelectResume(selectedResumeUrl);
+//   };
 
-  return (
-      <div className="modal">
-          <div className="modal-content">
-              <span className="close" onClick={onClose}>&times;</span>
-              <h2>Select Resume</h2>
-              <select onChange={handleResumeSelect}>
-                  <option value="">Select Resume</option>
-                  {resumes.map(resume => (
-                      <option key={resume.resumeId} value={resume.fileName}>{resume.message}</option>
-                  ))}
-              </select>
-          </div>
-      </div>
-  );
-};
+//   return (
+//       <div className="modal">
+//           <div className="modal-content">
+//               <span className="close" onClick={onClose}>&times;</span>
+//               <h2>Select Resume</h2>
+//               <select onChange={handleResumeSelect}>
+//                   <option value="">Select Resume</option>
+//                   {resumes.map(resume => (
+//                       <option key={resume.resumeId} value={resume.fileName}>{resume.message}</option>
+//                   ))}
+//               </select>
+//           </div>
+//       </div>
+//   );
+//};
 
 
 export default CandiadteJobs;

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
+const BASE_API_URL = "http://localhost:8081/api/jobbox";
 const HrRegistrationForm = () => {
   const history =useHistory();
   const [formData, setFormData] = useState({
@@ -17,7 +17,7 @@ const HrRegistrationForm = () => {
     date: '',
     password: '',
     confirmPassword: '',
-     companyName: '', // Added companyName to formData state
+     companyName: '', 
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
  
@@ -69,6 +69,7 @@ const HrRegistrationForm = () => {
       throw new Error("Invalid user details");
     }
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setPasswordCriteriaError(false); // Reset password criteria error on submission
@@ -81,7 +82,7 @@ const HrRegistrationForm = () => {
     
     // console.log("Form Data:", formData);
      saveUserDetails(formData);
-    history.pushState('/hr-RegSuccess') // Log the form data
+    history.push('/hr-RegSuccess') // Log the form data
     setFormData({
       userName: '',
       userEmail: '',

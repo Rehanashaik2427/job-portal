@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './AdminDashboard.css';
 import axios from 'axios';
 
-const BASE_API_URL = "http://localhost:8080/api/jobbox";
+const BASE_API_URL = "http://localhost:8081/api/jobbox";
 
 const CompanyDetailsByAdmin = ({ location }) => {
   const [location1, setLocation] = useState('');

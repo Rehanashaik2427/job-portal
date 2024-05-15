@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Jobs = () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const history=useHistory();
   const [showSettings, setShowSettings] = useState(false);
@@ -134,7 +134,7 @@ const user = {
 
 
                           <div className='addJob'>
-                          <Link to={{ pathname: '/addJob', state: {  userEmail:userEmail } }}>Add Job</Link>
+                          <Link to={{ pathname: '/addJob', state: { userName:userName, userEmail:userEmail } }}>Add Job</Link>
                           </div>
 
                           </div> </div>

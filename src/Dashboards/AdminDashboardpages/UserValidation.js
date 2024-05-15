@@ -9,7 +9,7 @@ const UserValidation = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/jobbox/displayUsers');
+        const response = await fetch('http://localhost:8081/api/jobbox/displayUsers');
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }

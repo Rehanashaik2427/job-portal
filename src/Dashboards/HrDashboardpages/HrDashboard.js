@@ -9,7 +9,7 @@ import HrLeftSide from './HrLeftSide';
 
 const HrDashboard = () => {
 
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
 
   // const userName=location.state?.userName;
@@ -62,6 +62,29 @@ const HrDashboard = () => {
     setShowSettings(!showSettings);
   };
 
+  const [countOfJobs,setCountOfJobs]=useState();
+ const fetchCountOfJobs= async()=>{
+    try{
+      const response=await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompany?userEmail=${userEmail}`)
+      setCountOfJobs(response.data);
+    }catch(error){
+console.log (error)
+    }
+  }
+  const [countOfApplications,setCountOfApplications]=useState();
+  const fetchCountOfApplication= async()=>{
+    try{
+      const response=await axios.get(`${BASE_API_URL}/CountOfApplicationBYHREachCompany?userEmail=${userEmail}`)
+      setCountOfApplications(response.data);
+    }catch(error){
+console.log (error)
+    }
+  }
+  useEffect(()=>{
+    fetchCountOfJobs();
+    fetchCountOfApplication();
+  })
+
   const user = {
    userName: userName,
    
@@ -76,6 +99,7 @@ const HrDashboard = () => {
       </div>
 
       <div className='hr-rightside'>
+        {/* <h2>{userName}</h2> */}
        
       <div className="candidate-search">
             <input type='text' placeholder='serach'></input>
@@ -98,17 +122,19 @@ const HrDashboard = () => {
 
                 {/* First row - first box */}
                 <div className="box">
+                <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>
                     <h2>Jobs</h2>
-                    <h4 style={{ alignContent: 'center' }}>1000+jobs</h4>
+                    <h4 style={{ alignContent: 'center' }}>{countOfJobs} jobs</h4>
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
-                    <p>Everyday 100+ jobs are posted by us</p>
+                    <p> are posted by us</p>
+                   </Link>
                 </div>
 
                 {/* First row - second box */}
                 <div className="box">
                     <h2>Total Applications</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/942/942748.png" className="animated-icons" alt="Applications Icon" />
-                    <p >Total Applications count 200+</p>
+                    <p >Total Applications count {countOfApplications}</p>
                 </div>
 
                 {/* Second row - first box */}

@@ -4,10 +4,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import './HrDashboard.css';
+import HrLeftSide from "./HrLeftSide";
 
 const ViewApplications=()=>
     {
-        const BASE_API_URL = "http://localhost:8080/api/jobbox";
+        const BASE_API_URL = "http://localhost:8081/api/jobbox";
 const location=useLocation();
 const jobId=location.state?.jobId;
 console.log(jobId);
@@ -61,6 +62,7 @@ console.log(jobId);
 
     return(
             <div>
+               
                                     <div className="filter">
                                                     
                                     <label htmlFor="status">Filter by Status:</label>
