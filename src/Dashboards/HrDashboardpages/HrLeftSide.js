@@ -11,9 +11,9 @@ function HrLeftSide({ user }) {
   const BASE_API_URL = "http://localhost:8080/api/jobbox";
   const location = useLocation();
   const [userData, setUserData] = useState();
-  const [userName, setUserName] = useState();
-  const history = useHistory();
-  const userEmail = location.state?.userEmail;
+  const [userName,setUserName]=useState();
+  const history=useHistory();
+  const userEmail=location.state?.userEmail;
 
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function HrLeftSide({ user }) {
     }
   }, [location.state, userEmail]);
 
-  const fetchUserData = async (userEmail) => {
+ const fetchUserData = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getHRName`, {
         params: {
@@ -38,9 +38,9 @@ function HrLeftSide({ user }) {
     }
   };
 
+  
 
-
-
+ 
 
 
   return (
@@ -52,30 +52,29 @@ function HrLeftSide({ user }) {
         <h2>{userName}</h2>
       </nav>
       <section id="hr-dashboard">
-        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail: userEmail } }}>Dashboard</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail: userEmail } }}>My Jobs</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName, userEmail: userEmail } }}>Applicants</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs', state: { userName: userName, userEmail: userEmail } }}>All Jobs</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName, userEmail: userEmail } }}>People</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail: userEmail } }}>Profile</Link>
-      </section>
-      <section>
-        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail: userEmail } }}>Home</Link>
-      </section>
-   
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail:userEmail }}}>Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faAddressCard} /> <Link to={{ pathname: '/hr-applications', state: { userName: userName, userEmail:userEmail } }}>Applications</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>Posted Jobs</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUsers} /> <Link to={{ pathname: '/people', state: { userName: userName, userEmail:userEmail }}}>People</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail:userEmail } }}>Profile</Link>
+                    </section>
+                    <section>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
+                    </section>
 
-      <h3>Help</h3>
-      <h3><Link to="/contact">Contact us</Link></h3>
+                    <h3>Help</h3>
+                    <h3><Link to="/contact">Contact us</Link></h3>
     </div>
   );
 };
