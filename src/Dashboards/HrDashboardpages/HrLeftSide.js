@@ -11,9 +11,9 @@ function HrLeftSide({ user }) {
   const BASE_API_URL = "http://localhost:8080/api/jobbox";
   const location = useLocation();
   const [userData, setUserData] = useState();
-  const [userName,setUserName]=useState();
-  const history=useHistory();
-  const userEmail=location.state?.userEmail;
+  const [userName, setUserName] = useState();
+  const history = useHistory();
+  const userEmail = location.state?.userEmail;
 
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function HrLeftSide({ user }) {
     }
   }, [location.state, userEmail]);
 
- const fetchUserData = async (userEmail) => {
+  const fetchUserData = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getHRName`, {
         params: {
@@ -38,9 +38,9 @@ function HrLeftSide({ user }) {
     }
   };
 
-  
 
- 
+
+
 
 
   return (
@@ -72,6 +72,7 @@ function HrLeftSide({ user }) {
       <section>
         <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail: userEmail } }}>Home</Link>
       </section>
+   
 
       <h3>Help</h3>
       <h3><Link to="/contact">Contact us</Link></h3>

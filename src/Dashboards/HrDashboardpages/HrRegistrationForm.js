@@ -5,8 +5,13 @@ import './HrReg.css';
 
 const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
+
+
+//const BASE_API_URL = "http://localhost:8080/api/jobbox";
+
 const HrRegistrationForm = () => {
   const history = useHistory(); 
+  
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
@@ -19,6 +24,9 @@ const HrRegistrationForm = () => {
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false); // State for password match error
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false); // State for password criteria error
+ 
+ 
+
 
     const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -38,6 +46,23 @@ const HrRegistrationForm = () => {
 
     return true;
   };
+
+
+
+  const saveUserDetails = async (formData)=>{
+    try{
+      const response = await fetch("http://localhost:8080/api/jobbox/saveUser",{
+        method:"POST",
+        headers :{"Content-Type":"application/json"},
+        body:JSON.stringify(formData),
+      });
+      return response;
+    }
+    catch(error){
+      throw new Error("Invalid user details");
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -59,6 +84,13 @@ const HrRegistrationForm = () => {
       console.error("Error saving user details:", error);
     }
     // saveUserDetails(formData); 
+    console.log("Form Data:", formData);
+    saveUserDetails(formData); // Log the form data
+
+    
+    // console.log("Form Data:", formData);
+     saveUserDetails(formData);
+    history.pushState('/hr-RegSuccess') // Log the form data
     setFormData({
       userName: '',
       userEmail: '',
@@ -69,24 +101,8 @@ const HrRegistrationForm = () => {
       
     });
   };
-  const saveUserDetails = async (formData)=>{
-    try{
-      const response = await fetch("http://localhost:8080/api/jobbox/saveUser",{
-        method:"POST",
-        headers :{"Content-Type":"application/json"},
-        body:JSON.stringify(formData),
-      });
 
-       if (!response.ok) {
-        throw new Error("Failed to save user details");
-      }
-      return response.json();
-    }
-    
-    catch(error){
-      throw new Error("Invalid user details");
-    }
-  }
+
 
   return (
     <div className="centered-form">
@@ -98,6 +114,8 @@ const HrRegistrationForm = () => {
          {passwordCriteriaError && ( // Display error message if password criteria are not met
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 15 characters</p>
         )}
+      
+      
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="hrName">Name:</label>

@@ -17,19 +17,6 @@ const HrSignin = () => {
 
   const BASE_API_URL = "http://localhost:8080/api/jobbox";
 
-  
-
-  // const getUser = async (userEmail) => {
-  //   try {
-  //     const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
-  //     console.log(response.data.userName);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('Error fetching user:', error);
-  //     return null;
-  //   }
-  // };
-
   const getUser = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
@@ -39,29 +26,7 @@ const HrSignin = () => {
       return null;
     }
   };
-  
 
-  //  const handleLogin = async () => {
-  //   // history.push("/hr-dashboard")
-  //   try {
-  //     const user = await getUser(formData.userEmail);
-      
-  //     if (user) {
-  //       const userName = user;
-  //       const userEmail=formData.userEmail;
-       
-  //       console.log(userName)
-  //       console.log(userEmail);
-  //       history.push("/hr-dashboard", {userEmail,userName});
-  //     } else {
-  //       // Handle case where user data is not found or userName is not available
-  //       console.error('User data not found or userName is missing');
-  //     }
-  //   } catch (error) {
-  //     // Handle error when fetching user data
-  //     console.error('Error fetching user:', error);
-  //   }
-  //  };
   const handleLogin = async () => {
     try {
       const user = await getUser(formData.userEmail);
@@ -75,7 +40,6 @@ const HrSignin = () => {
       console.error('Error fetching user:', error);
     }
   };
-  
 
   return (
     <div className="centered-form"> {/* Apply centered styling to the form */}
@@ -88,7 +52,7 @@ const HrSignin = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input style={{height:'20%'}}type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <button onClick={handleLogin}>Login</button>

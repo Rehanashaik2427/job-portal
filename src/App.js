@@ -45,6 +45,8 @@ import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
 
+import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
+import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
@@ -110,7 +112,10 @@ const App = () => {
           <Route path="/applicationDetails" component={ApplicationDetails} />
           <Route path='/viewApplications' component={ViewApplications} />
           <Route path='hr-leftSide' component={HrLeftSide}/>
-         
+        
+          <Route path='/companyPage' component={CompamyPage} />
+          <Route path='/resumeAdd' component={ResumeAdd} />
+
         </Switch>
       </BrowserRouter>
     </div>
