@@ -1,13 +1,11 @@
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import './HrDashboard.css';
 
 const ViewApplications=()=>
     {
-        const BASE_API_URL = "http://localhost:8080/api/jobbox";
+        const BASE_API_URL = "http://localhost:8081/api/jobbox";
 const location=useLocation();
 const jobId=location.state?.jobId;
 console.log(jobId);

@@ -5,7 +5,7 @@ import HrLeftSide from "./HrLeftSide";
 
 
 const AddJob= () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const userName = location.state?.userName; // Use location.state directly for userName

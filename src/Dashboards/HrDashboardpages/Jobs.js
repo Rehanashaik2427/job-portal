@@ -6,7 +6,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import HrLeftSide from './HrLeftSide';
 
 const Jobs = () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const [userName, setUserName] = useState('');
