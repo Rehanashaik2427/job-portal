@@ -17,6 +17,7 @@ const Companies = () => {
     date: '',
   });
   const companyName = formData.companyName;
+  console.log(companyName);
 
 
   const [successMessage, setSuccessMessage] = useState('');
@@ -31,44 +32,25 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
-    try {
-      const response = await saveCompanyData(formData);
-      if (response.ok) {
-        setSuccessMessage("Company added successfully");
-        history.push('/hr-registeration', { companyName: formData.companyName });
-        setFormData({
-          companyName: '',
-          contactNumber: '',
-          companyEmail: '',
-          industry: '',
-          location: '',
-          discription: '',
-          date: '',
-        });
-      } else  {
-        setErrorMessage("Company already exists. Please try again.");
-      } 
-    } catch (error) {
-      setErrorMessage2("Error adding company. Please try again.");
-    }
-  };
-
- 
-
-  const saveCompanyData = async (formData) => {
     try {
       const response = await fetch("http://localhost:8081/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      return response;
+      console.log(response.data);
+      if(response.ok)
+        history.push("/hr-registeration",{companyName});
     } catch (error) {
       throw new Error("Error adding company. Please try again.");
     }
+
+   
   };
+
+ 
+
+ 
 
   
 

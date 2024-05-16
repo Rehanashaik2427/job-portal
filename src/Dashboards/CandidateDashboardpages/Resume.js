@@ -29,28 +29,28 @@ const Resume = () => {
             });
     }, []);
 
-    // Function to handle resume download
-    const handleDownload = (fileName) => {
-        axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}&fileName=${fileName}`, {
-            responseType: 'blob'
-        })
-        .then(response => {
-            // Create a temporary URL for the downloaded file
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            // Create a link element to trigger the download
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', fileName.substring(fileName.lastIndexOf('/') + 1)); // Extract filename from path
-            document.body.appendChild(link);
-            link.click();
-            // Clean up after download
-            link.parentNode.removeChild(link);
-        })
-        .catch(error => {
-            console.error('Error downloading resume:', error);
-        });
-    };
-  
+   // Function to handle resume download
+   const handleDownload = (fileName) => {
+    axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`, {
+        responseType: 'blob'
+    })
+    .then(response => {
+        // Create a temporary URL for the downloaded file
+        const url = window.URL.createObjectURL(response.data);
+        // Create a link element to trigger the download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName); // Use the provided file name
+        document.body.appendChild(link);
+        link.click();
+        // Clean up after download
+        link.parentNode.removeChild(link);
+    })
+    .catch(error => {
+        console.error('Error downloading resume:', error);
+    });
+};
+
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {

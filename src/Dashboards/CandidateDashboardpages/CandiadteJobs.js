@@ -29,6 +29,7 @@ const CandiadteJobs = () => {
       try {
         const response = await axios.get(BASE_API_URL+"/displayJobs"); // Assuming backend is running on the same host
         setJobs(response.data);
+       
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
@@ -103,22 +104,13 @@ useEffect(() => {
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
   const nPage=Math.ceil(jobs.length/jobsPerPage);
   const numbers=[...Array(nPage+1).keys()].slice(1);
-  // function  prePage(){
-  //   if(currentPage!==indexOfFirstJob){
-  //     setCurrentPage(currentPage-1);
-  //   }
-  //   }
+
     
     function changeCurrentPage(id)
     {
     setCurrentPage(id);
     }
     
-    // function nextPage(){
-    //   if(currentPage!==indexOfLastJob){
-    //     setCurrentPage(currentPage+1);
-    //   }
-    // }
 
   
 
@@ -246,30 +238,25 @@ console.log("No data Found"+error);
             <td>{job.requirements}</td>
            
             <td>
-                { applications.some(application => application.jobId === job.jobId) ? (
+            {(
+                 applications.some(application => application.jobId === job.jobId) ||
+                    (applyjobs && applyjobs.jobId === job.jobId)
+                       )  ? (
                     <h4>Applied</h4>
-                ) : (
+                     ) : (
                     <button onClick={() => handleApplyButtonClick(job.jobId)}><h4>Apply</h4></button>
-                 )}
+                 )}`
             </td>
           </tr>
         ))}
       
     </table>
     </div>
-  {/*
-)}
-{jobs.length === 0 && <h1>No jobs found.</h1>} */}
+ 
 
 <nav>
   <ul className='pagination'>
-    {/* <li className='page-item'>
-       <a href='#' className='page-link' onClick={prePage}>Prev</a> x
-      <Link to={{
-        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
-        state: { userName: userName,userEmail:userEmail } // Pass user data as state
-      }} className='page-link'onClick={prePage}>Prev</Link>
-    </li> */}
+   
     {
       numbers.map((n,i)=>(
           <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
@@ -282,13 +269,7 @@ console.log("No data Found"+error);
       ))
     }
 
-{/* <li className='page-item'>
-       <a href='#' className='page-link' onClick={nextPage}>Next</a> 
-      <Link to={{
-        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
-        state: { userName: userName,userEmail:userEmail } // Pass user data as state
-      }} className='page-link'onClick={nextPage}>next</Link>
-    </li> */}
+
 
   </ul>
 </nav>
@@ -317,27 +298,7 @@ console.log("No data Found"+error);
     </div>
   );
 };
-// const ResumeSelectionModal = ({ resumes, onClose, onSelectResume }) => {
-//   const handleResumeSelect = (e) => {
-//       const selectedResumeUrl = e.target.value;
-//       onSelectResume(selectedResumeUrl);
-//   };
 
-//   return (
-//       <div className="modal">
-//           <div className="modal-content">
-//               <span className="close" onClick={onClose}>&times;</span>
-//               <h2>Select Resume</h2>
-//               <select onChange={handleResumeSelect}>
-//                   <option value="">Select Resume</option>
-//                   {resumes.map(resume => (
-//                       <option key={resume.resumeId} value={resume.fileName}>{resume.message}</option>
-//                   ))}
-//               </select>
-//           </div>
-//       </div>
-//   );
-//};
 
 
 export default CandiadteJobs;

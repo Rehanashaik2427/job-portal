@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import './HrDashboard.css';
 import './HrReg.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
 const BASE_API_URL = "http://localhost:8081/api/jobbox";
+
 const HrRegistrationForm = () => {
+  const location=useLocation();
+  const  companyName=location.state?.companyName;
+  console.log(companyName);
   const history =useHistory();
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
     userRole:'HR',
-    
+    companyName:companyName,
     phone: '',
     date: '',
     password: '',
     confirmPassword: '',
-     companyName: '', 
+    
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
  
@@ -55,7 +59,7 @@ const HrRegistrationForm = () => {
   const saveUserDetails = async (formData)=>{
     try{
 
-      const response = await fetch(BASE_API_URL,{
+      const response = await fetch(BASE_API_URL+"/saveUser",{
 
      
 
@@ -86,6 +90,7 @@ const HrRegistrationForm = () => {
     setFormData({
       userName: '',
       userEmail: '',
+      companyName:'',
       phone: '',
       appliedDate: '',
       password: '',

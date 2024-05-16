@@ -58,8 +58,48 @@ console.log(jobId);
     
             }
 
-
-
+            const handleDownload = 
+                async (resumeUrl, candidateId) => {
+                    try {
+                    //   const response = await axios.get(`${BASE_API_URL}/getApplicantResume?resumeUrl=${resumeUrl}&candidateId=${candidateId}`, {
+                    //     responseType: 'blob'
+                    const response = resumeUrl;
+                  
+                      if (!response.ok) {
+                        console.log("error")
+                        throw new Error(`Failed to download PDF resume: ${response.statusText}`);
+                       
+                      }
+                  
+                      const blob = new Blob([response.data], { type: 'application/pdf' });
+                      const url = window.URL.createObjectURL(blob);
+                  
+                      const downloadLink = document.createElement('a');
+                      downloadLink.href = url;
+                      downloadLink.setAttribute('download', `resume_${candidateId}.pdf`);
+                      document.body.appendChild(downloadLink);
+                      downloadLink.click();
+                      document.body.removeChild(downloadLink);
+                  
+                      displayPDF(url);
+                    } catch (error) {
+                      console.error('Error downloading or displaying PDF resume:', error);
+                      // Handle download or display errors (e.g., inform the user about network issues or invalid URLs)
+                    }
+                  };
+                  
+                  const displayPDF = (url) => {
+                    // Create and configure the iframe (unchanged from previous code)
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.border = 'none';
+                  
+                    const container = document.getElementById('pdfContainer');
+                    container.innerHTML = ''; // Clear previous content
+                    container.appendChild(iframe);
+                  };
     return(
             <div>
                
@@ -92,7 +132,7 @@ console.log(jobId);
                             <tr key={application.id}>
                             <td>{application.jobRole}</td>
                             <td>{application.companyName}</td>
-                            <td>{application.resumeId}</td>
+                            <td> <button className='download' onClick={() => handleDownload(application.resumeUrl,application.candidateId)}>Resume</button></td>
                             <td>{application.appliedOn}</td>
                             <td>{application.applicationStatus}</td>
                             <td><button onClick={()=>viewDetails(application.applicationId)}>View</button></td>
