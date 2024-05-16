@@ -9,7 +9,10 @@ const Jobs = () => {
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
+  const { companyName } = location.state || {};
+
   const [userName, setUserName] = useState('');
+  // const [companyName ,setCompanyName] = useState('');
   const [jobs, setJobs] = useState([]);
   const history = useHistory();
   const [showSettings, setShowSettings] = useState(false);
@@ -22,6 +25,7 @@ const Jobs = () => {
     if (userEmail) {
       fetchUserData(userEmail);
       fetchJobs(userEmail);
+      fetchUserData(companyName);
     }
   }, [userEmail]);
 
@@ -122,7 +126,7 @@ const Jobs = () => {
             <p>If you want to post a job, click the button below:</p>
             <div className='add-job-button'>
               <button className="add-job-button">
-                <Link to={{ pathname: '/addjob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
+                <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail,companyName:companyName } }}>Add Job</Link>
               </button>
             </div>
           </div>

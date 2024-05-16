@@ -14,7 +14,7 @@ const Companies = () => {
     discription: '',
     date: '',
   });
-  const companyName = formData.companyName;
+ 
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -25,6 +25,7 @@ const Companies = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+   
   };
 
   const handleSubmit = async (e) => {
@@ -41,6 +42,7 @@ const Companies = () => {
       const response = await saveCompanyData(formData);
       if (response.ok) {
         setSuccessMessage("Company added successfully");
+        // history.push('/hr-registeration', { companyName : formData.companyName});
         history.push('/hr-registeration', { companyName: formData.companyName });
         setFormData({
           companyName: '',
@@ -115,7 +117,7 @@ const Companies = () => {
         {errorMessage && (
           <div className="error-message">
             {errorMessage}
-            <Link to='/hr-registeration'>Click here to fill your details</Link>
+            <Link to={{ pathname: '/hr-registeration', state: { companyName: formData.companyName } }}>Click here to fill your details</Link>
           </div>
         )}
         {successMessage && (

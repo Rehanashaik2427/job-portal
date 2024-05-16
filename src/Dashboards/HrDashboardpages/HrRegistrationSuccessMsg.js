@@ -5,6 +5,7 @@ import './Success.css';
 
 
 const HrRegistrationSuccessMsg=()=>{
+  
     return (
       <div className="sucess-msg-container" style={{textAlign:'center'}}>
       <h2>Registration Successful</h2>

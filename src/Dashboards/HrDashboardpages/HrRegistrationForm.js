@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import './HrReg.css';
 
@@ -7,7 +7,8 @@ const BASE_API_URL = "http://localhost:8081/api/jobbox";
 
 const HrRegistrationForm = () => {
   const history = useHistory(); 
-  
+  const location = useLocation();
+  const { companyName } = location.state || {};
   const [formData, setFormData] = useState({
     userName: '',
     userEmail: '',
@@ -28,6 +29,7 @@ const HrRegistrationForm = () => {
     setPasswordCriteriaError(false);
   };
 
+  
   const validatePassword = () => {
     const { password } = formData;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
@@ -43,10 +45,11 @@ const HrRegistrationForm = () => {
 
   const saveUserDetails = async (formData) => {
     try {
+      const { companyName, ...userData } = formData;
       const response = await fetch(`${BASE_API_URL}/saveUser`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...userData, companyName }),
       });
       return response;
     } catch (error) {
@@ -66,10 +69,10 @@ const HrRegistrationForm = () => {
     }
 
     try {
-      const response = await saveUserDetails(formData);
+      const response = await saveUserDetails({ ...formData, companyName });
       if (response.ok) {
         console.log("User registered successfully");
-        history.push('/hr-RegSuccess');
+        history.push('/hr-RegSuccess',{ companyName: formData.companyName });
       } else {
         console.error("Error registering user");
       }

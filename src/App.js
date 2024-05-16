@@ -30,7 +30,6 @@ import HrProfile from './Dashboards/HrDashboardpages/HrProfile';
 import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
-import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
@@ -49,6 +48,7 @@ import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
 import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
+import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 
 
@@ -107,12 +107,11 @@ const App = () => {
           <Route path="/post-jobs" component={Jobs} />
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
-          <Route path="/addJob" component={AddJob}/>
-          <Route path="/jodAddSuccess" component={JobAdded}/>
+          <Route path='/addJob' component={AddJob} />
+          <Route path="/jodAddSuccess" component={JobAddSuccessful}/>
           <Route path="/applicationDetails" component={ApplicationDetails} />
           <Route path='/viewApplications' component={ViewApplications} />
           <Route path='hr-leftSide' component={HrLeftSide}/>
-        
           <Route path='/companyPage' component={CompamyPage} />
           <Route path='/resumeAdd' component={ResumeAdd} />
 

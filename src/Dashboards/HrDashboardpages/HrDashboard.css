@@ -397,10 +397,11 @@ section {
   color: white;
 }
 
-.job-posting-form {
+.job-posting-form,.job-details-row {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
 }
 .job-form-group-button button{
@@ -413,10 +414,6 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.personal-details-row,
-.job-details-row ,.jod-description-row {
-  
 }
 
 .personal-details-row .form-group,
@@ -434,8 +431,11 @@ section {
   box-sizing: border-box;
   font-size: 20px;
   /* Larger font size for improved readability */
-  width: 1000px;
+  width: 40%;
   padding: 5px;
+  margin-left: 300px;
+
+ 
 }
   .job-form-group{
     margin: 12px;
@@ -445,10 +445,12 @@ section {
   display: block;
   font-weight: bold;
   color: #333; /* Darker label color for better contrast */
+  margin-left: 300px;
 }
 
 .job-form-group textarea{
   height: 100px;
+  width: 940px;
 }
 
 .fullWidthTextarea {

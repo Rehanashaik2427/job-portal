@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import "./JobAddSuccessful.css";
-const JobAdded = () => {
+const JobAddSuccessful = () => {
     
 const BASE_API_URL="http://localhost:8081/api/jobbox";
     const location=useLocation();
@@ -50,13 +50,13 @@ const BASE_API_URL="http://localhost:8081/api/jobbox";
   return (
     <div className='jobAddedSuccess'>
       <h2>Job Successfully Added!</h2>
-      <p>Thank you, {userName}, for adding the job.</p>
+      <p>Thank you for adding the job.</p>
       <p>You can go back to the dashboard or add another job:</p>
-      <Link to={{ pathname: '/post-jobs', state: { userName, userEmail } }}>Go to Jobs</Link>
+      <Link to= '/post-jobs'>Go to Jobs</Link>
       <br />
-      <Link to={{ pathname: '/addJob', state: { userName, userEmail } }}>Add Another Job</Link>
+      {/* <Link to={{ pathname: '/addJob', state: { userName, userEmail } }}>Add Another Job</Link> */}
     </div>
   );
 };
 
-export default JobAdded;
+export default JobAddSuccessful;
