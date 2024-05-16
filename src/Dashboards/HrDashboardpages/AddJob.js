@@ -1,19 +1,29 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import HrLeftSide from './HrLeftSide';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import HrLeftSide from "./HrLeftSide";
+import './HrDashboard.css';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import React, { useEffect, useId, useState } from 'react';
 
+const AddJob = () => {
 
 const AddJob= () => {
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
-  const userEmail = location.state?.userEmail;
-  const userName = location.state?.userName; // Use location.state directly for userName
+console.log('Location state:', location.state);
+
+    
+  const { userName, userEmail } = location.state || {};
+
+  console.log(userEmail);
   const [userData, setUserData] = useState();
- 
-  
+  //const [userName,setUserName]=useState();
   const [formData, setFormData] = useState({
+    userEmail : userData?.userEmail||'',
+    userName : userData?.userName||'',
     jobTitle: userData?.jobTitle || '',
+    hrId: userData?.jobTitle || userData,
     jobType: userData?.jobType || '',
     location: userData?.location || '',
     salary: userData?.salary || '',
@@ -23,39 +33,56 @@ const AddJob= () => {
     positions: userData?.positions || '',
     jobsummary: userData?.jobsummary || ''
   });
-
-  useEffect(() => {
-    fetchUserData(userEmail);
-  }, [userEmail]);
-
-  const fetchUserData = async (userEmail) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
     try {
-      const response = await axios.get(`${BASE_API_URL}/getHRName`, {
-        params: {
-          userEmail: userEmail
-        }
-      });
+      // Construct the job data to be sent to the backend
+      const jobData = {
+        jobTitle: formData.jobTitle,
+        jobType: formData.jobType,
+        location: formData.location,
+        salary: formData.salary,
+        postingdate: formData.postingdate,
+        qualifications: formData.qualifications,
+        deadline: formData.deadline,
+        positions: formData.positions,
+        jobsummary: formData.jobsummary,
+        hrid:formData.hrid, // Replace with the actual HR ID
+        hrname: userName, // Assuming userName is the HR name
+        hremail: userEmail, // Assuming userEmail is the HR email
+        companyName: formData.companyName // Replace with the actual company name
+      };
+  
+      // Send the job data to the backend API endpoint
+      const response = await axios.post(`${BASE_API_URL}/jobs`, jobData);
+      
+      // Handle the response from the backend (e.g., show success message)
+      console.log('Job posted successfully:', response.data);
+     
       setUserData(response.data);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      // Handle any errors (e.g., show error message)
+      console.error('Error posting job:', error);
     }
   };
+  
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    console.log(userName); 
-  };
+    const user = {
+      userName: userName,
+       userEmail: userEmail,
+     };
 
+
+     const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
   return (
     <div className='candidate-dashboard-container'>
-      <div className="hr-leftside">
-        <HrLeftSide user={userName} />
+      <div className='hr-leftside'>
+          <HrLeftSide user={{ userName, userEmail }} />
       </div>
 
       <div className='hr-rightside'>
@@ -112,11 +139,9 @@ const AddJob= () => {
   
         </form>
       </div>
+
     </div>
-  );
-
-
-};
+  )
+}
+}
 export default AddJob;
-
-

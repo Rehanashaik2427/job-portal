@@ -121,7 +121,9 @@ const Jobs = () => {
             <h2>You have not posted any jobs yet.</h2>
             <p>If you want to post a job, click the button below:</p>
             <div className='add-job-button'>
-              <button className="add-job-button"><Link to='/addJob'>Add Job</Link></button>
+              <button className="add-job-button">
+                <Link to={{ pathname: '/addjob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
+              </button>
             </div>
           </div>
         )}

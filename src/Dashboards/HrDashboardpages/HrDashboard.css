@@ -434,7 +434,7 @@ section {
   box-sizing: border-box;
   font-size: 20px;
   /* Larger font size for improved readability */
-  width: 100%;
+  width: 1000px;
   padding: 5px;
 }
   .job-form-group{
@@ -447,8 +447,8 @@ section {
   color: #333; /* Darker label color for better contrast */
 }
 
-textarea #jobsummary{
-  width: 100%;
+.job-form-group textarea{
+  height: 100px;
 }
 
 .fullWidthTextarea {
