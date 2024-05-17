@@ -1,6 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 const HrSignin = () => {
   const [formData, setFormData] = useState({
@@ -17,42 +17,27 @@ const HrSignin = () => {
 
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
 
-  const password=formData.password;
   const userEmail=formData.userEmail;
-  
+  const password=formData.password;
 
-  const getUser = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
-      console.log(response.data.userName);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
+      console.log(response);
+      if(response.data)
+      history.push('/hr-dashboard', {userEmail});
+    else{
+      alert("invalid userName or password")
     }
-  };
+  }
+    catch(error)
+    {
+      console.log(error);
+    }
 
-   const handleLogin = async () => {
-    // history.push("/hr-dashboard")
-    try {
-      const user = await getUser();
-      
-      if (user) {
-        const userName = user.userName;
-        const userEmail=formData.userEmail;
-        console.log(userName)
-        console.log(userEmail);
-        history.push("/hr-dashboard", {userEmail});
-      } else {
-        // Handle case where user data is not found or userName is not available
-        console.error('User data not found or userName is missing');
-      }
-    } catch (error) {
-      // Handle error when fetching user data
-      console.error('Error fetching user:', error);
-    }
-   };
-  
+  };
 
   return (
     <div className="centered-form"> {/* Apply centered styling to the form */}
@@ -65,7 +50,7 @@ const HrSignin = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input style={{height:'20%'}}type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
           </div>
           <div className="form-group">
             <button onClick={handleLogin}>Login</button>

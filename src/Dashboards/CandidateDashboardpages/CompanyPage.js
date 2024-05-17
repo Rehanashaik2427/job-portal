@@ -10,7 +10,7 @@ const CompamyPage= ()=> {
     const location=useLocation();
     const companyId=location.state?.companyId;
     const userName=location.state?.userName;
-    const userEmail=location.state?.userEmail;
+    const userId=location.state?.userId;
     const [company,setCompany]=useState();
 
     const fetchCompany = async () => {
@@ -30,7 +30,7 @@ const CompamyPage= ()=> {
       const user = {
         userName: userName,
         
-         userEmail: userEmail,
+        userId: userId,
        };
     
       return (

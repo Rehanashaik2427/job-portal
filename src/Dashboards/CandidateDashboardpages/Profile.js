@@ -9,21 +9,23 @@ import axios from 'axios';
 
 
 const Profile = () => {
+  const location = useLocation();
+  const userName=location.state?.userName;
+  const userId=location.state?.userId;
   const BASE_API_URL="http://localhost:8081/api/jobbox";
   const [userData,setUserData]=useState();
-  const getUser=async()=>{
-    try{
-      const response=await axios.get(`${BASE_API_URL}/getCandidate?userEmail=${userEmail}`);
+
+  const getUser = async (userId) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getCandidate?userId=${userId}`);
       setUserData(response.data);
-
-    }catch(error){
-console.log(error);
+    } catch (error) {
+      console.log(error);
     }
-
-  }
+  };
   useEffect(()=>{
-    getUser();
-  })
+    getUser(userId);
+  },[userId]);
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -32,13 +34,11 @@ console.log(error);
   };
 
 
-  const location = useLocation();
-  const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+ 
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
     return (

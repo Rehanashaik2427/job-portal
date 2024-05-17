@@ -12,9 +12,9 @@ import CandidateLeftSide from './CandidateLeftSide';
 const CandidateDashboard = () => {
   const location = useLocation();
   const BASE_API_URL="http://localhost:8081/api/jobbox";
-  
-  const userEmail=location.state?.userEmail;
-  console.log(userEmail);
+  // const userName=location.state.userName;
+  const userId=location.state?.userId;
+  console.log(userId);
  
 
   const [userData, setUserData] = useState();
@@ -22,11 +22,11 @@ const CandidateDashboard = () => {
   
  
 
-  const fetchUserData = async (userEmail) => {
+  const fetchUserData = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+        const response = await axios.get(`${BASE_API_URL}/getUserName`, {
             params: {
-              userEmail: userEmail
+              userId: userId
             }
           });
 
@@ -46,18 +46,18 @@ const CandidateDashboard = () => {
 
   useEffect(() => {
    
-      fetchUserData(userEmail);
+      fetchUserData(userId);
     
-  }, [userEmail]);
+  }, [userId]);
 
 
 
   const [countOfCompanies, setCountOfCompanies] = useState(null);
-  const fetchApplicationsCompanies = async (userEmail) => {
+  const fetchApplicationsCompanies = async (userId) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfAppliedCompany`, {
         params: {
-          userEmail: userEmail
+          userId: userId
         }
       });
   
@@ -70,16 +70,16 @@ const CandidateDashboard = () => {
   };  
   useEffect(() => {
    
-    fetchApplicationsCompanies(userEmail);
+    fetchApplicationsCompanies(userId);
   
-}, [userEmail]);
+}, [userId]);
 
-const [countOfResune, setCountOfResumes] = useState(null);
-  const fetchCountResumes = async (userEmail) => {
+const [countOfResume, setCountOfResumes] = useState(null);
+  const fetchCountResumes = async (userId) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfResumes`, {
         params: {
-          userEmail: userEmail
+          userId: userId
         }
       });
   
@@ -92,9 +92,9 @@ const [countOfResune, setCountOfResumes] = useState(null);
   };  
   useEffect(() => {
    
-    fetchCountResumes(userEmail);
+    fetchCountResumes(userId);
   
-}, [userEmail]);
+}, [userId]);
 
 const [countOfTotalCompanies, setCountOfTotalCompanies] = useState(null);
 const fetchTotalCompanies = async () => {
@@ -116,11 +116,11 @@ useEffect(() => {
 
 
 const [countOfshortlistedApplications, setCountOfshortlistedApplications] = useState(null);
-const fetchTotalShortlistedApplications = async (userEmail) => {
+const fetchTotalShortlistedApplications = async (userId) => {
   try {
     const response = await axios.get(`${BASE_API_URL}/getCountOfTotalShortlistedApplication`, {
       params: {
-        userEmail: userEmail
+        userId: userId
       }
     });
 
@@ -133,17 +133,17 @@ const fetchTotalShortlistedApplications = async (userEmail) => {
 };  
 useEffect(() => {
  
-  fetchTotalShortlistedApplications(userEmail);
+  fetchTotalShortlistedApplications(userId);
 
-},[userEmail]);
-
-
+},[userId]);
 
 
 
 
 
-  console.log(userName);
+
+
+  console.log(userId);
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
@@ -153,7 +153,7 @@ useEffect(() => {
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+     userId: userId,
    };
 
   return (
@@ -197,26 +197,39 @@ useEffect(() => {
          
             <div className="dashboard">
               <div className="data">
+
              
-                               <h4>Applied To </h4>
-                              <h2> {countOfCompanies !== null ? (
-                                   <p> {countOfCompanies}</p>
+
+              <Link
+  to={{
+    pathname: '/candidate-companies',
+    state: { userName: userName, userId: userId }
+  }}
+>
+                  <h4>Applied to</h4>
+                  <h2> {countOfCompanies !== null ? (
+        <p> {countOfCompanies}</p>
+
       ) : (
         <p>Loading...</p>
       )}</h2>
                   <h4>companies</h4>
+
                   
+
+                  </Link>
+
               </div>
               <div className="data">
                  <Link
   to={{
     pathname: '/resume',
-    state: { userName: userName, userEmail: userEmail }
+    state: { userName: userName, userId: userId  }
   }}
 >
   <h2>
-    {countOfResune !== null ? (
-      <p>{countOfResune}</p>
+    {countOfResume !== null ? (
+      <p>{countOfResume}</p>
     ) : (
       <p>Loading...</p>
     )}
@@ -230,7 +243,7 @@ useEffect(() => {
               <div className="data">
               <Link to={{
           pathname: '/my-application',
-          state: { userName: userName, userEmail:userEmail,applicationStatus:"Shortlisted" }
+          state: { userName: userName, userId: userId ,applicationStatus:"Shortlisted" }
         }}><h2><b> {countOfshortlistedApplications !== null ? (
           <p> {countOfshortlistedApplications}</p>
         ) : (
@@ -243,7 +256,7 @@ useEffect(() => {
               <Link
   to={{
     pathname: '/candidate-companies',
-    state: { userName: userName, userEmail: userEmail }
+    state: { userName: userName, userId: userId  }
   }}
 >
   <h2>

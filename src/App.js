@@ -30,8 +30,9 @@ import HrProfile from './Dashboards/HrDashboardpages/HrProfile';
 import HrRegistrationForm from './Dashboards/HrDashboardpages/HrRegistrationForm';
 import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
 import HrSignin from './Dashboards/HrDashboardpages/HrSignin';
-import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import Jobs from './Dashboards/HrDashboardpages/Jobs';
+
+
 
 import People from './Dashboards/HrDashboardpages/People';
 import PostedJobs from './Dashboards/HrDashboardpages/PostedJobs';
@@ -46,21 +47,24 @@ import Register from './pages/Register';
 import Signin from './pages/Signin';
 import TermsAndConditions from './pages/TermsAndConditions';
 
-// import Jobs from './Dashboards/HrDashboardpages/Jobs';
-// import HrRegistrationSuccessMsg from './Dashboards/HrDashboardpages/HrRegistrationSuccessMsg';
-// import UpdateJob from './Dashboards/HrDashboardpages/UpdateJob';
-// import AddJob from './Dashboards/HrDashboardpages/AddJob';
-// import JobAdded from './Dashboards/HrDashboardpages/JobAddSuccessful';
-import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
-import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
-import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
 import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
+
 import FindCompany from './pages/FindCompany';
+
+import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
+import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
+import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
+import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
+import JobboxCompanyPage from './pages/JobboxCompanyPage';
+import EachCompanyPage from './pages/EachCompanyPage';
+
 
 
 
 const App = () => {
+
+
   return (
     <div>
       <BrowserRouter>
@@ -112,15 +116,19 @@ const App = () => {
           <Route path="/post-jobs" component={Jobs} />
           <Route path="/hr-RegSuccess" component={HrRegistrationSuccessMsg} />
           <Route path="/update-job" component={UpdateJob}/>
-          <Route path="/addJob" component={AddJob}/>
-          <Route path="/jodAddSuccess" component={JobAdded}/>
+          <Route path='/addJob' component={AddJob} />
+          <Route path="/jodAddSuccess" component={JobAddSuccessful}/>
           <Route path="/applicationDetails" component={ApplicationDetails} />
           <Route path='/viewApplications' component={ViewApplications} />
           <Route path='hr-leftSide' component={HrLeftSide}/>
-         
+
           <Route path='/companyPage' component={CompamyPage} />
           <Route path='/resumeAdd' component={ResumeAdd} />
           <Route path='/findCompany' component={FindCompany} />
+          <Route path='/jobboxCompanyPage' component={JobboxCompanyPage} />
+          <Route path='/eachCompanyPage' component={EachCompanyPage} />
+          
+
 
         </Switch>
       </BrowserRouter>

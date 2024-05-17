@@ -17,7 +17,8 @@ const CandiadteJobs = () => {
 
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
+  console.log(userId);
 
   const [jobs, setJobs] = useState([]);
   const [applyjobs, setApplyJobs] = useState([]);
@@ -61,13 +62,13 @@ const handleResumeSelect = async (resumeUrl) => {
   ///////////////////////////
   const applyJob = async (jobId, resumeUrl) => {
     console.log(jobId);
-    console.log(userEmail);
+    console.log(userId);
 
     const appliedOn = new Date().toLocaleDateString();
 
 
     try {
-        const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userEmail=${userEmail}&appliedOn=${appliedOn}&resumeUrl=${resumeUrl}`);
+        const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeUrl=${resumeUrl}`);
 
         // setApplyJobs(response.data);
         console.log(response.data);
@@ -86,7 +87,7 @@ const handleResumeSelect = async (resumeUrl) => {
 const [resumes, setResumes] = useState([]);
 useEffect(() => {
   // Fetch resumes data from the backend
-  axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`)
+  axios.get(`${BASE_API_URL}/getResume?userId=${userId}`)
       .then(response => {
           setResumes(response.data);
       })
@@ -118,7 +119,7 @@ useEffect(() => {
 const fetchApplications= async()=>
   {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applications?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/applications?userId=${userId}`);
       setApplications(response.data); 
     } catch (error) {
       console.error('Error fetching jobs:', error);
@@ -149,7 +150,7 @@ console.log("No data Found"+error);
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
   return (
@@ -263,7 +264,7 @@ console.log("No data Found"+error);
             {/* <a href='#' className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</a> */}
             <Link to={{
         pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
-        state: { userName: userName,userEmail:userEmail } // Pass user data as state
+        state: { userName: userName,userId:userId } // Pass user data as state
       }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
           </li>
       ))
@@ -287,7 +288,7 @@ console.log("No data Found"+error);
             
               <Link  to={{
           pathname: '/dream-company',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }} className="app">
                   <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
               </Link>

@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./ApplicationDetails.css";
+import HrLeftSide from "./HrLeftSide";
 const ApplicationDetails = () => {
     const BASE_API_URL = "http://localhost:8081/api/jobbox";
     const location = useLocation();
+    const userEmail=location.state?.userEmail;
     const applicationId = location.state?.applicationId;
     const [application, setApplication] = useState();
     const [candidate, setCandidate] = useState();
@@ -50,7 +52,15 @@ const ApplicationDetails = () => {
         }
     }, [application]);
 
+    const user = {  userEmail };
+
     return (
+      <div className='candidate-dashboard-container'>
+        <div className='hr-leftside'>
+          <HrLeftSide user={user} />
+        </div>
+        <div className='hr-rightside'>
+          <div className="candidate-search">
         <div className="application-details-container">
             {job && (
                 <div className="jobdetails">
@@ -78,6 +88,9 @@ const ApplicationDetails = () => {
                     
                 </div>
             )}
+        </div>
+        </div>
+        </div>
         </div>
     );
 };

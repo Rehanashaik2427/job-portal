@@ -143,10 +143,17 @@ const history=useHistory();
                                                                     <td>{job.jobTitle}</td>
                                                                 
                                                                     <td>{job.applicationDeadline}</td>
+                                                                  
                                                                     <td>
-                                                                      <button onClick={() => viewApplications(job.jobId)}>ViewApplications</button>
-
-                                                                    </td>
+                                                                        <Link
+                                                                          to={{
+                                                                            pathname: '/viewApplications',
+                                                                            state: {userName:userName, userEmail: userEmail, jobId:job.jobId }
+                                                                          }}
+                                                                        >
+                                                                          <button>View Application</button>
+                                                                        </Link>
+                                                                        </td>
                                                                   </tr>
                                                                 )
                                                               ))}

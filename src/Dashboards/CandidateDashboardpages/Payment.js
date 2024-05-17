@@ -18,11 +18,11 @@ const Payment = () => {
 
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
   return (

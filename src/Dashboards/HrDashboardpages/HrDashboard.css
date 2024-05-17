@@ -1,224 +1,254 @@
 .centered-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .form-container {
-    width: 400px;
-    padding: 20px;
-    border: 1px solid white;
-    border-radius: 5px;
-    background-color: white;
-   
-  }
-  
-  
-  .form-group {
-    margin-bottom: 10px;
-   
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    
-  }
-  .form-group input,.form-group input[type='text']{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-  }
-  
-  .error-message{
-    color: red;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
- /* HrDashboard.css */
+.form-container {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: white;
+
+}
+
+
+.form-group {
+  margin-bottom: 10px;
+
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+
+}
+
+.form-group input,
+.form-group input[type='text'] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.error-message {
+  color: red;
+}
+
+/* HrDashboard.css */
 
 .hr-dashboard-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .hr-leftside {
-    height: 100vh;
-    width: 300px;
-    background-color: rgb(209, 247, 247);
-  }
-  
-  .hr-rightside {
-    height: 100vh;
-    width: 100vw;
-    background-color: rgb(252, 253, 253);
-    overflow: scroll;
-  }
-  
-  #logo img {
-    height: 100px;
-    width: 200px;
-    border-radius: 60px;
-  }
-  
+  display: flex;
+  flex-direction: row;
+}
+
+.hr-leftside {
+  height: 100vh;
+  width: 300px;
+  background-color: rgb(209, 247, 247);
+}
+
+.hr-rightside {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(252, 253, 253);
+  overflow: scroll;
+  flex-grow: 1;
+}
+
+#logo img {
+  height: 100px;
+  width: 200px;
+  border-radius: 60px;
+}
+
 section {
-    padding: 12px;
+  padding: 12px;
 }
-  
+
 .box-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    grid-template-rows: auto auto; /* Automatic rows */
-    gap: 15px; /* Gap between boxes */
-    margin: 20px;
-  }
-  
-
-  
-
-
-  .row {
-    display: flex;
-    justify-content: space-between; /* Adjust as needed */
-  }
-  
-  .small-box {
-    width: calc(33.33% - 20px); /* Adjust the width as needed */
-    margin-right: 20px; /* Set margin between boxes */
-    display: inline-block;
-    vertical-align: top;
-    background-color: #f0f0f0; /* Set background color */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  
-/* filetr */
-.filter{
-  margin-left: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Two columns */
+  grid-template-rows: auto auto;
+  /* Automatic rows */
+  gap: 15px;
+  /* Gap between boxes */
+  margin: 20px;
 }
 
-  /* #application {
-    margin: 60px;
-    
-    width: 90%;
-    height: 80%;
-  } */
-  #application {
-    width: 80%;
-    border-collapse: collapse;
-    margin-left: 100px;
-    margin-right: 30px;
-    margin-top: 100px;
+
+
+
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  /* Adjust as needed */
+}
+
+.small-box {
+  width: calc(33.33% - 20px);
+  /* Adjust the width as needed */
+  margin-right: 20px;
+  /* Set margin between boxes */
+  display: inline-block;
+  vertical-align: top;
+  background-color: #f0f0f0;
+  /* Set background color */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+/* filetr ////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+/* .candidate-search {
+ /* Adjust margins as needed 
+} */
+
+.application-div{
+  display: flex;
+  flex-direction: column;
+}
+.filter {
+  
+  margin-top: 10px; /* Adjust margins as needed */
+}
+
+#status {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#application {
+  margin-top: 100px;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 #application th, #application td {
-    border: 1px solid #ddd;
-    padding: 8px;
+  padding: 8px;
+  border: 1px solid #ddd;
 }
 
 #application th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
 #application tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 #application tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
-#application th, #application td {
-    text-align: left;
+.download {
+  padding: 5px 10px;
+  background-color: #eaf0ea;
+  color: rgb(5, 5, 5);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-#application th {
-    text-align: center;
+.download:hover {
+  background-color: #1fd428;
+}
+.select {
+  margin-top: 25px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #f1f5f1;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-#application button {
-    padding: 5px 10px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    border-radius: 3px;
+.select:hover {
+  background-color: #0bec30;
 }
 
-#application button:hover {
-    background-color: #45a049;
+.reject {
+  margin-left: 5px;
+  padding: 5px 10px;
+  background-color: #f5efee;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-#application button:not(:last-child) {
-    margin-right: 5px;
+.reject:hover {
+  background-color: #da190b;
 }
 
-#application button.reject {
-  background-color: #f44336; /* Red color */
+
+
+
+
+
+
+
+
+
+
+
+
+
+.hr-profile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
 }
 
-#application button.reject:hover {
-  background-color: #d32f2f; /* Darker red color */
+
+.profile_row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
 }
 
-  
+.boxp {
+  flex-basis: calc(33.33% - 20px);
+  /* Adjust the width of each box */
+  height: 120%;
+  width: 40%;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 5px;
 
 
- 
+}
 
- 
-  
+.boxp h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
 
-  
+.boxp p {
+  font-size: 14px;
 
+  margin-bottom: 15px;
+}
 
-  
-  .hr-profile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-   
-  }
+.boxp a {
+  display: block;
+  text-decoration: none;
+  color: #0366d6;
+  /* Link color */
+}
 
-  
-  .profile_row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-   
-  }
-  
-  .boxp {
-    flex-basis: calc(33.33% - 20px); /* Adjust the width of each box */
-    height: 120%;
-    width: 40%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 5px;
-
-   
-  }
-  
-  .boxp h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .boxp p {
-    font-size: 14px;
- 
-    margin-bottom: 15px;
-  }
-  
-  .boxp a {
-    display: block;
-    text-decoration: none;
-    color: #0366d6; /* Link color */
-  }
-  
 
 
 
@@ -235,10 +265,10 @@ section {
 .job-details label {
   flex-basis: 30%;
   text-align: left;
-  
+
 }
 
-.job-details input[type='text'] {
+/* .job-details input[type='text'] {
   flex-basis: 60%;
   padding: 8px;
   margin-top: 15px;
@@ -247,285 +277,245 @@ section {
   box-sizing: border-box;
 }
 
-#jobType {
-  height: 30px;
-  margin-top: 15px;
-}
 .job-details input[type='date'] ,  .job-details textarea{
   margin-top: 15px;
-}
+} */
 
-.job-button{
+.job-button {
   display: flex;
   justify-content: center;
   align-items: center;
 
 }
 
-.job-button button{
+.job-button button {
   height: 30px;
   width: 100px;
   background-color: skyblue;
   font-size: 15px;
 }
+
 /*tables rights*/
- #jobTable1{
-  
-    width: 90%;
-    border-collapse: collapse;
-    margin-top: 100px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-  #jobTable1 th{
-    background-color: rgb(188, 250, 229);
-  }
-  
-  #jobTable1 th,
-  #jobTable1 td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  
-  #jobTable1 tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  #jobTable1 tr:hover {
-    background-color: #ddd;
-  }
-  
+#jobTable1 {
 
-  .not-yet {
-    background-color: #b5e2e0;
-    padding: 20px;
-    margin-left: 240px;
-    margin-right: 240px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(5, 5, 5, 0.1);
-    animation: bounce 1s ease infinite alternate;
-  }
-  
-  .not-yet h2 {
-    color: #c91a1a;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  @keyframes bounce {
-    0% {
-      transform: translateY(-5px);
-    }
-    100% {
-      transform: translateY(5px);
-    }
-  }
-  
-  
-
-
-
-
-
-
-
-
-  .job-titles-container ,.requirements-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px; /* Adjust the gap between input boxes */
-    
-  }
-  
-  .job-titles-container span , .requirements-container span{
-    width: 15%; /* Adjust the width for 3 items per row */
-    margin: 10px; /* Adjust the bottom margin for spacing */
-  }
-  
-  .job-titles-container input , .requirements-container input {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-    text-align: center;
-    border-radius: 12%;
-    border:2px solid #e5e7eb;
-    box-sizing: border-box;
-  }
-  
-  .note {
-    width: 40%;
-    background-color: beige;
-    height: 20%;
-    border: 2px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto; /* Center horizontally */
-  }
-  
-  .note p {
-    text-align: center;
-  }
-.footer-buttons{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 12px;
-
-}
-.footer-buttons button{
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 100px;
+  margin-left: 20px;
   margin-right: 20px;
 }
-  
-.jobtype ,.eligible-list{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-align: center;
+
+#jobTable1 th {
+  background-color: rgb(188, 250, 229);
 }
 
-.jobtype-form {
-  width: 50%; /* Adjust width as needed */
-}
-
-.jobtype-heading ,.location ,.eligible-heading,.others{
-  text-align: center;
-}
-
-.jobtype-group,.eligible-group {
-  width: 80%;
-  border: 1px solid black;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  margin: 12px;
-}
-
-.jobtype-group label {
-  text-align: center; /* Center text within label */
-  margin-left: 8px; /* Add margin for better spacing */
-}
-
-.jobtype-group input[type="checkbox"] {
-  margin-right: 8px; /* Add margin to the right of the checkbox */
-  vertical-align: middle; /* Align the checkbox vertically with the label */
-}
-.jobtype-group ,.location-group{
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  border: 1px solid black;
+#jobTable1 th,
+#jobTable1 td {
+  border: 1px solid #ddd;
   padding: 8px;
-}
-
-.jobtype-group.selected {
-  background-color: skyblue;
-}
-
-.jobtype-group input[type="checkbox"] {
-  margin-right: 8px;
+  text-align: left;
 }
 
 
-/* 
-location */
-.location {
+#jobTable1 tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#jobTable1 tr:hover {
+  background-color: #ddd;
+}
+
+
+.not-yet {
+  background-color: #b5e2e0;
+  padding: 20px;
+  margin-left: 240px;
+  margin-right: 240px;
+  border-radius: 10px;
   text-align: center;
-  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px rgba(5, 5, 5, 0.1);
+  animation: bounce 1s ease infinite alternate;
 }
 
-.location h2 {
+.not-yet h2 {
+  color: #c91a1a;
   font-size: 24px;
-  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.location p {
-  font-size: 16px;
+@keyframes bounce {
+  0% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(5px);
+  }
 }
 
-.location-container {
+
+
+
+
+
+
+
+
+
+.job-titles-container,
+.requirements-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 10px;
+  /* Adjust the gap between input boxes */
+
 }
 
-.location-container form {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.first-column,
-.second-column,
-.third-column {
-  flex: 1;
-}
-
-.location-group {
+.job-titles-container span,
+.requirements-container span {
+  width: 15%;
+  /* Adjust the width for 3 items per row */
   margin: 10px;
+  /* Adjust the bottom margin for spacing */
 }
 
-.location-group input[type="checkbox"] {
-  margin-right: 5px;
+.job-titles-container input,
+.requirements-container input {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 12%;
+  border: 2px solid #e5e7eb;
+  box-sizing: border-box;
 }
 
-.location-group label {
-  font-size: 16px;
-}
-.center-button {
+
+.add-job-button{
+  text-align: center;
   display: flex;
   justify-content: center;
-  margin-top: 20px; /* Adjust margin as needed */
-}
-
-
-
-.eligible-group {
-  width: 100%;
-  border: 1px solid black;
-  margin: 12px;
-  display: flex;
   align-items: center;
-  padding: 8px;
-}
-.post-button button {
-  background-color: skyblue;
-  height: 40px;
-  width: 120px;
-  font-size: 16px;
-}
-.positions ,.deadline{
-   margin: 15px;
-   padding: 10px
-}
-.positions h3,.deadline h3{
-  text-decoration: underline;
-}
-
-
-.addJob {
-  margin-top: 20px;
-}
-
-.addJob a {
-  display: inline-block;
- margin-left:90%;
-
-  padding: 10px 20px;
-  background-color: #0967f3;
-  color: white;
-  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
-.addJob a:hover {
-  background-color: #0575f5;
+.add-job-button button {
+  background-color: rgb(0, 217, 255);
 }
 
+.add-job-button Link {
+  color: white;
+}
 
+.job-posting-form,.job-details-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+.job-form-group-button button{
+
+  font-size: 18px;
+  background-color: skyblue;
+  text-align: center;
+}
+.job-form-group-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.personal-details-row .form-group,
+.job-details-row .form-group {
+  padding: 15px;
+}
+
+.job-form-group input[type="text"],
+.job-form-group input[type="date"],
+.job-form-group input[type="password"],
+.job-form-group input[type="number"] {
+  /* Increased padding for more comfortable typing */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 20px;
+  /* Larger font size for improved readability */
+  width: 40%;
+  padding: 5px;
+  margin-left: 300px;
+
+ 
+}
+  .job-form-group{
+    margin: 12px;
+    width: 100%;
+  }
+.job-form-group label {
+  display: block;
+  font-weight: bold;
+  color: #333; /* Darker label color for better contrast */
+  margin-left: 300px;
+}
+
+.job-form-group textarea{
+  height: 100px;
+  width: 940px;
+}
+
+.fullWidthTextarea {
+  width: 100%;
+  height: 40%;
+}
+.job-save-edit-buttons{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+.job-save-edit-buttons button{
+  margin-left: 10px;
+}
+.menu-toggle {
+  /* Add styles for the menu toggle button */
+  cursor: pointer;
+  display: none; 
+  /* Initially hide the menu toggle button */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .hr-leftside {
+    
+    width: 100%;
+    text-align: center;
+    display: block; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center
+  }
+  }
+  .menu-toggle {
+    display: block; /* Show the menu toggle button */
+    /* Add styles for the menu toggle button on smaller screens */
+  }
+ 
+
+/* CSS for larger screens */
+.container {
+  width: 100%;
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container */
+}
+
+/* CSS for smaller screens */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px; /* Add padding for smaller screens */
+  }
+  /* Adjust other styles as needed */
+}

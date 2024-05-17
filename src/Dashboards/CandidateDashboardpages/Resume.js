@@ -12,7 +12,7 @@ const Resume = () => {
   const BASE_API_URL="http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
   const [showMessage, setShowMessage] = useState(false);
 
 
@@ -20,7 +20,7 @@ const Resume = () => {
 
     useEffect(() => {
         // Fetch resumes data from the backend
-        axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`)
+        axios.get(`${BASE_API_URL}/getResume?userId=${userId}`)
             .then(response => {
                 setResumes(response.data);
             })
@@ -31,7 +31,7 @@ const Resume = () => {
 
    // Function to handle resume download
    const handleDownload = (fileName) => {
-    axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`, {
+    axios.get(`${BASE_API_URL}/getResume?userId=${userId}`, {
         responseType: 'blob'
     })
     .then(response => {
@@ -60,7 +60,7 @@ const Resume = () => {
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
   return (
@@ -113,7 +113,7 @@ const Resume = () => {
           <div className='adding-resumes'>
           <Link to={{
           pathname: '/resumeAdd',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName,userId:userId }
         }}>ADD NEW RESUME</Link>
            
        

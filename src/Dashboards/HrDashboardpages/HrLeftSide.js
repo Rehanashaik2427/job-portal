@@ -2,13 +2,45 @@
 
 import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
+function HrLeftSide({ user }) {
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const location = useLocation();
+  const [userData, setUserData] = useState();
+  const [userName,setUserName]=useState();
+  const history=useHistory();
+  const userEmail=user.userEmail;
 
-function HrLeftSide  ({ user })  {
- const userEmail=user.userEmail;
- const userName=user.userName;
+console.log(user);
+  useEffect(() => {
+    if (location.state && location.state.userName) {
+      setUserName(location.state.userName);
+    } else {
+      fetchUserData(userEmail);
+    }
+  }, [location.state, userEmail]);
+
+ const fetchUserData = async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+        params: {
+          userEmail: userEmail
+        }
+      });
+      setUserName(response.data.userName);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setUserName('');
+    }
+  };
+
+  
+
+ 
 
 
   return (
@@ -19,8 +51,8 @@ function HrLeftSide  ({ user })  {
       <nav>
         <h2>Welcome {userName}</h2>
       </nav>
-                    <section id="hr-dashboard">
-                    <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
+      <section id="hr-dashboard">
+                        <FontAwesomeIcon icon={faHouse} /> <Link to={{ pathname: '/hr-dashboard', state: { userName: userName, userEmail:userEmail } }}>Dashboard</Link>
                     </section>
                     <section>
                         <FontAwesomeIcon icon={faBriefcase} /> <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail:userEmail }}}>Jobs</Link>
@@ -37,7 +69,9 @@ function HrLeftSide  ({ user })  {
                     <section>
                         <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail:userEmail } }}>Profile</Link>
                     </section>
-                  
+                    <section>
+                        <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail:userEmail } }}>Home</Link>
+                    </section>
 
                     <h3>Help</h3>
                     <h3><Link to="/contact">Contact us</Link></h3>

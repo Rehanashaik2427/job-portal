@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { Button, Col, Container, FormControl, InputGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 
 import { Link } from 'react-router-dom';
 import './Home.css';
@@ -24,13 +24,13 @@ const Home = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/About">About Us</Link>
+            <Link to="/About">AboutUs</Link>
           </li>
           <li>
             <Link to="/admin-register">Admin</Link>
           </li>
           <li>
-            <Link to="/Companies">Companies</Link>
+            <Link to="/jobboxCompanyPage">Companies</Link>
           </li>
           <li>
             <Link to="/Candidates">Candidates</Link>
@@ -48,64 +48,53 @@ const Home = () => {
       </div>
 
 
-      <Container style={{ width: 700 }} className='top-heading'>
-        <Row>
-          <Col xs={12} md={6} className='heading-info'>
-            <div style={{ width: 400}}>
+      <div style={{ display: 'flex', justifyContent: 'center', width: '100vw' }}>
+        <div style={{ width: 500 }} className='top-heading'>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <div style={{ width: '100%' }}>
               <h1>The best way to find your dream job</h1>
               <p>Forget the endless job boards and filters. Get personalized career recommendations and autofill your applications with our extension.</p>
               <Button variant="info" className='home-button'>
                 <Link to="/register" style={{ color: 'inherit', textDecoration: 'none' }}>It's 100% free - signup</Link>
               </Button>
             </div>
-          </Col>
-
-          <Col xs={12} md={6} className="d-flex justify-content-end align-items-end">
-            <div className="home" style={{width:300}}>
-              <div className="head">
-                <Row className="justify-content-start align-items-start">
-                  <h3 className="animate-text" >5000+ JOBS</h3>
-                </Row>
-
-                <Row className="justify-content-end align-items-end">
+            <div style={{ width: '50%', margin: '40px' }} className="d-flex justify-content-end align-items-end">
+              <div className="home">
+                <div className="head">
+                  <h3 className="animate-text">5000+ JOBS</h3>
                   <h3 className="animate-text">2000+ COMPANIES</h3>
-                </Row>
-
-                <Row className="justify-content-end align-items-end">
                   <h3 className="animate-text">100000+ students</h3>
-                </Row>
+                </div>
               </div>
             </div>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
 
-      <Container className="info" >
-        <Row className="row-row1">
-          <Col>
-            <h2 className="text-center" style={{ fontSize: '50px' ,textAlign:'center'}}>There Are 102,256 Postings Here For you!</h2>
-            <p className="text-center">Find Jobs, Employment & Career Opportunities</p>
-          </Col>
-        </Row>
-        <Row className='search'>
-        <Col>
-          <InputGroup>
-            <FormControl type="text" placeholder="Keywords: role-developer, analyst..." />
-            <FormControl type="text" placeholder="Location" />
-            <FormControl type="text" placeholder="Experience" />
-            
-            {/* <InputGroup.Append>
-              <Button variant="primary">Search</Button>
-            </InputGroup.Append> */}
-          </InputGroup>
-        </Col>
-      </Row>
-        <Row className="column-text">
-          <Col>
-            <p className="text-center"><b>Popular Searches:</b> Designer, Web Developer, IOS, Developer, PHP, Senior Developer, Engineer</p>
-          </Col>
-        </Row>
-      </Container>
+      <div className="info">
+        <div className="row-row1">
+          <div className="text-center">
+            <h2 style={{ fontSize: '50px' }}>There Are 102,256 Postings Here For you!</h2>
+          </div>
+          {/* <div className='text-center'>
+            <p>Find Jobs, Employment & Career Opportunities</p>
+          </div> */}
+        </div>
+        <div className='search'>
+          <div>
+            <input type="text" placeholder="Keywords: role-developer, analyst..." />
+            <input type="text" placeholder="Location" />
+            <input type="text" placeholder="Experience" />
+            {/* <button>Search</button> */}
+          </div>
+        </div>
+        <div className="column-text">
+          <div className="text-center">
+            <p><b>Popular Searches:</b> Designer, Web Developer, IOS, Developer, PHP, Senior Developer, Engineer</p>
+          </div>
+        </div>
+      </div>
+
 
       <div className="browse">
         <h1 className="text-center">Browse by category</h1>
@@ -155,14 +144,14 @@ const Home = () => {
         </Row>
       </Container>
 
-      <Container className="home-contact-container">
+      <div className="home-contact-container">
         <Row>
           <Col>
             <div className='contact-info'>
               <div className='home-contact-details'>
                 <div className='home-connect'>
-                  <h1 style={{textAlign:'center'}}>Contact Us</h1>
-                  <p style={{textAlign:'center'}}>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
+                  <h1 style={{ textAlign: 'center' }}>Contact Us</h1>
+                  <p style={{ textAlign: 'center' }}>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
 
                   <div className='home-contact-info' style={{ textAlign: 'center' }}>
                     <h3 className='home-email'>
@@ -182,24 +171,24 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            </Col>
-        </Row>
-
-        <Row className='home-social-media'>
-          <Col className='home-social-media'>
-          <div className='home-social-media text-center' style={{textAlign:'center'}}>
-            <ul className='list-inline d-flex justify-content-center'>
-              <li className='list-inline-item mr-3'><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} /> Instagram</a></li>
-              <li className='list-inline-item mr-3'><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faTwitter} /> Twitter</a></li>
-              <li className='list-inline-item mr-3'><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faFacebook} /> Facebook</a></li>
-              <li className='list-inline-item'><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} /> LinkedIn</a></li>
-            </ul>
-          </div>
-
-
           </Col>
         </Row>
-      </Container>
+
+        <div className='home-social-media'>
+          <div className='home-social-media'>
+            <div className='home-social-media text-center' style={{ textAlign: 'center' }}>
+              <ul className='list-inline d-flex justify-content-center'>
+                <li className='list-inline-item mr-3'><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faInstagram} /> Instagram</a></li>
+                <li className='list-inline-item mr-3'><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faTwitter} /> Twitter</a></li>
+                <li className='list-inline-item mr-3'><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faFacebook} /> Facebook</a></li>
+                <li className='list-inline-item'><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"><FontAwesomeIcon icon={faLinkedin} /> LinkedIn</a></li>
+              </ul>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
 
     </div>
   )

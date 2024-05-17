@@ -1,81 +1,83 @@
-import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import './HrDashboard.css';
-import HrLeftSide from './HrLeftSide';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import HrLeftSide from './HrLeftSide';
 
 const Jobs = () => {
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
-  const history=useHistory();
+  const userEmail = location.state?.userEmail;
+ const userName=location.state?.userName;
+  // const [companyName ,setCompanyName] = useState('');
+  const [jobs, setJobs] = useState([]);
+  const history = useHistory();
   const [showSettings, setShowSettings] = useState(false);
+
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
-const userEmail=location.state?.userEmail;
-const userName = location.state?.userName;
 
-  const [jobs, setJobs] = useState([]);
-  const fetchJobs = async (userEmail) => {
+  useEffect(() => {
+    if (userEmail) {
+      
+      fetchJobs(userEmail);
+      
+    }
+  }, [userEmail]);
+
+  // const fetchUserData = async (email) => {
+  //   try {
+  //     const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+  //       params: { userEmail: email }
+  //     });
+  //     setUserName(response.data.userName);
+  //   } catch (error) {
+  //     console.error('Error fetching user data:', error);
+  //   }
+  // };
+
+  const fetchJobs = async (email) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
-      console.log(response.data);
-      if (response.status === 200) {
-        setJobs(response.data);
-      } else {
-        console.error('Failed to fetch jobs data');
-      }
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
+        params: { userEmail: email }
+      });
+      setJobs(response.data);
     } catch (error) {
-      console.error('Error fetching jobs data:', error);
+      console.error('Error fetching jobs:', error);
     }
   };
-  
 
-useEffect(() => {
-  fetchJobs(userEmail);
-}, [userEmail]);
+  const handleUpdate = async (jobId) => {
+    history.push('/update-job', { jobId });
+  };
 
-const handleUpdate =async(jobId)=>{
-  history.push('/update-job',{jobId})
-}
-const handleDelete =async(jobId)=>{
- try{
-  const response=await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
-  if(response.ok)
-    {
-alert("Job Deleted successFully");
-fetchJobs(userEmail);
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
+      alert("Job Deleted successfully");
+      fetchJobs(userEmail);
+    } catch (error) {
+      console.error('Error deleting job:', error);
     }
- }catch(error){
-console.log(error);
- }
-}
+  };
 
-const user = {
-  userName: userName,
-  
-   userEmail: userEmail,
- };
+  const user = { userName, userEmail };
 
-
- return (
-   <div className='candidate-dashboard-container'>
-        <div className='hr-leftside'>
-       <HrLeftSide user={user} />
-     </div>
-
+  return (
+    <div className='candidate-dashboard-container'>
+      <div className='hr-leftside'>
+        <HrLeftSide user={user} />
+      </div>
       <div className='hr-rightside'>
-      <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
-            <button>
-              <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
-            </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+        <div className="candidate-search">
+          <div>
+            <FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} />
+          </div>
         </div>
         {showSettings && (
+
         <div id="settings-container">
           {/* Your settings options here */}
           <ul>
@@ -138,6 +140,7 @@ const user = {
                           </div>
 
                           </div> </div>
+
     </div>
   );
 };

@@ -1,9 +1,8 @@
 import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
@@ -49,7 +48,7 @@ useEffect(() => {
    return (
      <div className='candidate-dashboard-container'>
           <div className='hr-leftside'>
-         <HrLeftSide user={user} />
+         <HrLeftSide user={user}/>
        </div>
 
       <div className='hr-rightside'>

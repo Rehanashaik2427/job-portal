@@ -14,7 +14,7 @@ const CandidatesCompanies = () => {
   
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  
   const userId=location.state?.userId;
 
   // const handleChange = (e) => {
@@ -70,7 +70,7 @@ console.log("No data Found"+error);
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId:userId,
    };
 
   return (
@@ -128,7 +128,7 @@ console.log("No data Found"+error);
                   <p>Industry : <b>{company.industry}</b></p>
                   <Link  to={{
           pathname: '/companyPage',
-          state: { companyId :company.companyId,userName:userName,userEmail:userEmail }
+          state: { companyId :company.companyId,userName:userName,userId:userId }
         }} ><button className='com'><h3>View</h3></button></Link>
                                        
                            

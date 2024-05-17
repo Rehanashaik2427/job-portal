@@ -27,13 +27,17 @@ const Candidates = () => {
 
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     try {
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
       console.log(response);
-      if(response.data)
-      history.push('/candidate-dashboard', {userEmail});
+      if(response.data){
+        const userId=response.data.userId;
+        history.push('/candidate-dashboard', {userId});
+      }
+      
     else{
       alert("invalid userName or password")
     }
@@ -45,17 +49,6 @@ const Candidates = () => {
 
   };
  
-
-  
-
-     
-      
-       
-     
-  
-  
-  
-
   return (
     <div className="centered-form">
       <div className="form-container">

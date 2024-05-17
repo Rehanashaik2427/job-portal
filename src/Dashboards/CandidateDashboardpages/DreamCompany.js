@@ -10,7 +10,7 @@ const DreamCompany = () => {
   const [showMessage, setShowMessage] = useState(false);
   const location=useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
  
 
   const [formData, setFormData] = useState({
@@ -79,7 +79,7 @@ const DreamCompany = () => {
           <h3>You successfully applied to your Dream Company</h3>
           <h3><Link   to={{
           pathname: '/candidate-dashboard',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}>Go back to dashboard</Link></h3>
         </div>
       )}

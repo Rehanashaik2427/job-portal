@@ -11,7 +11,7 @@ const HrDashboard = () => {
 
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
-
+ 
   // const userName=location.state?.userName;
   const userEmail=location.state?.userEmail;
 
@@ -27,6 +27,7 @@ const HrDashboard = () => {
   const fetchUserData = async (userEmail) => {
     try {
         const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+          
             params: {
               userEmail: userEmail
             }
@@ -87,7 +88,6 @@ console.log (error)
 
   const user = {
    userName: userName,
-   
     userEmail: userEmail,
   };
 

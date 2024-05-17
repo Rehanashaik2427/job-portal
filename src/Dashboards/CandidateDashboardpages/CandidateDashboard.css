@@ -679,7 +679,7 @@ button.com:hover {
   transition: border-color 0.3s ease;
 }
 
-.select select:focus,
+.select-file select:focus,
 .input input:focus,
 .message textarea:focus {
   outline: none;

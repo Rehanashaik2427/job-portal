@@ -13,10 +13,11 @@ const MyApplication = () => {
   const BASE_API_URL="http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
   const applicationStatus=location.state?.applicationStatus;
   const [showSettings, setShowSettings] = useState(false);
   //const [applicationStatus, setApplicationStatus] = useState(null);
+  console.log(userId);
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -26,7 +27,7 @@ const MyApplication = () => {
 const fetchApplications= async()=>
   {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applications?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/applications?userId=${userId}`);
       setApplications(response.data); 
     } catch (error) {
       console.error('Error fetching jobs:', error);
@@ -39,7 +40,7 @@ const fetchApplications= async()=>
   const fetchApplicationsByStatus= async()=>
     {
       try {
-        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userEmail=${userEmail}`);
+        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userId=${userId}`);
         setApplications(response.data); 
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -67,7 +68,7 @@ const fetchApplications= async()=>
       event.preventDefault();
       
       try {
-        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userEmail=${userEmail}`);
+        const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userId=${userId}`);
         setApplications(response.data); 
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -97,7 +98,7 @@ const fetchApplications= async()=>
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+     userId: userId,
    };
 
   return (
