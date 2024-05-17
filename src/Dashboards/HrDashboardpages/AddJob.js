@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
@@ -12,7 +12,8 @@ const AddJob= () => {
 
   const history = useHistory(); 
   const { userName, userEmail } = location.state || {};
-
+ 
+  const { companyName } = location.state || {};
   console.log(userEmail);
   const [formData, setFormData] = useState({
     userEmail: userEmail ,
@@ -47,10 +48,10 @@ const AddJob= () => {
     e.preventDefault();
   
     try {
-      const response = await saveJobData(formData);
+      const response = await saveJobData({ ...formData, companyName });
       if (response.ok) {
-        console.log("Job posted successfully");
-        history.push('/jodAddSuccess');
+        console.log("Job posted successfully",formData);
+        // history.push('/jodAddSuccess',userEmail);
       } else {
         console.error("Error posting job");
       }
@@ -79,30 +80,30 @@ const AddJob= () => {
             <div className='job-details-row'>
               <div className='job-form-group'>
                 <label htmlFor="jobTitle">Job Title:</label>
-                <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleChange}  />
+                <input type="text" id="jobTitle" name="jobTitle" value={formData.jobTitle} onChange={handleChange} required />
               </div>
               <div className='job-form-group'>
                 <label htmlFor="jobType">Job Type:</label>
-                <input type="text" id="jobType" name="jobType" value={formData.jobType} onChange={handleChange}  />
+                <input type="text" id="jobType" name="jobType" value={formData.jobType} onChange={handleChange} required />
               </div>
               <div className='job-form-group'>
                 <label htmlFor="postingdate">Posting Date:</label>
-                <input type="date" id="postingdate" name="postingDate" value={formData.postingDate} onChange={handleChange}  />
+                <input type="date" id="postingdate" name="postingDate" value={formData.postingDate} onChange={handleChange} required  />
               </div>
             </div>
             <div className='job-details-row'>
               <div className='job-form-group'>
                 <label htmlFor="skills">Skills:</label>
-                <input type="text" id="skills" name="skills" value={formData.skills || ''} onChange={handleChange}  />
+                <input type="text" id="skills" name="skills" value={formData.skills || ''} onChange={handleChange} required />
               </div>
 
               <div className='job-form-group'>
                 <label htmlFor="positions">Number of Positions:</label>
-                <input type="number" id="positions" name="numberOfPosition" value={formData.numberOfPosition} onChange={handleChange}  />
+                <input type="number" id="positions" name="numberOfPosition" value={formData.numberOfPosition} onChange={handleChange} required  />
               </div>
               <div className='job-form-group'>
                 <label htmlFor="deadline">Application Deadline:</label>
-                <input type="date" id="deadline" name="applicationDeadline" value={formData.applicationDeadline} onChange={handleChange} />
+                <input type="date" id="deadline" name="applicationDeadline" value={formData.applicationDeadline} onChange={handleChange} required/>
               </div>
               <div className='job-form-group'>
                 <label htmlFor="jobsummary">Job summary: (Add Additional Information)</label>
@@ -116,7 +117,9 @@ const AddJob= () => {
               </div>
 
               <div className='job-form-group-button'>
-                <button type='submit'>post</button>
+                <button type='submit' onClick={handleSubmit}>
+                  <Link to={{ pathname: '/jodAddSuccess', state: { userName: userName, userEmail: userEmail} }}>Post</Link>
+                </button>
               </div>
             </div>
          

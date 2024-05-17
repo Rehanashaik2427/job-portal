@@ -418,7 +418,7 @@ section {
 
 .personal-details-row .form-group,
 .job-details-row .form-group {
-  padding: 15px;
+  padding: 8px;
 }
 
 .job-form-group input[type="text"],
@@ -432,7 +432,7 @@ section {
   font-size: 20px;
   /* Larger font size for improved readability */
   width: 40%;
-  padding: 5px;
+  padding: 3px;
   margin-left: 300px;
 
  
@@ -504,4 +504,24 @@ section {
     padding: 10px; /* Add padding for smaller screens */
   }
   /* Adjust other styles as needed */
+}
+
+.jobAddedSuccess {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.jobAddedSuccess h2,
+.jobAddedSuccess p,
+.jobAddedSuccess a {
+  margin: 10px; /* Add spacing around elements */
+}
+.job-save-edit-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
 }
