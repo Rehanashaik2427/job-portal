@@ -10,6 +10,7 @@ const HrProfile = () => {
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
+    const [jobCount, setJobCount] = useState(0); // State to hold job count
 
     const [showSettings, setShowSettings] = useState(false);
 
@@ -51,7 +52,7 @@ const HrProfile = () => {
                 <div className='hr-profile'>
                     <div className="profile_row">
                         <div className="boxp">
-                            <h1>300+ Jobs</h1>
+                            <h1>{jobCount}  Jobs</h1>
                             <p>"counting of posting jobs"</p>
                             <Link to="/posted-jobs">count of job posting</Link>
                         </div>

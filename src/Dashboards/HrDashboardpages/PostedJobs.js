@@ -7,8 +7,8 @@ import { Link, useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 
-const PostedJobs = () => {
-  const BASE_API_URL = "http://localhost:8080/api/jobbox";
+const PostedJobs = ({ setJobCount }) => {
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
   const location = useLocation();
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;
@@ -20,6 +20,7 @@ const PostedJobs = () => {
       console.log(response.data);
       if (response.status === 200) {
         setJobs(response.data);
+        setJobCount(response.data.length);
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -46,9 +47,9 @@ useEffect(() => {
  
  
    return (
-     <div className='candidate-dashboard-container'>
+     <div className='hr-dashboard-container'>
           <div className='hr-leftside'>
-         <HrLeftSide />
+         <HrLeftSide user={user}/>
        </div>
 
       <div className='hr-rightside'>
@@ -69,6 +70,7 @@ useEffect(() => {
             </ul>
           </div>
         )}
+     
         <div>
           <div className="jobs_list">
             <table id='jobTable1'>
@@ -79,7 +81,7 @@ useEffect(() => {
                   <th>Job Title</th>
                   <th>Job Type</th>
                   <th>Skills</th>
-                  <th>Eligible Candidates</th>
+
                   <th>Vacancy</th>
                   <th>Application Deadline</th>
                 </tr>
@@ -87,12 +89,12 @@ useEffect(() => {
               <tbody>
                 {jobs.map(job => (
                   <tr key={job.id}>
-                    <td>{job.hrName}</td>
+                    <td>{job.userName}</td>
                     <td>{job.companyName}</td>
                     <td>{job.jobTitle}</td>
                     <td>{job.jobType}</td>
-                    <td>{job.requirements}</td>
-                    <td>{job.eligibility}</td>
+                    <td>{job.skills}</td>
+                   
                     <td>{job.numberOfPosition}</td>
                     <td>{job.applicationDeadline}</td>
                   </tr>

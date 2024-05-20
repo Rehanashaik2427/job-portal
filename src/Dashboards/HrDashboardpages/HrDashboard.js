@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
-
 const HrDashboard = () => {
 
   const BASE_API_URL = "http://localhost:8081/api/jobbox";
@@ -18,7 +17,7 @@ const HrDashboard = () => {
   console.log(userEmail);
 
   
-
+  const [jobCount, setJobCount] = useState(0);
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
   
@@ -99,7 +98,7 @@ const HrDashboard = () => {
                 {/* First row - first box */}
                 <div className="box">
                     <h2>Jobs</h2>
-                    <h4 style={{ alignContent: 'center' }}>1000+jobs</h4>
+                    <h4 style={{ alignContent: 'center' }}>{jobCount} jobs </h4>
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
                     <p>Everyday 100+ jobs are posted by us</p>
                 </div>
@@ -125,7 +124,9 @@ const HrDashboard = () => {
                      
                 </div>
             </div>
+            
         </div>
+
       </div>
     
   );
