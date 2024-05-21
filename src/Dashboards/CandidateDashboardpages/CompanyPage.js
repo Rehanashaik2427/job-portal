@@ -6,7 +6,7 @@ import './CandidateDashboard.css';
 
 const CompamyPage= ()=> {
 
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
     const location=useLocation();
     const companyId=location.state?.companyId;
     const userName=location.state?.userName;
@@ -39,7 +39,7 @@ const CompamyPage= ()=> {
         <div className='left-side'>
        <CandidateLeftSide user={user} />
      </div>
-<div className="companyPage">
+    <div className="companyPage">
             {company ? (
                 <div>
                     <h2>{company.companyName}</h2>

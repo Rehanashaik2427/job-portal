@@ -5,7 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.m
 
 
 
-const BASE_API_URL = "http://localhost:8081/api/jobbox";
+const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
 const HrRegistrationForm = () => {
   const location=useLocation();

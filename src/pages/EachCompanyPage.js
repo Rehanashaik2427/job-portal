@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const EachCompanyPage = () => {
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   const companyId = location.state?.companyId;
   const [company, setCompany] = useState();
@@ -60,7 +60,7 @@ const EachCompanyPage = () => {
     fetchCountOfApplicationByCompany();
     fetchCountOfHRByCompany();
     fetchCountOfJobsByCompany();
-  }, []);
+  });
 
   return (
     <div>

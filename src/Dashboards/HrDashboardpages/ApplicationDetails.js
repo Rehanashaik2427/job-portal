@@ -4,7 +4,7 @@ import axios from "axios";
 import "./ApplicationDetails.css";
 import HrLeftSide from "./HrLeftSide";
 const ApplicationDetails = () => {
-    const BASE_API_URL = "http://localhost:8081/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
     const location = useLocation();
     const userEmail=location.state?.userEmail;
     const applicationId = location.state?.applicationId;
@@ -55,7 +55,7 @@ const ApplicationDetails = () => {
     const user = {  userEmail };
 
     return (
-      <div className='candidate-dashboard-container'>
+      <div className='hr-dashboard-container'>
         <div className='hr-leftside'>
           <HrLeftSide user={user} />
         </div>

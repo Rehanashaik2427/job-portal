@@ -11,7 +11,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
   // const userName=location.state.userName;
   const userId=location.state?.userId;
   console.log(userId);

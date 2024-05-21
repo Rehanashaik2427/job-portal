@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import CandidateLeftSide from './CandidateLeftSide';
 import './CandidateDashboard.css';
+import axios from 'axios';
 
 const ResumeAdd = () => {
-    const BASE_API_URL = "http://localhost:8081/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
     const location = useLocation();
     const userName = location.state?.userName;
@@ -35,10 +36,14 @@ const ResumeAdd = () => {
         formData.append('userId', userId);
 
         try {
-            const response = await fetch(BASE_API_URL + '/uploadResume?type=' + fileType, {
-                method: 'POST',
-                body: formData
-            });
+        
+
+            const response = await axios.post(BASE_API_URL + '/uploadResume', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              });
+              console.log('File uploaded successfully:', response.data);
             if (response.ok) {
                 setSuccessMessage('Resume uploaded successfully!');
                 alert(successMessage);

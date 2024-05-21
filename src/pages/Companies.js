@@ -72,7 +72,7 @@ const Companies = () => {
   const saveCompanyData = async (formData) => {
     try {
 
-      const response = await fetch("http://localhost:8081/api/jobbox/saveCompany", {
+      const response = await fetch("http://localhost:8082/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

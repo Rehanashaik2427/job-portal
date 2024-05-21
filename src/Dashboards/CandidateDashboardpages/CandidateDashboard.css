@@ -5,7 +5,7 @@
 .left-side{
     height: 100vh;
     width: 300px;
-    background-color: rgb(154, 184, 204);
+    background-color: rgb(209, 247, 247);
 }
 .rightside{
     height: 100vh;
@@ -919,3 +919,54 @@ button.com:hover {
   background-color: #0056b3; /* darker blue */
 }
 
+/* Modal container */
+.modal-summary {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  overflow: auto; /* Enable scrolling if the content is too tall */
+}
+
+/* Modal content */
+.modal-content-summary {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Max width of the modal */
+  border-radius: 5px;
+  position: relative;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Header */
+.modal-content-summary h2 {
+  margin-top: 0;
+}
+
+/* Job summary */
+.modal-content-summary p {
+  margin-top: 10px;
+}

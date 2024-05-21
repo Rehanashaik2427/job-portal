@@ -8,8 +8,9 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
-const BASE_API_URL="http://localhost:8081/api/jobbox";
 const CandidatesCompanies = () => {
+  
+ const BASE_API_URL="http://localhost:8082/api/jobbox";
   const [companies, setCompanies] = useState([]);
   
   const location = useLocation();
@@ -17,14 +18,7 @@ const CandidatesCompanies = () => {
   
   const userId=location.state?.userId;
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setJobRole(value);
-  // };
 
-  // const [jobs, setJobs] = useState([]);
-  
-  // Function to fetch jobs from the database
   const fetchCompany = async () => {
     try {
       const response = await axios.get(BASE_API_URL+"/displayCompanies"); // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint

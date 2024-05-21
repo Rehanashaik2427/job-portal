@@ -6,7 +6,7 @@ import {faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const JobboxCompanyPage=()=>{
 
-    const BASE_API_URL="http://localhost:8081/api/jobbox";
+    const BASE_API_URL="http://localhost:8082/api/jobbox";
     const [companies, setCompanies] = useState([]);
     
    

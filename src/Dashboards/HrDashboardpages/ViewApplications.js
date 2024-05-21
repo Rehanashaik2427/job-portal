@@ -5,7 +5,7 @@ import './HrDashboard.css';
 import HrLeftSide from "./HrLeftSide";
 
 const ViewApplications = () => {
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const jobId = location.state?.jobId;
@@ -14,9 +14,21 @@ const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
 
-  const handleFilterChange = (e) => {
+  const handleFilterChange = async(e) => {
     setFilterStatus(e.target.value);
+    handleSelect(e.target.value);
+    
   };
+
+  const handleSelect= async(filterStatus)=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}`);
+      console.log(response.data);
+      setApplications(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const fetchApplications = async () => {
     try {
@@ -44,35 +56,35 @@ const ViewApplications = () => {
     }
   };
 
-  const handleDownload = async (resumeUrl, candidateId) => {
+  const handleDownload = async (resumeId, candidateId) => {
     try {
       const res = await axios.get(`${BASE_API_URL}/getUserName`, {
         params: {
           userId: candidateId
         }
       });
-      const response = await axios.get(`${BASE_API_URL}/getApplicantResume?resumeUrl=${resumeUrl}&candidateId=${candidateId}`, {
-        responseType: 'blob'
-      });
-      
-      const url = window.URL.createObjectURL(response.data);
-      const fileName =(res.data.userName)+ candidateId+"resume.pdf";
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', fileName); 
-      document.body.appendChild(link);
-      link.click();
-     
-      link.parentNode.removeChild(link);
-    } catch (error) {
-      console.error('Error downloading resume:', error);
-    }
+    
+        const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
+          responseType: 'blob'
+        });
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const fileName =(res.data.userName)+ candidateId+"resume.pdf";
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error('Error downloading resume:', error);
+      }
   };
+
+ 
 
   const user = { userEmail };
 
   return (
-    <div className='candidate-dashboard-container'>
+    <div className='hr-dashboard-container'>
       <div className='hr-leftside'>
         <HrLeftSide user={user} />
       </div>
@@ -84,7 +96,7 @@ const ViewApplications = () => {
               <option value="all">All</option>
               <option value="Shortlisted">Shortlisted</option>
               <option value="Under Review">Under Review</option>
-              <option value="Rejected">Rejected</option>
+              <option value="Not Shortlisted">Rejected</option>
             </select>
           </div>
           {applications.length > 0 && (
@@ -105,7 +117,7 @@ const ViewApplications = () => {
                   <tr key={application.id}>
                     <td>{application.jobRole}</td>
                     <td>{application.companyName}</td>
-                    <td><button className='download' onClick={() => handleDownload(application.resumeUrl, application.candidateId)}>Resume</button></td>
+                    <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td>
                     <td>{application.appliedOn}</td>
                     <td>{application.applicationStatus}</td>
                     <td>

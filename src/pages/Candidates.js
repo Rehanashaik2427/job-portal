@@ -20,7 +20,7 @@ const Candidates = () => {
   const password=formData.password;
 
 
- const BASE_API_URL = "http://localhost:8081/api/jobbox";
+ const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
   
 

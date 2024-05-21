@@ -16,7 +16,7 @@ const FindCompany = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const BASE_API_URL = "http://localhost:8081/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
     const handleSearch = async (e) => {
         e.preventDefault();

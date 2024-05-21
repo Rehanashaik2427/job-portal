@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HrLeftSide from './HrLeftSide';
 
 const People = () => {
-    const BASE_API_URL = "http://localhost:8081/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
@@ -44,7 +44,7 @@ const People = () => {
      
      
        return (
-         <div className='candidate-dashboard-container'>
+         <div className='hr-dashboard-container'>
               <div className='hr-leftside'>
              <HrLeftSide user={user} />
            </div>
@@ -58,15 +58,19 @@ const People = () => {
                     <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
                 </div>
                 {showSettings && (
-                    <div id="settings-container">
-                        {/* Your settings options here */}
-                        <ul>
-                            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-                            <li>Setting</li>
-                            {/* Add more settings as needed */}
-                        </ul>
-                    </div>
-                )}
+        <div id="modal-container">
+        <div id="settings-modal">
+          
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
+          
+          </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
+        </div>
+      )}
+
                 <div>
                     <table id='jobTable1' >
                         <tr>

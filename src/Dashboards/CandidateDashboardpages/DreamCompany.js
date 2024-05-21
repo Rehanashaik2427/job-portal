@@ -4,7 +4,7 @@ import './CandidateDashboard.css';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 
-   const BASE_API_URL="http://localhost:8081/api/jobbox";
+   const BASE_API_URL="http://localhost:8082/api/jobbox";
 
 const DreamCompany = () => {
   const [showMessage, setShowMessage] = useState(false);

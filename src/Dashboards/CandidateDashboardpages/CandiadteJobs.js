@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 import ResumeSelectionPopup from './ResumeSelectionPopup';
 
-const BASE_API_URL="http://localhost:8081/api/jobbox";
+const BASE_API_URL="http://localhost:8082/api/jobbox";
 const CandiadteJobs = () => {
 
   
@@ -52,23 +52,24 @@ const CandiadteJobs = () => {
     setShowResumePopup(true);
 };
 
-const handleResumeSelect = async (resumeUrl) => {
-    if (selectedJobId && resumeUrl) {
-        await applyJob(selectedJobId, resumeUrl);
+const handleResumeSelect = async (resumeId) => {
+    if (selectedJobId && resumeId) {
+        await applyJob(selectedJobId, resumeId);
         setSelectedJobId(null); // Reset selected job id
         setShowResumePopup(false); // Close the resume selection popup
     }
 };
   ///////////////////////////
-  const applyJob = async (jobId, resumeUrl) => {
+  const applyJob = async (jobId, resumeId) => {
     console.log(jobId);
     console.log(userId);
+  
 
     const appliedOn = new Date().toLocaleDateString();
 
 
     try {
-        const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeUrl=${resumeUrl}`);
+        const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
         // setApplyJobs(response.data);
         console.log(response.data);
@@ -147,6 +148,16 @@ console.log("No data Found"+error);
     console.log("Search submitted:", search);
   };
 
+  const [selectedJobSummary, setSelectedJobSummary] = useState(null);
+
+  const handleViewSummary = (summary) => {
+    setSelectedJobSummary(summary);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedJobSummary(null);
+  };
+
   const user = {
     userName: userName,
     
@@ -199,11 +210,11 @@ console.log("No data Found"+error);
         {showSettings && (
         <div id="modal-container">
         <div id="settings-modal">
-          {/* Your settings options here */}
+         
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting </li>
-            {/* Add more settings as needed */}
+           
           </ul>
           <button onClick={toggleSettings}>Close</button>
         </div>
@@ -221,10 +232,8 @@ console.log("No data Found"+error);
           <th>Job Profile</th>
           <th>Company Name</th>
           <th>Application Deadline</th>
-          <th>Experience</th>
-          <th>Eligibility</th>
-          <th>Requirements</th>
-         
+          <th>Skills</th>
+          <th>Job summary</th>
           <th>Actions</th>
         </tr>
      
@@ -234,24 +243,32 @@ console.log("No data Found"+error);
             <td>{job.jobTitle}</td>
             <td>{job.companyName}</td>
             <td>{job.applicationDeadline}</td>
-            <td>{job.experience}</td>
-            <td>{job.eligibility}</td>
-            <td>{job.requirements}</td>
+            <td>{job.skills}</td>
+            <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
+            
            
             <td>
-            {(
-                 applications.some(application => application.jobId === job.jobId) ||
-                    (applyjobs && applyjobs.jobId === job.jobId)
-                       )  ? (
-                    <h4>Applied</h4>
-                     ) : (
-                    <button onClick={() => handleApplyButtonClick(job.jobId)}><h4>Apply</h4></button>
-                 )}`
-            </td>
+      {applications.some(application => application.jobId === job.jobId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
+        <h4>Applied</h4>
+      ) : (
+        <button onClick={() => handleApplyButtonClick(job.jobId)}>
+         <h4>Apply</h4>
+        </button>
+      )}
+    </td>
           </tr>
         ))}
       
     </table>
+    {selectedJobSummary && (
+        <div className="modal-summary">
+          <div className="modal-content-summary">
+            <span className="close" onClick={handleCloseModal}>&times;</span>
+            <h2>Job Summary</h2>
+            <p>{selectedJobSummary}</p>
+          </div>
+        </div>
+      )}
     </div>
  
 
@@ -261,10 +278,10 @@ console.log("No data Found"+error);
     {
       numbers.map((n,i)=>(
           <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
-            {/* <a href='#' className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</a> */}
+            
             <Link to={{
-        pathname: '/candidate-jobs', // Replace with the actual pathname of the previous page
-        state: { userName: userName,userId:userId } // Pass user data as state
+        pathname: '/candidate-jobs', 
+        state: { userName: userName,userId:userId } 
       }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
           </li>
       ))

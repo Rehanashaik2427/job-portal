@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 const Resume = () => {
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
   const userId=location.state?.userId;
@@ -30,26 +30,21 @@ const Resume = () => {
     }, []);
 
    // Function to handle resume download
-   const handleDownload = (fileName) => {
-    axios.get(`${BASE_API_URL}/getResume?userId=${userId}`, {
+   const handleDownload = async (resumeId, fileName) => {
+    try {
+      const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
         responseType: 'blob'
-    })
-    .then(response => {
-        // Create a temporary URL for the downloaded file
-        const url = window.URL.createObjectURL(response.data);
-        // Create a link element to trigger the download
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName); // Use the provided file name
-        document.body.appendChild(link);
-        link.click();
-        // Clean up after download
-        link.parentNode.removeChild(link);
-    })
-    .catch(error => {
-        console.error('Error downloading resume:', error);
-    });
-};
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+    }
+  };
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -105,7 +100,7 @@ const Resume = () => {
                     <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
-                        <button className='download' onClick={() => handleDownload(resume.fileName)}>Download</button>
+                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
                     </span>
                 ))}
             </div>

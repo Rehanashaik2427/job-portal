@@ -12,7 +12,7 @@ const Profile = () => {
   const location = useLocation();
   const userName=location.state?.userName;
   const userId=location.state?.userId;
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
   const [userData,setUserData]=useState();
 
   const getUser = async (userId) => {
