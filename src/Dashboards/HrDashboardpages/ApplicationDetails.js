@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import "./ApplicationDetails.css";
 import HrLeftSide from "./HrLeftSide";
 const ApplicationDetails = () => {
@@ -67,14 +67,10 @@ const ApplicationDetails = () => {
                     <h2>Job Details</h2>
                     <p><b>Job Title: </b>{job.jobTitle}</p>
                     <p><b>Company Name:</b> {job.companyName}</p>
-                    <p><b>Requirements:</b> {job.requirements}</p>
-                    <p><b>Eligibility:</b> {job.eligibility}</p>
-                    <p><b>Position:</b> {job.numberOfPosition}</p>
-                    <p><b>Experience:</b> {job.experience}</p>
+                    <p><b>Requirements:</b> {job.skills}</p>
+                    <p><b>Position:</b> {job.numberOfPosition}</p>       
                     <p><b>JobType:</b> {job.jobType}</p>
-                    <p><b>Location:</b> {job.location}</p>
-                    <p><b>Salary:</b> {job.salary}</p>
-
+                    <b>Job Description:</b><pre> {job.jobsummary}</pre>
                     {/* Add more job details as needed */}
                 </div>
             )}
