@@ -7,8 +7,11 @@ import { Link, useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 
+
 const PostedJobs = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
+
+
   const location = useLocation();
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;
@@ -20,6 +23,7 @@ const PostedJobs = () => {
       console.log(response.data);
       if (response.status === 200) {
         setJobs(response.data);
+        setJobCount(response.data.length);
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -110,6 +114,17 @@ console.log("No data Found"+error);
         </div>
       )}
 
+
+          <div id="settings-container">
+            {/* Your settings options here */}
+            <ul>
+              <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+              <li>Setting</li>
+              {/* Add more settings as needed */}
+            </ul>
+          </div>
+        
+
         <div>
           <div className="jobs_list">
             <table id='jobTable1'>
@@ -128,7 +143,7 @@ console.log("No data Found"+error);
               <tbody>
                 {jobs.map(job => (
                   <tr key={job.id}>
-                    <td>{job.hrName}</td>
+                    <td>{job.userName}</td>
                     <td>{job.companyName}</td>
                     <td><a onClick={() => handleViewSummary(job.jobsummary)}>{job.jobTitle}</a></td>
                     <td>{job.jobType}</td>

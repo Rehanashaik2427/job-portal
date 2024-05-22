@@ -1,13 +1,22 @@
 
+<<<<<<< HEAD
 import { faSignOutAlt, faUser,faSearch } from '@fortawesome/free-solid-svg-icons';
+=======
+import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+>>>>>>> 6451d80737f1e7d4b8a888dfbe37350d8112fc51
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import HrLeftSide from './HrLeftSide';
 
+<<<<<<< HEAD
 const Jobs = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
+=======
+const Jobs = ({ setJobCount }) => {
+  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+>>>>>>> 6451d80737f1e7d4b8a888dfbe37350d8112fc51
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const userName=location.state?.userName;
@@ -46,6 +55,7 @@ const Jobs = () => {
         params: { userEmail: email }
       });
       setJobs(response.data);
+      setJobCount(response.data.length);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }

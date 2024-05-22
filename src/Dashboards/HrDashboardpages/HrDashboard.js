@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
-
 const HrDashboard = () => {
 
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -18,7 +17,7 @@ const HrDashboard = () => {
   console.log(userEmail);
 
   
-
+  const [jobCount, setJobCount] = useState(0);
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
   
@@ -128,7 +127,11 @@ console.log (error)
                 <div className="box">
                 <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>
                     <h2>Jobs</h2>
+
                     <h4 style={{ alignContent: 'center' }}>{countOfJobs} jobs</h4>
+
+                    <h4 style={{ alignContent: 'center' }}>{jobCount} jobs </h4>
+
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
                     <p> are posted by you</p>
                    </Link>
@@ -155,7 +158,9 @@ console.log (error)
                      
                 </div>
             </div>
+            
         </div>
+
       </div>
     
   );

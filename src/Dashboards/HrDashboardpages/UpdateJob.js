@@ -16,6 +16,7 @@ const UpdateJob = () => {
 
   console.log(userEmail);
   
+  
   useEffect(() => {
     if (jobId) {
       fetchJobDetails(jobId);
