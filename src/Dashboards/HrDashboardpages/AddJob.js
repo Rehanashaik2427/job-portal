@@ -6,7 +6,7 @@ import HrLeftSide from './HrLeftSide';
 const AddJob= () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
-  //console.log('Location state:', location.state);
+ 
 
   const history = useHistory(); 
   const { userName, userEmail } = location.state || {};
@@ -50,7 +50,7 @@ const AddJob= () => {
       const response = await saveJobData(formData);
       if (response.ok) {
         console.log("Job posted successfully",formData);
-        // history.push('/jodAddSuccess',userEmail);
+       
       } else {
         console.error("Error posting job");
       }
@@ -67,10 +67,11 @@ const AddJob= () => {
   return (
     <div className='hr-dashboard-container'>
       <div className='hr-leftside'>
-          <HrLeftSide user={{ userName, userEmail }} />
+          <HrLeftSide user={{ userName, userEmail }} /> 
       </div>
 
       <div className='hr-rightside'>
+       <div className='hr-rightside-add-job'> 
         
         <form className="job-posting-form" onSubmit={handleSubmit}>
         
@@ -137,8 +138,9 @@ const AddJob= () => {
   
         </form>
       </div>
+      </div>
 
-    </div>
+       </div>
   )
 }
 

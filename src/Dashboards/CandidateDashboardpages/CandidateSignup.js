@@ -16,7 +16,18 @@ const CandidateRegistrationForm = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
+  const validatePassword = () => {
+    const { password, confirmPassword } = formData;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
+    const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
 
+    if (!isValidPassword) {
+      setPasswordCriteriaError(true);
+      return false;
+    }
+
+    return true;
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -29,7 +40,7 @@ const CandidateRegistrationForm = () => {
     }
     const BASE_API_URL="http://localhost:8082/api/jobbox";
     try {
-      const response = await fetch('http://localhost:8082/api/jobbox', {
+      const response = await fetch('http://localhost:8082/api/jobbox/saveUser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -48,18 +59,7 @@ const CandidateRegistrationForm = () => {
 
   };
 
-  const validatePassword = () => {
-    const { password, confirmPassword } = formData;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
-    const isValidPassword = passwordRegex.test(password) && password === confirmPassword;
 
-    if (!isValidPassword) {
-      setPasswordCriteriaError(true);
-      return false;
-    }
-
-    return true;
-  };
 
   return (
     <div className="centered-form">

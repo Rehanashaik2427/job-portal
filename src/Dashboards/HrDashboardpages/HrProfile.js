@@ -25,7 +25,7 @@ const HrProfile = () => {
     const [countOfJobs,setCountOfJobs]=useState();
     const fetchCountOfJobs= async()=>{
        try{
-         const response=await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompany?userEmail=${userEmail}`)
+         const response=await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompanyHR?userEmail=${userEmail}`)
          setCountOfJobs(response.data);
        }catch(error){
    console.log (error)
@@ -106,9 +106,6 @@ const HrProfile = () => {
                         <div className="boxp">
 
                             <h1> {countOfJobs} Jobs</h1>
-
-                            <h1>{jobCount}  Jobs</h1>
-
                             <p>"counting of posting jobs"</p>
                             <p>count of job posting</p>
                         </div>

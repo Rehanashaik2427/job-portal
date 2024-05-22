@@ -265,7 +265,7 @@ console.log("No data Found"+error);
           <div className="modal-content-summary">
             <span className="close" onClick={handleCloseModal}>&times;</span>
             <h2>Job Summary</h2>
-            <p>{selectedJobSummary}</p>
+            <pre>{selectedJobSummary}</pre>
           </div>
         </div>
       )}

@@ -1,22 +1,13 @@
 
-<<<<<<< HEAD
 import { faSignOutAlt, faUser,faSearch } from '@fortawesome/free-solid-svg-icons';
-=======
-import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
->>>>>>> 6451d80737f1e7d4b8a888dfbe37350d8112fc51
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import HrLeftSide from './HrLeftSide';
 
-<<<<<<< HEAD
 const Jobs = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
-=======
-const Jobs = ({ setJobCount }) => {
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
->>>>>>> 6451d80737f1e7d4b8a888dfbe37350d8112fc51
   const location = useLocation();
   const userEmail = location.state?.userEmail;
   const userName=location.state?.userName;
@@ -55,7 +46,6 @@ const Jobs = ({ setJobCount }) => {
         params: { userEmail: email }
       });
       setJobs(response.data);
-      setJobCount(response.data.length);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
@@ -81,6 +71,20 @@ const Jobs = ({ setJobCount }) => {
       console.error('Error deleting job:', error);
     }
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 3;
+  const indexOfLastJob= currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const nPage=Math.ceil(jobs.length/jobsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
+
+    
+    function changeCurrentPage(id)
+    {
+    setCurrentPage(id);
+    }
 
   const [search, setSearch] = useState('');
 
@@ -125,11 +129,11 @@ console.log("No data Found"+error);
         {showSettings && (
         <div id="modal-container">
         <div id="settings-modal">
-          {/* Your settings options here */}
+         
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting </li>
-            {/* Add more settings as needed */}
+            
           </ul>
           <button onClick={toggleSettings}>Close</button>
         </div>
@@ -139,7 +143,10 @@ console.log("No data Found"+error);
       <h2>Job posted by {userName}</h2>
 
       <div className='job-list'>
+     
       {jobs.length > 0 && (
+   <div>
+     <div>
         <table id='jobTable1'>
           <tr>
             <th>Job Title</th>
@@ -152,7 +159,7 @@ console.log("No data Found"+error);
             <th>Application DeadLine</th>
             <th>Action</th>
           </tr>
-          {jobs.map(job => (
+          {currentJobs.map(job => (
             job.jobId !== 0 && (
               <tr key={job.id}>
                 <td>{job.jobTitle}</td>
@@ -171,7 +178,29 @@ console.log("No data Found"+error);
             )
           ))}
         </table>
+        </div>
+        <nav>
+  <ul className='pagination'>
+   
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            
+            <Link to={{
+        pathname: '/post-jobs', 
+        state: { userName: userName,userEmail:userEmail } 
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
+
+
+
+  </ul>
+</nav>
+              </div>
 )}
+
     {jobs.length === 0 && (
        <section className='not-yet'>
         <h2 >You have not posted any jobs yet. Post Now</h2>

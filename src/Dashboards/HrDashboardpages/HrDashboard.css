@@ -43,7 +43,7 @@ label {
  .hr-dashboard-container {
   display: flex;
   flex-direction: row;
-  overflow-x: hidden;
+ 
 }
 
 
@@ -57,8 +57,8 @@ label {
   height: 100vh;
   width: 100vw;
   background-color: rgb(252, 253, 253);
-  /* overflow: scroll; */
-  flex-grow: 1;
+  
+  /* flex-grow: 1; */
 }
 
 #logo img {
@@ -74,11 +74,11 @@ section {
 .box-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* Two columns */
+ 
   grid-template-rows: auto auto;
-  /* Automatic rows */
+
   gap: 15px;
-  /* Gap between boxes */
+  
   margin: 20px;
 }
 
@@ -512,11 +512,11 @@ section {
  
 
 /* CSS for larger screens */
-.container {
+/* .container {
   width: 100%;
-  max-width: 1200px; /* Adjust as needed */
-  margin: 0 auto; /* Center the container */
-}
+  max-width: 1200px; /* Adjust as needed 
+  margin: 0 auto; /* Center the container 
+} */
 
 /* CSS for smaller screens
 @media (max-width: 768px) {
@@ -545,3 +545,16 @@ section {
   align-items: center;
 
 }
+
+
+/* Addjob
+.hr-rightside-add-job {
+  width: 100%;
+  /* max-width: 600px; Adjust as needed 
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  overflow-x: auto; /* Add scroll option 
+} */

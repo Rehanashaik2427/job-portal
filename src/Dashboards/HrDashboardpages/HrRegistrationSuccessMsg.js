@@ -10,7 +10,7 @@ const HrRegistrationSuccessMsg=()=>{
       <div className="sucess-msg-container" style={{textAlign:'center'}}>
       <h2>Registration Successful</h2>
       <p>Welcome!</p>
-      <Link to='/hr-signin'>click here to see your details</Link>
+      <Link to='/hr-signin'>click here to Login</Link>
     </div>
     )
   } 

@@ -5,6 +5,7 @@ import './CandidateDashboard.css';
 import axios from 'axios';
 import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const MyApplication = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -59,6 +60,20 @@ const MyApplication = () => {
       console.error('Error fetching resume names:', error);
     }
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const applicationsPerPage = 5;
+  const indexOfLastApplication= currentPage * applicationsPerPage;
+  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
+  const currentApplications = applications.slice(indexOfFirstApplication, indexOfLastApplication);
+  const nPage=Math.ceil(applications.length/applicationsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
+
+  function changeCurrentPage(id)
+  {
+  setCurrentPage(id);
+  }
+  
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -121,6 +136,7 @@ const MyApplication = () => {
         <div>
           {applications.length > 0 ? (
             <div>
+               <div>
               <h1 style={{ textAlign: 'center' }}>MY APPLICATIONS</h1>
               <div className='applications-table'>
                 <table className='applications-table'>
@@ -134,7 +150,7 @@ const MyApplication = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {applications.map(application => (
+                    {currentApplications.map(application => (
                       <tr key={application.id}>
                         <td>{application.companyName}</td>
                         <td>{application.jobRole}</td>
@@ -145,6 +161,26 @@ const MyApplication = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+              <nav>
+  <ul className='pagination'>
+   
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            
+            <Link to={{
+        pathname: '/candidate-jobs', 
+        state: { userName: userName,userId:userId } 
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
+
+
+
+  </ul>
+</nav>
               </div>
             </div>
           ) : (

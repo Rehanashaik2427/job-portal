@@ -8,11 +8,26 @@ const ViewApplications = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
+  const userName=location.state?.userName;
   const jobId = location.state?.jobId;
   console.log(jobId);
-
   const [applications, setApplications] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const applicationsPerPage = 5;
+  const indexOfLastApplication= currentPage * applicationsPerPage;
+  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
+  const currentApplications = applications.slice(indexOfFirstApplication, indexOfLastApplication);
+  const nPage=Math.ceil(applications.length/applicationsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
+
+  function changeCurrentPage(id)
+  {
+  setCurrentPage(id);
+  }
+
+
 
   const handleFilterChange = async(e) => {
     setFilterStatus(e.target.value);
@@ -100,6 +115,8 @@ const ViewApplications = () => {
             </select>
           </div>
           {applications.length > 0 && (
+            <div>
+                <div>
             <table id='application'>
               <thead>
                 <tr style={{textAlign:'center'}}>
@@ -113,7 +130,7 @@ const ViewApplications = () => {
                 </tr>
               </thead>
               <tbody>
-                {applications.map(application => (
+                {currentApplications.map(application => (
                   <tr key={application.id}>
                     <td>{application.jobRole}</td>
                     <td>{application.companyName}</td>
@@ -138,6 +155,27 @@ const ViewApplications = () => {
                 ))}
               </tbody>
             </table>
+            </div>
+            <nav>
+  <ul className='pagination'>
+   
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            
+            <Link to={{
+        pathname: '/candidate-jobs', 
+        state: { userName: userName,userEmail:userEmail } 
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
+
+
+
+  </ul>
+</nav>
+            </div>
           )}
           {applications.length === 0 && (
             <section class='not-yet'>

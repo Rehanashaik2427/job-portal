@@ -23,7 +23,7 @@ const PostedJobs = () => {
       console.log(response.data);
       if (response.status === 200) {
         setJobs(response.data);
-        setJobCount(response.data.length);
+       
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -70,6 +70,20 @@ console.log("No data Found"+error);
     setSelectedJobSummary(null);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 3;
+  const indexOfLastJob= currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const nPage=Math.ceil(jobs.length/jobsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
+
+    
+    function changeCurrentPage(id)
+    {
+    setCurrentPage(id);
+    }
+
 
   const user = {
     userName: userName,
@@ -115,14 +129,7 @@ console.log("No data Found"+error);
       )}
 
 
-          <div id="settings-container">
-            {/* Your settings options here */}
-            <ul>
-              <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-              <li>Setting</li>
-              {/* Add more settings as needed */}
-            </ul>
-          </div>
+          
         
 
         <div>
@@ -141,9 +148,9 @@ console.log("No data Found"+error);
                 </tr>
               </thead>
               <tbody>
-                {jobs.map(job => (
+                {currentJobs.map(job => (
                   <tr key={job.id}>
-                    <td>{job.userName}</td>
+                    <td>{job.hrName}</td>
                     <td>{job.companyName}</td>
                     <td><a onClick={() => handleViewSummary(job.jobsummary)}>{job.jobTitle}</a></td>
                     <td>{job.jobType}</td>
@@ -165,6 +172,25 @@ console.log("No data Found"+error);
         </div>
       )}
           </div>
+          <nav>
+  <ul className='pagination'>
+   
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            
+            <Link to={{
+        pathname: '/posted-jobs', 
+        state: { userName: userName,userEmail:userEmail } 
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
+
+
+
+  </ul>
+</nav>
         </div>
 
         

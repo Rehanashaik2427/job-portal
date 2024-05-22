@@ -17,7 +17,7 @@ const HrDashboard = () => {
   console.log(userEmail);
 
   
-  const [jobCount, setJobCount] = useState(0);
+ 
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
   
@@ -74,7 +74,7 @@ console.log (error)
   const [countOfApplications,setCountOfApplications]=useState();
   const fetchCountOfApplication= async()=>{
     try{
-      const response=await axios.get(`${BASE_API_URL}/CountOfApplicationBYHREachCompany?userEmail=${userEmail}`)
+      const response=await axios.get(`${BASE_API_URL}/CountOfApplicationByEachCompany?userEmail=${userEmail}`)
       setCountOfApplications(response.data);
     }catch(error){
 console.log (error)
@@ -130,7 +130,7 @@ console.log (error)
 
                     <h4 style={{ alignContent: 'center' }}>{countOfJobs} jobs</h4>
 
-                    <h4 style={{ alignContent: 'center' }}>{jobCount} jobs </h4>
+                   
 
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
                     <p> are posted by you</p>

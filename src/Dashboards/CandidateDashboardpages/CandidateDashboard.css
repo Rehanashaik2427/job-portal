@@ -926,7 +926,7 @@ button.com:hover {
   z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%;
+  width: 100vw;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
   overflow: auto; /* Enable scrolling if the content is too tall */
@@ -938,8 +938,8 @@ button.com:hover {
   margin: 10% auto; /* Center modal vertically and horizontally */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 600px; /* Max width of the modal */
+  width: 95%;
+  max-width: fit-content; /* Max width of the modal */
   border-radius: 5px;
   position: relative;
 }
@@ -967,6 +967,7 @@ button.com:hover {
 }
 
 /* Job summary */
-.modal-content-summary p {
-  margin-top: 10px;
+.modal-content-summary pre {
+  margin: 10px;
+
 }
