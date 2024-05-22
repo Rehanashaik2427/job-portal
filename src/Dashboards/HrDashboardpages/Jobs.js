@@ -115,7 +115,7 @@ const Jobs = ({ setJobCount }) => {
                   <td>{job.skills}</td>
                   <td>{job.numberOfPosition}</td>
                   <td>{job.applicationDeadline}</td>
-                  <td>{job.jobsummary}</td>
+                  <td><button>Job Description</button></td>
                   <td>
                     <button onClick={() => handleUpdate(job.jobId)}>Update
                       {/* <Link to={{pathname:'/update-job',state:{userName:userName,userEmail: userEmail}}}>Update</Link> */}
