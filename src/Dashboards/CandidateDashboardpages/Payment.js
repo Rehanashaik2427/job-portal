@@ -18,11 +18,11 @@ const Payment = () => {
 
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
   return (
@@ -45,13 +45,16 @@ const Payment = () => {
                             
                             </div>
                                 {showSettings && (
-                                <div id="settings-container">
+                               <div id="modal-container">
+                               <div id="settings-modal">
                                   {/* Your settings options here */}
                                   <ul>
                                     <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-                                    <li>Setting 2</li>
+                                    <li>Setting </li>
                                     {/* Add more settings as needed */}
                                   </ul>
+                                  <button onClick={toggleSettings}>Close</button>
+                                </div>
                                 </div>
                               )}
 

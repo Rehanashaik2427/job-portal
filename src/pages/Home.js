@@ -24,13 +24,13 @@ const Home = () => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/About">AboutaoolUs</Link>
+            <Link to="/About">AboutUs</Link>
           </li>
           <li>
             <Link to="/admin-register">Admin</Link>
           </li>
           <li>
-            <Link to="/Companies">Companies</Link>
+            <Link to="/jobboxCompanyPage">Companies</Link>
           </li>
           <li>
             <Link to="/Candidates">Candidates</Link>

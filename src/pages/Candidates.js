@@ -20,65 +20,35 @@ const Candidates = () => {
   const password=formData.password;
 
 
- const BASE_API_URL = "http://localhost:8081/api/jobbox";
+ const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
   
 
 
 
 
-//   const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-//     try {
-//       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
-//       console.log(response.data);
-//       if(response.data)
-//       history.push('/candidate-dashboard', {userEmail});
-//     else{
-//       alert("invalid userName or password")
-//     }
-//   }
-// }
-  const getUser = async () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
-      console.log(response.data.userName);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    
-    try {
-      const user = await getUser();
-      if (user) {
-        const userName = user.userName;
-        const userEmail = formData.userEmail;
-        console.log(userName);
-        console.log(userEmail);
-  
-        history.push('/candidate-dashboard', { userEmail });
-      } else {
-        console.error('User data not found or userName is missing');
+      console.log(response);
+      if(response.data){
+        const userId=response.data.userId;
+        history.push('/candidate-dashboard', {userId});
       }
-
-    } catch (error) {
-      console.error('Error fetching user:', error);
-     
-    }
-  };
-     
       
-       
-     
-  
-  
-  
+    else{
+      alert("invalid userName or password")
+    }
+  }
+    catch(error)
+    {
+      console.log(error);
+    }
 
+  };
+ 
   return (
     <div className="centered-form">
       <div className="form-container">

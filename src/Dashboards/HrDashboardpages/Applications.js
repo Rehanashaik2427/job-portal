@@ -14,7 +14,7 @@ import HrLeftSide from './HrLeftSide';
 
 
 const Applications = () => {
-    const BASE_API_URL = "http://localhost:8080/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
    
     
     
@@ -101,7 +101,7 @@ const history=useHistory();
    
    
      return (
-       <div className='candidate-dashboard-container'>
+       <div className='hr-dashboard-container'>
             <div className='hr-leftside'>
            <HrLeftSide user={user} />
          </div>
@@ -117,17 +117,20 @@ const history=useHistory();
                         
                     </div>
          
-    
-                                    {showSettings && (
-                                    <div id="settings-container">
-                                      {/* Your settings options here */}
-                                      <ul>
-                                        <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-                                        <li>Setting 2</li>
-                                        {/* Add more settings as needed */}
-                                      </ul>
-                                    </div>
-                                  )}
+                    {showSettings && (
+        <div id="modal-container">
+        <div id="settings-modal">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
+            {/* Add more settings as needed */}
+          </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
+        </div>
+      )}
+
                                       <div className='job-list'>
                                         {jobs.length > 0 && (
                                                             <table id='jobTable1'>
@@ -143,10 +146,17 @@ const history=useHistory();
                                                                     <td>{job.jobTitle}</td>
                                                                 
                                                                     <td>{job.applicationDeadline}</td>
+                                                                  
                                                                     <td>
-                                                                      <button onClick={() => viewApplications(job.jobId)}>ViewApplications</button>
-
-                                                                    </td>
+                                                                        <Link
+                                                                          to={{
+                                                                            pathname: '/viewApplications',
+                                                                            state: {userName:userName, userEmail: userEmail, jobId:job.jobId }
+                                                                          }}
+                                                                        >
+                                                                          <button>View Application</button>
+                                                                        </Link>
+                                                                        </td>
                                                                   </tr>
                                                                 )
                                                               ))}

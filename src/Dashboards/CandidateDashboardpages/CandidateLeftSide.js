@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
 
 function CandidateLeftSide ({user}) {
-    const userName=user.userName;
-    const userEmail=user.userEmail;
+  const { userName, userId } = user;
+    console.log(userId);
+    console.log(userName);
+    
 
     return(
        <div className='left-side'>
@@ -19,43 +21,43 @@ function CandidateLeftSide ({user}) {
         <section id="dashboard">
           <FontAwesomeIcon icon={faHouse} /> <Link   to={{
           pathname: '/candidate-dashboard',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}> Dashboard</Link>
         </section>
         <section id="jobs">
           <FontAwesomeIcon icon={faLayerGroup} /> <Link  to={{
           pathname: '/candidate-jobs',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }} >Jobs</Link>
         </section>
         <section id="companies">
           <FontAwesomeIcon icon={faBuilding} /> <Link  to={{
           pathname: '/candidate-companies',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}> Companies</Link>
         </section>
         <section id="my-application">
           <FontAwesomeIcon icon={faFileLines} /> <Link to={{
           pathname: '/my-application',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName,userId:userId }
         }}>My Application</Link>
         </section>
         <section id="my-resume">
           <FontAwesomeIcon icon={faFile} /> <Link to={{
           pathname: '/resume',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}> My Resume</Link>
         </section>
         <section id="my-profile">
           <FontAwesomeIcon icon={faUser} /> <Link to={{
           pathname: '/profile',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}> My Profile</Link>
         </section>
         <section id="payment">
           <FontAwesomeIcon icon={faMoneyCheckDollar} /> <Link  to={{
           pathname: '/payment',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}> Payments/Credits</Link>
         </section>
         {/* <section id="Home">

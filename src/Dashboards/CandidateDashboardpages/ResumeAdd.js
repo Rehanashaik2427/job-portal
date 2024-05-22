@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import CandidateLeftSide from './CandidateLeftSide';
 import './CandidateDashboard.css';
+import axios from 'axios';
 
 const ResumeAdd = () => {
-    const BASE_API_URL = "http://localhost:8081/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
     const location = useLocation();
     const userName = location.state?.userName;
-    const userEmail = location.state?.userEmail;
+    const userId = location.state?.userId;
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [fileType, setFileType] = useState('file');
@@ -32,13 +33,17 @@ const ResumeAdd = () => {
         formData.append('file', file);
         formData.append('message', message);
         formData.append('fileType', fileType);
-        formData.append('userEmail', userEmail);
+        formData.append('userId', userId);
 
         try {
-            const response = await fetch(BASE_API_URL + '/uploadResume?type=' + fileType, {
-                method: 'POST',
-                body: formData
-            });
+        
+
+            const response = await axios.post(BASE_API_URL + '/uploadResume', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              });
+              console.log('File uploaded successfully:', response.data);
             if (response.ok) {
                 setSuccessMessage('Resume uploaded successfully!');
                 alert(successMessage);
@@ -52,7 +57,7 @@ const ResumeAdd = () => {
 
     const user = {
         userName: userName,
-        userEmail: userEmail,
+        userId: userId,
     };
     
     return (
@@ -71,7 +76,7 @@ const ResumeAdd = () => {
                             <option value="brief">Brief</option> {/* Corrected: Use 'brief' */}
                         </select>
                     </div>
-                    <div className='select'>
+                    <div className='select-file'>
                         <label>Select {fileType === 'file' ? 'File' : fileType === 'image' ? 'Image' : 'Brief'}:</label>
                         <input type={fileType === 'file' ? 'file' : fileType === 'image' ? 'file' : 'file'} accept={fileType === 'file' ? '.pdf, .doc, .docx' : fileType === 'image' ? 'image/*' : '.txt'} onChange={handleFileChange} />
                     </div>

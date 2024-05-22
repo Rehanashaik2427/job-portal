@@ -4,13 +4,13 @@ import './CandidateDashboard.css';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 
-   const BASE_API_URL="http://localhost:8081/api/jobbox";
+   const BASE_API_URL="http://localhost:8082/api/jobbox";
 
 const DreamCompany = () => {
   const [showMessage, setShowMessage] = useState(false);
   const location=useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
  
 
   const [formData, setFormData] = useState({
@@ -79,7 +79,7 @@ const DreamCompany = () => {
           <h3>You successfully applied to your Dream Company</h3>
           <h3><Link   to={{
           pathname: '/candidate-dashboard',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName, userId:userId }
         }}>Go back to dashboard</Link></h3>
         </div>
       )}

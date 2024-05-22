@@ -9,10 +9,10 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 const Resume = () => {
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  const userId=location.state?.userId;
   const [showMessage, setShowMessage] = useState(false);
 
 
@@ -20,7 +20,7 @@ const Resume = () => {
 
     useEffect(() => {
         // Fetch resumes data from the backend
-        axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}`)
+        axios.get(`${BASE_API_URL}/getResume?userId=${userId}`)
             .then(response => {
                 setResumes(response.data);
             })
@@ -29,28 +29,23 @@ const Resume = () => {
             });
     }, []);
 
-    // Function to handle resume download
-    const handleDownload = (fileName) => {
-        axios.get(`${BASE_API_URL}/getResume?userEmail=${userEmail}&fileName=${fileName}`, {
-            responseType: 'blob'
-        })
-        .then(response => {
-            // Create a temporary URL for the downloaded file
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            // Create a link element to trigger the download
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', fileName.substring(fileName.lastIndexOf('/') + 1)); // Extract filename from path
-            document.body.appendChild(link);
-            link.click();
-            // Clean up after download
-            link.parentNode.removeChild(link);
-        })
-        .catch(error => {
-            console.error('Error downloading resume:', error);
-        });
-    };
-  
+   // Function to handle resume download
+   const handleDownload = async (resumeId, fileName) => {
+    try {
+      const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
+        responseType: 'blob'
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+    }
+  };
+
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {
@@ -60,7 +55,7 @@ const Resume = () => {
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId: userId,
    };
 
   return (
@@ -83,13 +78,16 @@ const Resume = () => {
     
         </div>
         {showSettings && (
-        <div id="settings-container">
+        <div id="modal-container">
+        <div id="settings-modal">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting 2</li>
+            <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
         </div>
       )}
 
@@ -102,7 +100,7 @@ const Resume = () => {
                     <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
-                        <button className='download' onClick={() => handleDownload(resume.fileName)}>Download</button>
+                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
                     </span>
                 ))}
             </div>
@@ -110,7 +108,7 @@ const Resume = () => {
           <div className='adding-resumes'>
           <Link to={{
           pathname: '/resumeAdd',
-          state: { userName: userName, userEmail:userEmail }
+          state: { userName: userName,userId:userId }
         }}>ADD NEW RESUME</Link>
            
        

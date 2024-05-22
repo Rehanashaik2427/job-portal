@@ -14,7 +14,7 @@ const Register = () => {
       history.push("/admin-register");
     }
     if (type === "hr") {
-      history.push("/companies");
+      history.push("/findCompany");
     }
     if (type === "candidate") {
       history.push("/candidate-signup");

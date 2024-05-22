@@ -5,7 +5,7 @@
 .left-side{
     height: 100vh;
     width: 300px;
-    background-color: rgb(154, 184, 204);
+    background-color: rgb(209, 247, 247);
 }
 .rightside{
     height: 100vh;
@@ -679,7 +679,7 @@ button.com:hover {
   transition: border-color 0.3s ease;
 }
 
-.select select:focus,
+.select-file select:focus,
 .input input:focus,
 .message textarea:focus {
   outline: none;
@@ -864,4 +864,109 @@ button.com:hover {
 
 .ok:hover {
   background-color: #45a049; /* Darker Green */
+}
+
+
+/* popuo singout*/
+/* Style for the overlay */
+#modal-container {
+  position: fixed;
+  top: 0;
+  right: 0; /* Adjusted to position at the top-right corner */
+  width: 100%;
+  height: 100%;
+  margin-top: 50px;
+  margin-right: 30px;
+  /* background-color: rgba(0, 0, 0, 0.5); semi-transparent black */
+  display: flex;
+  justify-content: flex-end; /* Aligning content to the end of the flex container (right side) */
+  align-items: flex-start; /* Aligning content to the start of the flex container (top side) */
+  z-index: 1000; /* make sure it's above other content */
+}
+
+
+/* Style for the modal */
+#settings-modal {
+  background-color: #fff; /* white background */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* shadow effect */
+}
+
+/* Style for the list inside the modal */
+#settings-modal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style for the list items inside the modal */
+#settings-modal li {
+  margin-bottom: 10px;
+}
+
+/* Style for the close button */
+#settings-modal button {
+  background-color: #007bff; /* blue */
+  color: #fff; /* white text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for the close button on hover */
+#settings-modal button:hover {
+  background-color: #0056b3; /* darker blue */
+}
+
+/* Modal container */
+.modal-summary {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  overflow: auto; /* Enable scrolling if the content is too tall */
+}
+
+/* Modal content */
+.modal-content-summary {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Max width of the modal */
+  border-radius: 5px;
+  position: relative;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Header */
+.modal-content-summary h2 {
+  margin-top: 0;
+}
+
+/* Job summary */
+.modal-content-summary p {
+  margin-top: 10px;
 }

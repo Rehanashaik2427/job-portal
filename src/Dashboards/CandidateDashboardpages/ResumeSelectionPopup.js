@@ -31,7 +31,7 @@ const ResumeSelectionPopup = ({ resumes, onSelectResume, onClose }) => {
         <select id="resumeSelect"  required>
             <option value="">Select Resume</option>
             {resumes.map(resume => (
-                <option key={resume.resumeId} value={resume.fileName} >{resume.message}</option>
+                <option key={resume.id} value={resume.id} >{resume.message}</option>
             ))}
         </select>
         {errMessage && <p className="error-message">{errMessage}</p>}

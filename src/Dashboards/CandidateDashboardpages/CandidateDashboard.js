@@ -1,20 +1,18 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom'; 
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';// Import Link from react-router-dom
-import './CandidateDashboard.css';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'; // Import Link from react-router-dom
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
   const location = useLocation();
-  const BASE_API_URL="http://localhost:8081/api/jobbox";
-  
-  const userEmail=location.state?.userEmail;
-  console.log(userEmail);
+  const BASE_API_URL="http://localhost:8082/api/jobbox";
+  // const userName=location.state.userName;
+  const userId=location.state?.userId;
+  console.log(userId);
  
 
   const [userData, setUserData] = useState();
@@ -22,11 +20,11 @@ const CandidateDashboard = () => {
   
  
 
-  const fetchUserData = async (userEmail) => {
+  const fetchUserData = async (userId) => {
     try {
-        const response = await axios.get(`${BASE_API_URL}/getHRName`, {
+        const response = await axios.get(`${BASE_API_URL}/getUserName`, {
             params: {
-              userEmail: userEmail
+              userId: userId
             }
           });
 
@@ -46,18 +44,18 @@ const CandidateDashboard = () => {
 
   useEffect(() => {
    
-      fetchUserData(userEmail);
+      fetchUserData(userId);
     
-  }, [userEmail]);
+  }, [userId]);
 
 
 
   const [countOfCompanies, setCountOfCompanies] = useState(null);
-  const fetchApplicationsCompanies = async (userEmail) => {
+  const fetchApplicationsCompanies = async (userId) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfAppliedCompany`, {
         params: {
-          userEmail: userEmail
+          userId: userId
         }
       });
   
@@ -70,16 +68,19 @@ const CandidateDashboard = () => {
   };  
   useEffect(() => {
    
-    fetchApplicationsCompanies(userEmail);
+    fetchApplicationsCompanies(userId);
   
-}, [userEmail]);
-
+}, [userId]);
+const user = {
+  userName: userName,
+   userId:userId,
+ };
 const [countOfResume, setCountOfResumes] = useState(null);
-  const fetchCountResumes = async (userEmail) => {
+  const fetchCountResumes = async (userId) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getCountOfResumes`, {
         params: {
-          userEmail: userEmail
+          userId: userId
         }
       });
   
@@ -92,9 +93,9 @@ const [countOfResume, setCountOfResumes] = useState(null);
   };  
   useEffect(() => {
    
-    fetchCountResumes(userEmail);
+    fetchCountResumes(userId);
   
-}, [userEmail]);
+}, [userId]);
 
 const [countOfTotalCompanies, setCountOfTotalCompanies] = useState(null);
 const fetchTotalCompanies = async () => {
@@ -116,11 +117,11 @@ useEffect(() => {
 
 
 const [countOfshortlistedApplications, setCountOfshortlistedApplications] = useState(null);
-const fetchTotalShortlistedApplications = async (userEmail) => {
+const fetchTotalShortlistedApplications = async (userId) => {
   try {
     const response = await axios.get(`${BASE_API_URL}/getCountOfTotalShortlistedApplication`, {
       params: {
-        userEmail: userEmail
+        userId: userId
       }
     });
 
@@ -133,28 +134,24 @@ const fetchTotalShortlistedApplications = async (userEmail) => {
 };  
 useEffect(() => {
  
-  fetchTotalShortlistedApplications(userEmail);
+  fetchTotalShortlistedApplications(userId);
 
-},[userEmail]);
-
-
+},[userId]);
 
 
 
 
 
-  console.log(userName);
-  const [showSettings, setShowSettings] = useState(false);
 
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
+
+  console.log(userId);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
   
-  const user = {
-    userName: userName,
-    
-     userEmail: userEmail,
-   };
+ 
 
   return (
     <div className='candidate-dashboard-container'>
@@ -169,23 +166,27 @@ useEffect(() => {
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
             </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleSettings}/></div>
+            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{color:'black'}} onClick={toggleModal}/></div>
           
           </div>
          
     
         </div>
-        {showSettings && (
-        <div id="settings-container">
-          {/* Your settings options here */}
-          <ul>
-            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting </li>
-            {/* Add more settings as needed */}
-          </ul>
+        {showModal && (
+        <div id="modal-container">
+          <div id="settings-modal">
+            <ul>
+              <li>
+                <FontAwesomeIcon icon={faSignOutAlt} />
+                <Link to="/">Sign out</Link>
+              </li>
+              <li>Setting</li>
+              {/* Add more settings as needed */}
+            </ul>
+            <button onClick={toggleModal}>Close</button>
+          </div>
         </div>
       )}
-
 
         <div className="my-dashboard-container">
           <div>
@@ -193,26 +194,34 @@ useEffect(() => {
          
             <div className="dashboard">
               <div className="data">
+
+             
+
               <Link
   to={{
     pathname: '/candidate-companies',
-    state: { userName: userName, userEmail: userEmail }
+    state: { userName: userName, userId: userId }
   }}
 >
                   <h4>Applied to</h4>
-                  <h2><b> {countOfCompanies !== null ? (
+                  <h2> {countOfCompanies !== null ? (
         <p> {countOfCompanies}</p>
+
       ) : (
         <p>Loading...</p>
-      )}</b></h2>
+      )}</h2>
                   <h4>companies</h4>
+
+                  
+
                   </Link>
+
               </div>
               <div className="data">
                  <Link
   to={{
     pathname: '/resume',
-    state: { userName: userName, userEmail: userEmail }
+    state: { userName: userName, userId: userId  }
   }}
 >
   <h2>
@@ -231,7 +240,7 @@ useEffect(() => {
               <div className="data">
               <Link to={{
           pathname: '/my-application',
-          state: { userName: userName, userEmail:userEmail,applicationStatus:"Shortlisted" }
+          state: { userName: userName, userId: userId ,applicationStatus:"Shortlisted" }
         }}><h2><b> {countOfshortlistedApplications !== null ? (
           <p> {countOfshortlistedApplications}</p>
         ) : (
@@ -244,7 +253,7 @@ useEffect(() => {
               <Link
   to={{
     pathname: '/candidate-companies',
-    state: { userName: userName, userEmail: userEmail }
+    state: { userName: userName, userId: userId  }
   }}
 >
   <h2>

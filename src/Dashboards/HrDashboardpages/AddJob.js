@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
 
-
 const AddJob= () => {
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   //console.log('Location state:', location.state);
 
   const history = useHistory(); 
   const { userName, userEmail } = location.state || {};
+  console.log(userEmail);
  
   const { companyName } = location.state || {};
   console.log(userEmail);
   const [formData, setFormData] = useState({
-    userEmail: userEmail ,
+    hrEmail: userEmail ,
     
     jobTitle: '',
-    // Assuming hrId is an integer in your Java entity
+
     jobType: '',
     location: '',
     salary: '',
-    postingDate: '', // Match the naming convention with your Java entity (postingDate instead of postingdate)
+    postingDate: '',
     qualifications: '',
     applicationDeadline: '',
-    numberOfPosition: '', // Assuming numberOfPosition is an integer in your Java entity
+    numberOfPosition: '', 
     jobsummary: ''
   });
   
@@ -48,7 +47,7 @@ const AddJob= () => {
     e.preventDefault();
   
     try {
-      const response = await saveJobData({ ...formData, companyName });
+      const response = await saveJobData(formData);
       if (response.ok) {
         console.log("Job posted successfully",formData);
         // history.push('/jodAddSuccess',userEmail);
@@ -66,7 +65,7 @@ const AddJob= () => {
   };
 
   return (
-    <div className='candidate-dashboard-container'>
+    <div className='hr-dashboard-container'>
       <div className='hr-leftside'>
           <HrLeftSide user={{ userName, userEmail }} />
       </div>
@@ -94,12 +93,20 @@ const AddJob= () => {
             <div className='job-details-row'>
               <div className='job-form-group'>
                 <label htmlFor="skills">Skills:</label>
-                <input type="text" id="skills" name="skills" value={formData.skills || ''} onChange={handleChange} required />
+                <input type="text" id="skills" name="skills" value={formData.skills} onChange={handleChange} required />
               </div>
 
               <div className='job-form-group'>
                 <label htmlFor="positions">Number of Positions:</label>
                 <input type="number" id="positions" name="numberOfPosition" value={formData.numberOfPosition} onChange={handleChange} required  />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="salary">Salary:</label>
+                <input type="text" id="salary" name="salary" value={formData.salary} onChange={handleChange} required  />
+              </div>
+              <div className='job-form-group'>
+                <label htmlFor="location">Location:</label>
+                <input type="text" id="location" name="location" value={formData.location} onChange={handleChange} required  />
               </div>
               <div className='job-form-group'>
                 <label htmlFor="deadline">Application Deadline:</label>
@@ -117,8 +124,11 @@ const AddJob= () => {
               </div>
 
               <div className='job-form-group-button'>
-                <button type='submit' onClick={handleSubmit}>
-                  <Link to={{ pathname: '/jodAddSuccess', state: { userName: userName, userEmail: userEmail} }}>Post</Link>
+                <button type='submit' className='post'   onClick={handleSubmit}>
+              
+                   <Link to={{ pathname: '/jodAddSuccess', state: { userName: userName, userEmail: userEmail} }}>Post</Link> 
+
+
                 </button>
               </div>
             </div>
@@ -131,5 +141,6 @@ const AddJob= () => {
     </div>
   )
 }
+
 
 export default AddJob;

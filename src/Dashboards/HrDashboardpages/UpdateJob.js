@@ -1,14 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaSave } from "react-icons/fa";
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HrLeftSide from "./HrLeftSide";
 
 const UpdateJob = () => {
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
+  const history=useHistory();
   const [userData, setUserData] = useState({});
-  // const [userName, setUserName] = useState('');
+  
   const [editableJobDetails, setEditableJobDetails] = useState(false);
   const [jobDetails, setJobDetails] = useState({});
   const { jobId, userName, userEmail } = location.state;
@@ -38,8 +39,9 @@ const UpdateJob = () => {
     salary: '',
     postingdate: '',
     qualifications: '',
-    deadline: '',
+    applicationDeadline: '',
     positions: '',
+    postingDate: '',
     jobsummary: ''
   });
 
@@ -66,26 +68,24 @@ const UpdateJob = () => {
     try {
       await axios.put(`${BASE_API_URL}/updateJob?jobId=${jobId}`,formData); // Assuming your endpoint for updating jobs is /updateJob
       alert('Job details updated successfully.');
+      history.push({
+        pathname: '/post-jobs',
+        state: {
+          userName: userName,
+          userEmail: userEmail,
+          
+        }
+      });
+
     } catch (error) {
       console.error('Error updating job details:', error);
     }
   };
 
-  const deleteZeroPositionJobs = async () => {
-    try {
-      await axios.delete(`${BASE_API_URL}/deleteZeroPositionJobs`);
-      alert('Jobs with zero positions deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting jobs:', error);
-    }
-  };
-
-  useEffect(() => {
-    deleteZeroPositionJobs();
-  }, []);
+  
 
   return (
-    <div className='candidate-dashboard-container'>
+    <div className='hr-dashboard-container'>
       <div className="hr-leftside">
         <HrLeftSide user={user} />
       </div>
@@ -181,7 +181,10 @@ const UpdateJob = () => {
               ) : (
                 <button type="button" onClick={handleEditJobDetails}><FaEdit />Edit</button>
               )}
-               <button type="submit">Post</button>
+               <button type="submit">
+              Post
+
+               </button>
             </div>
            
           </div>

@@ -15,30 +15,28 @@ const HrSignin = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
-  const getUser = async (userEmail) => {
-    try {
-      const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
-      return response.data; // This includes the user's data, including the username
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return null;
-    }
-  };
+  const userEmail=formData.userEmail;
+  const password=formData.password;
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     try {
-      const user = await getUser(formData.userEmail);
-      if (user) {
-        const userName = user.userName; // Retrieve the username from the user object
-        history.push("/hr-dashboard", { userName, userEmail: formData.userEmail });
-      } else {
-        console.error('User data not found');
-      }
-    } catch (error) {
-      console.error('Error fetching user:', error);
+      const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
+      console.log(response);
+      if(response.data)
+      history.push('/hr-dashboard', {userEmail});
+    else{
+      alert("invalid userName or password")
     }
+  }
+    catch(error)
+    {
+      console.log(error);
+    }
+
   };
 
   return (

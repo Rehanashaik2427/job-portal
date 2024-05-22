@@ -8,23 +8,17 @@ import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
-const BASE_API_URL="http://localhost:8081/api/jobbox";
 const CandidatesCompanies = () => {
+  
+ const BASE_API_URL="http://localhost:8082/api/jobbox";
   const [companies, setCompanies] = useState([]);
   
   const location = useLocation();
   const userName=location.state?.userName;
-  const userEmail=location.state?.userEmail;
+  
   const userId=location.state?.userId;
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setJobRole(value);
-  // };
 
-  // const [jobs, setJobs] = useState([]);
-  
-  // Function to fetch jobs from the database
   const fetchCompany = async () => {
     try {
       const response = await axios.get(BASE_API_URL+"/displayCompanies"); // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
@@ -70,7 +64,7 @@ console.log("No data Found"+error);
   const user = {
     userName: userName,
     
-     userEmail: userEmail,
+    userId:userId,
    };
 
   return (
@@ -103,13 +97,16 @@ console.log("No data Found"+error);
     
         </div>
         {showSettings && (
-        <div id="settings-container">
+        <div id="modal-container">
+        <div id="settings-modal">
           {/* Your settings options here */}
           <ul>
             <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
             <li>Setting </li>
             {/* Add more settings as needed */}
           </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
         </div>
       )}
 
@@ -125,7 +122,7 @@ console.log("No data Found"+error);
                   <p>Industry : <b>{company.industry}</b></p>
                   <Link  to={{
           pathname: '/companyPage',
-          state: { companyId :company.companyId,userName:userName,userEmail:userEmail }
+          state: { companyId :company.companyId,userName:userName,userId:userId }
         }} ><button className='com'><h3>View</h3></button></Link>
                                        
                            

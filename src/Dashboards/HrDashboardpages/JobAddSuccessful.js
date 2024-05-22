@@ -5,7 +5,7 @@ import HrLeftSide from './HrLeftSide';
 import "./JobAddSuccessful.css";
 const JobAddSuccessful = () => {
 
-  const BASE_API_URL = "http://localhost:8081/api/jobbox";
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   const { userName, userEmail } = location.state || {};
 
@@ -16,7 +16,7 @@ const JobAddSuccessful = () => {
 
 
   return (
-    <div className='candidate-dashboard-container'>
+    <div className='hr-dashboard-container'>
       <div className='hr-leftside'>
         <HrLeftSide user={{userName,userEmail}}/>
       </div>

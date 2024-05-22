@@ -14,7 +14,10 @@ const Companies = () => {
     discription: '',
     date: '',
   });
- 
+
+  const companyName = formData.companyName;
+  console.log(companyName);
+
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,6 +34,8 @@ const Companies = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+
     if (isSubmitting) {
       return; // Prevent multiple submissions
     }
@@ -38,7 +43,7 @@ const Companies = () => {
     setIsSubmitting(true); // Set submitting flag
     
 
-    try {
+    // try {
       const response = await saveCompanyData(formData);
       if (response.ok) {
         setSuccessMessage("Company added successfully");
@@ -62,20 +67,33 @@ const Companies = () => {
     finally {
       setIsSubmitting(false); // Reset submitting flag
     }
-  };
+    }
 
   const saveCompanyData = async (formData) => {
     try {
-      const response = await fetch("http://localhost:8081/api/jobbox/saveCompany", {
+
+      const response = await fetch("http://localhost:8082/api/jobbox/saveCompany", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      return response;
+      console.log(response.data);
+      if(response.ok)
+        history.push("/hr-registeration",{companyName});
     } catch (error) {
       throw new Error("Error adding company. Please try again.");
     }
+
+   
   };
+
+
+ 
+
+ 
+
+  
+
 
   return (
     <div className='company-details'>
