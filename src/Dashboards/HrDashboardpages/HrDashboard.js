@@ -74,7 +74,7 @@ const HrDashboard = () => {
   const [countOfApplications,setCountOfApplications]=useState();
   const fetchCountOfApplication= async()=>{
     try{
-      const response=await axios.get(`${BASE_API_URL}/CountOfApplicationBYHREachCompany?userEmail=${userEmail}`)
+      const response=await axios.get(`${BASE_API_URL}/CountOfApplicationByEachCompany?userEmail=${userEmail}`)
       setCountOfApplications(response.data);
     }catch(error){
 console.log (error)
@@ -142,7 +142,8 @@ console.log (error)
                 <div className="box">
                     <h2>Total Applications</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/942/942748.png" className="animated-icons" alt="Applications Icon" />
-                    <p >Total Applications count {countOfApplications}</p>
+                    
+                    <p >Total Applicants count {countOfApplications}</p>
                 </div>
 
                 {/* Second row - first box */}

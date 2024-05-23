@@ -771,9 +771,9 @@ button.com:hover {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow */
   padding: 20px;
-  max-width: 400px; /* Maximum width */
+ /* Maximum width */
   width: 80%; /* Responsive width */
-  height: 200px;
+  
 }
 
 .close {
@@ -884,7 +884,10 @@ button.com:hover {
   z-index: 1000; /* make sure it's above other content */
 }
 
-
+.modal-content-summar{
+  height: 80%;
+  width: 80%;
+}
 /* Style for the modal */
 #settings-modal {
   background-color: #fff; /* white background */

@@ -1,12 +1,10 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './CandidateDashboard.css';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
 import ResumeSelectionPopup from './ResumeSelectionPopup';
 
@@ -263,9 +261,11 @@ console.log("No data Found"+error);
     {selectedJobSummary && (
         <div className="modal-summary">
           <div className="modal-content-summary">
-            <span className="close" onClick={handleCloseModal}>&times;</span>
+            <div style={{width:'100%'}}>
+            <span   className="close" onClick={handleCloseModal}>&times;</span>
             <h2>Job Summary</h2>
             <p>{selectedJobSummary}</p>
+            </div>
           </div>
         </div>
       )}

@@ -24,7 +24,7 @@ const HrProfile = () => {
     const [countOfJobs,setCountOfJobs]=useState(0);
     const fetchCountOfJobs= async()=>{
        try{
-         const response=await axios.get(`${BASE_API_URL}/countOfJobsByHr?userEmail=${userEmail}`)
+         const response=await axios.get(`${BASE_API_URL}/countofjobsbyhr?userEmail=${userEmail}`)
          setCountOfJobs(response.data);
        }catch(error){
    console.log (error)
@@ -33,7 +33,7 @@ const HrProfile = () => {
      const [countOfApplications,setCountOfApplications]=useState();
      const fetchCountOfApplication= async()=>{
        try{
-         const response=await axios.get(`${BASE_API_URL}/CountOfApplicationBYHR?userEmail=${userEmail}`)
+         const response=await axios.get(`${BASE_API_URL}/CountOfApplicationBYHREachCompany?userEmail=${userEmail}`)
          setCountOfApplications(response.data);
        }catch(error){
    console.log (error)
@@ -116,9 +116,12 @@ const HrProfile = () => {
                             
                         </div>
                         <div className="boxp">
-                            <h1>{countOfApplications} Applications</h1>
-                            <p>"Number of applications you got"</p>
-                            <p>Total Applications</p>
+                            <h1>Total Applications</h1>
+                            <p>"Number of applications click here to see"</p>
+                            <Link to={{ pathname: '/hr-applications',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2>Total Applicants {countOfApplications}</h2>
+                            </Link>
+                         
                         </div>
                         <div className="boxp">
                             <h1>{countOfShortlistedCandidates} Candidates</h1>

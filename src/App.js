@@ -53,11 +53,12 @@ import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
 import FindCompany from './pages/FindCompany';
 
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
+import HrDetailsModal from './Dashboards/HrDashboardpages/HrDetailsModal ';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
-import JobboxCompanyPage from './pages/JobboxCompanyPage';
 import EachCompanyPage from './pages/EachCompanyPage';
+import JobboxCompanyPage from './pages/JobboxCompanyPage';
 
 
 
@@ -121,7 +122,7 @@ const App = () => {
           <Route path="/applicationDetails" component={ApplicationDetails} />
           <Route path='/viewApplications' component={ViewApplications} />
           <Route path='hr-leftSide' component={HrLeftSide}/>
-
+          <Route path='/hr-details-model' component={HrDetailsModal} />
           <Route path='/companyPage' component={CompamyPage} />
           <Route path='/resumeAdd' component={ResumeAdd} />
           <Route path='/findCompany' component={FindCompany} />

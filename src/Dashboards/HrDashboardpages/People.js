@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import HrDetailsModal from './HrDetailsModal ';
 import HrLeftSide from './HrLeftSide';
-import UserDetailsModal from './UserDetailsModal';
+import Pagination from './Pagination';
 
 const People = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -12,11 +13,21 @@ const People = () => {
     const [people, setPeople] = useState([]);
     const [showSettings, setShowSettings] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [hrDetails, setHrDetails] = useState(null);
+    const [selectedHr, setSelectedHr] = useState(null);
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
+    const [currentPage, setCurrentPage] = useState(1); // Start at page 1
+    const peoplePerPage = 5; // Number of people per page
 
+    // Pagination logic
+    const indexOfLastPerson = currentPage * peoplePerPage;
+    const indexOfFirstPerson = indexOfLastPerson - peoplePerPage;
+    const currentPeople = people.slice(indexOfFirstPerson, indexOfLastPerson);
+    const totalPages = Math.ceil(people.length / peoplePerPage);
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     useEffect(() => {
         const fetchData = async () => {
             console.log(userEmail);
@@ -35,17 +46,15 @@ const People = () => {
     const toggleSettings = () => {
         setShowSettings(!showSettings);
     };
-    const handleHrDetails = (details) => {
-        setHrDetails(details);
-    }
-    const handleOpenModal = (user) => {
-        setSelectedUser(user);
+
+    const handleOpenModal = (hr) => {
+        setSelectedHr({ ...hr, username: userName });
         setShowModal(true);
     };
 
     const handleCloseModal = () => {
         setShowModal(false);
-        setSelectedUser(null);
+        setSelectedHr(null);
     };
 
     const user = {
@@ -93,11 +102,7 @@ const People = () => {
                             {people.map(person => (
                                 <tr key={person.id}>
                                     <td>{person.userId}</td>
-                                    <td>
-                                        <Link to="#" onClick={() => { handleOpenModal(person); handleHrDetails(person); }}>
-                                            {person.userName}
-                                        </Link>
-                                    </td>                                    
+                                    <td>{person.userName}</td>                                    
                                     <td>{person.userEmail}</td>
                                     <td>{person.companyName}</td>
                                 </tr>
@@ -105,12 +110,19 @@ const People = () => {
                         </tbody>
                     </table>
                 </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    handlePageClick={handlePageClick}
+                />
             </div>
-            <UserDetailsModal
-                show={showModal}
-                handleClose={handleCloseModal}
-                user={selectedUser}
-            />
+            {showModal && (
+                <HrDetailsModal
+                    show={showModal}
+                    handleClose={handleCloseModal}
+                    hrDetails={selectedHr}
+                />
+            )}
         </div>
     );
 }

@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
+import Pagination from './Pagination';
 
 
 const PostedJobs = () => {
@@ -17,6 +18,9 @@ const PostedJobs = () => {
   const userEmail = location.state?.userEmail;
  // const [jobCount, setJobCount] = useState(0); // State for job count
   const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Start at page 1
+  const jobsPerPage = 5;
+
   const fetchJobs = async (userEmail) => {
     try {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
@@ -38,8 +42,8 @@ const PostedJobs = () => {
   
 
 useEffect(() => {
-  fetchJobs(userEmail);
-}, [userEmail]);
+  fetchJobs(userEmail,currentPage);
+}, [userEmail,currentPage]);
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {
@@ -80,7 +84,15 @@ console.log("No data Found"+error);
     
      userEmail: userEmail,
    };
- 
+ // Pagination logic
+ const indexOfLastJob = currentPage * jobsPerPage;
+ const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+ const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+ const totalPages = Math.ceil(jobs.length / jobsPerPage);
+
+ const handlePageClick = (pageNumber) => {
+   setCurrentPage(pageNumber);
+ };
  
    return (
      <div className='hr-dashboard-container'>
@@ -142,7 +154,7 @@ console.log("No data Found"+error);
                 </tr>
               </thead>
               <tbody>
-                {jobs.map(job => (
+                {currentJobs.map(job => (
                   <tr key={job.id}>
                     <td>{job.userName}</td>
                     <td>{job.companyName}</td>
@@ -166,6 +178,11 @@ console.log("No data Found"+error);
         </div>
       )}
           </div>
+          <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageClick={handlePageClick}
+      />
         </div>
 
         

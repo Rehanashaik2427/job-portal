@@ -4,6 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import HrLeftSide from './HrLeftSide';
+import Pagination from './Pagination';
 
 const Jobs = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -14,6 +15,14 @@ const Jobs = () => {
   const [jobCount, setJobCount] = useState(0);
   const [showJobDescription, setShowJobDescription] = useState(false);
   const [selectedJobSummary, setSelectedJobSummary] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // Start at page 1
+  const jobsPerPage = 5;
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(jobCount / jobsPerPage);
+  const [search, setSearch] = useState('');
+  const [numbers, setNumbers] = useState([]);
 
   const history = useHistory();
   const [showSettings, setShowSettings] = useState(false);
@@ -26,7 +35,15 @@ const Jobs = () => {
     if (userEmail) {
       fetchJobs(userEmail);
     }
-  }, [userEmail]);
+  }, [userEmail, currentPage]); // Include currentPage in the dependency array
+
+  useEffect(() => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+    setNumbers(pageNumbers);
+  }, [totalPages]);
 
   const fetchJobs = async (email) => {
     try {
@@ -62,16 +79,14 @@ const Jobs = () => {
   };
 
   const handleJobDescription = (summary) => {
-    console.log('Job summary:', summary); // Add this line
     setSelectedJobSummary(summary);
     setShowJobDescription(true);
   };
+
   const closeJobDescription = () => {
     setShowJobDescription(false);
     setSelectedJobSummary('');
   };
-
-  const [search, setSearch] = useState('');
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -82,10 +97,15 @@ const Jobs = () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/searchJobsByHR?search=${search}&userEmail=${userEmail}`);
       setJobs(response.data);
+      setJobCount(response.data.length);
     } catch (error) {
       console.log("No data Found" + error);
     }
     console.log("Search submitted:", search);
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -110,21 +130,18 @@ const Jobs = () => {
           <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
         </div>
         {showSettings && (
-        <div id="modal-container">
-        <div id="settings-modal">
-       
-          <ul>
-            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting </li>
-           
-          </ul>
-          <button onClick={toggleSettings}>Close</button>
-        </div>
-        </div>
-      )}
-        {/* <h2>Jobs posted by {userName}</h2> */}
+          <div id="modal-container">
+            <div id="settings-modal">
+              <ul>
+                <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sign out</Link></li>
+                <li>Settings</li>
+              </ul>
+              <button onClick={toggleSettings}>Close</button>
+            </div>
+          </div>
+        )}
         <div className='job-list'>
-          {jobs.length > 0 && (
+          {currentJobs.length > 0 && (
             <table id='jobTable1'>
               <thead>
                 <tr>
@@ -133,13 +150,13 @@ const Jobs = () => {
                   <th>Posting Date</th>
                   <th>Skills</th>
                   <th>No of Position</th>
-                  <th>Application DeadLine</th>
+                  <th>Application Deadline</th>
                   <th>Job Summary</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {jobs.map(job => (
+                {currentJobs.map(job => (
                   job.jobId !== 0 && (
                     <tr key={job.jobId}>
                       <td>{job.jobTitle}</td>
@@ -149,6 +166,9 @@ const Jobs = () => {
                       <td>{job.numberOfPosition}</td>
                       <td>{job.applicationDeadline}</td>
                       <td>
+                        <div className='job-description-container'>
+                         
+                        </div>
                         <button className='description' onClick={() => handleJobDescription(job.jobsummary)}>Description</button>
                       </td>
                       <td>
@@ -161,12 +181,20 @@ const Jobs = () => {
               </tbody>
             </table>
           )}
-          {jobs.length === 0 && (
+         
+         {currentJobs.length === 0 && (
             <section className='not-yet'>
               <h2>You have not posted any jobs yet. Post Now</h2>
             </section>
           )}
-          <button className='add-job-button'>
+        
+        <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageClick={handlePageClick}
+          />
+   
+          <button  className='add-job-button'>
             <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
           </button>
         </div>
