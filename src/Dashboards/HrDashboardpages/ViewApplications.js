@@ -110,7 +110,7 @@ const ViewApplications = () => {
             <select id="status" onChange={handleFilterChange} value={filterStatus}>
               <option value="all">All</option>
               <option value="Shortlisted">Shortlisted</option>
-              <option value="Under Review">Under Review</option>
+              <option value="Under Preview">Under Preview</option>
               <option value="Not Shortlisted">Rejected</option>
             </select>
           </div>
@@ -164,7 +164,7 @@ const ViewApplications = () => {
           <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
             
             <Link to={{
-        pathname: '/candidate-jobs', 
+        pathname: '/viewApplications', 
         state: { userName: userName,userEmail:userEmail } 
       }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
           </li>

@@ -68,9 +68,7 @@ const ApplicationDetails = () => {
                     <p><b>Job Title: </b>{job.jobTitle}</p>
                     <p><b>Company Name:</b> {job.companyName}</p>
                     <p><b>Requirements:</b> {job.requirements}</p>
-                    <p><b>Eligibility:</b> {job.eligibility}</p>
                     <p><b>Position:</b> {job.numberOfPosition}</p>
-                    <p><b>Experience:</b> {job.experience}</p>
                     <p><b>JobType:</b> {job.jobType}</p>
                     <p><b>Location:</b> {job.location}</p>
                     <p><b>Salary:</b> {job.salary}</p>

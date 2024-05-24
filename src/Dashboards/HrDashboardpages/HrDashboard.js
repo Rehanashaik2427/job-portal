@@ -133,7 +133,7 @@ console.log (error)
                    
 
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
-                    <p> are posted by you</p>
+                    <p> are posted by us</p>
                    </Link>
                 </div>
 
@@ -153,9 +153,10 @@ console.log (error)
 
                   {/* Second row - second box */}
                 <div className="box">
-                    <h2>Activities</h2>
-                        <img src="https://cdn-icons-png.flaticon.com/128/15597/15597760.png" className="animated-icons" alt="Activities Icon" />
-                     
+                <Link to={{ pathname: '/dreamApplication',state: { userName: userName, userEmail:userEmail } }}>
+                    <h2>Dream Applications</h2>
+                    <img src="https://cdn-icons-png.flaticon.com/128/15597/15597760.png" className="animated-icons" alt="Activities Icon" />
+                </Link>
                 </div>
             </div>
             

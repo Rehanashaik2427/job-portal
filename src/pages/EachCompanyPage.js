@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const EachCompanyPage = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -71,8 +71,19 @@ const EachCompanyPage = () => {
             <p>{company.description}</p>
             <p>{company.jobboxEmail}</p>
             <p>Total Applications: {countOfApplications}</p>
+            {countOfHR > 0 ? (
+            <p>HR mapped = Yes</p>
+                 ) : (
+            <p>HR mapped = No</p>
+                )}
             <p>Total HRs Join: {countOfHR}</p>
             <p>Total Jobs Posted By HRs: {countOfJobs}</p>
+            <div> 
+             <h2> To View the Applications please 
+           <Link to={{pathname:'/hr-registeration', state: { companyName:company.companyName }}}> Register as HR</Link>   </h2>
+            </div>
+
+
           </div>
         ) : (
           <p>Loading company details...</p>

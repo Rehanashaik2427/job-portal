@@ -170,7 +170,7 @@ const MyApplication = () => {
           <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
             
             <Link to={{
-        pathname: '/candidate-jobs', 
+        pathname: '/my-application', 
         state: { userName: userName,userId:userId } 
       }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
           </li>
@@ -193,3 +193,4 @@ const MyApplication = () => {
 }
 
 export default MyApplication;
+   

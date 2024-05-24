@@ -58,6 +58,7 @@ import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import JobboxCompanyPage from './pages/JobboxCompanyPage';
 import EachCompanyPage from './pages/EachCompanyPage';
+import DreamApplication from './Dashboards/HrDashboardpages/DreamApplications';
 
 
 
@@ -127,7 +128,7 @@ const App = () => {
           <Route path='/findCompany' component={FindCompany} />
           <Route path='/jobboxCompanyPage' component={JobboxCompanyPage} />
           <Route path='/eachCompanyPage' component={EachCompanyPage} />
-          
+          <Route path='/dreamApplication' component={DreamApplication} />
 
 
         </Switch>

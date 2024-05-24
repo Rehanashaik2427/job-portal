@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CandidateDashboard.css';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
+import ResumeSelectionPopup from './ResumeSelectionPopup';
 
    const BASE_API_URL="http://localhost:8082/api/jobbox";
 
@@ -22,12 +23,64 @@ const DreamCompany = () => {
     discription: '', // Corrected typo
     date: '',
   });
-  const companyName=formData.companyName;
 
+  const companyName=formData.companyName;
+  console.log(companyName);
+ 
+  const [showResumePopup, setShowResumePopup] = useState(false);
+  const handleApplyButtonClick = () => {
+    setShowResumePopup(true);
+};
+
+  const [resumes, setResumes] = useState([]);
+  useEffect(() => {
+    // Fetch resumes data from the backend
+    axios.get(`${BASE_API_URL}/getResume?userId=${userId}`)
+        .then(response => {
+            setResumes(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching resumes:', error);
+        });
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+
+
+const handleResumeSelect = async (resumeId) => {
+    if (resumeId) {
+        await applyJob(resumeId);
+        setShowResumePopup(false); // Close the resume selection popup
+    }
+};
+
+const applyJob=async(resumeId)=>{
+  const appliedOn = new Date().toLocaleDateString();
+
+
+    try {
+        const response = await axios.put(`${BASE_API_URL}/applyDreamCompany?userId=${userId}&companyName=${companyName}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
+
+        
+        console.log(response.data);
+       
+
+        if (response.data) {
+            alert("You have successfully applied for this job");
+
+            setShowMessage(true);
+        }
+    } catch (error) {
+        console.error('Error fetching jobs:', error);
+    }
+    
+};
+
+
+
 
 
 
@@ -38,7 +91,7 @@ const DreamCompany = () => {
       console.log('Company details submitted:', response.data);
       
       setFormData({
-        companyName: '',
+        companyName:companyName,
         contactNumber: '',
         companyEmail: '',
         industry: '',
@@ -51,16 +104,27 @@ const DreamCompany = () => {
     } catch (error) {
       console.error('Error during submission:', error);
       
-      alert('Company already exists, please register as a HR')
+      // alert('Company already exists')
       
     }
 
-    setShowMessage(true);
   };
 
   return (
     <div className='dream-company-container'>
       <div className="centered-content">
+      {showResumePopup && (
+            <div className="modal">
+                <div className="modal-content">
+                    <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+                    <ResumeSelectionPopup
+                        resumes={resumes}
+                        onSelectResume={handleResumeSelect}
+                        onClose={() => setShowResumePopup(false)}
+                    />
+                </div>
+            </div>
+        )}
         <form onSubmit={handleSubmit} className="centered-form">
           <div className="form-group">
             <label htmlFor="companyName">Company Name:</label>
@@ -68,7 +132,7 @@ const DreamCompany = () => {
           </div>
           <div className="form-group">
             <label htmlFor="resume">Resume:</label>
-            <input type="file" id="resume" name="resume" required />
+            <button onClick={handleApplyButtonClick}>Select Resume</button>
           </div>
           <div className="form-group">
             <input type="submit" value="Apply" className="apply-button" />
