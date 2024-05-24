@@ -275,10 +275,12 @@ border-radius: 8px;
 
 .contact-form-info {
 margin-bottom: 20px;
+margin-left: 200px;
 }
 
 .send-msg {
 text-align: right;
+margin-left: 200px;
 }
 
 .send-msg button {

@@ -101,9 +101,9 @@ console.log("No data Found"+error);
        </div>
 
       <div className='hr-rightside'>
-        <div className="candidate-search">
-        <form className="candidate-search" onSubmit={handleSubmit}>
-      <input
+        <div className="candidate-search"onSubmit={handleSubmit}>
+       
+        <input
         type='text'
         name='search'
         placeholder='Search'
@@ -113,7 +113,7 @@ console.log("No data Found"+error);
       <button type="submit">
         <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
       </button>
-    </form>
+   
           <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
         </div>
         {showSettings && (

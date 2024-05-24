@@ -95,7 +95,7 @@ const ViewApplications = () => {
             <select id="status" onChange={handleFilterChange} value={filterStatus}>
               <option value="all">All</option>
               <option value="Shortlisted">Shortlisted</option>
-              <option value="Under Review">Under Review</option>
+              <option value="Under Preview">Under Preview</option>
               <option value="Not Shortlisted">Rejected</option>
             </select>
           </div>

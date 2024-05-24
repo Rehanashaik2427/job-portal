@@ -109,7 +109,7 @@ const Applications = () => {
         <div className="applications">
 
           <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
+            <input type='text' placeholder='Search'></input>
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
             </button>

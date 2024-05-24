@@ -223,13 +223,12 @@ section {
 .boxp {
   flex-basis: calc(33.33% - 20px);
   /* Adjust the width of each box */
-  height: 90%;
+  height: 70%;
   width: 40%;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.63);
   text-align: center;
   margin: 9px;
-
 
 }
 
