@@ -46,11 +46,11 @@ const HrSignin = () => {
         <form onSubmit={(event) => event.preventDefault()}>
           <div className="form-group">
             <label htmlFor="userEmail">Email:</label>
-            <input type="email" id="userEmail" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
+            <input type="email" id="userEmail" name="userEmail" value={formData.userEmail} onChange={handleInputChange} placeholder='email' required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+            <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} placeholder='password' required />
           </div>
           <div className="form-group">
             <button onClick={handleLogin}>Login</button>

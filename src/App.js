@@ -50,14 +50,16 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import CompamyPage from './Dashboards/CandidateDashboardpages/CompanyPage';
 import ResumeAdd from './Dashboards/CandidateDashboardpages/ResumeAdd';
 
-import FindCompany from './pages/FindCompany';
-
 import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails';
 import HrDetailsModal from './Dashboards/HrDashboardpages/HrDetailsModal ';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
+import ShortlistedCandidates from './Dashboards/HrDashboardpages/ShortlistedCandidates';
+import TotalApplicantsHr from './Dashboards/HrDashboardpages/TotalApplicantsHr';
+import UnderReview from './Dashboards/HrDashboardpages/UnderReview';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import EachCompanyPage from './pages/EachCompanyPage';
+import FindCompany from './pages/FindCompany';
 import JobboxCompanyPage from './pages/JobboxCompanyPage';
 
 
@@ -129,8 +131,9 @@ const App = () => {
           <Route path='/jobboxCompanyPage' component={JobboxCompanyPage} />
           <Route path='/eachCompanyPage' component={EachCompanyPage} />
           
-
-
+          <Route path='/total-applicants-by-hr' component={TotalApplicantsHr}/>
+          <Route path='/shortlisted-candidates' component={ShortlistedCandidates}/>
+          <Route path='/under-review' component={UnderReview}/>
         </Switch>
       </BrowserRouter>
     </div>

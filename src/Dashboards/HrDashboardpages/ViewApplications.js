@@ -106,7 +106,7 @@ const ViewApplications = () => {
                   <th>Job Title</th>
                   <th>Company Name</th>
                   <th>Resume ID</th>
-                  <th>Date/Time</th>
+                  <th>Date</th>
                   <th>Application Status</th>
                   <th>View Details</th>
                   <th>Application Action</th>
