@@ -60,7 +60,7 @@ const EachCompanyPage = () => {
     fetchCountOfApplicationByCompany();
     fetchCountOfHRByCompany();
     fetchCountOfJobsByCompany();
-  });
+  },[]);
 
   return (
     <div>
@@ -79,7 +79,7 @@ const EachCompanyPage = () => {
             <p>Total HRs Join: {countOfHR}</p>
             <p>Total Jobs Posted By HRs: {countOfJobs}</p>
             <div> 
-             <h2> To View the Applications please 
+            <h2> To View the Applications please 
            <Link to={{pathname:'/hr-registeration', state: { companyName:company.companyName }}}> Register as HR</Link>   </h2>
             </div>
 
