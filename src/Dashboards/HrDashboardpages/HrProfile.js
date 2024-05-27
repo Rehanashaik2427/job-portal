@@ -1,11 +1,10 @@
 import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HrLeftSide from './HrLeftSide';
-import axios from 'axios';
-import { useEffect } from 'react';
 
 const HrProfile = () => {
 
@@ -22,9 +21,10 @@ const HrProfile = () => {
         setShowSettings(!showSettings);
     };
 
-    const [countOfJobs,setCountOfJobs]=useState();
+    const [countOfJobs,setCountOfJobs]=useState(0);
     const fetchCountOfJobs= async()=>{
        try{
+
          const response=await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompanyHR?userEmail=${userEmail}`)
          setCountOfJobs(response.data);
        }catch(error){
@@ -49,7 +49,7 @@ const HrProfile = () => {
    console.log (error)
        }
      }
-       const [countOfShortlistedCandidates,setCountOfShortlistedCandidates]=useState();
+    const [countOfShortlistedCandidates,setCountOfShortlistedCandidates]=useState();
      const fetchCountOfShortlistedCandidates= async()=>{
        try{
          const response=await axios.get(`${BASE_API_URL}/CountOfShortlistedCandidateBYHRJob?userEmail=${userEmail}`)
@@ -58,11 +58,23 @@ const HrProfile = () => {
    console.log (error)
        }
      }
+     const [countOfUnderReviewCandidates, setCountOfUnderReviewCandidates] = useState();
+
+    const fetchCountOfUnderReviewCandidates = async () => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/CountOfUnderReviewCandidateBYHRJob?userEmail=${userEmail}`);
+        setCountOfUnderReviewCandidates(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
      useEffect(()=>{
        fetchCountOfJobs();
        fetchCountOfApplication();
        fetchCountOfCandidates();
        fetchCountOfShortlistedCandidates();
+       fetchCountOfUnderReviewCandidates();
      })
    
     const user = {
@@ -105,29 +117,44 @@ const HrProfile = () => {
                     <div className="profile_row">
                         <div className="boxp">
 
-                            <h1> {countOfJobs} Jobs</h1>
-                            <p>"counting of posting jobs"</p>
-                            <p>count of job posting</p>
+
+
+                            <h1>count of job posting</h1>
+                            <p>"Number of jobs posted by {userName}"</p>
+                            <Link to={{ pathname: '/post-jobs',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2> {countOfJobs} Jobs</h2>
+                            </Link>
+
                         </div>
                         <div className="boxp">
-                            <h1>{countOfApplications} Applications</h1>
-                            <p>"Number of applications you got"</p>
-                            <p>Total Applications</p>
+                            <h1>Total Applications</h1>
+                            <p>"Number of applications got by {userName}"</p>
+                            <Link to={{ pathname: '/hr-applications',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2>Total Applicants {countOfApplications}</h2>
+                            </Link>
+                         
                         </div>
                         <div className="boxp">
-                            <h1>{countOfShortlistedCandidates} Candidates</h1>
-                            <p>"shortlisted students"</p>
-                            <a href="/hr-applications">Shortlisted</a>
+                            <h1>Shortlisted Candidates</h1>
+                            <p>"Number of shortlisted candidiates"</p>
+                            <Link to={{ pathname: '/hr-applications',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2>{countOfShortlistedCandidates} Candidates</h2>
+                            </Link>
+                            
                         </div>
                         <div className="boxp">
-                            <h1>150+ Hired</h1>
-                            <p>"The candidates hired by you"</p>
-                            <a href="/hr-applications">Hired</a>
+                            <h1>Hired Candidates</h1>
+                            <p>"Number of candidates hired by {userName}"</p>
+                            <Link to={{ pathname: '/hr-applications',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2>Hired</h2>
+                            </Link>
                         </div>
                         <div className="boxp">
-                            <h1>{countOfCandidates} Candidates</h1>
+                            <h1>Under Review Candidates</h1>
                             <p>"The candidate profile want to check"</p>
-                            <a href="/hr-applications">Candidate Profiles</a>
+                            <Link to={{ pathname: '/hr-applications',state: { userName: userName, userEmail:userEmail } }}>
+                              <h2> {countOfUnderReviewCandidates} Under Review</h2>
+                            </Link>
                         </div>
                         <div className="boxp">
                             <h1>Your Activity Status</h1>

@@ -132,6 +132,19 @@ const MyApplication = () => {
             </form>
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           </div>
+          {showSettings && (
+        <div id="modal-container">
+        <div id="settings-modal">
+         
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
+           
+          </ul>
+          <button onClick={toggleSettings}>Close</button>
+        </div>
+        </div>
+      )}
         </div>
         <div>
           {applications.length > 0 ? (

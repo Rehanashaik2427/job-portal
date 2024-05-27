@@ -16,7 +16,7 @@ const HrDashboard = () => {
 
   console.log(userEmail);
 
-  
+
  
   const [userData, setUserData] = useState();
   const [userName,setUserName]=useState();
@@ -62,15 +62,16 @@ const HrDashboard = () => {
     setShowSettings(!showSettings);
   };
 
-  const [countOfJobs,setCountOfJobs]=useState();
- const fetchCountOfJobs= async()=>{
-    try{
-      const response=await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompany?userEmail=${userEmail}`)
+  const [countOfJobs,setCountOfJobs]=useState(0);
+  const fetchCountOfJobs = async () => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompany?userEmail=${userEmail}`);
       setCountOfJobs(response.data);
-    }catch(error){
-console.log (error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
   const [countOfApplications,setCountOfApplications]=useState();
   const fetchCountOfApplication= async()=>{
     try{
@@ -125,15 +126,14 @@ console.log (error)
 
                 {/* First row - first box */}
                 <div className="box">
-                <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>
+                
                     <h2>Jobs</h2>
 
-                    <h4 style={{ alignContent: 'center' }}>{countOfJobs} jobs</h4>
-
-                   
-
+                    <h4 style={{ alignContent: 'center' }}></h4>
                     <img src="https://cdn-icons-png.flaticon.com/128/3688/3688609.png" className="animated-icons" alt="Jobs Icon" />
-                    <p> are posted by us</p>
+                    <Link to={{ pathname: '/posted-jobs',state: { userName: userName, userEmail:userEmail } }}>
+                    <p> {countOfJobs} posted by us</p>
+
                    </Link>
                 </div>
 
@@ -141,7 +141,8 @@ console.log (error)
                 <div className="box">
                     <h2>Total Applications</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/942/942748.png" className="animated-icons" alt="Applications Icon" />
-                    <p >Total Applications count {countOfApplications}</p>
+                    
+                    <p >Total Applicants count {countOfApplications}</p>
                 </div>
 
                 {/* Second row - first box */}
@@ -159,7 +160,7 @@ console.log (error)
                 </Link>
                 </div>
             </div>
-            
+
         </div>
 
       </div>

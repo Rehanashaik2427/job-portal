@@ -1,12 +1,10 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Link } from 'react-router-dom'; 
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';// Import Link from react-router-dom
-import './CandidateDashboard.css';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'; // Import Link from react-router-dom
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
 
 const CandidateDashboard = () => {
@@ -73,7 +71,10 @@ const CandidateDashboard = () => {
     fetchApplicationsCompanies(userId);
   
 }, [userId]);
-
+const user = {
+  userName: userName,
+   userId:userId,
+ };
 const [countOfResume, setCountOfResumes] = useState(null);
   const fetchCountResumes = async (userId) => {
     try {
@@ -150,11 +151,7 @@ useEffect(() => {
     setShowModal(!showModal);
   };
   
-  const user = {
-    userName: userName,
-    
-     userId: userId,
-   };
+ 
 
   return (
     <div className='candidate-dashboard-container'>

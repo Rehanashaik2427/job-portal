@@ -14,9 +14,10 @@
   }
   
   .jobdetails, .candidatedetails {
-    margin-top: 50px;
+   
+    width: 100%;
     border: 1px solid #ccc;
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 8px;
   }
   
@@ -33,4 +34,7 @@
   }
   
   /* Add additional styling as needed */
-  
+  .candidate-search{
+    width: 930px;
+    margin-top: 20px;
+  }

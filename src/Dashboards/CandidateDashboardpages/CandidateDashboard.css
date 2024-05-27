@@ -51,9 +51,11 @@ span {
 .candidate-search {
     position: relative;
     display: flex;
-    justify-content: flex-end;
+    justify-content: end;
     align-items: center;
     padding: 10px;
+    margin-left: 250px;
+ 
     
   }
   .candidate-search input[type="text"]{
@@ -872,16 +874,16 @@ button.com:hover {
 #modal-container {
   position: fixed;
   top: 0;
-  right: 0; /* Adjusted to position at the top-right corner */
+  right: 0; 
   width: 100%;
   height: 100%;
-  margin-top: 50px;
+  margin-top: 80px;
   margin-right: 30px;
   /* background-color: rgba(0, 0, 0, 0.5); semi-transparent black */
   display: flex;
-  justify-content: flex-end; /* Aligning content to the end of the flex container (right side) */
-  align-items: flex-start; /* Aligning content to the start of the flex container (top side) */
-  z-index: 1000; /* make sure it's above other content */
+  justify-content: flex-end; 
+  align-items: flex-start; 
+  z-index: 1000; 
 }
 
 
@@ -925,21 +927,21 @@ button.com:hover {
   position: fixed;
   z-index: 1000;
   left: 0;
-  top: 0;
-  width: 100vw;
+  top: 0;  
+  width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-  overflow: auto; /* Enable scrolling if the content is too tall */
+  background-color: rgba(0, 0, 0, 0.5); 
+  overflow: auto;
 }
 
 /* Modal content */
 .modal-content-summary {
   background-color: #fefefe;
-  margin: 10% auto; /* Center modal vertically and horizontally */
+  margin: 10% auto; 
   padding: 20px;
   border: 1px solid #888;
   width: 95%;
-  max-width: fit-content; /* Max width of the modal */
+  max-width: fit-content; 
   border-radius: 5px;
   position: relative;
 }
