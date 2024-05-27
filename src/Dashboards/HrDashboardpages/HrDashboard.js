@@ -81,9 +81,21 @@ const HrDashboard = () => {
 console.log (error)
     }
   }
+
+  const[countOfShortlistedCandiCompany , setCountOfShortlistedCandiCompany] = useState();
+  const fetchCountOfShortlistedCandiComopany = async ()=>{
+    try{
+      const response = await axios.get(`${BASE_API_URL}/CountOfShortlistedCandidatesByEachCompany?userEmail=${userEmail}`)
+      setCountOfShortlistedCandiCompany(response.data);
+    }
+    catch(error){
+      console.log (error)
+    }
+  }
   useEffect(()=>{
     fetchCountOfJobs();
     fetchCountOfApplication();
+    fetchCountOfShortlistedCandiComopany();
   })
 
   const user = {
@@ -142,14 +154,14 @@ console.log (error)
                     <h2>Total Applications</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/942/942748.png" className="animated-icons" alt="Applications Icon" />
                     
-                    <p >Total Applicants count {countOfApplications}</p>
+                    <p >Total Applicants  {countOfApplications}</p>
                 </div>
 
                 {/* Second row - first box */}
                 <div className="box">
                     <h2>Shortlisted candidates</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/11356/11356039.png" className="animated-icons" alt="Candidates Icon" />
-                    <p>click here to see <a href="#">list of candidates</a></p>
+                    <p>Shortlisted Candidates  {countOfShortlistedCandiCompany}</p>
                 </div>
 
                   {/* Second row - second box */}
@@ -158,6 +170,8 @@ console.log (error)
                     <h2>Dream Applications</h2>
                     <img src="https://cdn-icons-png.flaticon.com/128/15597/15597760.png" className="animated-icons" alt="Activities Icon" />
                 </Link>
+                     
+
                 </div>
             </div>
 

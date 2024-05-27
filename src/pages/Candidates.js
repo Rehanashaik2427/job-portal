@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
-import axios from 'axios';
 
 const Candidates = () => {
   const [formData, setFormData] = useState({
@@ -56,11 +56,11 @@ const Candidates = () => {
           <form >
             <div className="form-group">
               <label htmlFor="login-email">Email:</label>
-              <input type="email" id="login-email" name="userEmail" value={formData.userEmail} onChange={handleInputChange} required />
+              <input type="email" id="login-email" name="userEmail" value={formData.userEmail} placeholder='email' onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <label htmlFor="login-password">Password:</label>
-              <input type="password" id="login-password" name="password" value={formData.password} onChange={handleInputChange} required />
+              <input type="password" id="login-password" name="password" value={formData.password} placeholder='password' onChange={handleInputChange} required />
             </div>
             <div className="form-group">
               <button type="submit" onClick={handleSubmit}>Login</button>
