@@ -91,7 +91,7 @@ const People = () => {
                 <div className="candidate-search">
                     <input 
                         type='text' 
-                        placeholder='Search' 
+                        placeholder='Enter Emp Name' 
                         value={searchQuery}
                         onChange={handleSearchChange}
                     />

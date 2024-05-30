@@ -94,6 +94,29 @@ const ViewApplications = () => {
       }
   };
 
+  const [candidateName,setCandidateName]=useState();
+  const [candidateEmail,setCandidateEmail]=useState();
+
+  const fetchCandidateDetails= async()=>{
+    const candidateNames={};
+    const candidateEmails={};
+    for (const application of applications) {
+    const res = await axios.get(`${BASE_API_URL}/getUserName`, {
+      params: {
+        userId: application.candidateId
+      }
+      
+    });
+    candidateNames[application.candidateId]=res.data.userName;
+    candidateEmails[application.candidateId]=res.data.userEmail;
+
+  }
+    setCandidateName(candidateNames);
+    setCandidateEmail(candidateEmails);
+  }
+  useEffect(() => {
+    fetchCandidateDetails();
+  }, [applications]);
  
 
   const user = { userEmail };
@@ -117,11 +140,12 @@ const ViewApplications = () => {
           {applications.length > 0 && (
             <div>
                 <div>
-            <table id='application'>
+            <table id='jobTable1' style={{marginTop:'12px'}}>
               <thead>
-                <tr style={{textAlign:'center'}}>
+                <tr>
                   <th>Job Title</th>
-                  <th>Company Name</th>
+                  <th>Candidate Name</th>
+                  <th>Candidate Email</th>
                   <th>Resume ID</th>
                   <th>Date</th>
                   <th>Application Status</th>
@@ -133,7 +157,8 @@ const ViewApplications = () => {
                 {currentApplications.map(application => (
                   <tr key={application.id}>
                     <td>{application.jobRole}</td>
-                    <td>{application.companyName}</td>
+                    <td>{candidateName[application.candidateId]}</td>
+                       <td>{candidateEmail[application.candidateId]}</td>
                     <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td>
                     <td>{application.appliedOn}</td>
                     <td>{application.applicationStatus}</td>

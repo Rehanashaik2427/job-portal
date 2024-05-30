@@ -1,4 +1,4 @@
-import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -114,10 +114,10 @@ console.log (error)
         {/* <h2>{userName}</h2> */}
        
       <div className="candidate-search">
-            <input type='text' placeholder='serach'></input>
+            {/* <input type='text' placeholder='serach'></input>
             <button>
               <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
-            </button>
+            </button> */}
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
         </div>
         {showSettings && (

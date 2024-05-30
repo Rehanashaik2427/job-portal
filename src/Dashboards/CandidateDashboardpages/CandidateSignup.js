@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const CandidateRegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const CandidateRegistrationForm = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState(false);
   const validatePassword = () => {
     const { password, confirmPassword } = formData;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,12}$/;
@@ -35,6 +37,7 @@ const CandidateRegistrationForm = () => {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
+    setEmailExistsError(false); // Reset email exists error on submission
     if (!validatePassword()) {
       return;
     }
@@ -53,8 +56,12 @@ const CandidateRegistrationForm = () => {
       //history.push('/candidates'); // Redirect after successful registration
       history.push('/CandidateRegisterSucessMsg'); // Redirect after successful registration
 
-    } catch (error) {
-      console.error('Error registering candidate:', error);
+    }  catch (error) {
+      if (error.message.includes("User already exists")) {
+        setEmailExistsError(true);
+      } else {
+        console.error('Error registering candidate:', error);
+      }
     }
 
   };
@@ -82,7 +89,7 @@ const CandidateRegistrationForm = () => {
           </div> */}
 
           
-<div className="form-group">
+          <div className="form-group">
             <label htmlFor="date">Date:</label>
             <input type="date" id="date" name="appliedDate" value={formData.appliedDate} onChange={handleChange} required />
           </div>
@@ -108,13 +115,13 @@ const CandidateRegistrationForm = () => {
       {passwordMatchError && (
           <p className="error-message">Password and confirm password do not match</p>
         )}
-
-
-       
+        
         {passwordCriteriaError && (
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>
         )}
-        
+          {emailExistsError && (
+          <p className="error-message">Email already exists. Please <Link to='/candidates'>click here for login</Link> </p>
+        )}
         </div> 
 
     

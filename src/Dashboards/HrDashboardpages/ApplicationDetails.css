@@ -1,3 +1,4 @@
+
 .application-details-container {
   display: flex;
   flex-direction: column;
@@ -23,3 +24,36 @@
 .jobdetails pre {
   white-space: pre-wrap;
 }
+
+  .application-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .jobdetails, .candidatedetails {
+   
+    width: 100%;
+    border: 1px solid #ccc;
+    /* padding: 20px; */
+    border-radius: 8px;
+  }
+  
+  .jobdetails h2, .candidatedetails h2 {
+    margin-top: 0;
+  }
+  
+  .jobdetails p, .candidatedetails p {
+    margin: 5px 0;
+  }
+  
+  .jobdetails p b, .candidatedetails p b {
+    font-weight: bold;
+  }
+  
+  /* Add additional styling as needed */
+  .candidate-search{
+    width: 930px;
+    margin-top: 20px;
+  }
+

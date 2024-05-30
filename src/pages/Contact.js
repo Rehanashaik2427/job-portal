@@ -48,7 +48,7 @@ const Contact = () => {
             <p>We are here to assist you with any inquiries or questions you may have. Feel free to reach out to us via email at contact@jobportal.com or call us at +1 234 567 890. Our office is located at 123 Job Portal Street, City, Country. We look forward to hearing from you!</p>
 
             <div className='contact-info'>
-              <div className='email'><FontAwesomeIcon icon={faEnvelope} /> Email: jobbox@mywebsite.com<br /></div>
+              <div className='email'><FontAwesomeIcon icon={faEnvelope} /> Email: jobdb@mywebsite.org<br /></div>
               <div className='mobile'><FontAwesomeIcon icon={faPhone} /> Phone: +1 234 567 890<br /></div>
               <div className='address'><FontAwesomeIcon icon={faMapMarkerAlt} /> Address: 123 Job Portal Street, City, Country</div>
             </div>
