@@ -181,11 +181,11 @@ console.log("No data Found"+error);
                 </div>
             </div>
         )}
-        <div className="page">
+    
         <div className="top-right-content">
           <div className="candidate-search">
        
-          <form className="candidate-search" onSubmit={handleSubmit}>
+          <form className="candidate-search1" onSubmit={handleSubmit}>
       <input
         type='text'
         name='search'
@@ -219,7 +219,7 @@ console.log("No data Found"+error);
         </div>
       )}
 
-          
+<div className="page">        
 {jobs.length > 0 && (
   <div>
     <div>

@@ -77,7 +77,7 @@ console.log("No data Found"+error);
       <div className='rightside'>
       <div className="top-right-content">
           <div className="candidate-search">
-          <form className="candidate-search" onSubmit={handleSubmit}>
+          <form className="candidate-search1" onSubmit={handleSubmit}>
       <input
         type='text'
         name='search'

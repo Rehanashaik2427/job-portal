@@ -1,4 +1,4 @@
-import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser ,faHouse,faBriefcase,faAddressCard,faUsers,faHome,} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { default as React, useEffect, useState } from 'react';
@@ -14,177 +14,176 @@ import HrLeftSide from './HrLeftSide';
 
 
 const Applications = () => {
-  const BASE_API_URL = "http://localhost:8082/api/jobbox";
+    const BASE_API_URL = "http://localhost:8082/api/jobbox";
+   
+    
+    
+const history=useHistory();
+    const location = useLocation();
+    const userName = location.state?.userName;
+    const userEmail = location.state?.userEmail;
 
+    const [showSettings, setShowSettings] = useState(false);
 
-
-  const history = useHistory();
-  const location = useLocation();
-  const userName = location.state?.userName;
-  const userEmail = location.state?.userEmail;
-
-  const [showSettings, setShowSettings] = useState(false);
-
-
-  const [jobs, setJobs] = useState([]);
-
-
-  const fetchJobs = async (userEmail) => {
-    try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
-      console.log(response.data);
-      if (response.status === 200) {
-        setJobs(response.data);
-      } else {
-        console.error('Failed to fetch jobs data');
+    
+    const [jobs, setJobs] = useState([]);
+   
+    
+    const fetchJobs = async (userEmail) => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
+        console.log(response.data);
+        if (response.status === 200) {
+          setJobs(response.data);
+        } else {
+          console.error('Failed to fetch jobs data');
+        }
+      } catch (error) {
+        console.error('Error fetching jobs data:', error);
       }
-    } catch (error) {
-      console.error('Error fetching jobs data:', error);
-    }
-  };
-
+    };
+    
 
   useEffect(() => {
     fetchJobs(userEmail);
   }, [userEmail]);
 
-  // const history = useHistory();
+ // const history = useHistory();
+  
+    const [applications, setApplications] = useState([]);
 
-  const [applications, setApplications] = useState([]);
+    const toggleSettings = () => {
+        setShowSettings(!showSettings);
+    };
 
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
-  };
+    const fetchApplications = async () => {
+        try {
+            const response = await axios.get(`${BASE_API_URL}/getApplicationsByHR?userEmail=${userEmail}`);
+            console.log(response.data);
+            setApplications(response.data);
 
-  const fetchApplications = async () => {
-    try {
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByHR?userEmail=${userEmail}`);
-      console.log(response.data);
-      setApplications(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    } catch (error) {
-      console.log(error);
+    useEffect(() => {
+        fetchApplications();
+    }, [])
+
+
+    const updateStatus = async (applicationId, newStatus) => {
+        console.log(applicationId);
+        console.log(newStatus);
+        try {
+            const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
+            console.log(response.data);
+            fetchApplications();
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+  
+
+    const viewApplications = async (jobId) => {
+        history.push('/viewApplications', { jobId })
+
     }
-  };
-
-  useEffect(() => {
-    fetchApplications();
-  }, [])
 
 
-  const updateStatus = async (applicationId, newStatus) => {
-    console.log(applicationId);
-    console.log(newStatus);
-    try {
-      const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
-      console.log(response.data);
-      fetchApplications();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-
-  const viewApplications = async (jobId) => {
-    history.push('/viewApplications', { jobId })
-
-  }
-
-
-
-  const user = {
-    userName: userName,
-
-    userEmail: userEmail,
-  };
-
-
-  return (
-    <div className='hr-dashboard-container'>
-      <div className='hr-leftside'>
-        <HrLeftSide user={user} />
-      </div>
-      <div className='hr-rightside'>
-        <div className="applications">
-
-          <div className="candidate-search">
-            <input type='text' placeholder='Search'></input>
-            <button>
-              <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-            </button>
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
-
-          </div>
-
-          {showSettings && (
-            <div id="modal-container">
-              <div id="settings-modal">
-                {/* Your settings options here */}
-                <ul>
-                  <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-                  <li>Setting </li>
-                  {/* Add more settings as needed */}
-                </ul>
-                <button onClick={toggleSettings}>Close</button>
-              </div>
-            </div>
-          )}
-
-          <div className='job-list'>
-            {jobs.length > 0 && (
-              <table id='jobTable1'>
-                <tr>
-                  <th>Job Title</th>
-
-                  <th>Application DeadLine</th>
-                  <th>Action</th>
-                </tr>
-                {jobs.map(job => (
-                  job.jobId !== 0 && (
-                    <tr key={job.id}>
-                      <td>{job.jobTitle}</td>
-
-                      <td>{job.applicationDeadline}</td>
-
-                      <td>
-                        <Link
-                          to={{
-                            pathname: '/viewApplications',
-                            state: { userName: userName, userEmail: userEmail, jobId: job.jobId }
-                          }}
-                        >
-                          <button>View Application</button>
-                        </Link>
-                      </td>
-                    </tr>
-                  )
-                ))}
-              </table>
-            )}
-            {jobs.length === 0 && (
-              <section className='not-yet'>
-                <h2 >You have not posted any jobs yet. Post Now</h2>
-              </section>
-            )}
-
-          </div>
-
-
-
-          <div>
-
-          </div>
+  
+    const user = {
+      userName: userName,
+      
+       userEmail: userEmail,
+     };
+   
+   
+     return (
+       <div className='hr-dashboard-container'>
+            <div className='hr-leftside'>
+           <HrLeftSide user={user} />
+         </div>
+            <div className='hr-rightside'>
+                <div className="applications">
+                    
+                    <div className="candidate-search">
+                          <input type='text' placeholder='serach'></input>
+                          <button>
+                            <FontAwesomeIcon icon={faSearch} className='button' style={{color:'skyblue'}}/>
+                          </button>
+                          <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
+                        
+                    </div>
+         
+                    {showSettings && (
+        <div id="modal-container">
+        <div id="settings-modal">
+          {/* Your settings options here */}
+          <ul>
+            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+            <li>Setting </li>
+            {/* Add more settings as needed */}
+          </ul>
+          <button onClick={toggleSettings}>Close</button>
         </div>
-      </div>
+        </div>
+      )}
 
-    </div>
+        <div className='job-list'>
+          {jobs.length > 0 && (
+            <table id='jobTable1'>
+                   <tr>
+                      <th>Job Title</th>
+                    
+                      <th>Application DeadLine</th>
+                      <th>Action</th>
+                    </tr>
+                    {jobs.map(job => (
+                    job.jobId !== 0 && (
+                      <tr key={job.id}>
+                        <td>{job.jobTitle}</td>
+                           <td>{job.applicationDeadline}</td>
+                      
+                         <td>
+                            <Link
+                            to={{
+                              pathname: '/viewApplications',
+                              state: {userName:userName, userEmail: userEmail, jobId:job.jobId }
+                            }}
+                           >
+                            <button>View Application</button>
+                          </Link>
+                           </td>
+                     </tr>
+                  )
+                 ))}
+              </table>
+                )}
+                {jobs.length === 0 && (
+                  <section className='not-yet'>
+                    <h2 >You have not posted any jobs yet. Post Now</h2>
+                  </section>
+                )}
+
+</div>
+                   
+            
+
+                <div>
+                  
+             </div>
+         </div> 
+         </div>   
+         
+           </div> 
 
 
 
 
-
-  );
+     
+    );
 }
 
 export default Applications;

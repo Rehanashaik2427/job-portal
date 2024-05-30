@@ -31,6 +31,7 @@ const Candidates = () => {
     e.preventDefault();
 
     try {
+      
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
       console.log(response);
       if(response.data){

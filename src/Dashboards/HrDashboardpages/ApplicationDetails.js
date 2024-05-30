@@ -60,7 +60,7 @@ const ApplicationDetails = () => {
           <HrLeftSide user={user} />
         </div>
         <div className='hr-rightside'>
-          <div className="candidate-search">
+         
         <div className="application-details-container">
             {job && (
                 <div className="jobdetails">
@@ -90,7 +90,7 @@ const ApplicationDetails = () => {
         </div>
         </div>
         </div>
-        </div>
+      
     );
 };
 

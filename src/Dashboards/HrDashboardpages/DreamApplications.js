@@ -70,17 +70,36 @@ const DreamApplication =()=>{
     };
     const [candidateName,setCandidateName]=useState();
     const [candidateEmail,setCandidateEmail]=useState();
-   
+
+    const fetchCandidateDetails= async()=>{
+      const candidateNames={};
+      const candidateEmails={};
+      for (const application of applications) {
+      const res = await axios.get(`${BASE_API_URL}/getUserName`, {
+        params: {
+          userId: application.candidateId
+        }
+        
+      });
+      candidateNames[application.candidateId]=res.data.userName;
+      candidateEmails[application.candidateId]=res.data.userEmail;
+
+    }
+      setCandidateName(candidateNames);
+      setCandidateEmail(candidateEmails);
+    }
+    useEffect(() => {
+      fetchCandidateDetails();
+    }, [applications]);
   
     const handleDownload = async (resumeId, candidateId) => {
       try {
         const res = await axios.get(`${BASE_API_URL}/getUserName`, {
           params: {
-            userId: candidateId
+            userId:candidateId
           }
+          
         });
-        setCandidateName(res.data.userName);
-        setCandidateEmail(res.data.userEmail);
       
           const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
             responseType: 'blob'
@@ -123,7 +142,8 @@ const DreamApplication =()=>{
               <table id='application'>
                 <thead>
                   <tr style={{textAlign:'center'}}>
-
+                    <th>Candidate Name</th>
+                    <th>Candidate Email</th>
                     <th>Resume ID</th>
                     <th>Date/Time</th>
                     <th>Application Status</th>
@@ -133,6 +153,8 @@ const DreamApplication =()=>{
                 <tbody>
                   {currentApplications.map(application => (
                     <tr key={application.id}>
+                       <td>{candidateName[application.candidateId]}</td>
+                       <td>{candidateEmail[application.candidateId]}</td>
                       <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td>
                       <td>{application.appliedOn}</td>
                       <td>{application.applicationStatus}</td>
