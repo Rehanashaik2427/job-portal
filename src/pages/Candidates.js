@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import './Home.css';
 
 const Candidates = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     userEmail: '',
     password: '',
@@ -16,57 +17,50 @@ const Candidates = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const userEmail=formData.userEmail;
-  const password=formData.password;
-
-
- const BASE_API_URL = "http://localhost:8082/api/jobbox";
-
-  
-
-
-
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.get(`${BASE_API_URL}/login?userEmail=${userEmail}&password=${password}`);
-      console.log(response);
-      if(response.data){
-        const userId=response.data.userId;
-        history.push('/candidate-dashboard', {userId});
-      }
-      
-    else{
-      alert("invalid userName or password")
-    }
-  }
-    catch(error)
-    {
-      console.log(error);
-    }
+      const response = await axios.get(`${BASE_API_URL}/login?userEmail=${formData.userEmail}&password=${formData.password}`);
+      const user = response.data;
 
+      if (user) {
+        if (user.userRole === 'Candidate') {
+          history.push('/candidate-dashboard', { userId: user.userId });
+        } else {
+          setErrorMessage("You do not have Candidate permissions. Please enter the correct email ID.");
+        }
+      } else {
+        setErrorMessage("Invalid email or password.");
+      }
+    } catch (error) {
+      console.log(error);
+      setErrorMessage("An error occurred during login. Please try again.");
+
+    }
   };
- 
+
   return (
     <div className="centered-form">
       <div className="form-container">
-          <h2>Candidate SignIn</h2>
-          <form >
-            <div className="form-group">
-              <label htmlFor="login-email">Email:</label>
-              <input type="email" id="login-email" name="userEmail" value={formData.userEmail} placeholder='email' onChange={handleInputChange} required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="login-password">Password:</label>
-              <input type="password" id="login-password" name="password" value={formData.password} placeholder='password' onChange={handleInputChange} required />
-            </div>
-            <div className="form-group">
-              <button type="submit" onClick={handleSubmit}>Login</button>
-            </div>
-          </form>
-        
+        <h2>Candidate Sign In</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="login-email">Email:</label>
+            <input type="email" id="login-email" name="userEmail" value={formData.userEmail} placeholder='email' onChange={handleInputChange} required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" value={formData.password} placeholder='password' onChange={handleInputChange} required />
+          </div>
+          <div className="form-group">
+            <button type="submit">Login</button>
+          </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+        </form>
         <div className="candidate-login-switch-form">
           Don't have an account? <Link to="/candidate-signup">Signup</Link>
         </div>
@@ -76,3 +70,4 @@ const Candidates = () => {
 };
 
 export default Candidates;
+

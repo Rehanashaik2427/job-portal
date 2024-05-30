@@ -133,6 +133,9 @@ section {
   width: 100%;
   border-collapse: collapse;
 }
+#application th{
+  background-color: rgb(188, 250, 229);
+}
 
 #application th, #application td {
   padding: 8px;
@@ -270,19 +273,6 @@ section {
 
 }
 
-/* .job-details input[type='text'] {
-  flex-basis: 60%;
-  padding: 8px;
-  margin-top: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-.job-details input[type='date'] ,  .job-details textarea{
-  margin-top: 15px;
-} */
-
 .job-button {
   display: flex;
   justify-content: center;
@@ -299,11 +289,9 @@ section {
 
 /*tables rights*/
 #jobTable1 {
-
-  width: 90%;
+  width: 95%;
   border-collapse: collapse;
-  margin-top: 100px;
-  margin-left: 20px;
+  margin-left: 30px;
   margin-right: 20px;
 }
 
@@ -397,7 +385,7 @@ section {
 .add-job-button {
   padding: 10px 20px;
   margin-top: 50px;
-  margin-left: 500px;
+  margin-left: 465px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -485,47 +473,6 @@ section {
 .job-save-edit-buttons button{
   margin-left: 10px;
 }
-/* .menu-toggle {
-  /* Add styles for the menu toggle button 
-  cursor: pointer;
-  display: none; 
-  /* Initially hide the menu toggle button 
-} */
-
-/* Media query for smaller screens */
-/* @media (max-width: 768px) {
-  .hr-leftside {
-    
-    width: 100%;
-    text-align: center;
-    display: block; 
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center
-  }
-  }
-  .menu-toggle {
-    display: block; /* Show the menu toggle button */
-    /* Add styles for the menu toggle button on smaller screens 
-  } */
- 
-
-/* CSS for larger screens */
-/* .container {
-  width: 100%;
-  max-width: 1200px; /* Adjust as needed 
-  margin: 0 auto; /* Center the container 
-} */
-
-/* CSS for smaller screens
-@media (max-width: 768px) {
-  .container {
-    padding: 10px; /* Add padding for smaller screens 
-  }
-  /* Adjust other styles as needed 
-} */
-
 .jobAddedSuccess {
   display: flex;
   flex-direction: column;
@@ -545,20 +492,6 @@ section {
   align-items: center;
 
 }
-
-
-
-/* Addjob
-.hr-rightside-add-job {
-  width: 100%;
-  /* max-width: 600px; Adjust as needed 
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  overflow-x: auto; /* Add scroll option 
-} */
 
 
 .job-description-container {
@@ -711,7 +644,43 @@ section {
 }
 
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
 
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #f0f0f0;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.dots {
+  display: block;
+  padding: 8px 12px;
+  color: #333;
+}
 
 
 .top-bar{
@@ -719,3 +688,6 @@ section {
   justify-content: space-between;
   flex-direction: column;
 }
+
+
+

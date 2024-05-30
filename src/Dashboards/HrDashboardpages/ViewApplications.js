@@ -117,9 +117,9 @@ const ViewApplications = () => {
           {applications.length > 0 && (
             <div>
                 <div>
-            <table id='application'>
+            <table id='jobTable1' style={{marginTop:'12px'}}>
               <thead>
-                <tr style={{textAlign:'center'}}>
+                <tr>
                   <th>Job Title</th>
                   <th>Company Name</th>
                   <th>Resume ID</th>

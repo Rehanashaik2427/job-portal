@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import CandidateLeftSide from './CandidateLeftSide';
-import './CandidateDashboard.css';
-import axios from 'axios';
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import './CandidateDashboard.css';
+import CandidateLeftSide from './CandidateLeftSide';
 
 const MyApplication = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -117,8 +117,8 @@ const MyApplication = () => {
       <div className='rightside'>
         
         <div className="top-right-content">
-          <div className="candidate-search">
-            <form className="candidate-search" onSubmit={handleSubmit}>
+          <div className="candidate-search" onSubmit={handleSubmit}>
+            {/* <form className="candidate-search" > */}
               <input
                 type='text'
                 name='search'
@@ -129,7 +129,7 @@ const MyApplication = () => {
               <button type="submit">
               <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
               </button>
-            </form>
+            {/* </form> */}
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           </div>
           {showSettings && (
@@ -150,7 +150,7 @@ const MyApplication = () => {
           {applications.length > 0 ? (
             <div>
                <div>
-              <h1 style={{ textAlign: 'center' }}>MY APPLICATIONS</h1>
+              {/* <h1 style={{ textAlign: 'center' }}>MY APPLICATIONS</h1> */}
               <div className='applications-table'>
                 <table className='applications-table'>
                   <thead>

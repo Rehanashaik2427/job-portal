@@ -54,7 +54,7 @@ span {
     justify-content: end;
     align-items: center;
     padding: 10px;
-    margin-left: 250px;
+    /* margin-left: 200px; */
  
     
   }
@@ -62,10 +62,12 @@ span {
     width:10%;
   }
   .candidate-search button {
+    height: 35px;
     margin-left: 10px; /* Adjust as needed */
   }
   
 #user{
+height: 35px;
 margin-left: 10px;
 margin-top: 5px;
 color: rgb(90, 90, 182);
@@ -221,7 +223,7 @@ table, th, td ,tr{
 .dream{
   /* background-color: rgb(204, 201, 198); */
   width: 98%;
-  margin-top: 150px;
+  /* margin-top: 150px; */
   margin-left: 12px;
  
 }
@@ -603,7 +605,7 @@ button.com:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 
 .profile-item {
@@ -973,3 +975,15 @@ button.com:hover {
   margin: 10px;
 
 }
+
+
+.rightside {
+  flex: 1; /* Take the remaining space */
+  overflow: auto; /* Enable scrolling for the right side only */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+}
+
+.rightside::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for webkit browsers */
+}
+

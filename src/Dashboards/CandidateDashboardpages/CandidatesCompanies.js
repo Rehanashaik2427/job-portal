@@ -1,10 +1,10 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './CandidateDashboard.css';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
 
 
@@ -76,8 +76,8 @@ console.log("No data Found"+error);
 
       <div className='rightside'>
       <div className="top-right-content">
-          <div className="candidate-search">
-          <form className="candidate-search" onSubmit={handleSubmit}>
+          <div className="candidate-search"onSubmit={handleSubmit}>
+          {/* <form className="candidate-search" > */}
       <input
         type='text'
         name='search'
@@ -88,7 +88,7 @@ console.log("No data Found"+error);
       <button type="submit">
         <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
       </button>
-    </form>
+    {/* </form> */}
            
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           

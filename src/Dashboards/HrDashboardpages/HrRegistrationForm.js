@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './HrDashboard.css';
 import './HrReg.css';
-import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 
@@ -26,6 +26,7 @@ const HrRegistrationForm = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
  
   const [passwordCriteriaError, setPasswordCriteriaError] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,7 +78,7 @@ const HrRegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setPasswordCriteriaError(false); // Reset password criteria error on submission
-
+    setEmailExistsError(false); 
     if (!validatePassword()) {
       setPasswordMatchError(true);
       
@@ -85,27 +86,36 @@ const HrRegistrationForm = () => {
     // Simulating registration success
     
     // console.log("Form Data:", formData);
-     saveUserDetails(formData);
-    history.push('/hr-RegSuccess') // Log the form data
-    setFormData({
-      userName: '',
-      userEmail: '',
-      companyName:'',
-      phone: '',
-      appliedDate: '',
-      password: '',
-      confirmPassword: '',
-      
-    });
-  };
+    try {
+      saveUserDetails(formData);
+      history.push('/hr-RegSuccess');
+      setFormData({
+        userName: '',
+        userEmail: '',
+        companyName: '',
+        phone: '',
+        appliedDate: '',
+        password: '',
+        confirmPassword: '',
+      });
+    } catch (error) {
+      if (error.message.includes("User already exists")) {
+        setEmailExistsError(true);
+      } else {
+        console.error("Error saving user details:", error);
+      }
+    }
   
-
+  };
   return (
     <div className="centered-form">
       <div className="form-container">
         <h2 style={{ textAlign: 'center' }}>HR Registration Form</h2>
         {passwordMatchError && (
           <p className="error-message">Password and confirm password do not match</p>
+        )}
+          {emailExistsError && (
+          <p className="error-message">Email already exists. Please <a href="/signin">sign in</a> here.</p>
         )}
         {passwordCriteriaError && (
           <p className="error-message">Password should include at least one number, one special character, one capital letter, one small letter, and have a length between 8 to 12 characters</p>

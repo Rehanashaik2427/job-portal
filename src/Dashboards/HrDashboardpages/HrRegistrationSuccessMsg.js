@@ -9,7 +9,7 @@ const HrRegistrationSuccessMsg=()=>{
     return (
       <div className="sucess-msg-container" style={{textAlign:'center'}}>
       <h2>Registration Successful</h2>
-      <p>Welcome!</p>
+      <p>please check Your Mail id</p>
       <Link to='/hr-signin'>click here to Login</Link>
     </div>
     )
