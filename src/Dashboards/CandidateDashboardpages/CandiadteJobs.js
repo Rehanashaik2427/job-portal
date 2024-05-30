@@ -181,9 +181,8 @@ const CandiadteJobs = () => {
         )}
         <div className="page">
           <div className="top-right-content">
-            <div className="candidate-search"onSubmit={handleSubmit}>
-
-              {/* <form className="candidate-search" > */}
+            <div className="candidate-search">
+              <form className="candidate-search1"onSubmit={handleSubmit} >
                 <input
                   type='text'
                   name='search'
@@ -194,7 +193,7 @@ const CandiadteJobs = () => {
                 <button type="submit">
                   <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                 </button>
-              {/* </form> */}
+              </form>
 
 
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
@@ -265,7 +264,7 @@ const CandiadteJobs = () => {
 
                         <pre>{selectedJobSummary}</pre>
 
-                        <p>{selectedJobSummary}</p>
+                    
                       </div>
 
                     </div>

@@ -117,8 +117,8 @@ const MyApplication = () => {
       <div className='rightside'>
         
         <div className="top-right-content">
-          <div className="candidate-search" onSubmit={handleSubmit}>
-            {/* <form className="candidate-search" > */}
+          <div className="candidate-search" >
+            <form className="candidate-search1"onSubmit={handleSubmit} >
               <input
                 type='text'
                 name='search'
@@ -129,7 +129,7 @@ const MyApplication = () => {
               <button type="submit">
               <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
               </button>
-            {/* </form> */}
+            </form>
             <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
           </div>
           {showSettings && (

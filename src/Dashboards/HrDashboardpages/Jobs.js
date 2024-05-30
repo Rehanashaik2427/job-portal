@@ -1,4 +1,4 @@
-import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -20,8 +20,8 @@ const Jobs = () => {
   const jobsPerPage = 5;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(currentJobs.length / jobsPerPage);
   const [search, setSearch] = useState('');
   const [numbers, setNumbers] = useState([]);
   const history = useHistory();
@@ -46,13 +46,9 @@ const Jobs = () => {
   }, [totalPages]);
 
   useEffect(() => {
-    setFilteredJobs(
-      jobs.filter(job =>
-        job.jobTitle.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+
     setJobCount(filteredJobs.length);
-  }, [search, jobs]);
+  }, [ jobs]);
 
   const fetchJobs = async (email) => {
     try {
@@ -87,7 +83,25 @@ const Jobs = () => {
       console.error('Error deleting job:', error);
     }
   };
+ 
 
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
+        params: { search, userEmail }
+      });
+      setJobs(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+  };
+  
+  
+  
   const changeCurrentPage = (id) => {
     setCurrentPage(id);
   };
@@ -114,20 +128,23 @@ const Jobs = () => {
       <div className='hr-rightside'>
         
         <div className="candidate-search">
-          {/* <form className="candidate-search" onSubmit={(e) => e.preventDefault()}> */}
-            <input
-              type='text'
-              name='search'
-              placeholder='Search'
-              value={search}
-              onChange={handleSearchChange}
-            />
-            {/* <button type="submit">
-              <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-            </button> */}
-          {/* </form> */}
-          <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
-        </div>
+              <form className="candidate-search1"  onSubmit={handleSubmit}>
+                <input
+                  type='text'
+                  name='search'
+                  placeholder='Search'
+                  value={search}
+                  onChange={handleSearchChange}
+                />
+             <button type="submit">
+  <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+</button>
+              </form>
+
+
+              <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
+
+            </div>
         {showSettings && (
           <div id="modal-container">
             <div id="settings-modal">
@@ -151,7 +168,7 @@ const Jobs = () => {
       )}
       {/* <h2>Job posted by {userName}</h2> */}
       <div className='job-list'>
-        {filteredJobs.length > 0 && (
+        {jobs.length > 0 && (
           <table id='jobTable1'>
             <thead>
               <tr>
