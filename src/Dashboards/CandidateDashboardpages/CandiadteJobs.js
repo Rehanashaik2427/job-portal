@@ -180,6 +180,27 @@ const CandiadteJobs = () => {
           </div>
         )}
 
+        <div className="page">
+          <div className="top-right-content">
+            <div className="candidate-search">
+              <form className="candidate-search1"onSubmit={handleSubmit} >
+                <input
+                  type='text'
+                  name='search'
+                  placeholder='Search'
+                  value={search}
+                  onChange={handleSearchChange}
+                />
+                <button type="submit">
+                  <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+                </button>
+              </form>
+
+
+              <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
+
+            </div>
+
     
         <div className="top-right-content">
           <div className="candidate-search">
@@ -265,7 +286,8 @@ const CandiadteJobs = () => {
 
                         <pre>{selectedJobSummary}</pre>
 
-                        
+
+
                       </div>
 
                     </div>
@@ -311,7 +333,8 @@ const CandiadteJobs = () => {
           </div>
         </div>
       </div>
- 
+      </div>
+      </div>
   );
 };
 

@@ -117,7 +117,6 @@ const MyApplication = () => {
       <div className='rightside'>
         
         <div className="top-right-content">
-
           <div className="candidate-search">
             <form className="candidate-search1" onSubmit={handleSubmit}>
 
@@ -152,7 +151,7 @@ const MyApplication = () => {
       )}
         </div>
         <div>
-          {applications.length > 0 ? (
+          {applications.length > 0 ? ( 
             <div>
               <h2>My Applications</h2>
                <div>

@@ -1,4 +1,4 @@
-import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -48,7 +48,19 @@ const PostedJobs = () => {
   const handleViewSummary = (summary) => {
     setSelectedJobSummary(summary);
   };
-
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
+        params: { search, userEmail }
+      });
+      setJobs(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+  };
   const handleCloseModal = () => {
     setSelectedJobSummary(null);
   };
@@ -61,8 +73,8 @@ const PostedJobs = () => {
       job.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
       job.userName.toLowerCase().includes(search.toLowerCase())
   );
-  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(filteredJobs.length / jobsPerPage);
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const nPage = Math.ceil(currentJobs .length / jobsPerPage);
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
   const changeCurrentPage = (id) => {
@@ -86,6 +98,7 @@ const PostedJobs = () => {
 
       <div className='hr-rightside'>
         <div className="candidate-search">
+        <form className="candidate-search1"  onSubmit={handleSubmit}>
           <input
             type='text'
             name='search'
@@ -93,9 +106,10 @@ const PostedJobs = () => {
             value={search}
             onChange={handleSearchChange}
           />
-          {/* <button type="submit">
+          <button type="submit">
             <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-          </button> */}
+          </button>
+          </form>
           <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
         </div>
         {showSettings && (
