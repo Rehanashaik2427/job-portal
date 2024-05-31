@@ -74,7 +74,7 @@ const PostedJobs = () => {
       job.userName.toLowerCase().includes(search.toLowerCase())
   );
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(currentJobs .length / jobsPerPage);
+  const nPage = Math.ceil(jobs .length / jobsPerPage);
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
   const changeCurrentPage = (id) => {

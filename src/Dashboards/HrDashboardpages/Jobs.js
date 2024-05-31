@@ -21,7 +21,7 @@ const Jobs = () => {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(currentJobs.length / jobsPerPage);
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
   const [search, setSearch] = useState('');
   const [numbers, setNumbers] = useState([]);
   const history = useHistory();
@@ -166,7 +166,7 @@ const Jobs = () => {
           </div>
         </div>
       )}
-      {/* <h2>Job posted by {userName}</h2> */}
+      <h2>Job posted by {userName}</h2>
       <div className='job-list'>
         {jobs.length > 0 && (
           <table id='jobTable1'>

@@ -51,7 +51,19 @@ const Resume = () => {
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+const handleDelete=async(resumeId)=>{
+  try{
+   const response= await axios.delete(`${BASE_API_URL}/deleteResume?resumeId=${resumeId}`)
+   if(response.data)
+    {
+      alert("Resume Delete")
+       window.location.reload(); // Refresh the page
+    }
+  }catch{
+alert("Failed To delete")
+  }
 
+}
   const user = {
     userName: userName,
     
@@ -101,6 +113,7 @@ const Resume = () => {
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
                         <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
+                        <button className='delete' onClick={() => handleDelete(resume.id)}>delete</button>
                     </span>
                 ))}
             </div>

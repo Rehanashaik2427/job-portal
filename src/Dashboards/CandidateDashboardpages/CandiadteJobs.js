@@ -54,7 +54,7 @@ const CandiadteJobs = () => {
     if (selectedJobId && resumeId) {
       await applyJob(selectedJobId, resumeId);
       setSelectedJobId(null); // Reset selected job id
-      setShowResumePopup(false); // Close the resume selection popup
+     setShowResumePopup(false); // Close the resume selection popup
     }
   };
   ///////////////////////////
@@ -69,9 +69,9 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
-      // setApplyJobs(response.data);
+       setApplyJobs(response.data);
       console.log(response.data);
-      setApplyJobs([...applyjobs, jobId]);
+      //setApplyJobs([...applyjobs, jobId]);
 
       if (response.data) {
         alert("You have successfully applied for this job");
@@ -202,26 +202,7 @@ const CandiadteJobs = () => {
             </div>
 
     
-        <div className="top-right-content">
-          <div className="candidate-search">
-       
-          <form className="candidate-search1" onSubmit={handleSubmit}>
-      <input
-        type='text'
-        name='search'
-        placeholder='Search'
-        value={search}
-        onChange={handleSearchChange}
-      />
-      <button type="submit">
-        <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-      </button>
-    </form>
-           
-          
-            <div><FontAwesomeIcon icon={faUser} id="user" className='icon'  style={{color:'black'}} onClick={toggleSettings}/></div>
-          
-          </div>
+ 
          
     
         </div>
@@ -334,7 +315,8 @@ const CandiadteJobs = () => {
         </div>
       </div>
       </div>
-      </div>
+      
+        
   );
 };
 
