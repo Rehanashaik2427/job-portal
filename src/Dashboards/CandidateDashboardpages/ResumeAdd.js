@@ -13,38 +13,52 @@ const ResumeAdd = () => {
     const [file, setFile] = useState(null);
     const [message, setMessage] = useState('');
     const [fileType, setFileType] = useState('file');
+    const [link, setLink] = useState('');
+    const [briefMessage, setBriefMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
     const handleFileChange = (event) => {
-        setFile(event.target.files[0]); // Corrected: Access 'files' array, not 'file'
+        setFile(event.target.files[0]); 
     };
 
     const handleMessageChange = (event) => {
         setMessage(event.target.value);
+    };
+    const handleBriefMessageChange = (event) => {
+        setBriefMessage(event.target.value);
     };
 
     const handleFileTypeChange = (event) => {
         setFileType(event.target.value);
     };
 
+    const handleLinkChange = (event) => {
+        setLink(event.target.value);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('message', message);
-        formData.append('fileType', fileType);
         formData.append('userId', userId);
+        formData.append('fileType', fileType);
+        formData.append('message', message);
+
+        if (fileType === 'file') {
+            formData.append('file', file);
+        } else if (fileType === 'link') {
+            formData.append('link', link);
+        } else if (fileType === 'brief') {
+            formData.append('briefMessage', briefMessage);
+        }
 
         try {
-        
-
             const response = await axios.post(BASE_API_URL + '/uploadResume', formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
-              });
-              console.log('File uploaded successfully:', response.data);
-            if (response.ok) {
+            });
+            console.log('File uploaded successfully:', response.data);
+            if (response.status === 200) {
                 setSuccessMessage('Resume uploaded successfully!');
                 alert(successMessage);
             } else {
@@ -72,19 +86,34 @@ const ResumeAdd = () => {
                         <label>Select Type:</label>
                         <select value={fileType} onChange={handleFileTypeChange}>
                             <option value="file">File</option>
-                            <option value="image">Image</option>
-                            <option value="brief">Brief</option> {/* Corrected: Use 'brief' */}
+                            <option value="link">Link</option>
+                            <option value="brief">Brief</option>
                         </select>
                     </div>
-                    <div className='select-file'>
-                        <label>Select {fileType === 'file' ? 'File' : fileType === 'image' ? 'Image' : 'Brief'}:</label>
-                        <input type={fileType === 'file' ? 'file' : fileType === 'image' ? 'file' : 'file'} accept={fileType === 'file' ? '.pdf, .doc, .docx' : fileType === 'image' ? 'image/*' : '.txt'} onChange={handleFileChange} />
-                    </div>
-                    <div className='message-type'>
-                        <label>Message:</label>
-                        <textarea value={message} onChange={handleMessageChange}></textarea>
-                    </div>
+                    {fileType === 'file' && (
+                        <div className='select-file'>
+                            <label>Select File:</label>
+                            <input type='file' accept='.pdf, .doc, .docx' onChange={handleFileChange} />
+                        </div>
+                    )}
+                    {fileType === 'link' && (
+                        <div className='select-link'>
+                            <label>Enter Link:</label>
+                            <input type='text' value={link} onChange={handleLinkChange} />
+                        </div>
+                    )}
+                    {fileType === 'brief' && (
+                        <div className='message-type'>
+                            <label>Brief Resume:</label>
+                            <textarea value={briefMessage} onChange={handleBriefMessageChange}></textarea>
+                        </div>
+                    )}
+                        <div className='message-type'>
+                            <label>Message:</label>
+                            <textarea value={message} onChange={handleMessageChange}></textarea>
+                        </div>
                     <div>
+
                         <button type="submit" className='uploadResume'>Upload Resume</button>
                     </div>
                 </form>

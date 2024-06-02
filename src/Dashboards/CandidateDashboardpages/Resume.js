@@ -45,6 +45,17 @@ const Resume = () => {
       console.error('Error downloading resume:', error);
     }
   };
+  const [showBriefSettings, setShowBriefSettings] = useState(false);
+  const handleBrief=async(resumeId,fileType)=>{
+
+    const response = await axios.get(`http://localhost:8082/api/jobbox/getBriefResume?resumeId=${resumeId}`);
+    if(response){
+      setShowMessage(response.data);
+      setShowBriefSettings(!showBriefSettings);
+  
+    }
+    
+  }
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -90,6 +101,12 @@ const Resume = () => {
         </div>
         </div>
       )}
+              {showBriefSettings && (
+        <div id="modal-container">
+          {showMessage}
+        </div>
+      )}
+
 
         <div>
           <h1 style={{textAlign:'center'}}>MY RESUMES</h1>
@@ -100,7 +117,16 @@ const Resume = () => {
                     <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
-                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
+                        {resume.fileType === 'file' && (
+                                <button className='download' onClick={() => handleDownload(resume.id, resume.fileType)}>Download</button>
+                            )}
+                            {resume.fileType === 'link' && (
+                                <a href={resume.link} target="_blank" rel="noopener noreferrer">Open Link</a>
+                            )}
+                            {resume.fileType === 'brief' && (
+                                <button className='open-brief-modal' onClick={() => handleBrief(resume.id, resume.fileType)}>Open Brief</button>
+                            )}
+
                     </span>
                 ))}
             </div>
