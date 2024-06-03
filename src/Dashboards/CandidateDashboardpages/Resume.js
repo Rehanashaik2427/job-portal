@@ -135,10 +135,6 @@ const Resume = () => {
                     <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
-                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
-                        <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
-                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
-=======
                         {resume.fileType === 'file' && (
                                 <button className='download' onClick={() => handleDownload(resume.id, resume.fileType)}>Download</button>
                             )}
@@ -148,7 +144,7 @@ const Resume = () => {
                             {resume.fileType === 'brief' && (
                                 <button className='open-brief-modal' onClick={() => handleBrief(resume.id, resume.fileType)}>Open Brief</button>
                             )}
-
+                        <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
                     </span>
                 ))}
             </div>
