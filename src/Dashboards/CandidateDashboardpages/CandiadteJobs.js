@@ -69,15 +69,12 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
-<<<<<<< HEAD
        setApplyJobs(response.data);
       console.log(response.data);
     
-=======
       setApplyJobs(response.data);
       console.log(response.data);
       // setApplyJobs([...applyjobs, jobId]);
->>>>>>> 8df07b5e3fc09b76b3ef10cfdb0bcd1edb1c71d3
 
       if (response.data) {
         alert("You have successfully applied for this job");
