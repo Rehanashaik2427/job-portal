@@ -27,7 +27,7 @@ const Resume = () => {
             .catch(error => {
                 console.error('Error fetching resumes:', error);
             });
-    }, []);
+    },[]);
 
    // Function to handle resume download
    const handleDownload = async (resumeId, fileName) => {
@@ -102,7 +102,7 @@ const Resume = () => {
         </div>
       )}
               {showBriefSettings && (
-        <div id="modal-container">
+        <div className="modal-content">
           {showMessage}
         </div>
       )}
