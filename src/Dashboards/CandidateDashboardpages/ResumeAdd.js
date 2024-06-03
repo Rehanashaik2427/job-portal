@@ -117,7 +117,7 @@ const ResumeAdd = () => {
                         </div>
                     )}
                         <div className='message-type'>
-                            <label>Message:</label>
+                            <label>Resume Title:</label>
                             <textarea value={message} onChange={handleMessageChange}></textarea>
                         </div>
                     <div>
