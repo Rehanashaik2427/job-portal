@@ -28,12 +28,14 @@
   .application-details-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 20px;
   }
   
   .jobdetails, .candidatedetails {
    
-    width: 100%;
+    width: 850px;
     border: 1px solid #ccc;
     /* padding: 20px; */
     border-radius: 8px;

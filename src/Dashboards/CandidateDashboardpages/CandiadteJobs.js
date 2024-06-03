@@ -69,9 +69,15 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
+<<<<<<< HEAD
        setApplyJobs(response.data);
       console.log(response.data);
     
+=======
+      setApplyJobs(response.data);
+      console.log(response.data);
+      // setApplyJobs([...applyjobs, jobId]);
+>>>>>>> 8df07b5e3fc09b76b3ef10cfdb0bcd1edb1c71d3
 
       if (response.data) {
         alert("You have successfully applied for this job");
@@ -195,37 +201,34 @@ const CandiadteJobs = () => {
                   <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                 </button>
               </form>
-
-
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
-
             </div>
+
 
     
  
          
     
         </div>
-        {showSettings && (
-        <div id="modal-container">
-        <div id="settings-modal">
-         
-          <ul>
-            <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
-            <li>Setting </li>
-           
-          </ul>
-          <button onClick={toggleSettings}>Close</button>
-        </div>
-        </div>
-      )}
+       
+          {showSettings && (
+            <div id="modal-container">
+              <div id="settings-modal">
+                <ul>
+                  <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sing out</Link></li>
+                  <li>Setting </li>
+                </ul>
+                <button onClick={toggleSettings}>Close</button>
+              </div>
+            </div>
+          )}
+
           {jobs.length > 0 && (
             <div>
               <h2>Jobs For {userName}</h2>
               <div>
                 {/* <h1 style={{ textAlign: 'center' }}>JOBS</h1> */}
                 <table className='jobs-table'>
-
                   <tr>
                     <th>Job Profile</th>
                     <th>Company Name</th>
@@ -234,8 +237,6 @@ const CandiadteJobs = () => {
                     <th>Job summary</th>
                     <th>Actions</th>
                   </tr>
-
-
                   {currentJobs.map(job => (
                     <tr key={job.id} id='job-table-list'>
                       <td>{job.jobTitle}</td>
@@ -243,8 +244,6 @@ const CandiadteJobs = () => {
                       <td>{job.applicationDeadline}</td>
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
-
-
                       <td>
                         {applications.some(application => application.jobId === job.jobId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
                           <h4>Applied</h4>
@@ -256,7 +255,6 @@ const CandiadteJobs = () => {
                       </td>
                     </tr>
                   ))}
-
                 </table>
                 {selectedJobSummary && (
                   <div className="modal-summary">
@@ -264,26 +262,22 @@ const CandiadteJobs = () => {
                       <div style={{ width: '100%' }}>
                         <span className="close" onClick={handleCloseModal}>&times;</span>
                         <h2>Job Summary</h2>
-
                         <pre>{selectedJobSummary}</pre>
 
 
 
-                      </div>
 
+
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
-
-
               <nav>
                 <ul className='pagination'>
-
                   {
                     numbers.map((n, i) => (
                       <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-
                         <Link to={{
                           pathname: '/candidate-jobs',
                           state: { userName: userName, userId: userId }
@@ -291,35 +285,24 @@ const CandiadteJobs = () => {
                       </li>
                     ))
                   }
-
-
-
                 </ul>
               </nav>
             </div>
           )}
           {jobs.length === 0 && <h1>No jobs found.</h1>}
-
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
             <p>Just add the name of your dream company and apply to them directly.</p>
-
-            <Link to={{
-              pathname: '/dream-company',
-              state: { userName: userName, userId: userId }
-            }} className="app">
+            <Link to={{pathname: '/dream-company',state: { userName: userName, userId: userId }}} className="app">
               <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
             </Link>
-
           </div>
         </div>
       </div>
       </div>
       
+      
         
   );
 };
-
-
-
 export default CandiadteJobs;

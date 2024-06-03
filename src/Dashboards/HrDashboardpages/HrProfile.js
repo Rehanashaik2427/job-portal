@@ -128,7 +128,7 @@ const HrProfile = () => {
               <h1>Total Applications</h1>
               <p>"Number of applications got by {userName}"</p>
               <Link to={{ pathname: '/total-applicants-by-hr', state: { userName: userName, userEmail: userEmail } }}>
-                <h2>Total Applicants {countOfApplications}</h2>
+                <h2> {countOfApplications} Applicants</h2>
               </Link>
             </div>
 
@@ -137,7 +137,7 @@ const HrProfile = () => {
               <h1>Shortlisted Candidates</h1>
               <p>"Number of shortlisted candidiates"</p>
               <Link to={{ pathname: '/shortlisted-candidates', state: { userName: userName, userEmail: userEmail } }}>
-                <h2>{countOfShortlistedCandidates} Candidates</h2>
+                <h2>{countOfShortlistedCandidates} Shortlisted Candidates</h2>
               </Link>
             </div>
 
@@ -155,7 +155,7 @@ const HrProfile = () => {
               <h1>Under Review Candidates</h1>
               <p>"The candidate profile want to check"</p>
               <Link to={{ pathname: '/under-review', state: { userName: userName, userEmail: userEmail } }}>
-                <h2> {countOfUnderReviewCandidates} Under Review</h2>
+                <h2> {countOfUnderReviewCandidates} Under Review Candidates</h2>
               </Link>
             </div>
 

@@ -1,12 +1,11 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './CandidateDashboard.css';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import CandidateLeftSide from './CandidateLeftSide';
 import axios from 'axios';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './CandidateDashboard.css';
+import CandidateLeftSide from './CandidateLeftSide';
 
 const Resume = () => {
   const BASE_API_URL="http://localhost:8082/api/jobbox";
@@ -58,6 +57,8 @@ const Resume = () => {
     
   }
 
+ 
+  
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {
@@ -134,6 +135,10 @@ alert("Failed To delete")
                         <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
+                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
+                        <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
+                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
+=======
                         {resume.fileType === 'file' && (
                                 <button className='download' onClick={() => handleDownload(resume.id, resume.fileType)}>Download</button>
                             )}

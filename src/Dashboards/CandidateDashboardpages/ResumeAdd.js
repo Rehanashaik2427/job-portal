@@ -1,8 +1,8 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import CandidateLeftSide from './CandidateLeftSide';
 import './CandidateDashboard.css';
-import axios from 'axios';
+import CandidateLeftSide from './CandidateLeftSide';
 
 const ResumeAdd = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -56,13 +56,21 @@ const ResumeAdd = () => {
                 headers: {
                   'Content-Type': 'multipart/form-data'
                 }
-            });
+              });
+              console.log('File uploaded successfully:', response.data);
+            if (response) {
+              };
+           
             console.log('File uploaded successfully:', response.data);
             if (response.status === 200) {
                 setSuccessMessage('Resume uploaded successfully!');
-                alert(successMessage);
+                
             } else {
+
                 console.error('Resume upload failed');
+
+                setSuccessMessage('File upload failed');
+
             }
         } catch (error) {
             console.error('Error uploading Resume:', error);
