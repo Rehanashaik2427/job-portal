@@ -74,18 +74,44 @@ const Jobs = () => {
     });
   };
 
-  const handleDelete = async (jobId) => {
-    try {
-      await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
+  // const handleDelete = async (jobId) => {
+  //   try {
+  //     await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
       
-      fetchJobs(userEmail);
-    } catch (error) {
-      console.error('Error deleting job:', error);
-    }
+  //     fetchJobs(userEmail);
+  //   } catch (error) {
+  //     console.error('Error deleting job:', error);
+  //   }
+  // };
+  useEffect(() => {
+    // Get hidden job IDs from local storage
+    const hiddenJobs = JSON.parse(localStorage.getItem('hiddenJobs') || '[]');
+    // Filter out hidden jobs
+    const visibleJobs = jobs.filter(job => !hiddenJobs.includes(job.jobId));
+    setFilteredJobs(visibleJobs);
+  }, [jobs]);
+
+  const handleDelete = (jobId) => {
+    // Update the state to mark the job as hidden
+    setJobs(prevJobs =>
+      prevJobs.map(job =>
+        job.jobId !== jobId ? job : { ...job, hidden: true }
+      )
+    );
+
+    // Store the hidden job ID in local storage
+    const hiddenJobs = JSON.parse(localStorage.getItem('hiddenJobs') || '[]');
+    localStorage.setItem('hiddenJobs', JSON.stringify([...hiddenJobs, jobId]));
   };
- 
+
+  // Render only non-hidden jobs
+  const visibleJobs = filteredJobs.filter(job => !job.hidden);
 
 
+
+
+
+  
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     try {
@@ -168,7 +194,7 @@ const Jobs = () => {
           </div>
         </div>
       )}
-      <h2>Job posted by {userName}</h2>
+      {/* <h2>Job posted by {userName}</h2> */}
       <div className='job-list'>
         {jobs.length > 0 && (
           <table id='jobTable1'>

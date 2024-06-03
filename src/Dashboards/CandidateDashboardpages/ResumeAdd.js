@@ -113,7 +113,7 @@ const ResumeAdd = () => {
                     {fileType === 'brief' && (
                         <div className='message-type'>
                             <label>Brief Resume:</label>
-                            <textarea value={briefMessage} onChange={handleBriefMessageChange}></textarea>
+                           <pre><textarea value={briefMessage} onChange={handleBriefMessageChange}></textarea></pre>
                         </div>
                     )}
                         <div className='message-type'>

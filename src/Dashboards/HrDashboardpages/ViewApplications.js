@@ -96,7 +96,7 @@ const ViewApplications = () => {
     const fileName=fileNames[resumeId];
     if (fileType === 'file') {
       return (
-        <button onClick={() => handleDownload(resumeId)}>Download</button>
+        <button onClick={() => handleDownload(resumeId,fileName)}>Download</button>
       );
     } else if (fileType === 'link') {
       return (
@@ -117,7 +117,8 @@ const ViewApplications = () => {
     setShowBriefSettings(!showBriefSettings)
   };
 
-  const handleDownload = async (resumeId) => {
+  const handleDownload = async (resumeId,fileName) => {
+
     try {
       
     
@@ -125,7 +126,7 @@ const ViewApplications = () => {
           responseType: 'blob'
         });
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const fileName =response.data.fileName;
+       // const fileName =response.data.fileName;
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', fileName);
@@ -180,8 +181,8 @@ const ViewApplications = () => {
             </select>
           </div>
           {showBriefSettings && (
-         <div className="modal">
-         <div className="modal-content">
+         <div className="modal-summary">
+         <div className="modal-content-summary">
          <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
           {showMessage}
         </div>

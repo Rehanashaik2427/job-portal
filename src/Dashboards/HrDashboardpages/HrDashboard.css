@@ -105,12 +105,7 @@ section {
   box-sizing: border-box;
 }
 
-/* filetr ////////////////////////////////////////////////////////////////////////////////////////*/
 
-
-/* .candidate-search {
- /* Adjust margins as needed 
-} */
 
 .application-div{
   display: flex;
@@ -726,4 +721,31 @@ section {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+}
+
+
+.candidate-search{
+  margin-left: 10px;
+}
+
+
+.profile-container {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  
+
+}
+
+.profile-item {
+}
+
+.profile-label {
+  font-weight: bold;
+}
+
+.profile-value {
+  margin-left: 10px;
+  color: #333;
 }

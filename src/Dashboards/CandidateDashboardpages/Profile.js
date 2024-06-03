@@ -1,11 +1,11 @@
-import { faBuilding, faFile, faFileLines, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faSearch, faUser,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './CandidateDashboard.css';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
-import axios from 'axios';
 
 
 const Profile = () => {
@@ -76,8 +76,8 @@ const Profile = () => {
       )}
        
        <div className="profile-container">
-  {userData && (
-    <>
+      {userData && (
+      <>
       <div className="profile-item">
         <span className="profile-label">Name:</span>
         <span className="profile-value">{userData.userName}</span>
