@@ -54,7 +54,7 @@ const CandiadteJobs = () => {
     if (selectedJobId && resumeId) {
       await applyJob(selectedJobId, resumeId);
       setSelectedJobId(null); // Reset selected job id
-      setShowResumePopup(false); // Close the resume selection popup
+     setShowResumePopup(false); // Close the resume selection popup
     }
   };
   ///////////////////////////
@@ -69,9 +69,15 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
+<<<<<<< HEAD
+       setApplyJobs(response.data);
+      console.log(response.data);
+    
+=======
       setApplyJobs(response.data);
       console.log(response.data);
       // setApplyJobs([...applyjobs, jobId]);
+>>>>>>> 8df07b5e3fc09b76b3ef10cfdb0bcd1edb1c71d3
 
       if (response.data) {
         alert("You have successfully applied for this job");
@@ -80,7 +86,7 @@ const CandiadteJobs = () => {
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
-    // fetchJobs();
+   
   };
 
   const [resumes, setResumes] = useState([]);
@@ -170,7 +176,7 @@ const CandiadteJobs = () => {
         {showResumePopup && (
           <div className="modal">
             <div className="modal-content">
-              <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+            <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
               <ResumeSelectionPopup
                 resumes={resumes}
                 onSelectResume={handleResumeSelect}
@@ -179,6 +185,7 @@ const CandiadteJobs = () => {
             </div>
           </div>
         )}
+
         <div className="page">
           <div className="top-right-content">
             <div className="candidate-search">
@@ -196,7 +203,14 @@ const CandiadteJobs = () => {
               </form>
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
             </div>
-          </div>
+
+
+    
+ 
+         
+    
+        </div>
+       
           {showSettings && (
             <div id="modal-container">
               <div id="settings-modal">
@@ -208,8 +222,10 @@ const CandiadteJobs = () => {
               </div>
             </div>
           )}
+
           {jobs.length > 0 && (
             <div>
+              <h2>Jobs For {userName}</h2>
               <div>
                 {/* <h1 style={{ textAlign: 'center' }}>JOBS</h1> */}
                 <table className='jobs-table'>
@@ -247,6 +263,11 @@ const CandiadteJobs = () => {
                         <span className="close" onClick={handleCloseModal}>&times;</span>
                         <h2>Job Summary</h2>
                         <pre>{selectedJobSummary}</pre>
+
+
+
+
+
                       </div>
                     </div>
                   </div>
@@ -278,7 +299,10 @@ const CandiadteJobs = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      
+      
+        
   );
 };
 export default CandiadteJobs;

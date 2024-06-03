@@ -22,14 +22,19 @@ const HrSignin = () => {
     e.preventDefault();
 
     try {
+
+     
+     
+
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${formData.userEmail}&password=${formData.password}`);
       const user = response.data;
+
 
       if (user) {
         if (user.userRole === 'HR') {
           history.push('/hr-dashboard', { userEmail: formData.userEmail });
         } else {
-          setErrorMessage("You do not have HR permissions. Please enter the correct email ID.");
+          setErrorMessage("You do not have permission to login as HR. Please enter the correct email ID.");
         }
       } else {
         setErrorMessage("Invalid email or password.");

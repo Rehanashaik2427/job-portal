@@ -1,4 +1,4 @@
-import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser ,faHouse,faBriefcase,faAddressCard,faUsers,faHome,} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -9,14 +9,30 @@ import Pagination from './Pagination';
 
 const Applications = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
-    const history = useHistory();
+
+   
+    
+    
+const history=useHistory();
+
+  
+
     const location = useLocation();
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
 
     const [showSettings, setShowSettings] = useState(false);
-    const [jobs, setJobs] = useState([]);
-    const [applications, setApplications] = useState([]);
+
+
+    
+ 
+   
+    
+    
+    
+
+    
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // Start at page 1
@@ -32,13 +48,11 @@ const Applications = () => {
         setCurrentPage(pageNumber);
     };
 
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+ 
 
     const handleSearch = () => {
         const value = searchTerm.toLowerCase();
-        const filtered = jobs.filter(job =>
+        const filtered = filteredJobs.filter(job =>
             job.jobTitle.toLowerCase().includes(value)
         );
         setFilteredJobs(filtered);
@@ -66,28 +80,32 @@ const Applications = () => {
         setShowSettings(!showSettings);
     };
 
-    const fetchApplications = async () => {
-        try {
-            const response = await axios.get(`${BASE_API_URL}/getApplicationsByHR?userEmail=${userEmail}`);
-            setApplications(response.data);
-            setFilteredJobs(response.data); // Initialize filteredApplications with the full list
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
-    useEffect(() => {
-        fetchApplications();
-    }, [userEmail]);
+   const handleSearchChange=(e)=>{
+setSearchTerm(e.target.value);
+   }
 
-    const updateStatus = async (applicationId, newStatus) => {
-        try {
-            await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
-            fetchApplications();
-        } catch (error) {
-            console.log(error);
-        }
-    };
+
+
+
+ 
+    
+
+
+  
+    
+
+  
+
+
+
+    
+
+   
+
+  
+
+
 
     const user = {
         userName: userName,
@@ -107,7 +125,7 @@ const Applications = () => {
                                 type='text'
                                 placeholder='Search by job title'
                                 value={searchTerm}
-                                onChange={handleSearchChange}
+                                 onChange={handleSearchChange}
                             />
                             <button onClick={handleSearch}>
                                 <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
@@ -131,7 +149,7 @@ const Applications = () => {
                     )}
 
                     <div className='job-list'>
-                        {/* {jobs.length > 0 && ( */}
+                        {filteredJobs.length > 0 && (
                             <table id='jobTable1'>
                                 <thead>
                                     <tr>
@@ -162,7 +180,7 @@ const Applications = () => {
                                 </tbody>
                             </table>
                             
-                        {/* // )} */}
+                        )} 
 
                        
                              <Pagination
@@ -177,9 +195,15 @@ const Applications = () => {
                                 <h2>You have not posted any jobs yet. Post Now</h2>
                             </section>
                         )}
+
+                    </div>
+
+                
+
                 </div>
-            </div>
+           
         </div>
+
     );
 }
 

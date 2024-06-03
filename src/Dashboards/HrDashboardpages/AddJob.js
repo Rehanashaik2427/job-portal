@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HrLeftSide from './HrLeftSide';
@@ -6,16 +6,13 @@ import HrLeftSide from './HrLeftSide';
 const AddJob = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
-
- 
-
-
   const history = useHistory(); 
-  const { userName, userEmail, companyName } = location.state || {};
+
+  const { userName, userEmail } = location.state || {};
   console.log(userEmail);
- 
+  
   const [formData, setFormData] = useState({
-    userEmail: userEmail,
+    hrEmail: userEmail || '', // set userEmail to an empty string if it's not available in location.state
     jobTitle: '',
     jobType: '',
     location: '',
@@ -26,7 +23,14 @@ const AddJob = () => {
     numberOfPosition: '', 
     jobsummary: ''
   });
-  
+
+  useEffect(() => {
+    setFormData(prevState => ({
+      ...prevState,
+      userEmail: userEmail || '', // update userEmail in formData when location.state changes
+    }));
+  }, [userEmail]);
+
   const saveJobData = async (formData) => {
     try {
       const response = await fetch(`${BASE_API_URL}/postingJob`, {
@@ -45,8 +49,9 @@ const AddJob = () => {
     try {
       const response = await saveJobData(formData);
       if (response.ok) {
-        console.log("Job posted successfully",formData);
-       
+        console.log("Job posted successfully", formData);
+        alert("Job posted successfully");
+        history.push('/jodAddSuccess', { userName: userName, userEmail: userEmail });
       } else {
         console.error("Error posting job");
       }
@@ -63,15 +68,9 @@ const AddJob = () => {
   return (
     <div className='hr-dashboard-container'>
       <div className='hr-leftside'>
-
           <HrLeftSide user={{ userName, userEmail }} /> 
       </div>
-
-      
-
-  
-
-          <div className='hr-rightside'>
+      <div className='hr-rightside'>
         <div className='job-posting-container'>
           <form className="job-posting-form" onSubmit={handleSubmit}>
             <div>
@@ -89,7 +88,6 @@ const AddJob = () => {
                   <label htmlFor="postingdate">Posting Date:</label>
                   <input type="date" id="postingdate" name="postingDate" value={formData.postingDate} onChange={handleChange} required  />
                 </div>
-
               </div>
               <div className='job-details-row'>
                 <div className='job-form-group'>
@@ -104,32 +102,41 @@ const AddJob = () => {
                   <label htmlFor="salary">Salary:</label>
                   <input type="text" id="salary" name="salary" value={formData.salary} onChange={handleChange} required  />
                 </div>
-              
                 <div className='job-form-group'>
                   <label htmlFor="deadline">Application Deadline:</label>
                   <input type="date" id="deadline" name="applicationDeadline" value={formData.applicationDeadline} onChange={handleChange} required/>
                 </div>
                 <div className='job-form-group'>
                   <label htmlFor="jobsummary">Job summary: (Add Additional Information)</label>
-                 <pre> <strong><textarea
+                 
+
+                 <pre><textarea
+
                     id="jobsummary"
                     name="jobsummary"
                     value={formData.jobsummary}
                     onChange={handleChange}
                     className="fullWidthTextarea"
-                  /></strong></pre>
+
+            
+
+                  /></pre>
+
                 </div>
                 <div className='job-form-group-button'>
-                  <button type='submit' className='post' onClick={handleSubmit}>
-                    <Link to={{ pathname: '/jodAddSuccess', state: { userName: userName, userEmail: userEmail } }}>Post</Link>
-                  </button>
+                  <button type='submit' className='post'>Post</button>
                 </div>
               </div>
             </div>
           </form>
         </div>
       </div>
-      </div>
-  )
+
+    </div>
+  );
+
+      
+  
+
 }
 export default AddJob;

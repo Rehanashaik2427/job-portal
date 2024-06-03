@@ -54,7 +54,12 @@ span {
     justify-content: end;
     align-items: center;
     padding: 10px;
+
+    margin-left: 250px;
+    margin-top: 5px;
+
     /* margin-left: 200px; */
+
  
     
   }
@@ -69,7 +74,7 @@ span {
 #user{
 height: 35px;
 margin-left: 10px;
-margin-top: 5px;
+margin-top: 0px;
 color: rgb(90, 90, 182);
 }
 #user:hover{

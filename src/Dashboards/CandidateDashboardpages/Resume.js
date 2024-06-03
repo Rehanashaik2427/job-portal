@@ -26,7 +26,7 @@ const Resume = () => {
             .catch(error => {
                 console.error('Error fetching resumes:', error);
             });
-    },[]);
+    }, []);
 
    // Function to handle resume download
    const handleDownload = async (resumeId, fileName) => {
@@ -44,6 +44,7 @@ const Resume = () => {
       console.error('Error downloading resume:', error);
     }
   };
+
   const [showBriefSettings, setShowBriefSettings] = useState(false);
   const handleBrief=async(resumeId,fileType)=>{
 
@@ -56,31 +57,27 @@ const Resume = () => {
     
   }
 
-  const handleDelete = async (resumeId) => {
-    try {
-      await axios.delete(`${BASE_API_URL}/deleteResume?resumeId=${resumeId}`);
-      
-      
-      // Refresh the resumes list after deletion
-      axios.get(`${BASE_API_URL}/getResume?userId=${userId}`)
-        .then(response => {
-          setResumes(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching resumes:', error);
-        });
-    } catch (error) {
-      console.error('Error deleting resume:', error);
-      alert("Failed to delete resume");
-    }
-  };
+ 
   
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
+  
+const handleDelete=async(resumeId)=>{
+  try{
+   const response= await axios.delete(`${BASE_API_URL}/deleteResume?resumeId=${resumeId}`)
+   if(response.data)
+    {
+      alert("Resume Delete")
+       window.location.reload(); // Refresh the page
+    }
+  }catch{
+alert("Failed To delete")
+  }
 
+}
   const user = {
     userName: userName,
     
@@ -119,12 +116,15 @@ const Resume = () => {
         </div>
         </div>
       )}
-              {showBriefSettings && (
-        <div className="modal-content">
+
+{showBriefSettings && (
+         <div className="modal">
+         <div className="modal-content">
+         <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
           {showMessage}
         </div>
+        </div>
       )}
-
 
         <div>
           <h1 style={{textAlign:'center'}}>MY RESUMES</h1>
@@ -132,19 +132,23 @@ const Resume = () => {
             
             <div className='resume-div'>
                 {resumes.map((resume, index) => (
-                    <span className='resume-box' key={index}>
+                        <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
                         {resume.fileType === 'file' && (
                                 <button className='download' onClick={() => handleDownload(resume.id, resume.fileType)}>Download</button>
                             )}
                             {resume.fileType === 'link' && (
-                                <a href={resume.link} target="_blank" rel="noopener noreferrer">Open Link</a>
+                                <a href={resume.fileName} target="_blank" rel="noopener noreferrer">Open Link</a>
                             )}
                             {resume.fileType === 'brief' && (
                                 <button className='open-brief-modal' onClick={() => handleBrief(resume.id, resume.fileType)}>Open Brief</button>
                             )}
                         <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
+
+
+
+                        <button className='delete' onClick={() => handleDelete(resume.id)}>delete</button>
                     </span>
                 ))}
             </div>

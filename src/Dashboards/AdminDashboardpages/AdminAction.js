@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import './AdminAction.css';
 
 const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -48,7 +48,7 @@ const AdminAction = () => {
   const rejectRequest = async(userEmail,userId) => {
     console.log('Request Rejected');
     const rejected="Rejected";
-    // Handle reject request logic here
+    // Handle reject request logic here   
     try {
       const res = await axios.put(`${BASE_API_URL}/updateApprove?userEmail=${userEmail}&approvedOn=${currentTime}&userStatus=${rejected}`);
       console.log(res.data);

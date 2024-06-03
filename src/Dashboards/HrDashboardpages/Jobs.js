@@ -168,7 +168,7 @@ const Jobs = () => {
           </div>
         </div>
       )}
-      {/* <h2>Job posted by {userName}</h2> */}
+      <h2>Job posted by {userName}</h2>
       <div className='job-list'>
         {jobs.length > 0 && (
           <table id='jobTable1'>

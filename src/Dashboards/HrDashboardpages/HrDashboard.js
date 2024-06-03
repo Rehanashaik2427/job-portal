@@ -96,7 +96,7 @@ console.log (error)
     fetchCountOfJobs();
     fetchCountOfApplication();
     fetchCountOfShortlistedCandiComopany();
-  })
+  },[])
 
   const user = {
    userName: userName,

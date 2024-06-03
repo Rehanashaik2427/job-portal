@@ -22,15 +22,17 @@ const Candidates = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
+   try{
+
       const response = await axios.get(`${BASE_API_URL}/login?userEmail=${formData.userEmail}&password=${formData.password}`);
       const user = response.data;
+
 
       if (user) {
         if (user.userRole === 'Candidate') {
           history.push('/candidate-dashboard', { userId: user.userId });
         } else {
-          setErrorMessage("You do not have Candidate permissions. Please enter the correct email ID.");
+          setErrorMessage("You do not have permission to login as Candidate . Please enter the correct email ID.");
         }
       } else {
         setErrorMessage("Invalid email or password.");

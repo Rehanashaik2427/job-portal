@@ -66,10 +66,14 @@ const ResumeAdd = () => {
                 setSuccessMessage('Resume uploaded successfully!');
                 
             } else {
+
+                console.error('Resume upload failed');
+
                 setSuccessMessage('File upload failed');
+
             }
         } catch (error) {
-            console.error('Error uploading file:', error);
+            console.error('Error uploading Resume:', error);
         }
     };
 

@@ -25,7 +25,7 @@ const HrProfile = () => {
   const fetchCountOfJobs = async () => {
     try {
 
-      const response = await axios.get(`${BASE_API_URL}/countofjobsbyhr?userEmail=${userEmail}`)
+      const response = await axios.get(`${BASE_API_URL}/CountOfJobsPostedByEachCompanyHR?userEmail=${userEmail}`)
       setCountOfJobs(response.data);
     } catch (error) {
       console.log(error)
