@@ -109,11 +109,22 @@ const TotalApplicantsHr = () => {
         handleSelect();
     }, [filterStatus, searchQuery]);
 
-    // Filter applications based on the search query for job titles
-    const filteredApplications = applications.filter(application =>
-        application.jobRole.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // // Filter applications based on the search query for job titles
+    // const filteredApplications = applications.filter(application =>
+    //     application.jobRole.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
 
+     // Filter applications based on the search query for job titles and application status
+    //  const filteredApplications = applications.filter(application =>
+    //     (filterStatus === 'all' || application.applicationStatus === filterStatus) &&
+    //     application.jobRole.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
+
+
+    const filteredApplications = applications.filter(application =>
+        application.jobRole.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        application.applicationStatus.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     const indexOfLastJob = currentPage * jobsPerPage;
     const indexOfFirstJob = indexOfLastJob - jobsPerPage;
     const currentApplications = filteredApplications.slice(indexOfFirstJob, indexOfLastJob);

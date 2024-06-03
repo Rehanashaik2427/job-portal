@@ -21,7 +21,7 @@ const Jobs = () => {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(currentJobs.length / jobsPerPage);
+  const totalPages = Math.ceil(jobs.length / jobsPerPage);
   const [search, setSearch] = useState('');
   const [numbers, setNumbers] = useState([]);
   const history = useHistory();
@@ -77,7 +77,7 @@ const Jobs = () => {
   const handleDelete = async (jobId) => {
     try {
       await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
-      alert("Job Deleted successfully");
+      
       fetchJobs(userEmail);
     } catch (error) {
       console.error('Error deleting job:', error);
@@ -100,7 +100,9 @@ const Jobs = () => {
     }
   };
   
-  
+   const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
   
   const changeCurrentPage = (id) => {
     setCurrentPage(id);
@@ -158,8 +160,8 @@ const Jobs = () => {
         )}
   
       {showJobDescription && (
-        <div className="job-description-modal">
-          <div className="job-description-content">
+        <div className="modal-summary">
+          <div className="modal-content-summary">
             <span className="close" onClick={closeJobDescription}>&times;</span>
             <h2>Job Description</h2>
             <pre>{selectedJobSummary}</pre>
@@ -205,6 +207,11 @@ const Jobs = () => {
             </tbody>
           </table>
         )}
+            {filteredJobs.length === 0 && (
+        <section className='not-yet'>
+          <h2>You have not posted any jobs yet. Post Now</h2>
+        </section>
+      )}
         <nav>
           <ul className='pagination'>
             {numbers.map((n, i) => (
@@ -215,11 +222,6 @@ const Jobs = () => {
           </ul>
         </nav>
       </div>
-      {filteredJobs.length === 0 && (
-        <section className='not-yet'>
-          <h2>You have not posted any jobs yet. Post Now</h2>
-        </section>
-      )}
       <button className='add-job-button'>
         <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
       </button>

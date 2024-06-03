@@ -111,13 +111,13 @@ const AddJob = () => {
                 </div>
                 <div className='job-form-group'>
                   <label htmlFor="jobsummary">Job summary: (Add Additional Information)</label>
-                 <pre> <textarea
+                 <pre> <strong><textarea
                     id="jobsummary"
                     name="jobsummary"
                     value={formData.jobsummary}
                     onChange={handleChange}
                     className="fullWidthTextarea"
-                  /></pre>
+                  /></strong></pre>
                 </div>
                 <div className='job-form-group-button'>
                   <button type='submit' className='post' onClick={handleSubmit}>
@@ -129,14 +129,7 @@ const AddJob = () => {
           </form>
         </div>
       </div>
-
       </div>
-
-  
-
-
-
   )
 }
-
 export default AddJob;
