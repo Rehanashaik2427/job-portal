@@ -12,7 +12,9 @@ const ViewApplications = () => {
   const jobId = location.state?.jobId;
   console.log(jobId);
   const [applications, setApplications] = useState([]);
+  const [resumeTypes, setResumeTypes] = useState({});
   const [filterStatus, setFilterStatus] = useState('all');
+  const [fileNames, setfileNames] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
   const applicationsPerPage = 5;
@@ -50,6 +52,7 @@ const ViewApplications = () => {
       const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}`);
       console.log(response.data);
       setApplications(response.data);
+      fetchResumeTypes(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -71,19 +74,58 @@ const ViewApplications = () => {
     }
   };
 
-  const handleDownload = async (resumeId, candidateId) => {
+  // Fetch resume types for each application
+  const fetchResumeTypes = async (applications) => {
+    const types = {};
+    const fileNames={};
+    for (const application of applications) {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/getResumeByApplicationId?resumeId=${application.resumeId}`);
+        types[application.resumeId] = response.data.fileType;
+        fileNames[application.resumeId]=response.data.fileName;
+      } catch (error) {
+        console.error('Error fetching resume type:', error);
+      }
+    }
+    setResumeTypes(types);
+    setfileNames(fileNames);
+  };
+  // Render different components based on resume type
+  const renderResumeComponent = (resumeId) => {
+    const fileType = resumeTypes[resumeId];
+    const fileName=fileNames[resumeId];
+    if (fileType === 'file') {
+      return (
+        <button onClick={() => handleDownload(resumeId)}>Download</button>
+      );
+    } else if (fileType === 'link') {
+      return (
+        <a href={fileName} target="_blank" rel="noopener noreferrer">Click here</a>
+      );
+    } else if (fileType === 'brief') {
+      return (
+        <button onClick={() => openPopup(fileName)}>Open Popup</button>
+      );
+    } else {
+      return null; // Handle other file types as needed
+    }
+  };
+  const [showMessage, setShowMessage] = useState(false);
+  const [showBriefSettings, setShowBriefSettings] = useState(false);
+  const openPopup = (fileName) => {
+    setShowMessage(fileName);
+    setShowBriefSettings(!showBriefSettings)
+  };
+
+  const handleDownload = async (resumeId) => {
     try {
-      const res = await axios.get(`${BASE_API_URL}/getUserName`, {
-        params: {
-          userId: candidateId
-        }
-      });
+      
     
         const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
           responseType: 'blob'
         });
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const fileName =(res.data.userName)+ candidateId+"resume.pdf";
+        const fileName =response.data.fileName;
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', fileName);
@@ -110,14 +152,14 @@ const ViewApplications = () => {
     candidateNames[application.candidateId]=res.data.userName;
     candidateEmails[application.candidateId]=res.data.userEmail;
 
-  }
+     }
     setCandidateName(candidateNames);
     setCandidateEmail(candidateEmails);
   }
   useEffect(() => {
     fetchCandidateDetails();
   }, [applications]);
- 
+
 
   const user = { userEmail };
 
@@ -137,6 +179,14 @@ const ViewApplications = () => {
               <option value="Not Shortlisted">Rejected</option>
             </select>
           </div>
+          {showBriefSettings && (
+         <div className="modal">
+         <div className="modal-content">
+         <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
+          {showMessage}
+        </div>
+        </div>
+      )}
           {applications.length > 0 && (
             <div>
                 <div>
@@ -158,8 +208,9 @@ const ViewApplications = () => {
                   <tr key={application.id}>
                     <td>{application.jobRole}</td>
                     <td>{candidateName[application.candidateId]}</td>
-                       <td>{candidateEmail[application.candidateId]}</td>
-                    <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td>
+                    <td>{candidateEmail[application.candidateId]}</td>
+                    <td>{renderResumeComponent(application.resumeId)}</td>
+                    {/* <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td> */}
                     <td>{application.appliedOn}</td>
                     <td>{application.applicationStatus}</td>
                     <td>

@@ -71,7 +71,7 @@ const CandiadteJobs = () => {
 
        setApplyJobs(response.data);
       console.log(response.data);
-      //setApplyJobs([...applyjobs, jobId]);
+    
 
       if (response.data) {
         alert("You have successfully applied for this job");
@@ -80,7 +80,7 @@ const CandiadteJobs = () => {
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
-    // fetchJobs();
+   
   };
 
   const [resumes, setResumes] = useState([]);
@@ -170,7 +170,7 @@ const CandiadteJobs = () => {
         {showResumePopup && (
           <div className="modal">
             <div className="modal-content">
-              <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+            <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
               <ResumeSelectionPopup
                 resumes={resumes}
                 onSelectResume={handleResumeSelect}
