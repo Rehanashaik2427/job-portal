@@ -104,7 +104,7 @@ const ViewApplications = () => {
       );
     } else if (fileType === 'brief') {
       return (
-        <button onClick={() => openPopup(fileName)}>Open Popup</button>
+        <button onClick={() => openPopup(fileName)}>Open Brief</button>
       );
     } else {
       return null; // Handle other file types as needed
@@ -118,7 +118,10 @@ const ViewApplications = () => {
   };
 
   const handleDownload = async (resumeId,fileName) => {
+<<<<<<< HEAD
+=======
 
+>>>>>>> bceb36088e6a6f1d3ee49f9356f03ffb51fc06d9
     try {
       
     
@@ -126,7 +129,10 @@ const ViewApplications = () => {
           responseType: 'blob'
         });
         const url = window.URL.createObjectURL(new Blob([response.data]));
+<<<<<<< HEAD
+=======
        // const fileName =response.data.fileName;
+>>>>>>> bceb36088e6a6f1d3ee49f9356f03ffb51fc06d9
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', fileName);

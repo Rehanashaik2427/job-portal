@@ -135,6 +135,7 @@ alert("Failed To delete")
                         <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
+
                         {resume.fileType === 'file' && (
                                 <button className='download' onClick={() => handleDownload(resume.id, resume.fileName)}>Download</button>
                             )}

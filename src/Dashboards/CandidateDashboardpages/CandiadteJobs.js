@@ -21,21 +21,53 @@ const CandiadteJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [applyjobs, setApplyJobs] = useState([]);
   const [showResumePopup, setShowResumePopup] = useState(false);
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
 
 
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const fetchJobs = async () => {
+
+  useEffect(() => {
+    if(search)
+      {
+        fetchJobBysearch();
+      }
+else
+    fetchData();
+  }, [page, pageSize,search]);
+
+  async function fetchData() {
     try {
-      const response = await axios.get(BASE_API_URL + "/displayJobs"); // Assuming backend is running on the same host
-      setJobs(response.data);
-
+      const response = await axios.get(`${BASE_API_URL}/paginationJobs?page=${page}&size=${pageSize}`);
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
     }
   };
-  useEffect(() => {
-    fetchJobs();
-  }, []);
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -71,10 +103,15 @@ const CandiadteJobs = () => {
 
        setApplyJobs(response.data);
       console.log(response.data);
+
+
+       setApplyJobs(response.data);
+      console.log(response.data);
     
       setApplyJobs(response.data);
       console.log(response.data);
       // setApplyJobs([...applyjobs, jobId]);
+
 
       if (response.data) {
         alert("You have successfully applied for this job");
@@ -97,25 +134,6 @@ const CandiadteJobs = () => {
         console.error('Error fetching resumes:', error);
       });
   }, []);
-
-
-  // Get current jobs
-  const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 5;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(jobs.length / jobsPerPage);
-  const numbers = [...Array(nPage + 1).keys()].slice(1);
-
-
-  function changeCurrentPage(id) {
-    setCurrentPage(id);
-  }
-
-
-
-
   const [applications, setApplications] = useState([]);
   const fetchApplications = async () => {
     try {
@@ -129,23 +147,25 @@ const CandiadteJobs = () => {
     fetchApplications();
   }, []);
 
-  const [search, setSearch] = useState('');
+  
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+ const fetchJobBysearch= async()=>{
     try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobs?search=${search}`);
-      setJobs(response.data);
-
+      const response = await axios.get(`${BASE_API_URL}/searchJobs?search=${search}&page=${page}&size=${pageSize}  `);
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log("No data Found" + error);
     }
     console.log("Search submitted:", search);
   };
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setPage(0);
+  }
+   
 
   const [selectedJobSummary, setSelectedJobSummary] = useState(null);
 
@@ -200,12 +220,6 @@ const CandiadteJobs = () => {
               </form>
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
             </div>
-
-
-    
- 
-         
-    
         </div>
        
           {showSettings && (
@@ -235,7 +249,7 @@ const CandiadteJobs = () => {
                     <th>Actions</th>
                 
                   </tr>
-                  {currentJobs.map(job => (
+                  {jobs.map(job => (
                     <tr key={job.id} id='job-table-list'>
                       <td>{job.jobTitle}</td>
                       <td>{job.companyName}</td>
@@ -262,32 +276,29 @@ const CandiadteJobs = () => {
                         <span className="close" onClick={handleCloseModal}>&times;</span>
                         <h2>Job Summary</h2>
                         <pre>{selectedJobSummary}</pre>
-
-
-
-
-
                       </div>
                     </div>
                   </div>
                 )}
               </div>
               <nav>
-                <ul className='pagination'>
-                  {
-                    numbers.map((n, i) => (
-                      <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                        <Link to={{
-                          pathname: '/candidate-jobs',
-                          state: { userName: userName, userId: userId }
-                        }} className='page-link' onClick={() => changeCurrentPage(n)}>{n}</Link>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
             </div>
           )}
+          
           {jobs.length === 0 && <h1>No jobs found.</h1>}
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
