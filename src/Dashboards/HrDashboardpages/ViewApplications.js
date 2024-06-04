@@ -96,7 +96,7 @@ const ViewApplications = () => {
     const fileName=fileNames[resumeId];
     if (fileType === 'file') {
       return (
-        <button onClick={() => handleDownload(resumeId)}>Download</button>
+        <button onClick={() => handleDownload(resumeId,fileName)}>Download</button>
       );
     } else if (fileType === 'link') {
       return (
@@ -104,7 +104,7 @@ const ViewApplications = () => {
       );
     } else if (fileType === 'brief') {
       return (
-        <button onClick={() => openPopup(fileName)}>Open Popup</button>
+        <button onClick={() => openPopup(fileName)}>Open Brief</button>
       );
     } else {
       return null; // Handle other file types as needed
@@ -117,7 +117,7 @@ const ViewApplications = () => {
     setShowBriefSettings(!showBriefSettings)
   };
 
-  const handleDownload = async (resumeId) => {
+  const handleDownload = async (resumeId,fileName) => {
     try {
       
     
@@ -125,7 +125,6 @@ const ViewApplications = () => {
           responseType: 'blob'
         });
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const fileName =response.data.fileName;
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', fileName);

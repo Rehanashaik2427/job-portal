@@ -593,15 +593,37 @@ button.com:hover {
   border-radius: 4px;
 }
 
-.pagination .page-link:hover {
-  background-color: #f2f2f2;
-}
 
 .pagination .page-item.active .page-link {
   background-color: #007bff;
   color: #fff;
   border-color: #007bff;
 }
+
+.page-button, .page-link {
+  cursor: pointer;
+  padding: 5px 10px;
+  /* background-color: #f0f0f0; */
+  border: 1px solid #ccc;
+  margin: 0 3px;
+}
+
+.page-button:hover {
+  background-color: #e0e0e0;
+}
+
+.active .page-link {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+.page-button:disabled, .page-link:disabled {
+  cursor: not-allowed;
+  /* background-color: #f0f0f0; */
+  border-color: #ccc;
+  color: #999;
+}
+
 
 
 /*My Profile css*/

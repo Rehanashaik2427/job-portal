@@ -135,12 +135,9 @@ alert("Failed To delete")
                         <span className='resume-box' key={index}>
                         {/* {resume.fileName} */} <h1>Resume :{index+1}</h1>
                         <h3>{resume.message}</h3>
-                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
-                        <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
-                        <button className='download' onClick={() => handleDownload(resume.id,resume.fileName)}>Download</button>
-=======
+
                         {resume.fileType === 'file' && (
-                                <button className='download' onClick={() => handleDownload(resume.id, resume.fileType)}>Download</button>
+                                <button className='download' onClick={() => handleDownload(resume.id, resume.fileName)}>Download</button>
                             )}
                             {resume.fileType === 'link' && (
                                 <a href={resume.fileName} target="_blank" rel="noopener noreferrer">Open Link</a>

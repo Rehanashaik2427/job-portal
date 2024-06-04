@@ -17,36 +17,80 @@ const MyApplication = () => {
   const [applications, setApplications] = useState([]);
   const [search, setSearch] = useState('');
   const [resumeNames, setResumeNames] = useState({});
-
-  useEffect(() => {
-    if (applicationStatus) {
-      fetchApplicationsByStatus();
-    } else {
-      fetchApplications();
-    }
-  }, [applicationStatus]);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     fetchResumeNames();
   }, [applications]);
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
 
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber === page + 1) {
+      handleNextPage();
+    } else if (pageNumber === page - 1) {
+      handlePreviousPage();
+    } else {
+      setPage(pageNumber);
+      if (applicationStatus) {
+        fetchApplicationsByStatus(applicationStatus);
+      } else if (search) {
+        fetchApplicationBySearch(search);
+      } else {
+        fetchApplications();
+      }
+      fetchResumeNames();
+    }
+  };
+  
+  
+  // Update fetchApplications function to include the search term
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applications?userId=${userId}`);
-      setApplications(response.data);
+      const response = await axios.get(`${BASE_API_URL}/applicationsPagination?userId=${userId}&page=${page}&pageSize=${pageSize}&searchStatus=${search}`);
+      setApplications(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error('Error fetching applications:', error);
     }
   };
-
+  
+  // Update fetchApplicationsByStatus function to include the search term
   const fetchApplicationsByStatus = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userId=${userId}`);
-      setApplications(response.data);
+      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userId=${userId}&page=${page}&pageSize=${pageSize}`);
+      setApplications(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error('Error fetching applications by status:', error);
     }
   };
+
+  const fetchApplicationBySearch=async()=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userId=${userId}&page=${page}&pageSize=${pageSize}`);
+      setApplications(response.data.content);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error('Error fetching applications by search:', error);
+    }
+    console.log("Search submitted:", search);
+  }
+  
+  // Call the appropriate fetch function based on the existence of searchStatus
+  useEffect(() => {
+    if (applicationStatus) {
+      fetchApplicationsByStatus(applicationStatus);
+    }else if(search) {
+      fetchApplicationBySearch(search);
+    } else {
+      fetchApplications();
+    }
+
+  }, [applicationStatus, page, pageSize,search]);
 
   const fetchResumeNames = async () => {
     const names = {};
@@ -60,34 +104,29 @@ const MyApplication = () => {
       console.error('Error fetching resume names:', error);
     }
   };
+ 
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const applicationsPerPage = 5;
-  const indexOfLastApplication= currentPage * applicationsPerPage;
-  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
-  const currentApplications = applications.slice(indexOfFirstApplication, indexOfLastApplication);
-  const nPage=Math.ceil(applications.length/applicationsPerPage);
-  const numbers=[...Array(nPage+1).keys()].slice(1);
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
 
-  function changeCurrentPage(id)
-  {
-  setCurrentPage(id);
-  }
   
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
+  
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userId=${userId}`);
-      setApplications(response.data);
-    } catch (error) {
-      console.error('Error fetching applications by search:', error);
-    }
-    console.log("Search submitted:", search);
+      handlePageChange(0);
+   
   };
 
   const toggleSettings = () => {
@@ -119,9 +158,6 @@ const MyApplication = () => {
         <div className="top-right-content">
           <div className="candidate-search">
             <form className="candidate-search1" onSubmit={handleSubmit}>
-
-         
-            {/* <form className="candidate-search" > */}
 
               <input
                 type='text'
@@ -168,7 +204,7 @@ const MyApplication = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {currentApplications.map(application => (
+                    {applications.map(application => (
                       <tr key={application.id}>
                         <td>{application.companyName}</td>
                         <td>{application.jobRole}</td>
@@ -181,25 +217,21 @@ const MyApplication = () => {
                 </table>
               </div>
               <nav>
-  <ul className='pagination'>
-   
-    {
-      numbers.map((n,i)=>(
-          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
-            
-            <Link to={{
-        pathname: '/my-application', 
-        state: { userName: userName,userId:userId } 
-      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
           </li>
-      ))
-    }
-
-
-
-  </ul>
-</nav>
-              </div>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
+                </div>
             </div>
           ) : (
             <h1>No applications found.</h1>
