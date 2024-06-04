@@ -651,3 +651,12 @@ span .close1 {
 .companyFormButton:hover {
   background-color: #218838;
 }
+
+
+
+
+.company-buttons button{
+  margin: 12px;
+  background-color: skyblue;
+  height: 30px;
+}

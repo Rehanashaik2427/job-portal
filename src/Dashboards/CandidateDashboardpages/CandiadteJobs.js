@@ -57,7 +57,7 @@ const CandiadteJobs = () => {
      setShowResumePopup(false); // Close the resume selection popup
     }
   };
-  ///////////////////////////
+
   const applyJob = async (jobId, resumeId) => {
     console.log(jobId);
     console.log(userId);
@@ -233,6 +233,7 @@ const CandiadteJobs = () => {
                     <th>Skills</th>
                     <th>Job summary</th>
                     <th>Actions</th>
+                
                   </tr>
                   {currentJobs.map(job => (
                     <tr key={job.id} id='job-table-list'>
@@ -250,6 +251,7 @@ const CandiadteJobs = () => {
                           </button>
                         )}
                       </td>
+                    
                     </tr>
                   ))}
                 </table>

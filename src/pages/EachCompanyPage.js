@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from 'react-router-dom';
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const EachCompanyPage = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -10,6 +11,7 @@ const EachCompanyPage = () => {
   const [countOfApplications, setCountOfApplications] = useState();
   const [countOfHR, setCountOfHR] = useState();
   const [countOfJobs, setCountOfJobs] = useState();
+  const history = useHistory();
 
   const fetchCompany = async () => {
     try {
@@ -79,8 +81,15 @@ const EachCompanyPage = () => {
             <p>Total HRs Join: {countOfHR}</p>
             <p>Total Jobs Posted By HRs: {countOfJobs}</p>
             <div> 
-            <h2> To View the Applications please 
-           <Link to={{pathname:'/hr-registeration', state: { companyName:company.companyName }}}> Register as HR</Link>   </h2>
+            <h2> To View the Applications please </h2>
+            <div className="company-buttons">
+              <button onClick={() => history.push({ pathname: '/hr-registeration', state: { companyName: company.companyName } })}>Claim as HR</button>
+              
+              <button onClick={() => history.push({ pathname: '/hr-signin', state: { companyName: company.companyName } })}>Login</button>
+            </div>
+
+           {/* <Link to={{pathname:'/hr-registeration', state: { companyName:company.companyName }}}> Claim as HR</Link>   </h2> */}
+            
             </div>
 
 

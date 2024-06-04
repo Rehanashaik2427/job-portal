@@ -20,12 +20,14 @@ const Jobs = () => {
   const jobsPerPage = 5;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  // const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
   const totalPages = Math.ceil(jobs.length / jobsPerPage);
   const [search, setSearch] = useState('');
   const [numbers, setNumbers] = useState([]);
   const history = useHistory();
   const [showSettings, setShowSettings] = useState(false);
+  const visibleJobs = jobs.filter(job => job.jobStatus); 
+
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -39,16 +41,17 @@ const Jobs = () => {
 
   useEffect(() => {
     const pageNumbers = [];
+    const totalPages = Math.ceil(visibleJobs.length / jobsPerPage); // Update totalPages based on visibleJobs
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
     }
     setNumbers(pageNumbers);
-  }, [totalPages]);
+  }, [visibleJobs ,totalPages]);
 
   useEffect(() => {
 
     setJobCount(filteredJobs.length);
-  }, [ jobs]);
+  }, [filteredJobs]);
 
   const fetchJobs = async (email) => {
     try {
@@ -83,32 +86,17 @@ const Jobs = () => {
   //     console.error('Error deleting job:', error);
   //   }
   // };
-  useEffect(() => {
-    // Get hidden job IDs from local storage
-    const hiddenJobs = JSON.parse(localStorage.getItem('hiddenJobs') || '[]');
-    // Filter out hidden jobs
-    const visibleJobs = jobs.filter(job => !hiddenJobs.includes(job.jobId));
-    setFilteredJobs(visibleJobs);
-  }, [jobs]);
-
-  const handleDelete = (jobId) => {
-    // Update the state to mark the job as hidden
-    setJobs(prevJobs =>
-      prevJobs.map(job =>
-        job.jobId !== jobId ? job : { ...job, hidden: true }
-      )
-    );
-
-    // Store the hidden job ID in local storage
-    const hiddenJobs = JSON.parse(localStorage.getItem('hiddenJobs') || '[]');
-    localStorage.setItem('hiddenJobs', JSON.stringify([...hiddenJobs, jobId]));
+ 
+  const handleDelete = async (jobId) => {
+    try {
+      await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
+      // Remove the job from the frontend list
+      setJobs(prevJobs => prevJobs.filter(job => job.jobId !== jobId));
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
   };
-
-  // Render only non-hidden jobs
-  const visibleJobs = filteredJobs.filter(job => !job.hidden);
-
-
-
+ 
 
 
   
@@ -196,7 +184,8 @@ const Jobs = () => {
       )}
       {/* <h2>Job posted by {userName}</h2> */}
       <div className='job-list'>
-        {jobs.length > 0 && (
+        {/* {jobs.length > 0 && ( */}
+        {visibleJobs.length > 0 &&(
           <table id='jobTable1'>
             <thead>
               <tr>
@@ -211,7 +200,8 @@ const Jobs = () => {
               </tr>
             </thead>
             <tbody>
-              {currentJobs.map(job => (
+              {/* {currentJobs.map(job => ( */}
+              {visibleJobs.slice(indexOfFirstJob, indexOfLastJob).map(job => (
                 job.jobId !== 0 && (
                   <tr key={job.id}>
                     <td>{job.jobTitle}</td>
