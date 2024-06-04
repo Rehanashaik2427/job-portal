@@ -54,9 +54,6 @@ import ApplicationDetails from './Dashboards/HrDashboardpages/ApplicationDetails
 import HrDetailsModal from './Dashboards/HrDashboardpages/HrDetailsModal ';
 import HrLeftSide from './Dashboards/HrDashboardpages/HrLeftSide';
 import JobAddSuccessful from './Dashboards/HrDashboardpages/JobAddSuccessful';
-import ShortlistedCandidates from './Dashboards/HrDashboardpages/ShortlistedCandidates';
-import TotalApplicantsHr from './Dashboards/HrDashboardpages/TotalApplicantsHr';
-import UnderReview from './Dashboards/HrDashboardpages/UnderReview';
 import ViewApplications from './Dashboards/HrDashboardpages/ViewApplications';
 import EachCompanyPage from './pages/EachCompanyPage';
 
@@ -138,9 +135,7 @@ const App = () => {
           <Route path='/eachCompanyPage' component={EachCompanyPage} />
 
           <Route path='/dreamApplication' component={DreamApplication} />          
-          <Route path='/total-applicants-by-hr' component={TotalApplicantsHr}/>
-          <Route path='/shortlisted-candidates' component={ShortlistedCandidates}/>
-          <Route path='/under-review' component={UnderReview}/>
+  
         </Switch>
       </BrowserRouter>
     </div>

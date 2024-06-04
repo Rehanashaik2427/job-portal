@@ -1,4 +1,4 @@
-import { faAddressCard, faBriefcase, faHome, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faAddressCard, faBriefcase, faHouse, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -60,9 +60,7 @@ function HrLeftSide({ user }) {
             <section>
                 <FontAwesomeIcon icon={faUser} /> <Link to={{ pathname: '/hr-profile', state: { userName: userName, userEmail: userEmail } }}>Profile</Link>
             </section>
-            <section>
-                <FontAwesomeIcon icon={faHome} /> <Link to={{ pathname: '/', state: { userName: userName, userEmail: userEmail } }}>Home</Link>
-            </section>
+           
 
             <h3>Help</h3>
             <h3><Link to="/contact">Contact us</Link></h3>

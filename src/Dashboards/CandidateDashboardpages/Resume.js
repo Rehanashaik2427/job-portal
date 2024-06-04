@@ -37,7 +37,7 @@ const Resume = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', fileName);
+      link.setAttribute('download', fileName );
       document.body.appendChild(link);
       link.click();
     } catch (error) {
@@ -118,8 +118,8 @@ alert("Failed To delete")
       )}
 
 {showBriefSettings && (
-         <div className="modal">
-         <div className="modal-content">
+         <div className="modal-summary">
+         <div className="modal-content-summary">
          <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
           {showMessage}
         </div>
@@ -145,9 +145,10 @@ alert("Failed To delete")
                             {resume.fileType === 'brief' && (
                                 <button className='open-brief-modal' onClick={() => handleBrief(resume.id, resume.fileType)}>Open Brief</button>
                             )}
+                        <button className='download' onClick={() => handleDelete(resume.id,resume.fileName)}>Delete</button>
 
 
-                        <button className='delete' onClick={() => handleDelete(resume.id)}>delete</button>
+
                     </span>
                 ))}
             </div>
