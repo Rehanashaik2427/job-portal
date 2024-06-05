@@ -13,6 +13,7 @@ const PostedJobs = () => {
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;
   const [jobs, setJobs] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState('');
 
@@ -20,7 +21,7 @@ const PostedJobs = () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
       if (response.status === 200) {
-        setJobs(response.data);
+        setJobs(response.data); // Assuming response.data is an array of jobs
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -48,33 +49,31 @@ const PostedJobs = () => {
   const handleViewSummary = (summary) => {
     setSelectedJobSummary(summary);
   };
+
+  const handleCloseModal = () => {
+    setSelectedJobSummary(null);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     try {
       const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
         params: { search, userEmail }
       });
-      setJobs(response.data);
+      setJobs(response.data); // Assuming response.data is an array of jobs
       console.log(response.data);
     } catch (error) {
       console.log("Error searching:", error);
       alert("Error searching for jobs. Please try again later.");
     }
   };
-  const handleCloseModal = () => {
-    setSelectedJobSummary(null);
-  };
 
   const jobsPerPage = 5;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const filteredJobs = jobs.filter(
-    (job) =>
-      job.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
-      job.userName.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredJobs = jobs.filter(job=>job.jobTitle.toLowerCase().includes(search.toLowerCase())  );
   const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(jobs .length / jobsPerPage);
+  const nPage = Math.ceil(jobs.length / jobsPerPage);
   const numbers = [...Array(nPage + 1).keys()].slice(1);
 
   const changeCurrentPage = (id) => {
@@ -162,24 +161,39 @@ const PostedJobs = () => {
             )}
           </div>
 
-          <nav>
-            <ul className='pagination'>
-              {numbers.map((n, i) => (
-                <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                  <Link
-                    to={{
-                      pathname: '/posted-jobs',
-                      state: { userName: userName, userEmail: userEmail }
-                    }}
-                    className='page-link'
-                    onClick={() => changeCurrentPage(n)}
-                  >
-                    {n}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      
+
+<nav>
+  <ul className='pagination'>
+    {/* Previous button */}
+    {currentPage > 1 && (
+      <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+        <button className='page-link' onClick={() => changeCurrentPage(currentPage - 1)}>Previous</button>
+      </li>
+    )}
+    {/* Page numbers */}
+    {numbers.map((n, i) => (
+      <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
+        <Link
+          to={{
+            pathname: '/posted-jobs',
+            state: { userName: userName, userEmail: userEmail }
+          }}
+          className='page-link'
+          onClick={() => changeCurrentPage(n)}
+        >
+          {n}
+        </Link>
+      </li>
+    ))}
+    {/* Next button */}
+    {currentPage < nPage && (
+      <li className={`page-item ${currentPage === nPage ? 'disabled' : ''}`}>
+        <button className='page-link' onClick={() => changeCurrentPage(currentPage + 1)}>Next</button>
+      </li>
+    )}
+  </ul>
+</nav>
         </div>
       </div>
     </div>
