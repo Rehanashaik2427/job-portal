@@ -32,80 +32,89 @@ const history=useHistory();
     
 
     
-    
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filteredJobs, setFilteredJobs] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // Start at page 1
-    const jobsPerPage = 5; // Number of jobs per page
-
-    // Pagination logic
-    const indexOfLastJob = currentPage * jobsPerPage;
-    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-    const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
-    const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
-
-    const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
- 
-
-    const handleSearch = () => {
-        const value = searchTerm.toLowerCase();
-        const filtered = filteredJobs.filter(job =>
-            job.jobTitle.toLowerCase().includes(value)
-        );
-        setFilteredJobs(filtered);
-        setCurrentPage(1); // Reset to first page after search
-    };
-    
-    const fetchJobs = async (userEmail) => {
-        try {
-            const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}`);
-            if (response.status === 200) {
-                setFilteredJobs(response.data);
-            } else {
-                console.error('Failed to fetch jobs data');
-            }
-        } catch (error) {
-            console.error('Error fetching jobs data:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchJobs(userEmail);
-    }, [userEmail]);
-
-    const toggleSettings = () => {
-        setShowSettings(!showSettings);
-    };
-
-
-   const handleSearchChange=(e)=>{
-setSearchTerm(e.target.value);
-   }
-
-
-
-
- 
-    
-
-
-  
-    
-
-  
-
-
-
-    
-
+    const [jobs, setJobs] = useState('')
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(0);
+    const [pageSize, setPageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(0);
    
+  
+    const toggleSettings = () => {
+      setShowSettings(!showSettings);
+    };
+  
+    const handlePreviousPage = () => {
+      if (page > 0) {
+        setPage(page - 1);
+      }
+    };
+  
+    const handleNextPage = () => {
+      if (page < totalPages - 1) {
+        setPage(page + 1);
+      }
+    };
+  
+    const handlePageChange = (pageNumber) => {
+      setPage(pageNumber);
+    };
+  
+    useEffect(() => {
+      if (search) {
+        fetchJobBysearch();
+      }
+      else
+      fetchJobs()
+    }, [userEmail,userEmail,page,pageSize]);
+  
+   
+  
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
+          params: { userEmail:userEmail,
+            page:page,
+            size:pageSize,
+           }
+        });
+        setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
+        
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+  
+   
+     
+ 
 
   
-
-
+    
+   const handleSearchChange=(e)=>{
+setSearch(e.target.value);
+   }
+   const fetchJobBysearch= async()=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
+        params: { search, userEmail ,page,pageSize}
+      });
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+  
+  }
+  
+    
+    const handleSubmit = async (event) => {
+      event.preventDefault(); // Prevent default form submission
+      setPage(0);
+    };
+    
 
     const user = {
         userName: userName,
@@ -120,14 +129,14 @@ setSearchTerm(e.target.value);
             <div className='hr-rightside'>
                 <div className="applications">
                     <div className="candidate-search">
-                        <form className="candidate-search1" onSubmit={(e) => e.preventDefault()}>
+                        <form className="candidate-search1" onSubmit={handleSubmit}>
                             <input
                                 type='text'
                                 placeholder='Search by job title'
-                                value={searchTerm}
+                                value={search}
                                  onChange={handleSearchChange}
                             />
-                            <button onClick={handleSearch}>
+                            <button>
                                 <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                             </button>
                         </form>
@@ -149,7 +158,7 @@ setSearchTerm(e.target.value);
                     )}
 
                     <div className='job-list'>
-                        {filteredJobs.length > 0 && (
+                        {jobs.length > 0 && (
                             <table id='jobTable1'>
                                 <thead>
                                     <tr>
@@ -159,7 +168,7 @@ setSearchTerm(e.target.value);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {currentJobs.map(job => (
+                                    {jobs.map(job => (
                                         (
                                             <tr key={job.jobId}>
                                                 <td>{job.jobTitle}</td>
@@ -179,18 +188,15 @@ setSearchTerm(e.target.value);
                                     ))}
                                 </tbody>
                             </table>
+
+                            
                             
                         )} 
 
                        
-                             <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        handlePageClick={handlePageClick}
-                    />
-                    </div>
+         </div>
 
-                    {currentJobs.length === 0 && (
+                    {jobs.length === 0 && (
                             <section className='not-yet'>
                                 <h2>You have not posted any jobs yet. Post Now</h2>
                             </section>
@@ -198,7 +204,22 @@ setSearchTerm(e.target.value);
 
                     </div>
 
-                
+                    <nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
+           
 
                 </div>
            

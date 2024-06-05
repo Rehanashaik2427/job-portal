@@ -13,14 +13,34 @@ const PostedJobs = () => {
   const userName = location.state?.userName;
   const userEmail = location.state?.userEmail;
   const [jobs, setJobs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   const fetchJobs = async (userEmail) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
       if (response.status === 200) {
-        setJobs(response.data);
+        setJobs(response.data.content);
+        setTotalPages(response.data.totalPages);
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -29,9 +49,29 @@ const PostedJobs = () => {
     }
   };
 
+  const fetchJobBysearch=async()=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
+        params: { search, userEmail,page,pageSize }
+      });
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
+        console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+
+  }
+
   useEffect(() => {
+    if(search)
+      {
+        fetchJobBysearch();
+      }
+      else
     fetchJobs(userEmail);
-  }, [userEmail]);
+  }, [userEmail,search,page,pageSize]);
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -50,45 +90,19 @@ const PostedJobs = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
-        params: { search, userEmail }
-      });
-      setJobs(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log("Error searching:", error);
-      alert("Error searching for jobs. Please try again later.");
-    }
+   
   };
   const handleCloseModal = () => {
     setSelectedJobSummary(null);
   };
 
-  const jobsPerPage = 5;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const filteredJobs = jobs.filter(
-    (job) =>
-      job.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
-      job.userName.toLowerCase().includes(search.toLowerCase())
-  );
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(jobs .length / jobsPerPage);
-  const numbers = [...Array(nPage + 1).keys()].slice(1);
-
-  const changeCurrentPage = (id) => {
-    setCurrentPage(id);
-  };
+ 
 
   const user = {
     userName: userName,
     userEmail: userEmail,
   };
 
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <div className='hr-dashboard-container'>
@@ -138,7 +152,7 @@ const PostedJobs = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentJobs.map(job => (
+                {jobs.map(job => (
                   <tr key={job.id}>
                     <td>{job.hrName}</td>
                     <td>{job.companyName}</td>
@@ -163,23 +177,20 @@ const PostedJobs = () => {
           </div>
 
           <nav>
-            <ul className='pagination'>
-              {numbers.map((n, i) => (
-                <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                  <Link
-                    to={{
-                      pathname: '/posted-jobs',
-                      state: { userName: userName, userEmail: userEmail }
-                    }}
-                    className='page-link'
-                    onClick={() => changeCurrentPage(n)}
-                  >
-                    {n}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
         </div>
       </div>
     </div>

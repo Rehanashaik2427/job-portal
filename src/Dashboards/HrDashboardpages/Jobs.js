@@ -61,7 +61,7 @@ const Jobs = () => {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
         params: { userEmail:userEmail,
           page:page,
-          size:pageSize,
+          size:pageSize
          }
       });
       setJobs(response.data.content);
