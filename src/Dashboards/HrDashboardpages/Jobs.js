@@ -45,18 +45,27 @@ const Jobs = () => {
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    // setPage(0);
+  };
 
   useEffect(() => {
+    console.log(search);
     if (search) {
       fetchJobBysearch();
     }
     else
     fetchJobs()
-  }, [userEmail,userEmail,page,pageSize]);
+  }, [search,userEmail,page,pageSize]);
 
  
 
   const fetchJobs = async () => {
+      console.log(search);
     try {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
         params: { userEmail:userEmail,
@@ -119,11 +128,7 @@ const fetchJobBysearch= async()=>{
 }
 
   
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    setPage(0);
-  };
-  
+ 
 
 
   const handleJobDescription = (summary) => {
@@ -136,9 +141,6 @@ const fetchJobBysearch= async()=>{
     setSelectedJobSummary('');
   };
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
 
   return (
     <div className='hr-dashboard-container'>
