@@ -92,15 +92,7 @@ const Jobs = () => {
     });
   };
 
-  // const handleDelete = async (jobId) => {
-  //   try {
-  //     await axios.delete(`${BASE_API_URL}/deleteJob?jobId=${jobId}`);
-      
-  //     fetchJobs(userEmail);
-  //   } catch (error) {
-  //     console.error('Error deleting job:', error);
-  //   }
-  // };
+
  
   const handleDelete = async (jobId) => {
     try {
