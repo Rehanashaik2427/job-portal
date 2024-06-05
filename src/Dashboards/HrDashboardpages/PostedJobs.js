@@ -15,13 +15,36 @@ const PostedJobs = () => {
   const [jobs, setJobs] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
+
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   const fetchJobs = async (userEmail) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
       if (response.status === 200) {
         setJobs(response.data); // Assuming response.data is an array of jobs
+        setJobs(response.data);
+        setJobs(response.data.content);
+        setTotalPages(response.data.totalPages);
       } else {
         console.error('Failed to fetch jobs data');
       }
@@ -30,9 +53,29 @@ const PostedJobs = () => {
     }
   };
 
+  const fetchJobBysearch=async()=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
+        params: { search, userEmail,page,pageSize }
+      });
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
+        console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+
+  }
+
   useEffect(() => {
+    if(search)
+      {
+        fetchJobBysearch();
+      }
+      else
     fetchJobs(userEmail);
-  }, [userEmail]);
+  }, [userEmail,search,page,pageSize]);
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -66,6 +109,17 @@ const PostedJobs = () => {
       console.log("Error searching:", error);
       alert("Error searching for jobs. Please try again later.");
     }
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByCompany`, {
+        params: { search, userEmail }
+      });
+      setJobs(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+   
   };
 
   const jobsPerPage = 5;
@@ -79,15 +133,13 @@ const PostedJobs = () => {
   const changeCurrentPage = (id) => {
     setCurrentPage(id);
   };
+ 
 
   const user = {
     userName: userName,
     userEmail: userEmail,
   };
 
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
 
   return (
     <div className='hr-dashboard-container'>
@@ -137,7 +189,7 @@ const PostedJobs = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentJobs.map(job => (
+                {jobs.map(job => (
                   <tr key={job.id}>
                     <td>{job.userName}</td>
                     <td>{job.companyName}</td>
@@ -163,37 +215,39 @@ const PostedJobs = () => {
 
       
 
-<nav>
-  <ul className='pagination'>
-    {/* Previous button */}
-    {currentPage > 1 && (
-      <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-        <button className='page-link' onClick={() => changeCurrentPage(currentPage - 1)}>Previous</button>
-      </li>
-    )}
-    {/* Page numbers */}
-    {numbers.map((n, i) => (
-      <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-        <Link
-          to={{
-            pathname: '/posted-jobs',
-            state: { userName: userName, userEmail: userEmail }
-          }}
-          className='page-link'
-          onClick={() => changeCurrentPage(n)}
-        >
-          {n}
-        </Link>
-      </li>
-    ))}
-    {/* Next button */}
-    {currentPage < nPage && (
-      <li className={`page-item ${currentPage === nPage ? 'disabled' : ''}`}>
-        <button className='page-link' onClick={() => changeCurrentPage(currentPage + 1)}>Next</button>
-      </li>
-    )}
-  </ul>
-</nav>
+          {/* <nav>
+            <ul className='pagination'>
+              {numbers.map((n, i) => (
+                <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
+                  <Link
+                    to={{
+                      pathname: '/posted-jobs',
+                      state: { userName: userName, userEmail: userEmail }
+                    }}
+                    className='page-link'
+                    onClick={() => changeCurrentPage(n)}
+                  >
+                    {n}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav> */}
+          <nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
         </div>
       </div>
     </div>

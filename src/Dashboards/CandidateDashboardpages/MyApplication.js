@@ -31,8 +31,10 @@ const MyApplication = () => {
   const handlePageChange = (pageNumber) => {
     if (pageNumber === page + 1) {
       handleNextPage();
+ 
     } else if (pageNumber === page - 1) {
       handlePreviousPage();
+     
     } else {
       setPage(pageNumber);
       if (applicationStatus) {
@@ -84,10 +86,13 @@ const MyApplication = () => {
   useEffect(() => {
     if (applicationStatus) {
       fetchApplicationsByStatus(applicationStatus);
+      
     }else if(search) {
       fetchApplicationBySearch(search);
+    
     } else {
       fetchApplications();
+     
     }
 
   }, [applicationStatus, page, pageSize,search]);

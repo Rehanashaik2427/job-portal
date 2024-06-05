@@ -12,55 +12,61 @@ const Jobs = () => {
   const userEmail = location.state?.userEmail;
   const userName = location.state?.userName;
   const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
-  const [jobCount, setJobCount] = useState(0);
+  
   const [showJobDescription, setShowJobDescription] = useState(false);
   const [selectedJobSummary, setSelectedJobSummary] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const jobsPerPage = 5;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  // const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+
+
   const [search, setSearch] = useState('');
-  const [numbers, setNumbers] = useState([]);
+ 
   const history = useHistory();
   const [showSettings, setShowSettings] = useState(false);
-  const visibleJobs = jobs.filter(job => job.jobStatus); 
-
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+ 
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
   };
 
-  useEffect(() => {
-    if (userEmail) {
-      fetchJobs(userEmail);
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
     }
-  }, [userEmail]);
+  };
 
-  useEffect(() => {
-    const pageNumbers = [];
-    const totalPages = Math.ceil(visibleJobs.length / jobsPerPage); // Update totalPages based on visibleJobs
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
     }
-    setNumbers(pageNumbers);
-  }, [visibleJobs ,totalPages]);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   useEffect(() => {
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+    fetchJobs()
+  }, [userEmail,userEmail,page,pageSize]);
 
-    setJobCount(filteredJobs.length);
-  }, [filteredJobs]);
+ 
 
-  const fetchJobs = async (email) => {
+  const fetchJobs = async () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
-        params: { userEmail: email }
+        params: { userEmail:userEmail,
+          page:page,
+          size:pageSize
+         }
       });
-      setJobs(response.data);
-      setFilteredJobs(response.data);
-      setJobCount(response.data.length);
+      setJobs(response.data.content);
+    setTotalPages(response.data.totalPages);
+      
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
@@ -89,30 +95,28 @@ const Jobs = () => {
     }
   };
  
+const fetchJobBysearch= async()=>{
+  try {
+    const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
+      params: { search, userEmail ,page,pageSize}
+    });
+    setJobs(response.data.content);
+    setTotalPages(response.data.totalPages);
+    console.log(response.data);
+  } catch (error) {
+    console.log("Error searching:", error);
+    alert("Error searching for jobs. Please try again later.");
+  }
 
+}
 
   
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
-        params: { search, userEmail }
-      });
-      setJobs(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log("Error searching:", error);
-      alert("Error searching for jobs. Please try again later.");
-    }
+    setPage(0);
   };
   
-   const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-  
-  const changeCurrentPage = (id) => {
-    setCurrentPage(id);
-  };
+
 
   const handleJobDescription = (summary) => {
     setSelectedJobSummary(summary);
@@ -176,8 +180,8 @@ const Jobs = () => {
       )}
       {/* <h2>Job posted by {userName}</h2> */}
       <div className='job-list'>
-        {/* {jobs.length > 0 && ( */}
-        {visibleJobs.length > 0 &&(
+         {jobs.length > 0 && (
+        
           <table id='jobTable1'>
             <thead>
               <tr>
@@ -193,7 +197,7 @@ const Jobs = () => {
             </thead>
             <tbody>
               {/* {currentJobs.map(job => ( */}
-              {visibleJobs.slice(indexOfFirstJob, indexOfLastJob).map(job => (
+              {jobs.map(job => (
                 job.jobId !== 0 && (
                   <tr key={job.id}>
                     <td>{job.jobTitle}</td>
@@ -215,20 +219,26 @@ const Jobs = () => {
             </tbody>
           </table>
         )}
-            {filteredJobs.length === 0 && (
+            {jobs.length === 0 && (
         <section className='not-yet'>
           <h2>You have not posted any jobs yet. Post Now</h2>
         </section>
       )}
         <nav>
-          <ul className='pagination'>
-            {numbers.map((n, i) => (
-              <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                <Link to={{ pathname: '/post-jobs', state: { userName: userName, userEmail: userEmail } }} className='page-link' onClick={() => changeCurrentPage(n)}>{n}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
       </div>
       <button className='add-job-button'>
         <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
