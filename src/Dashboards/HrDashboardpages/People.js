@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import HrDetailsModal from './HrDetailsModal ';
+
 import HrLeftSide from './HrLeftSide';
-import Pagination from './Pagination';
+
 
 const People = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
@@ -13,67 +13,67 @@ const People = () => {
     const [people, setPeople] = useState([]);
     const [filteredPeople, setFilteredPeople] = useState([]);
     const [showSettings, setShowSettings] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedHr, setSelectedHr] = useState(null);
+    
+    
     const [searchQuery, setSearchQuery] = useState('');
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
-    const [currentPage, setCurrentPage] = useState(1); // Start at page 1
-    const peoplePerPage = 5; // Number of people per page
+    
 
-    // Pagination logic
-    const indexOfLastPerson = currentPage * peoplePerPage;
-    const indexOfFirstPerson = indexOfLastPerson - peoplePerPage;
-    const currentPeople = filteredPeople.slice(indexOfFirstPerson, indexOfLastPerson);
-    const totalPages = Math.ceil(filteredPeople.length / peoplePerPage);
-
-    const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const [page, setPage] = useState(0);
+    const [pageSize, setPageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(0);
+   
+  
+    const handlePreviousPage = () => {
+      if (page > 0) {
+        setPage(page - 1);
+      }
     };
-
+  
+    const handleNextPage = () => {
+      if (page < totalPages - 1) {
+        setPage(page + 1);
+      }
+    };
+  
+    const handlePageChange = (pageNumber) => {
+      setPage(pageNumber);
+    };
+   
+    
     useEffect(() => {
-        const fetchData = async () => {
-            console.log(userEmail);
-            try {
-                const response = await axios.get(BASE_API_URL + "/getHrEachCompany", { params: { userEmail } });
-                setPeople(response.data);
-                setFilteredPeople(response.data); // Initialize filtered people
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        if (userEmail) {
-            fetchData();
+        fetchHRData();
+    }, [userEmail,page,pageSize]); // Empty dependency array ensures the effect runs only once when the component mounts
+    
+    const fetchHRData = async () => {
+        try {
+            const response = await axios.get(`${BASE_API_URL}/getHrEachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
+            setPeople(response.data.content);
+            setTotalPages(response.data.totalPages)
+            // setFilteredPeople(response.data);
+        } catch (error) {
+            console.error('Error fetching HR data:', error);
         }
-    }, [userEmail]);
-
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
     };
+    
+   
 
-    const handleSearch = () => {
-        const query = searchQuery.toLowerCase();
-        const filtered = people.filter(person =>
-            person.userName.toLowerCase().includes(query) ||
-            person.userEmail.toLowerCase().includes(query) ||
-            person.companyName.toLowerCase().includes(query)
-        );
-        setFilteredPeople(filtered);
-        setCurrentPage(1); // Reset to first page after search
-    };
+  
 
     const toggleSettings = () => {
         setShowSettings(!showSettings);
     };
 
-    const handleOpenModal = (hr) => {
-        setSelectedHr({ ...hr, username: userName });
-        setShowModal(true);
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-        setSelectedHr(null);
+    const handleSearch = () => {
+        const filtered = people.filter(person =>
+            person.userName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredPeople(filtered);
     };
 
     const user = {
@@ -124,7 +124,7 @@ const People = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {currentPeople.map(person => (
+                            {people.map(person => (
                                 <tr key={person.id}>
                                     <td>{person.userId}</td>
                                     <td>{person.userName}</td>
@@ -136,19 +136,23 @@ const People = () => {
                         </tbody>
                     </table>
                 </div>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    handlePageClick={handlePageClick}
-                />
+                <nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
             </div>
-            {showModal && (
-                <HrDetailsModal
-                    show={showModal}
-                    handleClose={handleCloseModal}
-                    hrDetails={selectedHr}
-                />
-            )}
+           
         </div>
     );
 }

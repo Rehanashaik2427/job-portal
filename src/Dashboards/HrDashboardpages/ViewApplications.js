@@ -47,7 +47,7 @@ const ViewApplications = () => {
 
   const handleSelect= async(filterStatus)=>{
     try {
-      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}`);
+      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}&page=${page}&size=${pageSize}`);
       console.log(response.data);
       setApplications(response.data);
     } catch (error) {
@@ -57,10 +57,11 @@ const ViewApplications = () => {
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}`);
+      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}&page=${page}&size=${pageSize}`);
       console.log(response.data);
-      setApplications(response.data);
-      fetchResumeTypes(response.data);
+      setApplications(response.data.content);
+      setTotalPages(response.data.totalPages);
+      fetchResumeTypes(response.data.content);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +69,7 @@ const ViewApplications = () => {
 
   useEffect(() => {
     fetchApplications();
-  }, []);
+  }, [jobId,page,pageSize]);
 
   const updateStatus = async (applicationId, newStatus) => {
     console.log(applicationId);
