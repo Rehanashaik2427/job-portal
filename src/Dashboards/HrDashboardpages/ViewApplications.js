@@ -16,18 +16,26 @@ const ViewApplications = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [fileNames, setfileNames] = useState({});
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const applicationsPerPage = 5;
-  const indexOfLastApplication= currentPage * applicationsPerPage;
-  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
-  const currentApplications = applications.slice(indexOfFirstApplication, indexOfLastApplication);
-  const nPage=Math.ceil(applications.length/applicationsPerPage);
-  const numbers=[...Array(nPage+1).keys()].slice(1);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
 
-  function changeCurrentPage(id)
-  {
-  setCurrentPage(id);
-  }
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+ 
 
 
 
@@ -206,7 +214,7 @@ const ViewApplications = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentApplications.map(application => (
+                {applications.map(application => (
                   <tr key={application.id}>
                     <td>{application.jobRole}</td>
                     <td>{candidateName[application.candidateId]}</td>
@@ -235,24 +243,20 @@ const ViewApplications = () => {
             </table>
             </div>
             <nav>
-  <ul className='pagination'>
-   
-    {
-      numbers.map((n,i)=>(
-          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
-            
-            <Link to={{
-        pathname: '/viewApplications', 
-        state: { userName: userName,userEmail:userEmail } 
-      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
           </li>
-      ))
-    }
-
-
-
-  </ul>
-</nav>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
             </div>
           )}
           {applications.length === 0 && (
