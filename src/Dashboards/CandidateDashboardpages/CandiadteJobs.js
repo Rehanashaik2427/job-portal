@@ -150,7 +150,9 @@ const CandiadteJobs = () => {
 
   const fetchJobBysearch = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobs?search=${search}&page=${page}&size=${pageSize}`);
+      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
+        params: { search,page,pageSize }
+      });      
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -162,7 +164,8 @@ const CandiadteJobs = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setPage(0);
+    fetchJobBysearch();
+  
   }
 
 

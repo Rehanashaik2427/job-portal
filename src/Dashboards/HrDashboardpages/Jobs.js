@@ -25,6 +25,9 @@ const Jobs = () => {
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
  
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
 
   const toggleSettings = () => {
     setShowSettings(!showSettings);
@@ -46,24 +49,13 @@ const Jobs = () => {
     setPage(pageNumber);
   };
 
-  useEffect(() => {
-    if (search) {
-      fetchJobBysearch();
-    }
-    else
-    fetchJobs()
-  }, [userEmail,userEmail,page,pageSize]);
+ 
 
  
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail`, {
-        params: { userEmail:userEmail,
-          page:page,
-          size:pageSize
-         }
-      });
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
       setJobs(response.data.content);
     setTotalPages(response.data.totalPages);
       
@@ -95,25 +87,31 @@ const Jobs = () => {
     }
   };
  
-const fetchJobBysearch= async()=>{
-  try {
-    const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
-      params: { search, userEmail ,page,pageSize}
-    });
-    setJobs(response.data.content);
-    setTotalPages(response.data.totalPages);
-    console.log(response.data);
-  } catch (error) {
-    console.log("Error searching:", error);
-    alert("Error searching for jobs. Please try again later.");
+  const fetchJobBysearch=async()=>{
+    try {
+      const response = await axios.get(`${BASE_API_URL}/searchJobsByHR`, {
+        params: { search, userEmail,page,pageSize }
+      });
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
+        console.log(response.data);
+    } catch (error) {
+      console.log("Error searching:", error);
+      alert("Error searching for jobs. Please try again later.");
+    }
+
   }
-
-}
-
+  useEffect(() => {
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+    fetchJobs()
+  }, [userEmail,userEmail,page,pageSize]);
   
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    setPage(0);
+    fetchJobBysearch();
   };
   
 
@@ -128,9 +126,6 @@ const fetchJobBysearch= async()=>{
     setSelectedJobSummary('');
   };
 
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
 
   return (
     <div className='hr-dashboard-container'>

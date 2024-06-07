@@ -1,21 +1,15 @@
-import { faSearch, faSignOutAlt, faUser ,faHouse,faBriefcase,faAddressCard,faUsers,faHome,} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import './HrDashboard.css';
 import HrLeftSide from './HrLeftSide';
-import Pagination from './Pagination';
 
 const Applications = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
-
-   
-    
     
 const history=useHistory();
-
-  
 
     const location = useLocation();
     const userName = location.state?.userName;
@@ -23,15 +17,6 @@ const history=useHistory();
 
     const [showSettings, setShowSettings] = useState(false);
 
-
-    
- 
-   
-    
-    
-    
-
-    
     const [jobs, setJobs] = useState('')
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
@@ -108,11 +93,17 @@ setSearch(e.target.value);
     }
   
   }
-  
+  useEffect(() => {
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+    fetchJobs()
+  }, [userEmail,userEmail,page,pageSize]);
     
     const handleSubmit = async (event) => {
       event.preventDefault(); // Prevent default form submission
-      setPage(0);
+      fetchJobBysearch();
     };
     
 

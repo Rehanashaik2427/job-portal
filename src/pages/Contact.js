@@ -1,13 +1,15 @@
 import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-
 const Contact = () => {
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject:'',
     message: '',
     agreeTerms: false, // New state for terms agreement
   });
@@ -23,17 +25,28 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
       alert('Please accept the terms and conditions.');
       return;
     }
+    try {
+      // Send the form data to the backend API
+      const response = await axios.post(`${BASE_API_URL}/send-message`, formData);
+      if (response.status === 200) {
+        setIsMessageSent(true);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+
     console.log('Form submitted:', formData);
     setFormData({
       name: '',
       email: '',
       message: '',
+      subject:'',
       agreeTerms: false,
     });
     setIsMessageSent(true);
@@ -73,6 +86,10 @@ const Contact = () => {
               <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
             <div className='contact-form-info'>
+              <label htmlFor="subject">Subject:</label>
+              <input type="subject" id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
+            </div>
+            <div className='contact-form-info'>
               <label htmlFor="message">Message:</label>
               <textarea id="message" name="message" value={formData.message} onChange={handleChange} required></textarea>
             </div>
@@ -83,7 +100,7 @@ const Contact = () => {
               </label>
             </div>
             <div className='send-msg'>
-              <button type="submit">Send Message</button>
+              <button type="submit" >Send Message</button>
             </div>
           </form>
         )}
