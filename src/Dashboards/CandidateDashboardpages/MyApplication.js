@@ -151,7 +151,7 @@ const MyApplication = () => {
 
   const [jobStatuses, setJobStatuses] = useState({});
 
-  // Fetch job status for each application on component mount
+  
   useEffect(() => {
     const fetchJobStatuses = async () => {
       const statuses = {};
@@ -172,6 +172,10 @@ const MyApplication = () => {
 
   // Function to get job status for a specific job ID
   const getJobStatus = async (jobId) => {
+    if(jobId===0){
+      return 'job not availavle';
+    }
+    else{
     try {
       const response = await axios.get(`${BASE_API_URL}/getJob?jobId=${jobId}`);
       return response.data.jobStatus ? 'Available' : 'Not Available';
@@ -179,6 +183,7 @@ const MyApplication = () => {
       console.error("Error fetching job status:", error);
       throw error;
     }
+  }
   };
 
   // Render job status based on application ID

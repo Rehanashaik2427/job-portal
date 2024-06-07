@@ -8,7 +8,7 @@ const ViewApplications = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const location = useLocation();
   const userEmail = location.state?.userEmail;
-  const userName=location.state?.userName;
+  const userName = location.state?.userName;
   const jobId = location.state?.jobId;
   console.log(jobId);
   const [applications, setApplications] = useState([]);
@@ -16,9 +16,12 @@ const ViewApplications = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [fileNames, setfileNames] = useState({});
 
+
+
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
+ 
 
   const handlePreviousPage = () => {
     if (page > 0) {
@@ -36,20 +39,22 @@ const ViewApplications = () => {
     setPage(pageNumber);
   };
  
+  
 
 
 
   const handleFilterChange = async(e) => {
     setFilterStatus(e.target.value);
     handleSelect(e.target.value);
-    
+
   };
 
-  const handleSelect= async(filterStatus)=>{
+  const handleSelect = async (filterStatus) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}`);
+      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}&page=${page}&size=${pageSize}`);
       console.log(response.data);
-      setApplications(response.data);
+      setApplications(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
     }
@@ -59,8 +64,9 @@ const ViewApplications = () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}&page=${page}&size=${pageSize}`);
       console.log(response.data);
-      setApplications(response.data);
-      fetchResumeTypes(response.data);
+      setApplications(response.data.content);
+      fetchResumeTypes(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
     }
@@ -76,21 +82,21 @@ const ViewApplications = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
       console.log(response.data);
-      fetchApplications(); 
+      fetchApplications();
     } catch (error) {
       console.log(error);
-    }
+    }  
   };
 
   // Fetch resume types for each application
   const fetchResumeTypes = async (applications) => {
     const types = {};
-    const fileNames={};
+    const fileNames = {};
     for (const application of applications) {
       try {
         const response = await axios.get(`${BASE_API_URL}/getResumeByApplicationId?resumeId=${application.resumeId}`);
         types[application.resumeId] = response.data.fileType;
-        fileNames[application.resumeId]=response.data.fileName;
+        fileNames[application.resumeId] = response.data.fileName;
       } catch (error) {
         console.error('Error fetching resume type:', error);
       }
@@ -98,13 +104,13 @@ const ViewApplications = () => {
     setResumeTypes(types);
     setfileNames(fileNames);
   };
-  // Render different components based on resume type
+
   const renderResumeComponent = (resumeId) => {
     const fileType = resumeTypes[resumeId];
-    const fileName=fileNames[resumeId];
+    const fileName = fileNames[resumeId];
     if (fileType === 'file') {
       return (
-        <button onClick={() => handleDownload(resumeId,fileName)}>Download</button>
+        <button onClick={() => handleDownload(resumeId, fileName)}>Download</button>
       );
     } else if (fileType === 'link') {
       return (
@@ -125,47 +131,46 @@ const ViewApplications = () => {
     setShowBriefSettings(!showBriefSettings)
   };
 
-  const handleDownload = async (resumeId,fileName) => {
-
-
+  const handleDownload = async (resumeId, fileName) => {
     try {
-      
-    
-        const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
-          responseType: 'blob'
-        });
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-       // const fileName =response.data.fileName;
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
-      } catch (error) {
-        console.error('Error downloading resume:', error);
-      }
+      const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
+        responseType: 'blob'
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      // const fileName =response.data.fileName;
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error downloading resume:', error);
+    }
   };
 
-  const [candidateName,setCandidateName]=useState();
-  const [candidateEmail,setCandidateEmail]=useState();
+  const [candidateName, setCandidateName] = useState();
+  const [candidateEmail, setCandidateEmail] = useState();
 
-  const fetchCandidateDetails= async()=>{
-    const candidateNames={};
-    const candidateEmails={};
+  const fetchCandidateDetails = async () => {
+    const candidateNames = {};
+    const candidateEmails = {};
     for (const application of applications) {
-    const res = await axios.get(`${BASE_API_URL}/getUserName`, {
-      params: {
-        userId: application.candidateId
-      }
-      
-    });
-    candidateNames[application.candidateId]=res.data.userName;
-    candidateEmails[application.candidateId]=res.data.userEmail;
+      const res = await axios.get(`${BASE_API_URL}/getUserName`, {
+        params: {
+          userId: application.candidateId
+        }
 
-     }
+      });
+      candidateNames[application.candidateId] = res.data.userName;
+      candidateEmails[application.candidateId] = res.data.userEmail;
+
+    }
     setCandidateName(candidateNames);
     setCandidateEmail(candidateEmails);
   }
+  
+
+
   useEffect(() => {
     fetchCandidateDetails();
   }, [applications]);
@@ -190,13 +195,13 @@ const ViewApplications = () => {
             </select>
           </div>
           {showBriefSettings && (
-         <div className="modal-summary">
-         <div className="modal-content-summary">
-         <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
-          {showMessage}
-        </div>
-        </div>
-      )}
+            <div className="modal-summary">
+              <div className="modal-content-summary">
+                <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
+                {showMessage}
+              </div>
+            </div>
+          )}
           {applications.length > 0 && (
             <div>
                 <div>
@@ -258,6 +263,7 @@ const ViewApplications = () => {
         </ul>
       </nav>
             </div>
+           
           )}
           {applications.length === 0 && (
             <section class='not-yet'>

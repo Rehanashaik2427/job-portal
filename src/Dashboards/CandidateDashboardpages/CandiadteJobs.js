@@ -127,24 +127,30 @@ else
         console.error('Error fetching resumes:', error);
       });
   }, []);
-  const [applications, setApplications] = useState([]);
-  const fetchApplications = async () => {
+
+  const hasUserApplied = async (jobId, userId) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applications?userId=${userId}`);
-      setApplications(response.data);
+      // Make an API call to check if the user has applied for the job
+      const response =await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${jobId}&userId=${userId}`)
+  
+      // Return true if the user has applied for the job, false otherwise
+      return response.data.hasApplied; // Assuming the API returns a JSON object with a field indicating if the user has applied
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+      console.error('Error checking application:', error);
+      // Handle errors here
+      return false; // Return false in case of error
     }
   };
-  useEffect(() => {
-    fetchApplications();
-  }, []);
+
 
   
 
  const fetchJobBysearch= async()=>{
     try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobs?search=${search}&page=${page}&size=${pageSize}  `);
+      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
+        params: { search,page,pageSize }
+      });      
+     
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -156,7 +162,8 @@ else
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setPage(0);
+    fetchJobBysearch();
+  
   }
    
 
@@ -249,8 +256,7 @@ else
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
 
-                      <td>
-                        {applications.some(application => application.jobId === job.jobId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
+                      <td>   {hasUserApplied(job.jobId, userId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
                           <h4>Applied</h4>
                         ) : (
                           <button onClick={() => handleApplyButtonClick(job.jobId,job.jobStatus)}>

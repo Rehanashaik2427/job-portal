@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaSave } from "react-icons/fa";
-import { Link, useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import HrLeftSide from "./HrLeftSide";
 
 const UpdateJob = () => {

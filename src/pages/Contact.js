@@ -1,14 +1,19 @@
 import { faEnvelope, faMapMarkerAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
+
 
 const Contact = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
+
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject:'',
     message: '',
     subject: '',
     agreeTerms: false, // New state for terms agreement
@@ -25,14 +30,17 @@ const Contact = () => {
     }));
   };
 
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
     if (!formData.agreeTerms) {
       alert('Please accept the terms and conditions.');
       return;
     }
+  
+
     try {
-      await axios.post(BASE_API_URL+'/send-message', formData); 
+      await axios.post(BASE_API_URL+'/savemessage', formData); 
       setIsMessageSent(true);
     } catch (error) {
       console.error('Error sending message:', error);
@@ -83,7 +91,7 @@ const Contact = () => {
             </div>
             <div className='contact-form-info'>
               <label htmlFor="subject">Subject:</label>
-              <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
+              <input type="subject" id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
             </div>
             <div className='contact-form-info'>
               <label htmlFor="message">Message:</label>
@@ -96,7 +104,7 @@ const Contact = () => {
               </label>
             </div>
             <div className='send-msg'>
-              <button type="submit">Send Message</button>
+              <button type="submit" >Send Message</button>
             </div>
           </form>
         )}
@@ -104,5 +112,7 @@ const Contact = () => {
     </div>
   );
 };
+  
+
 
 export default Contact;

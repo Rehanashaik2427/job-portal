@@ -1,15 +1,83 @@
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
+import axios from 'axios';
 const Contacts = () => {
-  const userData = [
-    { user: 'User1 (hr)', email: 'a@gmail.com', message: 'Message1', reply: 'Replying Message1' },
-    { user: 'User2 (candidate)', email: 'b@gmail.com', message: 'Message2', reply: 'Replying Message2' },
-    { user: 'User3 (hr)', email: 'c@gmail.com', message: 'Message3', reply: 'Replying Message3' },
-  ];
+  
+  const BASE_API_URL = "http://localhost:8082/api/jobbox";
+  const [contacts, setContacts] = useState([]);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+   const [showModal, setShowModal] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [contactId, setContactId] = useState();
+  useEffect(() => {
+    fetchContacts();
+  }, [page, pageSize]);
+
+  const fetchContacts = async () => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getContactMessages?page=${page}&size=${pageSize}`);
+      setContacts(response.data.content);
+      setTotalPages(response.data.totalPages);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+  const handleSendMessage = async (message) => {
+    try {
+      // Send message using API
+      // Use selectedEmail and message state variables
+      const response = await axios.put(`${BASE_API_URL}/sendReplyMessages?replyMessage=${message}&replyTo=${selectedEmail}&contactId=${contactId}`);
+      console.log('Sending message to:', selectedEmail);
+      console.log('Message:', message);
+      // After sending the message, you can close the modal
+      setShowModal(false);
+      if(response)
+      alert("Reply send successfully");
+      // Optionally, you can update the UI to indicate that the message has been sent
+
+      fetchContacts();
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+
+  const openModal = (email,contactId) => {
+    setSelectedEmail(email);
+    setContactId(contactId);
+    setShowModal(true);
+  
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedEmail('');
+    setMessage('');
+  };
+
   return (
     <div className='body'>
     <div className='leftside'>
@@ -51,33 +119,71 @@ const Contacts = () => {
     </div>
 
     <div className="rightSide">
-      <h2 style={{textAlign:'center'}}>Request from the Users</h2>
-      <div className="help">
-      <div className='contacts-table'>
-      <table id="user-table" className="user-table">
-
-    <tr>
-      <th>User</th>
-      <th>Email</th>
-      <th>Message</th>
-      <th>Replying To Users</th>
-    </tr>
- 
-    {userData.map((data, index) => (
-      <tr key={index}>
-        <td>{data.user}</td>
-        <td>{data.email}</td>
-        <td>{data.message}</td>
-        <td>{data.reply}</td>
-      </tr>
-    ))}
-  
-</table>
-
-      </div>
+        <h2 style={{ textAlign: 'center' }}>Request from the Users</h2>
+        <div className="help">
+          <div className='contacts-table'>
+            <table id="user-table" className="user-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                   <th>Message</th>
+                  <th>Replying To Users</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contacts.map(contact => (
+                  <tr key={contact.id}>
+                    <td>{contact.name}</td>
+                    <td>{contact.email}</td>
+                    <td>{contact.subject}</td>
+                    <td>{contact.message}</td>
+                    <td>
+      {contact.reply === null ? (
+        <button onClick={() => openModal(contact.email,contact.contactId)}>Reply</button>
+      ) : (
+        <h3>Replied</h3>
+      )}
+    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <h2>Compose Message</h2>
+            <p>To: {selectedEmail}</p>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Write your message here..."
+            ></textarea>
+          <button onClick={() => handleSendMessage(message)}>Send</button>
+          </div>
+        </div>
+      )}
+        </div>
+        <nav>
+          <ul className='pagination'>
+            <li>
+              <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+            </li>
+            {[...Array(totalPages).keys()].map((pageNumber) => (
+              <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+              </li>
+            ))}
+            <li>
+              <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
-</div>
   )
 }
 
