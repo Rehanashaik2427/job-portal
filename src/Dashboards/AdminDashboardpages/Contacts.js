@@ -1,19 +1,17 @@
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import React, { useEffect, useState } from 'react';
-import { FaBuilding, FaComments, FaHome, FaPlus, FaUniversalAccess, FaUser, FaUserCheck, FaUserLock } from 'react-icons/fa'; // Import the icons you need from React Icons
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import './AdminDashboard.css';
+
 import axios from 'axios';
+import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
 const Contacts = () => {
-  
+
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
   const [contacts, setContacts] = useState([]);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
-   const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState('');
   const [message, setMessage] = useState('');
   const [contactId, setContactId] = useState();
@@ -48,16 +46,17 @@ const Contacts = () => {
   };
 
   const handleSendMessage = async (message) => {
+    console.log('Sending message to:', selectedEmail);
+    console.log('Message:', message);
     try {
       // Send message using API
       // Use selectedEmail and message state variables
-      const response = await axios.put(`${BASE_API_URL}/sendReplyMessages?replyMessage=${message}&replyTo=${selectedEmail}&contactId=${contactId}`);
-      console.log('Sending message to:', selectedEmail);
-      console.log('Message:', message);
+      const response = await axios.put(`${BASE_API_URL}/sendReplyMessages?message=${message}&replyTo=${selectedEmail}&contactId=${contactId}`);
+  
       // After sending the message, you can close the modal
       setShowModal(false);
-      if(response)
-      alert("Reply send successfully");
+      if (response)
+        alert("Reply send successfully");
       // Optionally, you can update the UI to indicate that the message has been sent
 
       fetchContacts();
@@ -66,11 +65,12 @@ const Contacts = () => {
     }
   };
 
-  const openModal = (email,contactId) => {
+  const openModal = (email, contactID) => {
     setSelectedEmail(email);
-    setContactId(contactId);
+    setContactId(contactID);
+    console.log("mm",contactID);
     setShowModal(true);
-  
+
   };
 
   const closeModal = () => {
@@ -82,11 +82,11 @@ const Contacts = () => {
 
   return (
     <div className='body'>
-         <div className='leftside'>
-          <AdminleftSide />
-        </div>
+      <div className='leftside'>
+        <AdminleftSide />
+      </div>
 
-    <div className="rightSide">
+      <div className="rightSide">
         <h2 style={{ textAlign: 'center' }}>Request from the Users</h2>
         <div className="help">
           <div className='contacts-table'>
@@ -96,7 +96,7 @@ const Contacts = () => {
                   <th>User</th>
                   <th>Email</th>
                   <th>Subject</th>
-                   <th>Message</th>
+                  <th>Message</th>
                   <th>Replying To Users</th>
                 </tr>
               </thead>
@@ -108,32 +108,32 @@ const Contacts = () => {
                     <td>{contact.subject}</td>
                     <td>{contact.message}</td>
                     <td>
-      {contact.reply === null ? (
-        <button onClick={() => openModal(contact.email,contact.contactId)}>Reply</button>
-      ) : (
-        <h3>Replied</h3>
-      )}
-    </td>
+                      {contact.replyMsg === null ? (
+                        <button onClick={() => openModal(contact.email, contact.contactID)}>Reply</button>
+                      ) : (
+                        <h3>Replied</h3>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <h2>Compose Message</h2>
-            <p>To: {selectedEmail}</p>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Write your message here..."
-            ></textarea>
-          <button onClick={() => handleSendMessage(message)}>Send</button>
-          </div>
-        </div>
-      )}
+            <div className="modal">
+              <div className="modal-content">
+                <span className="close" onClick={closeModal}>&times;</span>
+                <h2>Compose Message</h2>
+                <p>To: {selectedEmail}</p>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Write your message here..."
+                ></textarea>
+                <button onClick={() => handleSendMessage(message)}>Send</button>
+              </div>
+            </div>
+          )}
         </div>
         <nav>
           <ul className='pagination'>
