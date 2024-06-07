@@ -83,7 +83,7 @@ console.log (error)
   }
 
   const[countOfShortlistedCandiCompany , setCountOfShortlistedCandiCompany] = useState();
-  // const fetchCountOfShortlistedCandiComopany = async ()=>{
+  // const fetchCountOfShortlistedCandiCompany = async ()=>{
   //   try{
   //     const response = await axios.get(`${BASE_API_URL}/CountOfShortlistedCandidatesByEachCompany?userEmail=${userEmail}`);
   //     setCountOfShortlistedCandiCompany(response.data);
@@ -95,7 +95,7 @@ console.log (error)
   useEffect(()=>{
     fetchCountOfJobs();
     fetchCountOfApplication();
-    // fetchCountOfShortlistedCandiComopany();
+    // fetchCountOfShortlistedCandiCompany();
   },[])
 
   const user = {

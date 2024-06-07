@@ -57,7 +57,7 @@ const ViewApplications = () => {
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}`);
+      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}&page=${page}&size=${pageSize}`);
       console.log(response.data);
       setApplications(response.data);
       fetchResumeTypes(response.data);
@@ -68,7 +68,7 @@ const ViewApplications = () => {
 
   useEffect(() => {
     fetchApplications();
-  }, []);
+  }, [jobId,page,pageSize]);
 
   const updateStatus = async (applicationId, newStatus) => {
     console.log(applicationId);
