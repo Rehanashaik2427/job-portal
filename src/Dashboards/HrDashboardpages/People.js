@@ -10,10 +10,9 @@ import HrLeftSide from './HrLeftSide';
 const People = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
     const location = useLocation();
-    const [people, setPeople] = useState([]);
     const [filteredPeople, setFilteredPeople] = useState([]);
     const [showSettings, setShowSettings] = useState(false);
-    
+    const [people, setPeople] = useState([]);
     
     const [searchQuery, setSearchQuery] = useState('');
     const userName = location.state?.userName;

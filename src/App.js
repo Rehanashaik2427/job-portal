@@ -63,6 +63,7 @@ import DreamApplication from './Dashboards/HrDashboardpages/DreamApplications';
 import FindCompany from './pages/FindCompany';
 
 import JobboxCompanyPage from './pages/JobboxCompanyPage';
+import AdminleftSide from './Dashboards/AdminDashboardpages/AdminleftSide';
 
 
 
@@ -134,7 +135,8 @@ const App = () => {
           <Route path='/jobboxCompanyPage' component={JobboxCompanyPage} />
           <Route path='/eachCompanyPage' component={EachCompanyPage} />
 
-          <Route path='/dreamApplication' component={DreamApplication} />          
+          <Route path='/dreamApplication' component={DreamApplication} />     
+          <Route path='admin-leftside' component={AdminleftSide} />       
   
         </Switch>
       </BrowserRouter>

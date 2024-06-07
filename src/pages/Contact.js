@@ -4,8 +4,6 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-
-
 const Contact = () => {
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
@@ -15,7 +13,6 @@ const Contact = () => {
     email: '',
     subject:'',
     message: '',
-    subject: '',
     agreeTerms: false, // New state for terms agreement
   });
   const [isMessageSent, setIsMessageSent] = useState(false);
@@ -30,14 +27,29 @@ const Contact = () => {
     }));
   };
 
+
   
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
+
     e.preventDefault();
     if (!formData.agreeTerms) {
       alert('Please accept the terms and conditions.');
       return;
     }
-  
+
+
+    try {
+      // Send the form data to the backend API
+      const response = await axios.post(`${BASE_API_URL}/send-message`, formData);
+      if (response.status === 200) {
+        setIsMessageSent(true);
+        alert("Mail sent")
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+
 
     try {
       await axios.post(BASE_API_URL+'/savemessage', formData); 
@@ -55,7 +67,7 @@ const Contact = () => {
     });
     setIsMessageSent(true);
   };
-
+ 
   return (
     <div className="contact-container">
       <div className='contact'>
@@ -93,6 +105,7 @@ const Contact = () => {
               <label htmlFor="subject">Subject:</label>
               <input type="subject" id="subject" name="subject" value={formData.subject} onChange={handleChange} required />
             </div>
+
             <div className='contact-form-info'>
               <label htmlFor="message">Message:</label>
               <textarea id="message" name="message" value={formData.message} onChange={handleChange} required></textarea>
@@ -112,7 +125,9 @@ const Contact = () => {
     </div>
   );
 };
+
   
+
 
 
 export default Contact;

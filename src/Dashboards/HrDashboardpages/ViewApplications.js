@@ -42,11 +42,9 @@ const ViewApplications = () => {
   
 
 
-
-  const handleFilterChange = async(e) => {
+  const handleFilterChange = async (e) => {
     setFilterStatus(e.target.value);
     handleSelect(e.target.value);
-
   };
 
   const handleSelect = async (filterStatus) => {
@@ -54,18 +52,22 @@ const ViewApplications = () => {
       const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}&page=${page}&size=${pageSize}`);
       console.log(response.data);
       setApplications(response.data.content);
+     
+      console.log(response.data);
+      setApplications(response.data.content || []);
       setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}&page=${page}&size=${pageSize}`);
+  
+      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobIdWithPagination?jobId=${jobId}&page=${page}&pageSize=${pageSize}`);
       console.log(response.data);
-      setApplications(response.data.content);
-      fetchResumeTypes(response.data.content);
+      setApplications(response.data.content || []);
+      fetchResumeTypes(response.data.content || []);
       setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
@@ -74,21 +76,21 @@ const ViewApplications = () => {
 
   useEffect(() => {
     fetchApplications();
+
   }, [jobId,page,pageSize]);
+
 
   const updateStatus = async (applicationId, newStatus) => {
     console.log(applicationId);
     console.log(newStatus);
     try {
-      const response = await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
-      console.log(response.data);
+      await axios.put(`${BASE_API_URL}/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`);
       fetchApplications();
     } catch (error) {
       console.log(error);
     }  
   };
 
-  // Fetch resume types for each application
   const fetchResumeTypes = async (applications) => {
     const types = {};
     const fileNames = {};
@@ -124,11 +126,12 @@ const ViewApplications = () => {
       return null; // Handle other file types as needed
     }
   };
+
   const [showMessage, setShowMessage] = useState(false);
   const [showBriefSettings, setShowBriefSettings] = useState(false);
   const openPopup = (fileName) => {
     setShowMessage(fileName);
-    setShowBriefSettings(!showBriefSettings)
+    setShowBriefSettings(!showBriefSettings);
   };
 
   const handleDownload = async (resumeId, fileName) => {
@@ -137,7 +140,6 @@ const ViewApplications = () => {
         responseType: 'blob'
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      // const fileName =response.data.fileName;
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', fileName);
@@ -148,34 +150,36 @@ const ViewApplications = () => {
     }
   };
 
-  const [candidateName, setCandidateName] = useState();
-  const [candidateEmail, setCandidateEmail] = useState();
+  const [candidateName, setCandidateName] = useState({});
+  const [candidateEmail, setCandidateEmail] = useState({});
 
   const fetchCandidateDetails = async () => {
     const candidateNames = {};
     const candidateEmails = {};
     for (const application of applications) {
-      const res = await axios.get(`${BASE_API_URL}/getUserName`, {
-        params: {
-          userId: application.candidateId
-        }
-
-      });
-      candidateNames[application.candidateId] = res.data.userName;
-      candidateEmails[application.candidateId] = res.data.userEmail;
-
+      try {
+        const res = await axios.get(`${BASE_API_URL}/getUserName`, {
+          params: { userId: application.candidateId }
+        });
+        candidateNames[application.candidateId] = res.data.userName;
+        candidateEmails[application.candidateId] = res.data.userEmail;
+      } catch (error) {
+        console.error('Error fetching candidate details:', error);
+      }
     }
     setCandidateName(candidateNames);
     setCandidateEmail(candidateEmails);
   }
   
 
+  
 
   useEffect(() => {
     fetchCandidateDetails();
   }, [applications]);
 
-
+  
+ 
   const user = { userEmail };
 
   return (
@@ -202,74 +206,74 @@ const ViewApplications = () => {
               </div>
             </div>
           )}
-          {applications.length > 0 && (
-            <div>
-                <div>
-            <table id='jobTable1' style={{marginTop:'12px'}}>
-              <thead>
-                <tr>
-                  <th>Job Title</th>
-                  <th>Candidate Name</th>
-                  <th>Candidate Email</th>
-                  <th>Resume ID</th>
-                  <th>Date</th>
-                  <th>Application Status</th>
-                  <th>View Details</th>
-                  <th>Application Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {applications.map(application => (
-                  <tr key={application.id}>
-                    <td>{application.jobRole}</td>
-                    <td>{candidateName[application.candidateId]}</td>
-                    <td>{candidateEmail[application.candidateId]}</td>
-                    <td>{renderResumeComponent(application.resumeId)}</td>
-                    {/* <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td> */}
-                    <td>{application.appliedOn}</td>
-                    <td>{application.applicationStatus}</td>
-                    <td>
-                      <Link
-                        to={{
-                          pathname: '/applicationDetails',
-                          state: { userEmail: userEmail, applicationId: application.applicationId }
-                        }}
-                      >
-                        <button>View</button>
-                      </Link>
-                    </td>
-                    <td>
-                      <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')} className="select">Select</button>
-                      <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')} className="reject">Reject</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            </div>
-            <nav>
+        {applications.length === 0 ? (
+  <section class='not-yet'>
+    <h2>Sorry, you haven't received any applications yet.</h2>
+  </section>
+) : (
+  <div>
+    <div>
+      <table id='jobTable1' style={{ marginTop: '12px' }}>
+        <thead>
+          <tr>
+            <th>Job Title</th>
+            <th>Candidate Name</th>
+            <th>Candidate Email</th>
+            <th>Resume ID</th>
+            <th>Date</th>
+            <th>Application Status</th>
+            <th>View Details</th>
+            <th>Application Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {applications.map(application => (
+            <tr key={application.id}>
+              <td>{application.jobRole}</td>
+              <td>{candidateName[application.candidateId]}</td>
+              <td>{candidateEmail[application.candidateId]}</td>
+              <td>{renderResumeComponent(application.resumeId)}</td>
+              <td>{application.appliedOn}</td>
+              <td>{application.applicationStatus}</td>
+              <td>
+                <Link
+                  to={{
+                    pathname: '/applicationDetails',
+                    state: { userEmail: userEmail, applicationId: application.applicationId }
+                  }}
+                >
+                  <button>View</button>
+                </Link>
+              </td>
+              <td>
+                <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')} className="select">Select</button>
+                <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')} className="reject">Reject</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <nav>
         <ul className='pagination'>
           <li>
-            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+            <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
           </li>
           {[...Array(totalPages).keys()].map((pageNumber) => (
             <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+              <button className='page-button' onClick={() => handlePageChange(pageNumber)}>
+                {pageNumber + 1}
+              </button>
             </li>
           ))}
           <li>
-            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+            <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
           </li>
         </ul>
       </nav>
-            </div>
-           
-          )}
-          {applications.length === 0 && (
-            <section class='not-yet'>
-              <h2>Sorry, you haven't received any applications yet.</h2>
-            </section>
-          )}
+    </div>
+  </div>
+)}
+
         </div>
       </div>
     </div>

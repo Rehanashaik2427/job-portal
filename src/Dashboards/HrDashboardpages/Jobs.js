@@ -246,7 +246,12 @@ const Jobs = () => {
           <h2>You have not posted any jobs yet. Post Now</h2>
         </section>
       )}
-        <nav>
+
+      </div>
+      <button className='add-job-button'>
+        <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
+      </button>
+      <nav>
         <ul className='pagination'>
           <li>
             <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
@@ -261,12 +266,8 @@ const Jobs = () => {
           </li>
         </ul>
       </nav>
-      </div>
-      <button className='add-job-button'>
-        <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
-      </button>
     </div>
-
+   
 </div>
   );
 };

@@ -1,8 +1,8 @@
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const JobboxCompanyPage=()=>{
 
@@ -92,7 +92,7 @@ const JobboxCompanyPage=()=>{
                 </div>
               ))
             ) : (
-              <p>Loading companies...</p>
+              <p>Company not there please <Link to='/companies'>please fill company details</Link></p>
             )}
 
 
