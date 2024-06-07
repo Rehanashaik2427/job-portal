@@ -49,11 +49,32 @@ const Jobs = () => {
     setPage(pageNumber);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent default form submission
+    // setPage(0);
+  };
+
  
+  useEffect(() => {
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+    fetchJobs()
+  }, [userEmail,userEmail,page,pageSize]);
+  useEffect(() => {
+    console.log(search);
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+    fetchJobs()
+  }, [search,userEmail,page,pageSize]);
 
  
 
   const fetchJobs = async () => {
+      console.log(search);
     try {
       const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
       setJobs(response.data.content);
@@ -109,11 +130,17 @@ const Jobs = () => {
     fetchJobs()
   }, [userEmail,userEmail,page,pageSize]);
   
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    fetchJobBysearch();
-  };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault(); // Prevent default form submission
+  //   fetchJobBysearch();
+  // };
   
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault(); // Prevent default form submission
+  //   setPage(0);
+  // };
+  
+
 
 
   const handleJobDescription = (summary) => {

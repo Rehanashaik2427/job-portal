@@ -15,25 +15,23 @@ const ViewApplications = () => {
   const [resumeTypes, setResumeTypes] = useState({});
   const [filterStatus, setFilterStatus] = useState('all');
   const [fileNames, setfileNames] = useState({});
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
-  const [totalPages, setTotalPages] = useState(0);
-  const handlePreviousPage = () => {
-    if (page > 0) {
-      setPage(page - 1);
-    }
-  };
 
-  const handleNextPage = () => {
-    if (page < totalPages - 1) {
-      setPage(page + 1);
-    }
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const applicationsPerPage = 5;
+  const indexOfLastApplication= currentPage * applicationsPerPage;
+  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
+  const currentApplications = applications.slice(indexOfFirstApplication, indexOfLastApplication);
+  const nPage=Math.ceil(applications.length/applicationsPerPage);
+  const numbers=[...Array(nPage+1).keys()].slice(1);
 
-  const handlePageChange = (pageNumber) => {
-    setPage(pageNumber);
-  };
-  const handleFilterChange = async (e) => {
+  function changeCurrentPage(id)
+  {
+  setCurrentPage(id);
+  }
+
+
+
+  const handleFilterChange = async(e) => {
     setFilterStatus(e.target.value);
     handleSelect(e.target.value);
 
@@ -41,9 +39,7 @@ const ViewApplications = () => {
 
   const handleSelect = async (filterStatus) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobIdWithpagination`, {
-        params: { jobId, filterStatus, page, pageSize }
-      });
+      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}`);
       console.log(response.data);
       setApplications(response.data.content);
     } catch (error) {
@@ -53,16 +49,10 @@ const ViewApplications = () => {
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobIdWithPagination`, {
-        params: { jobId, page, pageSize }
-      });
+      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobId?jobId=${jobId}`);
       console.log(response.data);
-      setApplications(response.data.content);
-      //fetchResumeTypes(response.data);
-
-      // Calculate total pages for pagination
-
-      setTotalPages(response.data.totalPages);
+      setApplications(response.data);
+      fetchResumeTypes(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -70,8 +60,7 @@ const ViewApplications = () => {
 
   useEffect(() => {
     fetchApplications();
-  }, [jobId, page, pageSize]); // Include page in the dependency array to trigger fetchApplications on page change
-
+  }, []);
 
   const updateStatus = async (applicationId, newStatus) => {
     console.log(applicationId);
@@ -216,64 +205,68 @@ const ViewApplications = () => {
           )}
           {applications.length > 0 && (
             <div>
-              <div>
-                <table id='jobTable1' style={{ marginTop: '12px' }}>
-                  <thead>
-                    <tr>
-                      <th>Job Title</th>
-                      <th>Candidate Name</th>
-                      <th>Candidate Email</th>
-                      <th>Resume</th>
-                      <th>Date</th>
-                      <th>Application Status</th>
-                      <th>View Details</th>
-                      <th>Application Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {applications.map(application => (
-                      <tr key={application.id}>
-                        <td>{application.jobRole}</td>
-                        <td>{candidateName[application.candidateId]}</td>
-                        <td>{candidateEmail[application.candidateId]}</td>
-                        <td>{renderResumeComponent(application.resumeId)}</td>
-                        <td>{application.appliedOn}</td>
-                        <td>{application.applicationStatus}</td>
-                        <td>
-                          <Link
-                            to={{
-                              pathname: '/applicationDetails',
-                              state: { userEmail: userEmail, applicationId: application.applicationId }
-                            }}
-                          >
-                            <button>View</button>
-                          </Link>
-                        </td>
-                        <td>
-                          <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')} className="select">Select</button>
-                          <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')} className="reject">Reject</button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                <div>
+            <table id='jobTable1' style={{marginTop:'12px'}}>
+              <thead>
+                <tr>
+                  <th>Job Title</th>
+                  <th>Candidate Name</th>
+                  <th>Candidate Email</th>
+                  <th>Resume ID</th>
+                  <th>Date</th>
+                  <th>Application Status</th>
+                  <th>View Details</th>
+                  <th>Application Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentApplications.map(application => (
+                  <tr key={application.id}>
+                    <td>{application.jobRole}</td>
+                    <td>{candidateName[application.candidateId]}</td>
+                    <td>{candidateEmail[application.candidateId]}</td>
+                    <td>{renderResumeComponent(application.resumeId)}</td>
+                    {/* <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td> */}
+                    <td>{application.appliedOn}</td>
+                    <td>{application.applicationStatus}</td>
+                    <td>
+                      <Link
+                        to={{
+                          pathname: '/applicationDetails',
+                          state: { userEmail: userEmail, applicationId: application.applicationId }
+                        }}
+                      >
+                        <button>View</button>
+                      </Link>
+                    </td>
+                    <td>
+                      <button onClick={() => updateStatus(application.applicationId, 'Shortlisted')} className="select">Select</button>
+                      <button onClick={() => updateStatus(application.applicationId, 'Not Shortlisted')} className="reject">Reject</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+            <nav>
+  <ul className='pagination'>
+   
+    {
+      numbers.map((n,i)=>(
+          <li className={`page-item ${currentPage ===n ? 'active' : ''}`} key={i}>
+            
+            <Link to={{
+        pathname: '/viewApplications', 
+        state: { userName: userName,userEmail:userEmail } 
+      }} className='page-link' onClick={()=>changeCurrentPage(n)}>{n}</Link>
+          </li>
+      ))
+    }
 
-              <nav>
-                <ul className='pagination'>
-                  <li>
-                    <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
-                  </li>
-                  {[...Array(totalPages).keys()].map((pageNumber) => (
-                    <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-                      <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
-                    </li>
-                  ))}
-                  <li>
-                    <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
-                  </li>
-                </ul>
-              </nav>
+
+
+  </ul>
+</nav>
             </div>
           )}
           {applications.length === 0 && (

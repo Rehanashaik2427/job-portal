@@ -34,12 +34,13 @@ const CandiadteJobs = () => {
 
 
   useEffect(() => {
-    if (search) {
-      fetchJobBysearch();
-    }
-    else
-      fetchData();
-  }, [page, pageSize, search]);
+    if(search)
+      {
+        fetchJobBysearch();
+      }
+else
+    fetchData();
+  }, [page, pageSize,search]);
 
   async function fetchData() {
     try {
@@ -85,10 +86,10 @@ const CandiadteJobs = () => {
     if (selectedJobId && resumeId) {
       await applyJob(selectedJobId, resumeId);
       setSelectedJobId(null); // Reset selected job id
-      setShowResumePopup(false); // Close the resume selection popup
+     setShowResumePopup(false); // Close the resume selection popup
     }
   };
-
+  ///////////////////////////
   const applyJob = async (jobId, resumeId) => {
     console.log(jobId);
     console.log(userId);
@@ -100,14 +101,7 @@ const CandiadteJobs = () => {
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
-      setApplyJobs(response.data);
-      console.log(response.data);
-
-
-      setApplyJobs(response.data);
-      console.log(response.data);
-
-      setApplyJobs(response.data);
+       setApplyJobs(response.data);
       console.log(response.data);
       // setApplyJobs([...applyjobs, jobId]);
 
@@ -119,7 +113,7 @@ const CandiadteJobs = () => {
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
-
+   
   };
 
   const [resumes, setResumes] = useState([]);
@@ -146,13 +140,14 @@ const CandiadteJobs = () => {
     fetchApplications();
   }, []);
 
+  
 
-
-  const fetchJobBysearch = async () => {
+ const fetchJobBysearch= async()=>{
     try {
       const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
         params: { search,page,pageSize }
       });      
+     
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -160,14 +155,14 @@ const CandiadteJobs = () => {
     }
     console.log("Search submitted:", search);
   };
-
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetchJobBysearch();
   
   }
-
+   
 
   const [selectedJobSummary, setSelectedJobSummary] = useState(null);
 
@@ -195,7 +190,7 @@ const CandiadteJobs = () => {
         {showResumePopup && (
           <div className="modal">
             <div className="modal-content">
-              <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+            <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
               <ResumeSelectionPopup
                 resumes={resumes}
                 onSelectResume={handleResumeSelect}
@@ -208,7 +203,7 @@ const CandiadteJobs = () => {
         <div className="page">
           <div className="top-right-content">
             <div className="candidate-search">
-              <form className="candidate-search1" onSubmit={handleSubmit} >
+              <form className="candidate-search1"onSubmit={handleSubmit} >
                 <input
                   type='text'
                   name='search'
@@ -222,8 +217,8 @@ const CandiadteJobs = () => {
               </form>
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
             </div>
-          </div>
-
+        </div>
+       
           {showSettings && (
             <div id="modal-container">
               <div id="settings-modal">
@@ -249,7 +244,6 @@ const CandiadteJobs = () => {
                     <th>Skills</th>
                     <th>Job summary</th>
                     <th>Actions</th>
-
                   </tr>
                   {jobs.map(job => (
                     <tr key={job.id} id='job-table-list'>
@@ -258,16 +252,16 @@ const CandiadteJobs = () => {
                       <td>{job.applicationDeadline}</td>
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
+
                       <td>
                         {applications.some(application => application.jobId === job.jobId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
                           <h4>Applied</h4>
                         ) : (
-                          <button onClick={() => handleApplyButtonClick(job.jobId)}>
+                          <button onClick={() => handleApplyButtonClick(job.jobId,job.jobStatus)}>
                             <h4>Apply</h4>
                           </button>
                         )}
                       </td>
-
                     </tr>
                   ))}
                 </table>
@@ -283,41 +277,38 @@ const CandiadteJobs = () => {
                   </div>
                 )}
               </div>
-
-
               <nav>
-                <ul className='pagination'>
-                  <li>
-                    <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Prev</button>
-                  </li>
-                  {[...Array(totalPages).keys()].map((pageNumber) => (
-                    <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-                      <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
-                    </li>
-                  ))}
-                  <li>
-                    <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
-                  </li>
-                </ul>
-              </nav>
-
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
             </div>
           )}
-
+          
           {jobs.length === 0 && <h1>No jobs found.</h1>}
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
             <p>Just add the name of your dream company and apply to them directly.</p>
-            <Link to={{ pathname: '/dream-company', state: { userName: userName, userId: userId } }} className="app">
+            <Link to={{pathname: '/dream-company',state: { userName: userName, userId: userId }}} className="app">
               <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
             </Link>
           </div>
         </div>
       </div>
-    </div>
-
-
-
+      </div>
+      
+      
+        
   );
 };
 export default CandiadteJobs;

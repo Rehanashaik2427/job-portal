@@ -148,6 +148,45 @@ const MyApplication = () => {
     }
   };
 
+
+  const [jobStatuses, setJobStatuses] = useState({});
+
+  // Fetch job status for each application on component mount
+  useEffect(() => {
+    const fetchJobStatuses = async () => {
+      const statuses = {};
+      for (const application of applications) {
+        try {
+          const status = await getJobStatus(application.jobId);
+          statuses[application.applicationId] = status;
+        } catch (error) {
+          console.error('Error fetching job status:', error);
+          statuses[application.id] = 'Unknown';
+        }
+      }
+      setJobStatuses(statuses);
+    };
+
+    fetchJobStatuses();
+  }, [applications]);
+
+  // Function to get job status for a specific job ID
+  const getJobStatus = async (jobId) => {
+    try {
+      const response = await axios.get(`${BASE_API_URL}/getJob?jobId=${jobId}`);
+      return response.data.jobStatus ? 'Available' : 'Not Available';
+    } catch (error) {
+      console.error("Error fetching job status:", error);
+      throw error;
+    }
+  };
+
+  // Render job status based on application ID
+  const renderJobStatus = (applicationId) => {
+    return jobStatuses[applicationId] || 'Loading...';
+  };
+  
+
   const user = {
     userName: userName,
     userId: userId,
@@ -205,7 +244,8 @@ const MyApplication = () => {
                       <th>Job Title</th>
                       <th>Applied On</th>
                       <th>Resume Profile</th>
-                      <th>Status & Actions</th>
+                      <th>Job Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -215,6 +255,7 @@ const MyApplication = () => {
                         <td>{application.jobRole}</td>
                         <td>{application.appliedOn}</td>
                         <td>{resumeNames[application.resumeId]}</td>
+                        <td>{renderJobStatus(application.applicationId)}</td> 
                         <td>{application.applicationStatus}</td>
                       </tr>
                     ))}

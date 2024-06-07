@@ -83,19 +83,19 @@ console.log (error)
   }
 
   const[countOfShortlistedCandiCompany , setCountOfShortlistedCandiCompany] = useState();
-  const fetchCountOfShortlistedCandiComopany = async ()=>{
-    try{
-      const response = await axios.get(`${BASE_API_URL}/CountOfShortlistedCandidatesByEachCompany?userEmail=${userEmail}`)
-      setCountOfShortlistedCandiCompany(response.data);
-    }
-    catch(error){
-      console.log (error)
-    }
-  }
+  // const fetchCountOfShortlistedCandiComopany = async ()=>{
+  //   try{
+  //     const response = await axios.get(`${BASE_API_URL}/CountOfShortlistedCandidatesByEachCompany?userEmail=${userEmail}`);
+  //     setCountOfShortlistedCandiCompany(response.data);
+  //   }
+  //   catch(error){
+  //     console.log (error)
+  //   }
+  // }
   useEffect(()=>{
     fetchCountOfJobs();
     fetchCountOfApplication();
-    fetchCountOfShortlistedCandiComopany();
+    // fetchCountOfShortlistedCandiComopany();
   },[])
 
   const user = {
