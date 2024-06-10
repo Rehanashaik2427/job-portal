@@ -4,6 +4,7 @@ import './CandidateDashboard.css';
 import { useHistory, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import ResumeSelectionPopup from './ResumeSelectionPopup';
+import CandidateLeftSide from './CandidateLeftSide';
 
    const BASE_API_URL="http://localhost:8082/api/jobbox";
 
@@ -20,7 +21,7 @@ const DreamCompany = () => {
     companyEmail: '',
     industry: '',
     location: '',
-    discription: '', // Corrected typo
+    discription: '',      // Corrected typo
     date: '',
   });
 
@@ -50,17 +51,24 @@ const DreamCompany = () => {
 
 
 
-const handleResumeSelect = async (resumeId) => {
+  const handleResumeSelect = async (resumeId) => {
     if (resumeId) {
+        // Save company data first
+        await saveCompanyData(formData);
+
+        // If saving is successful, then apply for the job
         await applyJob(resumeId);
-        setShowResumePopup(false); // Close the resume selection popup
+
+        // Close the resume selection popup
+        setShowResumePopup(false);
     }
 };
+
 
 const applyJob=async(resumeId)=>{
   const appliedOn = new Date().toLocaleDateString();
 
-
+         
     try {
         const response = await axios.put(`${BASE_API_URL}/applyDreamCompany?userId=${userId}&companyName=${companyName}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
@@ -80,38 +88,49 @@ const applyJob=async(resumeId)=>{
 };
 
 
+const saveCompanyData = async (formData) => {
+  try {
+    const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
+    console.log('Company details submitted:', response.data);
+    
+    setFormData({
+      companyName:companyName,
+      contactNumber: '',
+      companyEmail: '',
+      industry: '',
+      location: '',
+      discription: '',
+      date: '',
+    });
 
+   
+  } catch (error) {
+    console.error('Error during submission:', error);
+    
+   
+    
+  }
+ 
+};
 
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(`${BASE_API_URL}/saveCompany`, formData);
-      console.log('Company details submitted:', response.data);
-      
-      setFormData({
-        companyName:companyName,
-        contactNumber: '',
-        companyEmail: '',
-        industry: '',
-        location: '',
-        discription: '',
-        date: '',
-      });
-
-     
-    } catch (error) {
-      console.error('Error during submission:', error);
-      
-      // alert('Company already exists')
-      
-    }
-
+   
   };
 
+  const user = {
+    userName: userName,
+    
+    userId: userId,
+   };
   return (
-    <div className='dream-company-container'>
+    <div className='candidate-dashboard-container'>
+       <div className='left-side'>
+       <CandidateLeftSide user={user} />
+     </div>
+     <div className='rightside'>
       <div className="centered-content">
       {showResumePopup && (
             <div className="modal">
@@ -123,7 +142,7 @@ const applyJob=async(resumeId)=>{
                         onClose={() => setShowResumePopup(false)}
                     />
                 </div>
-            </div>
+            </div>  
         )}
         <form onSubmit={handleSubmit} className="centered-form">
           <div className="form-group">
@@ -151,6 +170,7 @@ const applyJob=async(resumeId)=>{
        
       </div>
    
+    </div>
     </div>
   );
 };

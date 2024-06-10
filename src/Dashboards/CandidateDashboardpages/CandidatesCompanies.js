@@ -11,7 +11,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 const CandidatesCompanies = () => {
   
  const BASE_API_URL="http://localhost:8082/api/jobbox";
-  const [companies, setCompanies] = useState([]);
+ 
   
   const location = useLocation();
   const userName=location.state?.userName;
@@ -19,40 +19,71 @@ const CandidatesCompanies = () => {
   const userId=location.state?.userId;
 
 
-  const fetchCompany = async () => {
-    try {
-      const response = await axios.get(BASE_API_URL+"/displayCompanies"); // Replace 'YOUR_API_ENDPOINT' with your actual API endpoint
-      setCompanies(response.data); // Set the fetched jobs to state
-    } catch (error) {
-      console.error('Error fetching jobs:', error);
-    }
-  };
-
-  // useEffect hook to fetch jobs when the component mounts
-  useEffect(() => {
-    fetchCompany();
-  }, []);
-
-
-
-  const [search, setSearch] = useState('');
-
-  const handleSearchChange = (event) => {
-    setSearch(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const [companies, setCompanies] = useState([]);
+    const [search, setSearch] = useState('');
+    const [page, setPage] = useState(0);
+    const [pageSize, setPageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(0);
+  
+    const handlePreviousPage = () => {
+      if (page > 0) {
+        setPage(page - 1);
+      }
+    };
+  
+    const handleNextPage = () => {
+      if (page < totalPages - 1) {
+        setPage(page + 1);
+      }
+    };
+  
+    const handlePageChange = (pageNumber) => {
+      setPage(pageNumber);
+    };
+  
+    
+  
+  
+    const fetchCompany = async () => {
+      const response = await axios.get(`${BASE_API_URL}/displayCompanies?page=${page}&size=${pageSize}`);
+      
+     
+      setCompanies(response.data.content);
+      setTotalPages(response.data.totalPages);
+    };
+  
+    // useEffect hook to fetch jobs when the component mounts
+    useEffect(() => {
+      if(search)
+        {
+          fetchCompanyBySearch();
+        }
+      fetchCompany();
+    }, [search,page, pageSize]);
+  
+  
+  const fetchCompanyBySearch=async()=>{
     try{
-      const response = await axios.get(`${BASE_API_URL}/searchCompany?search=${search}`);
-      setCompanies(response.data);
+      const response = await axios.get(`${BASE_API_URL}/searchCompany?search=${search}?page=${page}&size=${pageSize}`);
+      setCompanies(response.data.content);
+    setTotalPages(response.data.totalPages);
 
     }catch(error){
 console.log("No data Found"+error);
     }
     console.log("Search submitted:", search);
-  };
 
+  };
+    
+  
+    const handleSearchChange = (event) => {
+      setSearch(event.target.value);
+    };
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      fetchCompanyBySearch();
+    };
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -139,6 +170,21 @@ console.log("No data Found"+error);
 
 
           </div>
+          <nav>
+                  <ul className='pagination'>
+                      <li>
+                          <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+                      </li>
+                      {[...Array(totalPages).keys()].map((pageNumber) => (
+                          <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                              <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+                          </li>
+                      ))}
+                      <li>
+                          <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+                      </li>
+                  </ul>
+              </nav>
         </div>
       </div>
     </div>

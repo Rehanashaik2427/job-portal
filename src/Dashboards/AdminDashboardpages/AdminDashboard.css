@@ -112,6 +112,9 @@ main {
     cursor: pointer;
     margin-right: 1rem;
 }
+.approve-btn {
+    background-color:  #4CAF50;
+}
 
 .reject-btn {
     background-color: #FF5733;
@@ -267,10 +270,11 @@ company details by admin */
     border-collapse: collapse;
      margin-right: 20px;
     margin: 30px;
+    border: none;
   }
   
   .company-table1 th, .company-table1 td {
-    border: 1px solid #dddddd;
+    border: none;
     padding: 8px;
   }
   
@@ -288,7 +292,7 @@ company details by admin */
   }
   
   .company-table1 button .approved {
-    background-color: #0ee719;
+    background-color: rgb(96, 223, 96);
     border: none;
   }
 
@@ -296,4 +300,72 @@ company details by admin */
     background-color:rgb(218, 21, 21);
     border: none;
   }
+
+
+
+  /* Admin action*/
+
+   /* Header */
+   .admin-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: wheat;
+  }
+  
+  /* HR Request container */
+  .request-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* HR Details */
+  .hr-details {
+    margin-bottom: 10px;
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Approve Button */
+  .approve-btn-adminAction {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  /* Reject Button */
+  .reject-btn-adminAction {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  /* Approval Message */
+  .approval-message {
+    margin-top: 10px;
+    color: #28a745;
+  }
+
+  .reject-message {
+    margin-top: 10px;
+    color:rgb(194, 27, 27);
+  }
+  
+  /* Error Message */
+  .error-message {
+    margin-top: 10px;
+    color: #dc3545;
+  }
+  
  
