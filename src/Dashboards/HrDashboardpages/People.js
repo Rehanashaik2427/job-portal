@@ -49,26 +49,7 @@ const People = () => {
         fetchHRData();
     }, [userEmail, page, pageSize, sortedColumn, sortOrder]); // Empty dependency array ensures the effect runs only once when the component mounts
 
-    // const fetchHRData = async () => {
-    //     try {
-    //         // const response = await axios.get(`${BASE_API_URL}/getHrEachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
-    //         const response = await axios.get(`${BASE_API_URL}/getHrEachCompany`, {
-    //             params: {
-    //                 userEmail: userEmail,
-    //                 page: page,
-    //                 size: pageSize,
-    //                 sortBy: sortedColumn,
-    //                 sortOrder: sortOrder,
 
-    //             }
-    //         });
-    //         setPeople(response.data.content);
-    //         setTotalPages(response.data.totalPages)
-    //         // setFilteredPeople(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching HR data:', error);
-    //     }
-    // };
     const fetchHRData = async () => {
         try {
             const params = {
@@ -170,11 +151,12 @@ const People = () => {
                                     )}
                                 </th>
                                 <th>Company Name </th>
-                                <th onClick={() => handleSort('phone')}>
+                                <th>PhoneNumber</th>
+                                {/* <th onClick={() => handleSort('phone')}>
                                     Phone Number {sortedColumn === 'phone' && (
                                         sortOrder === ' ' ? '▲' : '▼'
                                     )}
-                                </th>
+                                </th> */}
                             </tr>
                         </thead>
                         <tbody>

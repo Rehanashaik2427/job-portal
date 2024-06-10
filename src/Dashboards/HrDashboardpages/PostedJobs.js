@@ -21,6 +21,9 @@ const PostedJobs = () => {
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
 
+  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+  const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
+
   const handlePreviousPage = () => {
     if (page > 0) {
       setPage(page - 1);
@@ -39,19 +42,29 @@ const PostedJobs = () => {
 
   const fetchJobs = async (userEmail) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
-      if (response.status === 200) {
-        setJobs(response.data); // Assuming response.data is an array of jobs
-        setJobs(response.data);
-        setJobs(response.data.content);
-        setTotalPages(response.data.totalPages);
-      } else {
-        console.error('Failed to fetch jobs data');
-      }
+      const params = {
+        userEmail: userEmail,
+        page: page,
+        size: pageSize,
+        sortBy: sortedColumn, // Include sortedColumn and sortOrder in params
+        sortOrder: sortOrder,
+      };
+  
+      const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmaileachCompany`, { params });
+      setJobs(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error('Error fetching jobs data:', error);
     }
   };
+  const handleSort = (column) => {
+    let order = 'asc';
+    if (sortedColumn === column) {
+        order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+};
 
   const fetchJobBysearch=async()=>{
     try {
@@ -75,7 +88,7 @@ const PostedJobs = () => {
       }
       else
     fetchJobs(userEmail);
-  }, [userEmail,search,page,pageSize]);
+  }, [userEmail,search,page,pageSize,sortedColumn, sortOrder]);
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -160,13 +173,13 @@ const PostedJobs = () => {
             <table id='jobTable1'>
               <thead>
                 <tr>
-                  <th>Hr Name</th>
+                  <th onClick={() => handleSort('userName')}>Hr Name{sortedColumn === 'userName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                   <th>Company Name</th>
-                  <th>Job Title</th>
-                  <th>Job Type</th>
-                  <th>Skills</th>
-                  <th>Vacancy</th>
-                  <th>Application Deadline</th>
+                  <th onClick={() => handleSort('jobTitle')}>Job Title{sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('jobType')}>Job Type{sortedColumn === 'jobType' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('skills')}>Skills{sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('numberOfPosition')}>Vacancy{sortedColumn === 'numberOfPosition' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('applicationDeadline')}>Application Deadline{sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                 </tr>
               </thead>
               <tbody>
