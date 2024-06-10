@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './AdminDashboard.css';
-import axios from 'axios';
 
 const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
@@ -15,7 +15,14 @@ const CompanyDetailsByAdmin = ({ location }) => {
     e.preventDefault(); // Prevent the default form submission behavior
     try {
       // Send the data to the backend using Axios
-      const response = await axios.put(`${BASE_API_URL}/updateCompanyByName?companyName=${companyName}`, { location1, description });
+      const response = await axios.put(`${BASE_API_URL}/updateCompanyByName`, null, {
+        params: {
+          companyName: companyName,
+          location1: location1,
+          description: description
+        }
+      });
+      // const response = await axios.put(`${BASE_API_URL}/updateCompanyByName?companyName=${companyName}`, { location1, description });
       console.log(response.data);
       history.push('/companyDetailsAdded');
     } catch (error) {

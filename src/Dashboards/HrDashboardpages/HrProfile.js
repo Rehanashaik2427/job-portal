@@ -29,7 +29,7 @@ const HrProfile = () => {
 
   const getUser = async (userEmail) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getHrByEmail?userEmail=${userEmail}`);
+      const response = await axios.get(`${BASE_API_URL}/getHRName?userEmail=${userEmail}`);
       setUserData(response.data);
     } catch (error) {
       console.log(error);

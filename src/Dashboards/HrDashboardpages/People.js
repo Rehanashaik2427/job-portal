@@ -13,52 +13,82 @@ const People = () => {
     const [filteredPeople, setFilteredPeople] = useState([]);
     const [showSettings, setShowSettings] = useState(false);
     const [people, setPeople] = useState([]);
-    
+
     const [searchQuery, setSearchQuery] = useState('');
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
-    
+
 
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
-   
-  
+
+
+
+    const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+    const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
+
     const handlePreviousPage = () => {
-      if (page > 0) {
-        setPage(page - 1);
-      }
+        if (page > 0) {
+            setPage(page - 1);
+        }
     };
-  
+
     const handleNextPage = () => {
-      if (page < totalPages - 1) {
-        setPage(page + 1);
-      }
+        if (page < totalPages - 1) {
+            setPage(page + 1);
+        }
     };
-  
+
     const handlePageChange = (pageNumber) => {
-      setPage(pageNumber);
+        setPage(pageNumber);
     };
-   
-    
+
+
     useEffect(() => {
         fetchHRData();
-    }, [userEmail,page,pageSize]); // Empty dependency array ensures the effect runs only once when the component mounts
-    
+    }, [userEmail, page, pageSize, sortedColumn, sortOrder]); // Empty dependency array ensures the effect runs only once when the component mounts
+
+    // const fetchHRData = async () => {
+    //     try {
+    //         // const response = await axios.get(`${BASE_API_URL}/getHrEachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
+    //         const response = await axios.get(`${BASE_API_URL}/getHrEachCompany`, {
+    //             params: {
+    //                 userEmail: userEmail,
+    //                 page: page,
+    //                 size: pageSize,
+    //                 sortBy: sortedColumn,
+    //                 sortOrder: sortOrder,
+
+    //             }
+    //         });
+    //         setPeople(response.data.content);
+    //         setTotalPages(response.data.totalPages)
+    //         // setFilteredPeople(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching HR data:', error);
+    //     }
+    // };
     const fetchHRData = async () => {
         try {
-            const response = await axios.get(`${BASE_API_URL}/getHrEachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
+            const params = {
+                userEmail: userEmail,
+                page: page,
+                size: pageSize,
+            };
+            if (sortedColumn) {
+                params.sortBy = sortedColumn;
+                params.sortOrder = sortOrder;
+            }
+            const response = await axios.get(`${BASE_API_URL}/getHrEachCompany`, { params });
             setPeople(response.data.content);
-            setTotalPages(response.data.totalPages)
-            // setFilteredPeople(response.data);
+            setTotalPages(response.data.totalPages);
         } catch (error) {
             console.error('Error fetching HR data:', error);
         }
     };
-    
-   
 
-  
+
 
     const toggleSettings = () => {
         setShowSettings(!showSettings);
@@ -74,6 +104,14 @@ const People = () => {
         );
         setFilteredPeople(filtered);
     };
+    const handleSort = (column) => {
+        let order = 'asc';
+        if (sortedColumn === column) {
+            order = sortOrder === 'asc' ? 'desc' : 'asc';
+        }
+        setSortedColumn(column);
+        setSortOrder(order);
+    };
 
     const user = {
         userName: userName,
@@ -87,39 +125,56 @@ const People = () => {
             </div>
 
             <div className='hr-rightside'>
-                <div className="candidate-search">
-                    <input 
-                        type='text' 
-                        placeholder='Enter Emp Name' 
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                    <button onClick={handleSearch}>
-                        <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
-                    </button>
-                    <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
-                </div>
-                {showSettings && (
-                    <div id="modal-container">
-                        <div id="settings-modal">
-                            <ul>
-                                <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sign out</Link></li>
-                                <li>Settings</li>
-                            </ul>
-                            <button onClick={toggleSettings}>Close</button>
-                        </div>
+                <div>
+                    <div className="candidate-search">
+                        <input
+                            type='text'
+                            placeholder='Enter Emp Name'
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                        <button onClick={handleSearch}>
+                            <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
+                        </button>
+                        <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
                     </div>
-                )}
+                    {showSettings && (
+                        <div id="modal-container">
+                            <div id="settings-modal">
+                                <ul>
+                                    <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/"> Sign out</Link></li>
+                                    <li>Settings</li>
+                                </ul>
+                                <button onClick={toggleSettings}>Close</button>
+                            </div>
+                        </div>
+                    )}
 
+                </div>
                 <div>
                     <table id='jobTable1'>
                         <thead>
                             <tr>
-                                <th>HR ID</th>
-                                <th>HR Name</th>
-                                <th>Email</th>
-                                <th>Company Name</th>
-                                <th>Phone Number</th>
+                                <th onClick={() => handleSort('userId')}>
+                                    HR ID {sortedColumn === 'userId' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                </th>
+
+                                <th onClick={() => handleSort('userName')}>
+                                    HR Name {sortedColumn === 'userName' && (
+                                        sortOrder === ' ' ? '▲' : '▼'
+                                    )}
+                                </th>
+                                <th onClick={() => handleSort('userEmail')}>
+                                    Email {sortedColumn === 'userEmail' && (
+                                        sortOrder === ' ' ? '▲' : '▼'
+                                    )}
+                                </th>
+                                <th>Company Name </th>
+                                <th onClick={() => handleSort('phone')}>
+                                    Phone Number {sortedColumn === 'phone' && (
+                                        sortOrder === ' ' ? '▲' : '▼'
+                                    )}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -136,22 +191,22 @@ const People = () => {
                     </table>
                 </div>
                 <nav>
-        <ul className='pagination'>
-          <li>
-            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
-          </li>
-          {[...Array(totalPages).keys()].map((pageNumber) => (
-            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
-            </li>
-          ))}
-          <li>
-            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
-          </li>
-        </ul>
-      </nav>
+                    <ul className='pagination'>
+                        <li>
+                            <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+                        </li>
+                        {[...Array(totalPages).keys()].map((pageNumber) => (
+                            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                                <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+                            </li>
+                        ))}
+                        <li>
+                            <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-           
+
         </div>
     );
 }
