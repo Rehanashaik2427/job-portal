@@ -19,8 +19,7 @@ const CandidatesCompanies = () => {
   const userId=location.state?.userId;
 
 
-  const [companies, setCompanies] = useState([]);
-    const [search, setSearch] = useState('');
+  const [companies, setCompanies] = useState([]);    const [search, setSearch] = useState('');
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
@@ -30,7 +29,6 @@ const CandidatesCompanies = () => {
         setPage(page - 1);
       }
     };
-  
     const handleNextPage = () => {
       if (page < totalPages - 1) {
         setPage(page + 1);

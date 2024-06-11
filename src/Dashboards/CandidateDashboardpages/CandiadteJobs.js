@@ -1,3 +1,5 @@
+
+
 import { faSearch, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
@@ -23,9 +25,6 @@ const CandiadteJobs = () => {
   const [showResumePopup, setShowResumePopup] = useState(false);
   const [search, setSearch] = useState('');
 
-  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
-  const [sortOrder, setSortOrder] = useState(' ');       // Track the sort order (asc or desc)
-
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
@@ -43,32 +42,13 @@ const CandiadteJobs = () => {
       }
 else
     fetchData();
-  }, [page, pageSize,search,sortedColumn,sortOrder]);
+  }, [page, pageSize,search]);
 
   async function fetchData() {
     try {
       const response = await axios.get(`${BASE_API_URL}/paginationJobs?page=${page}&size=${pageSize}`);
-      const jobsData = response.data.content;
-      setJobs(jobsData);
-     
-      const params = {
-        page: page,
-        size: pageSize,
-    };
-    if (sortedColumn) {
-        params.sortBy = sortedColumn;
-        params.sortOrder = sortOrder;
-    }
-      
+      setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
-
-      // Fetch application statuses
-      const statuses = await Promise.all(jobsData.map(job => hasUserApplied(job.jobId, userId)));
-      const statusesMap = {};
-      jobsData.forEach((job, index) => {
-        statusesMap[job.jobId] = statuses[index];
-      });
-      setApplicationStatuses(statusesMap);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -150,47 +130,36 @@ else
       });
   }, []);
 
-  const hasUserApplied = async (jobId, userId) => {
+  const [hasUserApplied, setHasUserApplied] = useState();
+  const checkHasUserApplied = async () => {
+    const applications = {};
     try {
-      // Make an API call to check if the user has applied for the job
-      const response =await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${jobId}&userId=${userId}`)
-  
-      // Return true if the user has applied for the job, false otherwise
-      return response.data; // Assuming the API returns a JSON object with a field indicating if the user has applied
+
+      for (const job of jobs) {
+        const response = await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${job.jobId}&userId=${userId}`)
+        applications[job.jobId] = response.data;
+      }
+      setHasUserApplied(applications);
     } catch (error) {
       console.error('Error checking application:', error);
-      // Handle errors here
-      return false; // Return false in case of error
+
+      return false;
     }
   };
-
+  useEffect(() => {
+    checkHasUserApplied();
+  }, [jobs]);
 
   
 
- const fetchJobBysearch = async () => {
+ const fetchJobBysearch= async()=>{
     try {
-       
-     
-      const params = {
-        search:search,
-        page: page,
-        size: pageSize,
-    };
-    if (sortedColumn) {
-        params.sortBy = sortedColumn;
-        params.sortOrder = sortOrder;
-    }
-      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {params});      
+      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
+        params: { search,page,pageSize }
+      });      
      
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
-
-      const statuses = await Promise.all(response.data.content.map(job => hasUserApplied(job.jobId, userId)));
-      const statusesMap = {};
-      response.data.content.forEach((job, index) => {
-        statusesMap[job.jobId] = statuses[index];
-      });
-      setApplicationStatuses(statusesMap);
     } catch (error) {
       console.log("No data Found" + error);
     }
@@ -204,14 +173,6 @@ else
   
   }
    
-  const handleSort = (column) => {
-    let order = 'asc';
-    if (sortedColumn === column) {
-        order = sortOrder === 'asc' ? 'desc' : 'asc';
-    }
-    setSortedColumn(column);
-    setSortOrder(order);
-};
 
   const [selectedJobSummary, setSelectedJobSummary] = useState(null);
 
@@ -287,20 +248,10 @@ else
                 {/* <h1 style={{ textAlign: 'center' }}>JOBS</h1> */}
                 <table className='jobs-table'>
                   <tr>
-                    <th onClick={() => handleSort('jobTitle')}>
-                     Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
-                    </th>
-                    <th onClick={() => handleSort('companyName')}>
-                    Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
-                    </th>
-                   
-                    
-                    <th onClick={() => handleSort('applicationDeadline')}>
-                    Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
-                    </th>
-                    <th onClick={() => handleSort('skills')}>
-                    Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
-                    </th>
+                    <th>Job Profile</th>
+                    <th>Company Name</th>
+                    <th>Application Deadline</th>
+                    <th>Skills</th>
                     <th>Job summary</th>
                     <th>Actions</th>
                   </tr>
@@ -312,13 +263,13 @@ else
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
 
-                      <td>{hasUserApplied(job.jobId, userId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
-                          <h4>Applied</h4>
-                        ) : (
-                          <button onClick={() => handleApplyButtonClick(job.jobId,job.jobStatus)}>
-                            <h4>Apply</h4>
-                          </button>
-                        )}
+                      <td>{hasUserApplied[job.jobId] === true || (applyjobs && applyjobs.jobId === job.jobId) ? (
+                        <h4>Applied</h4>
+                      ) : (
+                        <button onClick={() => handleApplyButtonClick(job.jobId, job.jobStatus)}>
+                          <h4>Apply</h4>
+                        </button>
+                      )}
                       </td>
                     </tr>
                   ))}
@@ -370,3 +321,4 @@ else
   );
 };
 export default CandiadteJobs;
+
