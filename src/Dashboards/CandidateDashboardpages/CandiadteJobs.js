@@ -22,6 +22,7 @@ const CandiadteJobs = () => {
   const [applyjobs, setApplyJobs] = useState([]);
   const [showResumePopup, setShowResumePopup] = useState(false);
   const [search, setSearch] = useState('');
+  const [applicationStatuses, setApplicationStatuses] = useState({});
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -45,8 +46,17 @@ else
   async function fetchData() {
     try {
       const response = await axios.get(`${BASE_API_URL}/paginationJobs?page=${page}&size=${pageSize}`);
-      setJobs(response.data.content);
+      const jobsData = response.data.content;
+      setJobs(jobsData);
       setTotalPages(response.data.totalPages);
+
+      // Fetch application statuses
+      const statuses = await Promise.all(jobsData.map(job => hasUserApplied(job.jobId, userId)));
+      const statusesMap = {};
+      jobsData.forEach((job, index) => {
+        statusesMap[job.jobId] = statuses[index];
+      });
+      setApplicationStatuses(statusesMap);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -145,14 +155,20 @@ else
 
   
 
- const fetchJobBysearch= async()=>{
+ const fetchJobBysearch = async () => {
     try {
       const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
-        params: { search,page,pageSize }
-      });      
-     
+        params: { search, page, pageSize }
+      });
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
+
+      const statuses = await Promise.all(response.data.content.map(job => hasUserApplied(job.jobId, userId)));
+      const statusesMap = {};
+      response.data.content.forEach((job, index) => {
+        statusesMap[job.jobId] = statuses[index];
+      });
+      setApplicationStatuses(statusesMap);
     } catch (error) {
       console.log("No data Found" + error);
     }
