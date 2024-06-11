@@ -21,7 +21,9 @@ const ViewApplications = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
- 
+  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+  const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
+
 
   const handlePreviousPage = () => {
     if (page > 0) {
@@ -49,7 +51,7 @@ const ViewApplications = () => {
 
   const handleSelect = async (filterStatus) => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobId?jobId=${jobId}&filterStatus=${filterStatus}&page=${page}&size=${pageSize}`);
+      const response = await axios.get(`${BASE_API_URL}/getFilterApplicationsByJobIdWithpagination?jobId=${jobId}&filterStatus=${filterStatus}&page=${page}&size=${pageSize}`);
       console.log(response.data);
       setApplications(response.data.content);
      
@@ -63,21 +65,34 @@ const ViewApplications = () => {
 
   const fetchApplications = async () => {
     try {
+      const params = {
+       jobId:jobId,
+        page: page,
+        size: pageSize,
+        sortBy: sortedColumn, // Include sortedColumn and sortOrder in params
+        sortOrder: sortOrder,
+      };
   
-      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobIdWithPagination?jobId=${jobId}&page=${page}&pageSize=${pageSize}`);
-      console.log(response.data);
+      const response = await axios.get(`${BASE_API_URL}/getApplicationsByJobIdWithPagination`, { params });
       setApplications(response.data.content || []);
       fetchResumeTypes(response.data.content || []);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.log(error);
+      console.log('Error fetching applications:', error);
     }
   };
-
+  const handleSort = (column) => {
+    let order = 'asc';
+    if (sortedColumn === column) {
+        order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+};
   useEffect(() => {
     fetchApplications();
 
-  }, [jobId,page,pageSize]);
+  }, [jobId,page,pageSize,sortedColumn, sortOrder]);
 
 
   const updateStatus = async (applicationId, newStatus) => {
@@ -216,12 +231,12 @@ const ViewApplications = () => {
       <table id='jobTable1' style={{ marginTop: '12px' }}>
         <thead>
           <tr>
-            <th>Job Title</th>
-            <th>Candidate Name</th>
-            <th>Candidate Email</th>
+            <th onClick={() => handleSort('jobRole')}>Job Title{sortedColumn === 'jobRole' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+            <th onClick={() => handleSort('candidateName')}>Candidate Name{sortedColumn === 'candidateName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+            <th onClick={() => handleSort('candidateEmail')}>Candidate Email{sortedColumn === 'candidateEmail' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
             <th>Resume ID</th>
-            <th>Date</th>
-            <th>Application Status</th>
+            <th onClick={() => handleSort('appliedOn')}>Date{sortedColumn === 'appliedOn' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+            <th onClick={() => handleSort('applicationStatus')}>Application Status{sortedColumn === 'applicationStatus' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
             <th>View Details</th>
             <th>Application Action</th>
           </tr>
@@ -259,12 +274,10 @@ const ViewApplications = () => {
             <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
           </li>
           {[...Array(totalPages).keys()].map((pageNumber) => (
-            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-              <button className='page-button' onClick={() => handlePageChange(pageNumber)}>
-                {pageNumber + 1}
-              </button>
-            </li>
-          ))}
+              <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+              </li>
+            ))}
           <li>
             <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
           </li>
