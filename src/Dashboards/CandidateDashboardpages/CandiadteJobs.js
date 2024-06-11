@@ -22,7 +22,9 @@ const CandiadteJobs = () => {
   const [applyjobs, setApplyJobs] = useState([]);
   const [showResumePopup, setShowResumePopup] = useState(false);
   const [search, setSearch] = useState('');
-  const [applicationStatuses, setApplicationStatuses] = useState({});
+
+  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+  const [sortOrder, setSortOrder] = useState(' ');       // Track the sort order (asc or desc)
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -41,13 +43,23 @@ const CandiadteJobs = () => {
       }
 else
     fetchData();
-  }, [page, pageSize,search]);
+  }, [page, pageSize,search,sortedColumn,sortOrder]);
 
   async function fetchData() {
     try {
       const response = await axios.get(`${BASE_API_URL}/paginationJobs?page=${page}&size=${pageSize}`);
       const jobsData = response.data.content;
       setJobs(jobsData);
+     
+      const params = {
+        page: page,
+        size: pageSize,
+    };
+    if (sortedColumn) {
+        params.sortBy = sortedColumn;
+        params.sortOrder = sortOrder;
+    }
+      
       setTotalPages(response.data.totalPages);
 
       // Fetch application statuses
@@ -144,7 +156,7 @@ else
       const response =await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${jobId}&userId=${userId}`)
   
       // Return true if the user has applied for the job, false otherwise
-      return response.data.hasApplied; // Assuming the API returns a JSON object with a field indicating if the user has applied
+      return response.data; // Assuming the API returns a JSON object with a field indicating if the user has applied
     } catch (error) {
       console.error('Error checking application:', error);
       // Handle errors here
@@ -157,9 +169,19 @@ else
 
  const fetchJobBysearch = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {
-        params: { search, page, pageSize }
-      });
+       
+     
+      const params = {
+        search:search,
+        page: page,
+        size: pageSize,
+    };
+    if (sortedColumn) {
+        params.sortBy = sortedColumn;
+        params.sortOrder = sortOrder;
+    }
+      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {params});      
+     
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
 
@@ -182,6 +204,14 @@ else
   
   }
    
+  const handleSort = (column) => {
+    let order = 'asc';
+    if (sortedColumn === column) {
+        order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+};
 
   const [selectedJobSummary, setSelectedJobSummary] = useState(null);
 
@@ -257,10 +287,20 @@ else
                 {/* <h1 style={{ textAlign: 'center' }}>JOBS</h1> */}
                 <table className='jobs-table'>
                   <tr>
-                    <th>Job Profile</th>
-                    <th>Company Name</th>
-                    <th>Application Deadline</th>
-                    <th>Skills</th>
+                    <th onClick={() => handleSort('jobTitle')}>
+                     Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('companyName')}>
+                    Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                   
+                    
+                    <th onClick={() => handleSort('applicationDeadline')}>
+                    Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('skills')}>
+                    Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
                     <th>Job summary</th>
                     <th>Actions</th>
                   </tr>
@@ -272,7 +312,7 @@ else
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
 
-                      <td>   {hasUserApplied(job.jobId, userId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
+                      <td>{hasUserApplied(job.jobId, userId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
                           <h4>Applied</h4>
                         ) : (
                           <button onClick={() => handleApplyButtonClick(job.jobId,job.jobStatus)}>

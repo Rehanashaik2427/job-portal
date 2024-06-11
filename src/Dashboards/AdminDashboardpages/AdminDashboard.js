@@ -1,25 +1,8 @@
-import axios from 'axios';
-import { default as React, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
 const AdminDashboard = () => {
-
-  const [totalCompanies, setTotalCompanies] = useState(0);
-  const BASE_API_URL = "http://localhost:8082/api/jobbox";
-
-  useEffect(() => {
-    const fetchTotalCompanies = async () => {
-      try {
-        const response = await axios.get(`${BASE_API_URL}/getCountOfTotalCompany`);
-        setTotalCompanies(response.data);
-      } catch (error) {
-        console.error('Error fetching total companies:', error);
-      }
-    };
-
-    fetchTotalCompanies();
-  }, []);
   return (
     <div className='body'>
      
@@ -35,8 +18,8 @@ const AdminDashboard = () => {
 
       <div className="adminDashboard">
         <span>
-        <h2>{totalCompanies}+</h2>
-        company validated
+          <h2>5000+</h2>
+          company validated
         </span>
         <span>
           <h2>20000+</h2>
@@ -67,4 +50,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+export default AdminDashboard;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
+import axios from 'axios';
 
 const AddCompanyDetails = () => {
 
@@ -12,20 +13,40 @@ const AddCompanyDetails = () => {
 
   const [companyData, setCompanyData] = useState([]);
 
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+
   useEffect(() => {
     fetchCompanyData();
-  }, []);
+  }, [page,pageSize]);
 
   const fetchCompanyData = async () => {
     try {
-      const response = await fetch(`${BASE_API_URL}/displayCompanies`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch company data');
-      }
-      const data = await response.json();
-      
-      setCompanyData(data);
+      const response = await axios.get(`${BASE_API_URL}/displayCompanies?page=${page}&size=${pageSize}`);
+      // if (!response.ok) {
+      //   throw new Error('Failed to fetch company data');
+      // }
      
+      setCompanyData(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.error(error);
     }
@@ -61,6 +82,21 @@ const AddCompanyDetails = () => {
 
        
       </div>
+      <nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
     </div>
 </div>
   )

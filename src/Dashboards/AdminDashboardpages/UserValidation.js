@@ -1,26 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
+import axios from 'axios';
 
 const UserValidation = () => {
   const [userData, setUserData] = useState([]);
 
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:8082/api/jobbox/displayUsers');
-        if (!response.ok) {
-          throw new Error('Failed to fetch user data');
+        const response = await axios.get('http://localhost:8082/api/jobbox/displayUsers', {
+            params: {
+               page:page,
+               size:pageSize
+            }
+        });
+        
+        if (response.status !== 200) {
+            throw new Error('Failed to fetch user data');
         }
-        const data = await response.json();
-        setUserData(data);
+       
+        setUserData(response.data.content);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [page,pageSize]);
 
   return (
     <div className='body'>
@@ -54,6 +84,21 @@ const UserValidation = () => {
             </tbody>
           </table>
         </div>
+        <nav>
+        <ul className='pagination'>
+          <li>
+            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pageNumber) => (
+            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+            </li>
+          ))}
+          <li>
+            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+          </li>
+        </ul>
+      </nav>
       </div>
     </div>
   );

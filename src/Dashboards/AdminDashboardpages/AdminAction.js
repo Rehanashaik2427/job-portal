@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AdminAction.css';
 
+import AdminleftSide from './AdminleftSide';
+import './AdminDashboard.css';
 const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
 const AdminAction = () => {
@@ -26,8 +27,8 @@ const AdminAction = () => {
     fetchHRDetails();
   }, []);
 
-  const currentTime = new Date().toLocaleString();
-
+  const currentTime = new Date().toLocaleDateString();
+  
   const approveRequest = async (userEmail,userId) => {
     console.log('Request Approved');
     const approved="Approved";
@@ -74,7 +75,12 @@ const AdminAction = () => {
   }
 
   return (
-    <div className="admin-container">
+    <div className="body">
+       <div className='leftside'>
+          <AdminleftSide />
+        </div>
+        
+        <div className="rightSide">
       <header className="admin-header">
         <h2 style={{color:'wheat'}}>Admin Dashboard</h2>
       </header>
@@ -87,10 +93,10 @@ const AdminAction = () => {
               <h1>{hr.userStatus}</h1>
             </div>
             <div className="button-container">
-              <button className="approve-btn" onClick={() => approveRequest(hr.userEmail,hr.userId)}>
+              <button className="approve-btn-adminAction" onClick={() => approveRequest(hr.userEmail,hr.userId)}>
                 Approve
               </button>
-              <button className="reject-btn" onClick={() => rejectRequest(hr.userEmail)}>
+              <button className="reject-btn-adminAction" onClick={() => rejectRequest(hr.userEmail)}>
                 Reject
               </button>
             </div>
@@ -100,6 +106,8 @@ const AdminAction = () => {
         ))}
       </main>
     </div>
+    </div>
+  
   );
   
 };
