@@ -66,29 +66,11 @@ const Jobs = () => {
     }
     else
       fetchJobs()
-  }, [userEmail, userEmail, page, pageSize]);
-  useEffect(() => {
-    console.log(search);
-    if (search) {
-      fetchJobBysearch();
-    }
-    else
-      fetchJobs()
-  }, [search, userEmail, page, pageSize]);
+  }, [userEmail, search, page, pageSize]);
 
 
 
-  // const fetchJobs = async () => {
-  //   console.log(search);
-  //   try {
-  //     const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
-  //     setJobs(response.data.content);
-  //     setTotalPages(response.data.totalPages);
 
-  //   } catch (error) {
-  //     console.error('Error fetching jobs:', error);
-  //   }
-  // };
 
   const fetchJobs = async () => {
     try {
@@ -162,15 +144,7 @@ const Jobs = () => {
       fetchJobs()
   }, [userEmail, userEmail, page, pageSize,sortedColumn, sortOrder]);
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault(); // Prevent default form submission
-  //   fetchJobBysearch();
-  // };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault(); // Prevent default form submission
-  //   setPage(0);
-  // };
+ 
 
 
 

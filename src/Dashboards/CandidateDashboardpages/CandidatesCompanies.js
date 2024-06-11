@@ -153,7 +153,7 @@ console.log("No data Found"+error);
               companies.map((company) => (
                 <div className="company-card-job" key={company.companyId}>
                   <p className="company-name">Company Name: <b>{company.companyName}</b></p>
-                  <p>Company Email <b>{company.companyEmail}</b></p>
+                  <p>Company Email <b>{company.jobboxEmail}</b></p>
                   <p>Industry : <b>{company.industry}</b></p>
                   <Link  to={{
           pathname: '/companyPage',

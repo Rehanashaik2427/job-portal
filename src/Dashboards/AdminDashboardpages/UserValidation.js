@@ -10,6 +10,9 @@ const UserValidation = () => {
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
 
+  const [sortedColumn, setSortedColumn] = useState(null); 
+  const [sortOrder, setSortOrder] = useState(' ');    
+
   const handlePreviousPage = () => {
     if (page > 0) {
       setPage(page - 1);
@@ -26,17 +29,27 @@ const UserValidation = () => {
     setPage(pageNumber);
   };
 
-
+  const handleSort = (column) => {
+    let order = 'asc';
+    if (sortedColumn === column) {
+      order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/api/jobbox/displayUsers', {
-            params: {
-               page:page,
-               size:pageSize
-            }
-        });
+        const params={
+          page:page,
+          size:pageSize,
+        }
+        if (sortedColumn) {
+          params.sortBy = sortedColumn;
+          params.sortOrder = sortOrder;
+        }
+        const response = await axios.get('http://localhost:8082/api/jobbox/displayUsers', { params});
         
         if (response.status !== 200) {
             throw new Error('Failed to fetch user data');
@@ -50,7 +63,7 @@ const UserValidation = () => {
     };
 
     fetchUserData();
-  }, [page,pageSize]);
+  }, [page,pageSize,sortOrder,sortedColumn]);
 
   return (
     <div className='body'>
@@ -64,11 +77,22 @@ const UserValidation = () => {
           <table id="user-table" className="user-table">
             <thead>
               <tr>
-                <th>User Name</th>
-                <th>User Role</th>
-                <th>User Email</th>
-                <th>Action Date</th>
-                <th>Status & Actions</th>
+              <th onClick={() => handleSort('userName')}>
+              User Name {sortedColumn === 'userName' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('userRole')}>
+                    User Role {sortedColumn === 'userRole' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('userEmail')}>
+                    User Email{sortedColumn === 'userEmail' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('approvedOn')}>
+                    Action Date{sortedColumn === 'approvedOn' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('userStatus')}>
+                    Status & Actions{sortedColumn === 'userStatus' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                
               </tr>
             </thead>
             <tbody>

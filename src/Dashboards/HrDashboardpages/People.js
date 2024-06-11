@@ -26,7 +26,7 @@ const People = () => {
 
 
     const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
-    const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
+    const [sortOrder, setSortOrder] = useState(' ');       // Track the sort order (asc or desc)
 
     const handlePreviousPage = () => {
         if (page > 0) {
@@ -43,12 +43,39 @@ const People = () => {
     const handlePageChange = (pageNumber) => {
         setPage(pageNumber);
     };
-
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
     useEffect(() => {
+        if(searchQuery){
+            handleSearch();
+        }
+        else
         fetchHRData();
-    }, [userEmail, page, pageSize, sortedColumn, sortOrder]); // Empty dependency array ensures the effect runs only once when the component mounts
+    }, [userEmail, page, pageSize, sortedColumn, sortOrder,searchQuery]); // Empty dependency array ensures the effect runs only once when the component mounts
 
+    // const fetchHRData = async () => {
+    //     try {
+    //         // const response = await axios.get(`${BASE_API_URL}/getHrEachCompany?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
+    //         const response = await axios.get(`${BASE_API_URL}/getHrEachCompany`, {
+    //             params: {
+    //                 userEmail: userEmail,
+    //                 page: page,
+    //                 size: pageSize,
+    //                 sortBy: sortedColumn,
+    //                 sortOrder: sortOrder,
+
+    //             }
+    //         });
+    //         setPeople(response.data.content);
+    //         setTotalPages(response.data.totalPages)
+    //         // setFilteredPeople(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching HR data:', error);
+    //     }
+    // };
+   
 
     const fetchHRData = async () => {
         try {
@@ -75,15 +102,12 @@ const People = () => {
         setShowSettings(!showSettings);
     };
 
-    const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
+   
     const handleSearch = () => {
         const filtered = people.filter(person =>
             person.userName.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setFilteredPeople(filtered);
+        setPeople(filtered);
     };
     const handleSort = (column) => {
         let order = 'asc';
@@ -114,7 +138,7 @@ const People = () => {
                             value={searchQuery}
                             onChange={handleSearchChange}
                         />
-                        <button onClick={handleSearch}>
+                        <button >
                             <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                         </button>
                         <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
@@ -151,12 +175,11 @@ const People = () => {
                                     )}
                                 </th>
                                 <th>Company Name </th>
-                                <th>PhoneNumber</th>
-                                {/* <th onClick={() => handleSort('phone')}>
+                                <th onClick={() => handleSort('phone')}>
                                     Phone Number {sortedColumn === 'phone' && (
                                         sortOrder === ' ' ? '▲' : '▼'
                                     )}
-                                </th> */}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>

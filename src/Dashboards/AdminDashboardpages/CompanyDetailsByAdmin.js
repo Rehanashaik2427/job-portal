@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './AdminDashboard.css';
+import AdminleftSide from './AdminleftSide';
 
 const BASE_API_URL = "http://localhost:8082/api/jobbox";
 
@@ -31,6 +32,12 @@ const CompanyDetailsByAdmin = ({ location }) => {
   };
 
   return (
+    <div className='body'>
+    <div className='leftside'>
+    <AdminleftSide />
+  </div>
+
+<div className="rightSide">
     <div className="company-admin-container">
       <h2>Company Information</h2>
       <form onSubmit={handleSubmit}>
@@ -47,6 +54,8 @@ const CompanyDetailsByAdmin = ({ location }) => {
         </div>
         <button className='company-admin-button' type="submit">Submit</button>
       </form>
+    </div>
+    </div>
     </div>
   );
 }

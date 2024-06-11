@@ -181,12 +181,6 @@ const CandidateJobs = () => {
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
 
-      const statuses = await Promise.all(response.data.content.map(job => hasUserApplied(job.jobId, userId)));
-      const statusesMap = {};
-      response.data.content.forEach((job, index) => {
-        statusesMap[job.jobId] = statuses[index];
-      });
-      setApplicationStatuses(statusesMap);
     } catch (error) {
       console.log("No data Found" + error);
     }
