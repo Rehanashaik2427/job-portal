@@ -9,7 +9,7 @@ import CandidateLeftSide from './CandidateLeftSide';
 import ResumeSelectionPopup from './ResumeSelectionPopup';
 
 const BASE_API_URL = "http://localhost:8082/api/jobbox";
-const CandiadteJobs = () => {
+const CandidateJobs = () => {
 
 
 
@@ -37,24 +37,23 @@ const CandiadteJobs = () => {
 
 
   useEffect(() => {
-    if(search)
-      {
-        fetchJobBysearch();
-      }
-else
-    fetchData();
-  }, [page, pageSize,search,sortedColumn,sortOrder]);
+    if (search) {
+      fetchJobBysearch();
+    }
+    else
+      fetchData();
+  }, [page, pageSize, search, sortedColumn, sortOrder]);
 
   async function fetchData() {
     try {
       const params = {
         page: page,
         size: pageSize,
-    };
-    if (sortedColumn) {
+      };
+      if (sortedColumn) {
         params.sortBy = sortedColumn;
         params.sortOrder = sortOrder;
-    }
+      }
       const response = await axios.get(`${BASE_API_URL}/paginationJobs`, { params });
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
@@ -97,7 +96,7 @@ else
     if (selectedJobId && resumeId) {
       await applyJob(selectedJobId, resumeId);
       setSelectedJobId(null); // Reset selected job id
-     setShowResumePopup(false); // Close the resume selection popup
+      setShowResumePopup(false); // Close the resume selection popup
     }
   };
   ///////////////////////////
@@ -112,7 +111,7 @@ else
     try {
       const response = await axios.put(`${BASE_API_URL}/applyJob?jobId=${jobId}&userId=${userId}&appliedOn=${appliedOn}&resumeId=${resumeId}`);
 
-       setApplyJobs(response.data);
+      setApplyJobs(response.data);
       console.log(response.data);
       // setApplyJobs([...applyjobs, jobId]);
 
@@ -124,7 +123,7 @@ else
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
-   
+
   };
 
   const [resumes, setResumes] = useState([]);
@@ -138,37 +137,41 @@ else
         console.error('Error fetching resumes:', error);
       });
   }, []);
-
-  const hasUserApplied = async (jobId, userId) => {
+  const [hasUserApplied, setHasUserApplied] = useState();
+  const checkHasUserApplied = async () => {
+    const applications = {};
     try {
-      // Make an API call to check if the user has applied for the job
-      const response =await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${jobId}&userId=${userId}`)
-  
-      // Return true if the user has applied for the job, false otherwise
-      return response.data; // Assuming the API returns a JSON object with a field indicating if the user has applied
+
+      for (const job of jobs) {
+        const response = await axios.get(`${BASE_API_URL}/applicationApplied?jobId=${job.jobId}&userId=${userId}`)
+        applications[job.jobId] = response.data;
+      }
+      setHasUserApplied(applications);
     } catch (error) {
       console.error('Error checking application:', error);
-      // Handle errors here
-      return false; // Return false in case of error
+
+      return false;
     }
   };
+  useEffect(() => {
+    checkHasUserApplied();
+  }, [jobs]);
 
 
-  
 
- const fetchJobBysearch= async()=>{
+  const fetchJobBysearch = async () => {
     try {
       const params = {
-        search:search,
+        search: search,
         page: page,
         size: pageSize,
-    };
-    if (sortedColumn) {
+      };
+      if (sortedColumn) {
         params.sortBy = sortedColumn;
         params.sortOrder = sortOrder;
-    }
-      const response = await axios.get(`${BASE_API_URL}/searchJobs`, {params});      
-     
+      }
+      const response = await axios.get(`${BASE_API_URL}/searchJobs`, { params });
+
       setJobs(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -176,22 +179,22 @@ else
     }
     console.log("Search submitted:", search);
   };
-  
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetchJobBysearch();
-  
+
   }
-   
+
   const handleSort = (column) => {
     let order = 'asc';
     if (sortedColumn === column) {
-        order = sortOrder === 'asc' ? 'desc' : 'asc';
+      order = sortOrder === 'asc' ? 'desc' : 'asc';
     }
     setSortedColumn(column);
     setSortOrder(order);
-};
+  };
 
   const [selectedJobSummary, setSelectedJobSummary] = useState(null);
 
@@ -219,7 +222,7 @@ else
         {showResumePopup && (
           <div className="modal">
             <div className="modal-content">
-            <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
+              <span className="close" onClick={() => setShowResumePopup(false)}>&times;</span>
               <ResumeSelectionPopup
                 resumes={resumes}
                 onSelectResume={handleResumeSelect}
@@ -232,7 +235,7 @@ else
         <div className="page">
           <div className="top-right-content">
             <div className="candidate-search">
-              <form className="candidate-search1"onSubmit={handleSubmit} >
+              <form className="candidate-search1" onSubmit={handleSubmit} >
                 <input
                   type='text'
                   name='search'
@@ -246,8 +249,8 @@ else
               </form>
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
             </div>
-        </div>
-       
+          </div>
+
           {showSettings && (
             <div id="modal-container">
               <div id="settings-modal">
@@ -268,18 +271,18 @@ else
                 <table className='jobs-table'>
                   <tr>
                     <th onClick={() => handleSort('jobTitle')}>
-                     Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
+                      Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
                     </th>
                     <th onClick={() => handleSort('companyName')}>
-                    Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
+                      Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
                     </th>
-                   
-                    
+
+
                     <th onClick={() => handleSort('applicationDeadline')}>
-                    Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
+                      Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
                     </th>
                     <th onClick={() => handleSort('skills')}>
-                    Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
+                      Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
                     </th>
                     <th>Job summary</th>
                     <th>Actions</th>
@@ -291,14 +294,13 @@ else
                       <td>{job.applicationDeadline}</td>
                       <td>{job.skills}</td>
                       <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
-
-                      <td>   {hasUserApplied(job.jobId, userId) || (applyjobs && applyjobs.jobId === job.jobId) ? (
-                          <h4>Applied</h4>
-                        ) : (
-                          <button onClick={() => handleApplyButtonClick(job.jobId,job.jobStatus)}>
-                            <h4>Apply</h4>
-                          </button>
-                        )}
+                      <td>{hasUserApplied[job.jobId] === true || (applyjobs && applyjobs.jobId === job.jobId) ? (
+                        <h4>Applied</h4>
+                      ) : (
+                        <button onClick={() => handleApplyButtonClick(job.jobId, job.jobStatus)}>
+                          <h4>Apply</h4>
+                        </button>
+                      )}
                       </td>
                     </tr>
                   ))}
@@ -316,37 +318,37 @@ else
                 )}
               </div>
               <nav>
-        <ul className='pagination'>
-          <li>
-            <button className='page-button'  onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
-          </li>
-          {[...Array(totalPages).keys()].map((pageNumber) => (
-            <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-              <button className='page-link'  onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
-            </li>
-          ))}
-          <li>
-            <button className='page-button'  onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
-          </li>
-        </ul>
-      </nav>
+                <ul className='pagination'>
+                  <li>
+                    <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+                  </li>
+                  {[...Array(totalPages).keys()].map((pageNumber) => (
+                    <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                      <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+                    </li>
+                  ))}
+                  <li>
+                    <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+                  </li>
+                </ul>
+              </nav>
             </div>
           )}
-          
+
           {jobs.length === 0 && <h1>No jobs found.</h1>}
           <div className="dream">
             <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
             <p>Just add the name of your dream company and apply to them directly.</p>
-            <Link to={{pathname: '/dream-company',state: { userName: userName, userId: userId }}} className="app">
+            <Link to={{ pathname: '/dream-company', state: { userName: userName, userId: userId } }} className="app">
               <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
             </Link>
           </div>
         </div>
       </div>
-      </div>
-      
-      
-        
+    </div>
+
+
+
   );
 };
-export default CandiadteJobs;
+export default CandidateJobs;
