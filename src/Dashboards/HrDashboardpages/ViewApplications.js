@@ -57,6 +57,7 @@ const ViewApplications = () => {
      
       console.log(response.data);
       setApplications(response.data.content || []);
+      fetchResumeTypes(response.data.content || []);
       setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);

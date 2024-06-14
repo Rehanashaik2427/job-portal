@@ -115,18 +115,7 @@ const PostedJobs = () => {
     fetchJobBysearch();
   };
 
-  const jobsPerPage = 5;
-  const indexOfLastJob = currentPage * jobsPerPage;
-  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  //const filteredJobs = jobs.filter(job=>job.jobTitle.toLowerCase().includes(search.toLowerCase()));
-  //const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const nPage = Math.ceil(jobs.length / jobsPerPage);
-  const numbers = [...Array(nPage).keys()].map(n => n + 1);
 
-
-  const changeCurrentPage = (id) => {
-    setCurrentPage(id);
-  };
  
 
   const user = {
@@ -173,7 +162,7 @@ const PostedJobs = () => {
             <table id='jobTable1'>
               <thead>
                 <tr>
-                  <th onClick={() => handleSort('userName')}>Hr Name{sortedColumn === 'userName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('hrName')}>Hr Name{sortedColumn === 'hrName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                   <th>Company Name</th>
                   <th onClick={() => handleSort('jobTitle')}>Job Title{sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                   <th onClick={() => handleSort('jobType')}>Job Type{sortedColumn === 'jobType' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
@@ -185,7 +174,7 @@ const PostedJobs = () => {
               <tbody>
                 {jobs.map(job => (
                   <tr key={job.id}>
-                    <td>{job.userName}</td>
+                    <td>{job.hrName}</td>
                     <td>{job.companyName}</td>
                     <td><a onClick={() => handleViewSummary(job.jobsummary)}>{job.jobTitle}</a></td>
                     <td>{job.jobType}</td>

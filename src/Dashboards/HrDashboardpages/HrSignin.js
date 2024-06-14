@@ -31,7 +31,7 @@ const HrSignin = () => {
 
 
       if (user) {
-        if (user.userRole === 'HR') {
+        if (user.userRole === 'HR' && user.userStatus ==='Approved') {
           history.push('/hr-dashboard', { userEmail: formData.userEmail });
         } else {
           setErrorMessage("You do not have permission to login as HR. Please enter the correct email ID.");
