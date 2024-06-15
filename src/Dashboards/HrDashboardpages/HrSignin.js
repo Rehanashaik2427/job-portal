@@ -60,7 +60,7 @@ const HrSignin = () => {
           </div>
           <div className="form-group">
             <button type="submit">Login</button>
-            <Link to="/forget-password">Forget Password?</Link>
+            <Link to={{pathname:"/forget-password", state:{userRole:"HR"}}} >Forget Password?</Link>
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
 

@@ -154,7 +154,7 @@ const CandidateJobs = () => {
       response.data.content.forEach((job, index) => {
         statusesMap[job.jobId] = statuses[index];
       });
-      setApplicationStatuses(statusesMap);
+     
 
     } catch (error) {
       console.log("No data Found" + error);

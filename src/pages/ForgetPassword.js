@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import './Home.css';
 const ForgetPassword = () => {
   const [userEmail, setEmail] = useState('');
@@ -12,7 +12,9 @@ const ForgetPassword = () => {
   const [stage, setStage] = useState('email');
   const [otpEnter, setOtpEnter] = useState();
   const BASE_API_URL = "http://localhost:8082/api/jobbox";
-
+const location=useLocation();
+const userRole=location.state?.userRole;
+console.log(userRole+"      user Role");
 
 
   const [passwordMatchError, setPasswordMatchError] = useState(false);
@@ -23,7 +25,7 @@ const ForgetPassword = () => {
     
     e.preventDefault();
     try{
-      const response =await axios.get(`${BASE_API_URL}/generateOTP?userEmail=${userEmail}`);
+      const response =await axios.get(`${BASE_API_URL}/generateOTP?userEmail=${userEmail}&userRole=${userRole}`);
       if(response.data){
         setOtp(response.data);
         setStage('otp');
@@ -104,6 +106,8 @@ console.log(error);
         <input type="email" id="email" value={userEmail} onChange={(e) => setEmail(e.target.value)} required />
         <br /><br />
         <button type="submit">Submit</button>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+
       </form>
     )}
 
