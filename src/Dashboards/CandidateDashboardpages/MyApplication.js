@@ -151,27 +151,21 @@ const MyApplication = () => {
 
   const [jobStatuses, setJobStatuses] = useState({});
 
-  
+   
   useEffect(() => {
     const fetchJobStatuses = async () => {
       const statuses = {};
       for (const application of applications) {
         try {
-          let status;
-          if (application.jobId === 0) {
-            status = "Job not available. Please wait for HR.";
-          } else {
-            status = await getJobStatus(application.jobId);
-          }
+          const status = await getJobStatus(application.jobId);
           statuses[application.applicationId] = status;
         } catch (error) {
           console.error('Error fetching job status:', error);
-          statuses[application.applicationId] = 'Unknown';
+          statuses[application.id] = 'Unknown';
         }
       }
       setJobStatuses(statuses);
     };
-    
 
     fetchJobStatuses();
   }, [applications]);
@@ -179,12 +173,12 @@ const MyApplication = () => {
   // Function to get job status for a specific job ID
   const getJobStatus = async (jobId) => {
     if(jobId===0){
-      return 'job not availavle';
+      return 'Job not availavle, HR not mapped';
     }
     else{
     try {
       const response = await axios.get(`${BASE_API_URL}/getJob?jobId=${jobId}`);
-      return response.data.jobStatus ? 'Active' : 'Deleted';
+      return response.data.jobStatus ? 'Active' : 'Not Active';
     } catch (error) {
       console.error("Error fetching job status:", error);
       throw error;

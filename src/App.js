@@ -13,7 +13,7 @@ import Contacts from './Dashboards/AdminDashboardpages/Contacts';
 import Myprofile from './Dashboards/AdminDashboardpages/Myprofile';
 import UserValidation from './Dashboards/AdminDashboardpages/UserValidation';
 import AppliedSucessmsg from './Dashboards/CandidateDashboardpages/AppliedSucessmsg';
-import CandiadteJobs from './Dashboards/CandidateDashboardpages/CandiadteJobs';
+// import CandidateJobs from './Dashboards/CandidateDashboardpages/CandiadteJobs';
 import CandidateDashboard from './Dashboards/CandidateDashboardpages/CandidateDashboard';
 import CandidateRegisterSucessMsg from './Dashboards/CandidateDashboardpages/CandidateRegisterSucessMsg';
 import CandidateSignup from './Dashboards/CandidateDashboardpages/CandidateSignup';
@@ -64,6 +64,8 @@ import FindCompany from './pages/FindCompany';
 
 import JobboxCompanyPage from './pages/JobboxCompanyPage';
 import AdminleftSide from './Dashboards/AdminDashboardpages/AdminleftSide';
+import CandiadteJobs from './Dashboards/CandidateDashboardpages/CandidateJobs';
+import CandidateJobs from './Dashboards/CandidateDashboardpages/CandidateJobs';
 
 
 
@@ -102,7 +104,7 @@ const App = () => {
           <Route path='/candidate-signup' component={CandidateSignup} />
           <Route path='/CandidateRegisterSucessMsg' component={CandidateRegisterSucessMsg} />
           <Route path='/candidate-dashboard' component={CandidateDashboard} />
-          <Route path='/candidate-jobs'  component={CandiadteJobs} />
+          <Route path='/candidate-jobs'  component={CandidateJobs} />
           <Route path='/candidate-companies' component={CandidatesCompanies}/>
           <Route path='/my-application' component={MyApplication} />
           <Route path='/payment' component={Payment} />
