@@ -1,10 +1,9 @@
-import { faBuilding, faCreditCard, faFile, faFileLines, faGlobe, faHome, faHouse, faLayerGroup, faMoneyCheckDollar, faPaperclip, faUser,faSearch,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCreditCard, faGlobe, faPaperclip, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './CandidateDashboard.css';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-import { useState } from 'react';
+import './CandidateDashboard.css';
 import CandidateLeftSide from './CandidateLeftSide';
 
 const Payment = () => {

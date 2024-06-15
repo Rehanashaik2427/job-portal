@@ -14,6 +14,7 @@ const DreamCompany = () => {
   const userName=location.state?.userName;
   const userId=location.state?.userId;
  
+  const currentDate = new Date().toLocaleDateString();
 
   const [formData, setFormData] = useState({
     companyName: '',
@@ -100,7 +101,7 @@ const saveCompanyData = async (formData) => {
       industry: '',
       location: '',
       discription: '',
-      date: '',
+      date: currentDate,
     });
 
    

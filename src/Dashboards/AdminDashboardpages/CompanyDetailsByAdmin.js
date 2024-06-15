@@ -115,9 +115,9 @@ const CompanyDetailsByAdmin = ({ location }) => {
               )}
               <button type="submit">Submit</button>
             </div>      
-          </form>
-        </div>
-      </div>
+   </form>
+    </div>
+    </div>
     </div>
   );
 }

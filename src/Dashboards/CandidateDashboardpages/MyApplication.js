@@ -21,6 +21,7 @@ const MyApplication = () => {
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
 
+
   useEffect(() => {
     fetchResumeNames();
   }, [applications]);
@@ -62,6 +63,11 @@ const MyApplication = () => {
 
     };
       const response = await axios.get(`${BASE_API_URL}/applicationsPagination`,{params});
+  
+      if (sortedColumn) {
+        params.sortBy = sortedColumn;
+        params.sortOrder = sortOrder;
+      }
       setApplications(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -72,7 +78,17 @@ const MyApplication = () => {
   // Update fetchApplicationsByStatus function to include the search term
   const fetchApplicationsByStatus = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${applicationStatus}&userId=${userId}&page=${page}&pageSize=${pageSize}`);
+      const params = {
+        searchStatus: applicationStatus,
+        userId:userId,
+        page: page,
+        pageSize: pageSize,
+      };
+      if (sortedColumn) {
+        params.sortBy = sortedColumn;
+        params.sortOrder = sortOrder;
+      }
+      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch`,{ params });
       setApplications(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -82,7 +98,17 @@ const MyApplication = () => {
 
   const fetchApplicationBySearch=async()=>{
     try {
-      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch?searchStatus=${search}&userId=${userId}&page=${page}&pageSize=${pageSize}`);
+      const params = {
+        searchStatus: search,
+        userId:userId,
+        page: page,
+        pageSize: pageSize,
+      };
+      if (sortedColumn) {
+        params.sortBy = sortedColumn;
+        params.sortOrder = sortOrder;
+      }
+      const response = await axios.get(`${BASE_API_URL}/applicationsBySearch`,{ params });
       setApplications(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -105,6 +131,7 @@ const MyApplication = () => {
     }
 
   }, [applicationStatus, page, pageSize,search,sortOrder,sortedColumn,userId]);
+  
 
   const fetchResumeNames = async () => {
     const names = {};
@@ -208,7 +235,6 @@ const MyApplication = () => {
     return jobStatuses[applicationId] || 'Loading...';
   };
   
-
   const user = {
     userName: userName,
     userId: userId,
@@ -265,9 +291,23 @@ const MyApplication = () => {
                       <th onClick={() => handleSort('companyName')}>Company Name{sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                       <th onClick={() => handleSort('jobRole')}>Job Title{sortedColumn === 'jobRole' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                       <th onClick={() => handleSort('appliedOn')}>Applied On{sortedColumn === 'appliedOn' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                      <th>Company Name</th>
+                      <th>Job Title</th>
+                      <th>Applied On</th>
+                    <th onClick={() => handleSort('companyName')}>
+                    Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('jobRole')}>
+                    Job Title {sortedColumn === 'jobRole' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('appliedOn')}>
+                    Applied On {sortedColumn === 'appliedOn' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
                       <th>Resume Profile</th>
                       <th>Job Status</th>
-                      <th>Actions</th>
+                      <th onClick={() => handleSort('applicationStatus')}>
+                    Action {sortedColumn === 'applicationStatus' && (sortOrder === 'asc' ? '▲' : '▼')}
+                    </th>
                     </tr>
                   </thead>
                   <tbody>

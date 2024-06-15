@@ -10,6 +10,9 @@ const DreamApplication =()=>{
     const userName=location.state?.userName;
     const [applications, setApplications] = useState([]);
     const [filterStatus, setFilterStatus] = useState('all');
+    const [resumeTypes, setResumeTypes] = useState({});
+    const [fileNames, setfileNames] = useState({});
+  
   
     const [currentPage, setCurrentPage] = useState(1);
     const applicationsPerPage = 5;
@@ -24,7 +27,48 @@ const DreamApplication =()=>{
     setCurrentPage(id);
     }
   
+    const fetchResumeTypes = async (applications) => {
+      const types = {};
+      const fileNames = {};
+      for (const application of applications) {
+        try {
+          const response = await axios.get(`${BASE_API_URL}/getResumeByApplicationId?resumeId=${application.resumeId}`);
+          types[application.resumeId] = response.data.fileType;
+          fileNames[application.resumeId] = response.data.fileName;
+        } catch (error) {
+          console.error('Error fetching resume type:', error);
+        }
+      }
+      setResumeTypes(types);
+      setfileNames(fileNames);
+    };
   
+    const renderResumeComponent = (resumeId) => {
+      const fileType = resumeTypes[resumeId];
+      const fileName = fileNames[resumeId];
+      if (fileType === 'file') {
+        return (
+          <button onClick={() => handleDownload(resumeId, fileName)}>Download</button>
+        );
+      } else if (fileType === 'link') {
+        return (
+          <a href={fileName} target="_blank" rel="noopener noreferrer">Click here</a>
+        );
+      } else if (fileType === 'brief') {
+        return (
+          <button onClick={() => openPopup(fileName)}>Open Brief</button>
+        );
+      } else {
+        return null; // Handle other file types as needed
+      }
+    };
+  
+    const [showMessage, setShowMessage] = useState(false);
+    const [showBriefSettings, setShowBriefSettings] = useState(false);
+    const openPopup = (fileName) => {
+      setShowMessage(fileName);
+      setShowBriefSettings(!showBriefSettings);
+    };
   
     const handleFilterChange = async(e) => {
       setFilterStatus(e.target.value);
@@ -90,32 +134,24 @@ const DreamApplication =()=>{
     }
     useEffect(() => {
       fetchCandidateDetails();
+      fetchResumeTypes(applications);
     }, [applications]);
   
-    const handleDownload = async (resumeId, candidateId) => {
+    const handleDownload = async (resumeId, fileName) => {
       try {
-        const res = await axios.get(`${BASE_API_URL}/getUserName`, {
-          params: {
-            userId:candidateId
-          }
-          
+        const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
+          responseType: 'blob'
         });
-      
-          const response = await axios.get(`http://localhost:8082/api/jobbox/downloadResume?resumeId=${resumeId}`, {
-            responseType: 'blob'
-          });
-          const url = window.URL.createObjectURL(new Blob([response.data]));
-          const fileName =(res.data.userName)+ candidateId+"resume.pdf";
-          const link = document.createElement('a');
-          link.href = url;
-          link.setAttribute('download', fileName);
-          document.body.appendChild(link);
-          link.click();
-        } catch (error) {
-          console.error('Error downloading resume:', error);
-        }
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error('Error downloading resume:', error);
+      }
     };
-  
    
   
     const user = { userEmail };
@@ -136,6 +172,14 @@ const DreamApplication =()=>{
                 <option value="Not Shortlisted">Rejected</option>
               </select>
             </div>
+            {showBriefSettings && (
+            <div className="modal-summary">
+              <div className="modal-content-summary">
+                <span className="close" onClick={() => setShowBriefSettings(false)}>&times;</span>
+                {showMessage}
+              </div>
+            </div>
+          )}
             {applications.length > 0 && (
               <div>
                   <div>
@@ -155,7 +199,7 @@ const DreamApplication =()=>{
                     <tr key={application.id}>
                        <td>{candidateName[application.candidateId]}</td>
                        <td>{candidateEmail[application.candidateId]}</td>
-                      <td><button className='download' onClick={() => handleDownload(application.resumeId, application.candidateId)}>Resume</button></td>
+                       <td>{renderResumeComponent(application.resumeId)}</td>
                       <td>{application.appliedOn}</td>
                       <td>{application.applicationStatus}</td>
                       <td>

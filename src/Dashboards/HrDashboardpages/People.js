@@ -24,7 +24,7 @@ const People = () => {
     const [search, setSearch] = useState('');
 
     const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
-    const [sortOrder, setSortOrder] = useState('asc'); // Track the sort order (asc or desc)
+    const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
 
     const handlePreviousPage = () => {
         if (page > 0) {
@@ -42,9 +42,15 @@ const People = () => {
         setPage(pageNumber);
     };
 
+
     useEffect(() => {
+        if(searchQuery){
+            handleSearch();
+        }
+        else
         fetchHRData();
-    }, [userEmail, page, pageSize, sortedColumn, sortOrder, search]);
+    }, [userEmail, page, pageSize, sortedColumn, sortOrder]); // Empty dependency array ensures the effect runs only once when the component mounts
+
 
     const fetchHRData = async () => {
         try {
@@ -80,9 +86,15 @@ const People = () => {
     };
 
     const handleSearchChange = (event) => {
-        setSearch(event.target.value);
+        setSearchQuery(event.target.value);
     };
 
+    const handleSearch = () => {
+        const filtered = people.filter(person =>
+            person.userName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredPeople(filtered);
+    };
     const handleSort = (column) => {
         let order = 'asc';
         if (sortedColumn === column) {
@@ -116,7 +128,7 @@ const People = () => {
                             value={search}
                             onChange={handleSearchChange}
                         />
-                        <button onClick={fetchSearchResults}>
+                        <button onClick={handleSearch}>
                             <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                         </button>
                         <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
@@ -150,8 +162,13 @@ const People = () => {
                                         sortOrder === 'asc' ? '▲' : '▼'
                                     )}
                                 </th>
-                                <th>Company Name</th>
-                                <th>Phone Number</th>
+                                <th>Company Name </th>
+                                <th>PhoneNumber</th>
+                                {/* <th onClick={() => handleSort('phone')}>
+                                    Phone Number {sortedColumn === 'phone' && (
+                                        sortOrder === ' ' ? '▲' : '▼'
+                                    )}
+                                </th> */}
                             </tr>
                         </thead>
                         <tbody>

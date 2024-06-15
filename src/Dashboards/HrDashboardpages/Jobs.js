@@ -66,29 +66,11 @@ const Jobs = () => {
     }
     else
       fetchJobs()
-  }, [userEmail, userEmail, page, pageSize]);
-  useEffect(() => {
-    console.log(search);
-    if (search) {
-      fetchJobBysearch();
-    }
-    else
-      fetchJobs()
-  }, [search, userEmail, page, pageSize]);
+  }, [userEmail, search, page, pageSize]);
 
 
 
-  // const fetchJobs = async () => {
-  //   console.log(search);
-  //   try {
-  //     const response = await axios.get(`${BASE_API_URL}/jobsPostedByHrEmail?userEmail=${userEmail}&page=${page}&size=${pageSize}`);
-  //     setJobs(response.data.content);
-  //     setTotalPages(response.data.totalPages);
 
-  //   } catch (error) {
-  //     console.error('Error fetching jobs:', error);
-  //   }
-  // };
 
   const fetchJobs = async () => {
     try {
@@ -162,15 +144,7 @@ const Jobs = () => {
       fetchJobs()
   }, [userEmail, userEmail, page, pageSize,sortedColumn, sortOrder]);
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault(); // Prevent default form submission
-  //   fetchJobBysearch();
-  // };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault(); // Prevent default form submission
-  //   setPage(0);
-  // };
+ 
 
 
 
@@ -244,7 +218,7 @@ const Jobs = () => {
                     {sortedColumn === 'jobTitle' && sortOrder === 'desc' && '▼'}
                   </th>
                   <th onClick={() => handleSort('jobType')}>Job Type{sortedColumn === 'jobType' && (sortOrder === ' ' ? '▲' : '▼')}</th>
-                  <th onClick={() => handleSort('postingDate')}> postingDate {sortedColumn === 'postingDate' && (sortOrder === ' ' ? '▲' : '▼')}</th>
+                  <th onClick={() => handleSort('postingDate')}> PostingDate {sortedColumn === 'postingDate' && (sortOrder === ' ' ? '▲' : '▼')}</th>
                   <th onClick={() => handleSort('skills')}>Skills{sortedColumn === 'skills' && (sortOrder === ' ' ? '▲' : '▼')}</th>
                   <th onClick={() => handleSort('numberOfPosition')}>No of Position{sortedColumn === 'numberOfPosition' && (sortOrder === ' ' ? '▲' : '▼')}</th>
                   <th onClick={() => handleSort('applicationDeadline')}>Application DeadLine{sortedColumn === 'applicationDeadline' && (sortOrder === ' ' ? '▲' : '▼')}</th>
@@ -275,7 +249,9 @@ const Jobs = () => {
                 ))}
               </tbody>
             </table>
+            
           )}
+          
           {jobs.length === 0 && (
             <section className='not-yet'>
               <h2>You have not posted any jobs yet. Post Now</h2>
@@ -283,9 +259,6 @@ const Jobs = () => {
           )}
 
         </div>
-        <button className='add-job-button'>
-          <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
-        </button>
         <nav>
           <ul className='pagination'>
             <li>
@@ -301,6 +274,11 @@ const Jobs = () => {
             </li>
           </ul>
         </nav>
+       
+
+        <button className='add-job-button'>
+          <Link to={{ pathname: '/addJob', state: { userName: userName, userEmail: userEmail } }}>Add Job</Link>
+        </button>
       </div>
 
     </div>
