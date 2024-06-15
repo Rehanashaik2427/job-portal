@@ -660,3 +660,41 @@ span .close1 {
   background-color: skyblue;
   height: 30px;
 }
+
+
+.forgetpassword-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 12px;
+
+}
+
+.forgetpassword-form {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.forgetpassword-form label,
+.forgetpassword-form input,
+.forgetpassword-form button {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.forgetpassword-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.forgetpassword-form button:hover {
+  background-color: #0056b3;
+}

@@ -62,10 +62,10 @@ import DreamApplication from './Dashboards/HrDashboardpages/DreamApplications';
 
 import FindCompany from './pages/FindCompany';
 
-import JobboxCompanyPage from './pages/JobboxCompanyPage';
 import AdminleftSide from './Dashboards/AdminDashboardpages/AdminleftSide';
-import CandiadteJobs from './Dashboards/CandidateDashboardpages/CandidateJobs';
 import CandidateJobs from './Dashboards/CandidateDashboardpages/CandidateJobs';
+import ForgetPassword from './pages/ForgetPassword';
+import JobboxCompanyPage from './pages/JobboxCompanyPage';
 
 
 
@@ -86,6 +86,7 @@ const App = () => {
           <Route path="/register" component={Register} />
           <Route path="/signin" component={Signin} />
           <Route path='/terms-and-conditions' component={TermsAndConditions} />
+          <Route path='/forget-password' component={ForgetPassword} />
 
           <Route path="/admin-register" component={AdminRegister} />
           <Route path="/admin-dashboard" component={AdminDashboard} />

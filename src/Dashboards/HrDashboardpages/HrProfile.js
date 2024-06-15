@@ -80,6 +80,7 @@ const HrProfile = () => {
               <span className="profile-label">PhoneNumber:</span>
               <span className="profile-value">{userData.phone}</span>
             </div>
+            
           </>
         )}
         </div>

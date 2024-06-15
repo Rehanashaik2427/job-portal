@@ -6,7 +6,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 import HrLeftSide from './HrLeftSide';
 
-
 const People = () => {
     const BASE_API_URL = "http://localhost:8082/api/jobbox";
     const location = useLocation();
@@ -18,15 +17,14 @@ const People = () => {
     const userName = location.state?.userName;
     const userEmail = location.state?.userEmail;
 
-
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
 
-
+    const [search, setSearch] = useState('');
 
     const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
-    const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
+    const [sortOrder, setSortOrder] = useState('asc'); // Track the sort order (asc or desc)
 
     const handlePreviousPage = () => {
         if (page > 0) {
@@ -44,23 +42,20 @@ const People = () => {
         setPage(pageNumber);
     };
 
-
     useEffect(() => {
         fetchHRData();
-    }, [userEmail, page, pageSize, sortedColumn, sortOrder]); // Empty dependency array ensures the effect runs only once when the component mounts
-
+    }, [userEmail, page, pageSize, sortedColumn, sortOrder, search]);
 
     const fetchHRData = async () => {
         try {
             const params = {
-                userEmail: userEmail,
-                page: page,
+                userEmail,
+                page,
                 size: pageSize,
+                sortBy: sortedColumn,
+                sortOrder,
+                search
             };
-            if (sortedColumn) {
-                params.sortBy = sortedColumn;
-                params.sortOrder = sortOrder;
-            }
             const response = await axios.get(`${BASE_API_URL}/getHrEachCompany`, { params });
             setPeople(response.data.content);
             setTotalPages(response.data.totalPages);
@@ -69,22 +64,25 @@ const People = () => {
         }
     };
 
-
-
-    const toggleSettings = () => {
-        setShowSettings(!showSettings);
+    const fetchSearchResults = async () => {
+        try {
+            const params = {
+                search,
+                page,
+                size: pageSize,
+            };
+            const response = await axios.get(`${BASE_API_URL}/searchHr`, { params });
+            setPeople(response.data.content);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        }
     };
 
     const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
+        setSearch(event.target.value);
     };
 
-    const handleSearch = () => {
-        const filtered = people.filter(person =>
-            person.userName.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setFilteredPeople(filtered);
-    };
     const handleSort = (column) => {
         let order = 'asc';
         if (sortedColumn === column) {
@@ -92,6 +90,10 @@ const People = () => {
         }
         setSortedColumn(column);
         setSortOrder(order);
+    };
+
+    const toggleSettings = () => {
+        setShowSettings(!showSettings);
     };
 
     const user = {
@@ -111,10 +113,10 @@ const People = () => {
                         <input
                             type='text'
                             placeholder='Enter Emp Name'
-                            value={searchQuery}
+                            value={search}
                             onChange={handleSearchChange}
                         />
-                        <button onClick={handleSearch}>
+                        <button onClick={fetchSearchResults}>
                             <FontAwesomeIcon icon={faSearch} className='button' style={{ color: 'skyblue' }} />
                         </button>
                         <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
@@ -130,7 +132,6 @@ const People = () => {
                             </div>
                         </div>
                     )}
-
                 </div>
                 <div>
                     <table id='jobTable1'>
@@ -139,29 +140,23 @@ const People = () => {
                                 <th onClick={() => handleSort('userId')}>
                                     HR ID {sortedColumn === 'userId' && (sortOrder === 'asc' ? '▲' : '▼')}
                                 </th>
-
                                 <th onClick={() => handleSort('userName')}>
                                     HR Name {sortedColumn === 'userName' && (
-                                        sortOrder === ' ' ? '▲' : '▼'
+                                        sortOrder === 'asc' ? '▲' : '▼'
                                     )}
                                 </th>
                                 <th onClick={() => handleSort('userEmail')}>
                                     Email {sortedColumn === 'userEmail' && (
-                                        sortOrder === ' ' ? '▲' : '▼'
+                                        sortOrder === 'asc' ? '▲' : '▼'
                                     )}
                                 </th>
-                                <th>Company Name </th>
-                                <th>PhoneNumber</th>
-                                {/* <th onClick={() => handleSort('phone')}>
-                                    Phone Number {sortedColumn === 'phone' && (
-                                        sortOrder === ' ' ? '▲' : '▼'
-                                    )}
-                                </th> */}
+                                <th>Company Name</th>
+                                <th>Phone Number</th>
                             </tr>
                         </thead>
                         <tbody>
                             {people.map(person => (
-                                <tr key={person.id}>
+                                <tr key={person.userId}>
                                     <td>{person.userId}</td>
                                     <td>{person.userName}</td>
                                     <td>{person.userEmail}</td>
@@ -188,7 +183,6 @@ const People = () => {
                     </ul>
                 </nav>
             </div>
-
         </div>
     );
 }

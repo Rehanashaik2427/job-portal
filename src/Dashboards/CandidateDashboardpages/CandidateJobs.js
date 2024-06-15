@@ -97,8 +97,9 @@ const CandidateJobs = () => {
       const response = await axios.put(`${BASE_API_URL}/applyJob`, null, {
         params: { jobId, userId, appliedOn, resumeId },
       });
-      setApplyJobs([...applyjobs, response.data]);
       if (response.data) {
+        setApplyJobs((prevApplyJobs) => [...prevApplyJobs, { jobId, appliedOn }]);
+        setHasUserApplied((prev) => ({ ...prev, [jobId]: true }));
         alert("You have successfully applied for this job");
       }
     } catch (error) {
@@ -217,110 +218,107 @@ const CandidateJobs = () => {
               </form>
               <div><FontAwesomeIcon icon={faUser} id="user" className='icon' style={{ color: 'black' }} onClick={toggleSettings} /></div>
             </div>
+          </div>
+
+          {showSettings && (
+            <div id="modal-container">
+              <div id="settings-modal">
+                <ul>
+                  <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/">Sign out</Link></li>
+                  <li>Setting</li>
+                </ul>
+                <button onClick={toggleSettings}>Close</button>
+              </div>
             </div>
-
-{showSettings && (
-  <div id="modal-container">
-    <div id="settings-modal">
-      <ul>
-        <li><FontAwesomeIcon icon={faSignOutAlt} /><Link to="/">Sign out</Link></li>
-        <li>Setting</li>
-      </ul>
-      <button onClick={toggleSettings}>Close</button>
-    </div>
-  </div>
-)}
-</div>
-
-{jobs.length > 0 && (
-<div>
-  <h2>Jobs For {userName}</h2>
-  <table className='jobs-table'>
-    <thead>
-      <tr>
-        <th onClick={() => handleSort('jobTitle')}>
-          Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
-        </th>
-        <th onClick={() => handleSort('companyName')}>
-          Company Name {sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}
-        </th>
-        <th onClick={() => handleSort('applicationDeadline')}>
-          Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
-        </th>
-        <th onClick={() => handleSort('skills')}>
-          Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
-        </th>
-        <th>Job Summary</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {jobs.map(job => (
-        <tr key={job.id} id='job-table-list'>
-          <td>{job.jobTitle}</td>
-          <td>{job.companyName}</td>
-          <td>{job.applicationDeadline}</td>
-          <td>{job.skills}</td>
-          <td><button onClick={() => handleViewSummary(job.jobSummary)}>View Summary</button></td>
-          <td>
-            {hasUserApplied[job.jobId] === true || (applyjobs && applyjobs.jobId === job.jobId) ? (
-              <h4>Applied</h4>
-            ) : (
-              <button onClick={() => handleApplyButtonClick(job.jobId, job.jobStatus)}>
-                <h4>Apply</h4>
-              </button>
-            )}
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-
-  {selectedJobSummary && (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={handleCloseModal}>&times;</span>
-        <div className="job-summary">
-          <h3>Job Summary</h3>
-          <p>{selectedJobSummary}</p>
+          )}
         </div>
+
+        {jobs.length > 0 && (
+          <div>
+            <h2>Jobs For {userName}</h2>
+            <table className='jobs-table'>
+              <thead>
+                <tr>
+                  <th onClick={() => handleSort('jobTitle')}>
+                    Job Profile {sortedColumn === 'jobTitle' && (sortOrder === 'asc' ? '▲' : '▼')}
+                  </th>
+                  <th >
+                    Company Name 
+                  </th>
+                  <th onClick={() => handleSort('applicationDeadline')}>
+                    Application Deadline {sortedColumn === 'applicationDeadline' && (sortOrder === 'asc' ? '▲' : '▼')}
+                  </th>
+                  <th onClick={() => handleSort('skills')}>
+                    Skills {sortedColumn === 'skills' && (sortOrder === 'asc' ? '▲' : '▼')}
+                  </th>
+                  <th>Job Summary</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {jobs.map(job => (
+                  <tr key={job.id} id='job-table-list'>
+                    <td>{job.jobTitle}</td>
+                    <td>{job.companyName}</td>
+                    <td>{job.applicationDeadline}</td>
+                    <td>{job.skills}</td>
+                    <td><button onClick={() => handleViewSummary(job.jobsummary)}>View Summary</button></td>
+                    <td>
+                      {hasUserApplied[job.jobId] === true || (applyjobs && applyjobs.jobId === job.jobId) ? (
+                        <h4>Applied</h4>
+                      ) : (
+                        <button onClick={() => handleApplyButtonClick(job.jobId, job.jobStatus)}>
+                          <h4>Apply</h4>
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {selectedJobSummary && (
+            <div className="modal-summary">
+            <div className="modal-content-summary">
+                  <span className="close" onClick={handleCloseModal}>&times;</span>
+                  <div className="job-summary">
+                    <h3>Job Summary</h3>
+                    <p>{selectedJobSummary}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <nav>
+              <ul className='pagination'>
+                <li>
+                  <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
+                </li>
+                {[...Array(totalPages).keys()].map((pageNumber) => (
+                  <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
+                    <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
+                  </li>
+                ))}
+                <li>
+                  <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        )}
+
+{jobs.length === 0 && <h1>No jobs found.</h1>}
+          <div className="dream">
+            <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
+            <p>Just add the name of your dream company and apply to them directly.</p>
+            <Link to={{pathname: '/dream-company',state: { userName: userName, userId: userId }}} className="app">
+              <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
+            </Link>
+          </div>
+   
       </div>
     </div>
-  )}
-
-  <nav>
-    <ul className='pagination'>
-      <li>
-        <button className='page-button' onClick={handlePreviousPage} disabled={page === 0}>Previous</button>
-      </li>
-      {[...Array(totalPages).keys()].map((pageNumber) => (
-        <li key={pageNumber} className={pageNumber === page ? 'active' : ''}>
-          <button className='page-link' onClick={() => handlePageChange(pageNumber)}>{pageNumber + 1}</button>
-        </li>
-      ))}
-      <li>
-        <button className='page-button' onClick={handleNextPage} disabled={page === totalPages - 1}>Next</button>
-      </li>
-    </ul>
-  </nav>
-</div>
-)}
-
-{jobs.length === 0 && (
-<div>
-  <h1>No jobs found.</h1>
-  <div className="dream">
-    <p>Can't find your dream company. Don't worry, you can still apply to them.</p>
-    <p>Just add the name of your dream company and apply to them directly.</p>
-    <Link to={{ pathname: '/dream-company', state: { userName: userName, userId: userId } }} className="app">
-      <nav className="apply" style={{ textAlign: 'center' }}><b>Apply to your dream company</b></nav>
-    </Link>
-  </div>
-</div>
-)}
-</div>
-</div>
-);
+  );
 };
 
 export default CandidateJobs;

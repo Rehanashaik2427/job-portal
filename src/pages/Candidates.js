@@ -64,6 +64,7 @@ const Candidates = () => {
 
         </form>
         <div className="candidate-login-switch-form">
+          <Link to="/forget-password">Forget Password?</Link>
           Don't have an account? <Link to="/candidate-signup">Signup</Link>
         </div>
       </div>

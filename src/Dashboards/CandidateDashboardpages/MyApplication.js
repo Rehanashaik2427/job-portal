@@ -47,12 +47,21 @@ const MyApplication = () => {
       fetchResumeNames();
     }
   };
-  
+  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+  const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
   
   // Update fetchApplications function to include the search term
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${BASE_API_URL}/applicationsPagination?userId=${userId}&page=${page}&pageSize=${pageSize}&searchStatus=${search}`);
+      const params = {
+        userId:userId,
+        page: page,
+        size: pageSize,
+        sortBy :sortedColumn,
+        sortOrder :sortOrder,
+
+    };
+      const response = await axios.get(`${BASE_API_URL}/applicationsPagination`,{params});
       setApplications(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -95,7 +104,7 @@ const MyApplication = () => {
      
     }
 
-  }, [applicationStatus, page, pageSize,search]);
+  }, [applicationStatus, page, pageSize,search,sortOrder,sortedColumn,userId]);
 
   const fetchResumeNames = async () => {
     const names = {};
@@ -126,7 +135,15 @@ const MyApplication = () => {
 
   
 
-  
+  const handleSort = (column) => {
+    let order = 'asc';
+    if (sortedColumn === column) {
+        order = sortOrder === 'asc' ? 'desc' : 'asc';
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+};
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -245,9 +262,9 @@ const MyApplication = () => {
                 <table className='applications-table'>
                   <thead>
                     <tr>
-                      <th>Company Name</th>
-                      <th>Job Title</th>
-                      <th>Applied On</th>
+                      <th onClick={() => handleSort('companyName')}>Company Name{sortedColumn === 'companyName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                      <th onClick={() => handleSort('jobRole')}>Job Title{sortedColumn === 'jobRole' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                      <th onClick={() => handleSort('appliedOn')}>Applied On{sortedColumn === 'appliedOn' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                       <th>Resume Profile</th>
                       <th>Job Status</th>
                       <th>Actions</th>

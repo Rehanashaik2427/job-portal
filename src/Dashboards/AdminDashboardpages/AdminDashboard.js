@@ -1,8 +1,36 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
+
 const AdminDashboard = () => {
+  const [validatedCompaniesCount, setValidatedCompaniesCount] = useState(0);
+  const[validatedHrCount, setValidatedHrCount] = useState(0);
+
+  useEffect(() => {
+      fetchValidatedCompaniesCount();
+      fetchValidatedHrCount();
+  }, []);
+
+  const fetchValidatedCompaniesCount = async () => {
+      try {
+          const response = await axios.get('http://localhost:8082/api/jobbox/countValidatedCompanies');
+          setValidatedCompaniesCount(response.data);
+      } catch (error) {
+          console.error('Error fetching count:', error);
+      }
+  };
+  
+  const fetchValidatedHrCount = async () => {
+    try {
+        const response = await axios.get('http://localhost:8082/api/jobbox/countValidatedUsers');
+        setValidatedHrCount(response.data);
+    } catch (error) {
+        console.error('Error fetching count:', error);
+    }
+};
+
   return (
     <div className='body'>
      
@@ -18,11 +46,11 @@ const AdminDashboard = () => {
 
       <div className="adminDashboard">
         <span>
-          <h2>5000+</h2>
+          <h2>{validatedCompaniesCount}</h2>
           company validated
         </span>
         <span>
-          <h2>20000+</h2>
+          <h2>{validatedHrCount}</h2>
           HR validated
         </span>
         <span>

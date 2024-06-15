@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
 import AdminleftSide from './AdminleftSide';
-import axios from 'axios';
 
 const UserValidation = () => {
   const [userData, setUserData] = useState([]);
@@ -9,6 +9,9 @@ const UserValidation = () => {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
+
+  const [sortedColumn, setSortedColumn] = useState(null); // Track the currently sorted column
+  const [sortOrder, setSortOrder] = useState(' '); // Track the sort order (asc or desc)
 
   const handlePreviousPage = () => {
     if (page > 0) {
@@ -31,16 +34,14 @@ const UserValidation = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:8082/api/jobbox/displayUsers', {
-            params: {
-               page:page,
-               size:pageSize
-            }
-        });
-        
-        if (response.status !== 200) {
-            throw new Error('Failed to fetch user data');
-        }
+        const params = {
+          page: page,
+          size: pageSize,
+          sortBy :sortedColumn,
+          sortOrder :sortOrder,
+  
+      };
+        const response = await axios.get('http://localhost:8082/api/jobbox/displayUsers', { params });
        
         setUserData(response.data.content);
         setTotalPages(response.data.totalPages);
@@ -48,10 +49,18 @@ const UserValidation = () => {
         console.error(error);
       }
     };
-
+  
     fetchUserData();
-  }, [page,pageSize]);
+  }, [page,pageSize, sortedColumn, sortOrder]);
 
+  const handleSort = (column) => {
+    let order = 'asc'; // Default sorting order is ascending
+    if (sortedColumn === column && sortOrder === 'asc') {
+      order = 'desc'; // If the same column is clicked again and it was already sorted in ascending order, switch to descending
+    }
+    setSortedColumn(column);
+    setSortOrder(order);
+  };
   return (
     <div className='body'>
              <div className='leftside'>
@@ -64,10 +73,10 @@ const UserValidation = () => {
           <table id="user-table" className="user-table">
             <thead>
               <tr>
-                <th>User Name</th>
-                <th>User Role</th>
-                <th>User Email</th>
-                <th>Action Date</th>
+                <th onClick={() => handleSort('userName')}>User Name{sortedColumn === 'userName' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                <th >User Role</th>
+                <th onClick={() => handleSort('userEmail')}>User Email{sortedColumn === 'userEmail' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
+                <th onClick={() => handleSort('approvedOn')}>Action Date{sortedColumn === 'approvedOn' && (sortOrder === 'asc' ? '▲' : '▼')}</th>
                 <th>Status & Actions</th>
               </tr>
             </thead>
@@ -75,7 +84,7 @@ const UserValidation = () => {
               {userData.map(user => (
                 <tr key={user.userId}>
                   <td>{user.userName}</td>
-                  <td>{user.userRole}</td>
+                  <td>{user.userName}</td>
                   <td>{user.userEmail}</td>
                   <td>{user.approvedOn}</td>
                   <td>{user.userStatus}</td>

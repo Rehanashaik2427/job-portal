@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const HrSignin = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
@@ -61,6 +60,7 @@ const HrSignin = () => {
           </div>
           <div className="form-group">
             <button type="submit">Login</button>
+            <Link to="/forget-password">Forget Password?</Link>
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
 

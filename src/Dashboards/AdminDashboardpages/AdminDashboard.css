@@ -368,4 +368,8 @@ company details by admin */
     color: #dc3545;
   }
   
- 
+  .rightside {
+    flex: 2;
+    overflow: hidden; /* Prevent scrollbars */
+    padding: 20px; /* Adjust padding as needed */
+  }
